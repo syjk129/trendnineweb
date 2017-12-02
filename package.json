@@ -12,11 +12,8 @@
     "build": "npm run clean-dist && webpack -p --config=configs/webpack/prod.js",
     "clean-dist": "rm -f -r -d dist",
     "lint": "npm run lint:ts && npm run lint:sass",
-    "lint:ts": "tslint './src/**/*.ts*' --format stylish --force",
-    "lint:sass": "stylelint ./src/**/*.scss",
-    "start": "npm run start-dev",
-    "start-dev": "webpack-dev-server --config=configs/webpack/dev.js",
-    "start-prod": "npm run build && node express.js",
+    "dev": "webpack-dev-server --config=configs/webpack/dev.js",
+    "prod": "npm run build && node express.js",
     "test": "jest --watch --coverage --config=configs/jest.json"
   },
   "devDependencies": {
@@ -52,8 +49,14 @@
     "webpack": "^3.8.1",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^2.9.5",
-    "webpack-merge": "^4.1.1"
+    "webpack-merge": "^4.1.1",
+    "@types/react-router": "^4.0.19",
+    "react-router-dom": "^4.2.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/react-router": "^4.0.19",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
+  },
   "postcss": {}
 }

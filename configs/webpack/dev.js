@@ -11,6 +11,7 @@ module.exports = merge(commonConfig, {
     './index.tsx' // the entry point of our app
   ],
   devServer: {
+    historyApiFallback: true,
     hot: true,
   },
   devtool: 'cheap-module-eval-source-map',

@@ -1,6 +1,10 @@
 {
     "jsRules": {
         "class-name": true,
+        "trailing-comma": [
+            true,
+            {"multiline": "always", "singleline": "never"}
+        ],
         "comment-format": [
             true,
             "check-space"
@@ -45,6 +49,10 @@
     },
     "rules": {
         "class-name": true,
+        "trailing-comma": [
+            true,
+            {"multiline": "always", "singleline": "never"}
+        ],
         "comment-format": [
             true,
             "check-space"
@@ -58,6 +66,7 @@
         "no-trailing-whitespace": true,
         "no-unsafe-finally": true,
         "no-var-keyword": true,
+        "import-spacing": true,
         "one-line": [
             true,
             "check-open-brace",
