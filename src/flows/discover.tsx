@@ -1,6 +1,7 @@
 import * as React from "react";
 import { match } from "react-router";
 import { PropTypes } from "prop-types";
+import autobind from "autobind-decorator";
 
 import Sidebar from "../components/sidebar";
 import Content from "../components/content";
@@ -39,18 +40,19 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     sidebar
                 </Sidebar>
                 <Content>
-                    {this.state.posts.map(post => {
-                        return post.title;
-                    })}
+                    {this._renderPosts()}
                 </Content>
             </div>
         );
     }
 
+    @autobind
     private _renderPosts() {
-        return this.state.posts.map(post => {
-            return post.title;
-        });
+        return this.state.posts.map(post => (
+            <div>
+                {post.title}
+            </div>
+        ));
     }
 }
 
