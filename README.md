@@ -10,4 +10,4 @@ Install all dependencies with `npm install`
 
 Run the dev server with `npm run dev`
 
-Navigate to `localhost:8080` to access your app!
+Navigate to `localhost:3000` to access your app!

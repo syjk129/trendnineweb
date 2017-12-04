@@ -3,7 +3,7 @@ import * as React from "react";
 import "./style.scss";
 
 interface SidebarProps {
-    children: React.ReactChild;
+    children?: React.ReactNode;
 }
 
 export default function Sidebar({ children }: SidebarProps) {
