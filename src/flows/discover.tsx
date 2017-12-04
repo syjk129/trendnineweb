@@ -26,7 +26,6 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     async componentWillMount() {
         try {
             const posts = await this.context.api.getLatestPosts();
-            console.log(posts);
             this.setState({ posts: posts.result });
         } catch (err) {
             console.warn(err);

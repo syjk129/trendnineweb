@@ -8,6 +8,7 @@ import Api from "../api";
 
 import Header from "./header";
 import Footer from "./footer";
+import ErrorBoundary from "./errorBoundary";
 
 export interface AppProps {
 }
@@ -17,7 +18,7 @@ export interface AppContext {
 }
 
 interface AppProviderProps {
-    children: React.ReactChild;
+    children: React.ReactNode;
 }
 
 class AppProvider extends React.Component<AppProviderProps, never> {
@@ -25,8 +26,8 @@ class AppProvider extends React.Component<AppProviderProps, never> {
         super(props);
 
         const api = new Api({
-            apiUrl: "http://54.175.34.30:8000",
-            token: "",
+            apiUrl: "http://54.175.34.30:8000", // TODO: get apiUrl from webpack env
+            token: "", // TODO: get token from session
         });
 
         this._api = api;
@@ -54,19 +55,19 @@ AppProvider.childContextTypes = {
 export default class App extends React.Component<AppProps, never> {
     render() {
         return (
-            <AppProvider>
+            <ErrorBoundary>
                 <Router history={browserHistory}>
-                    <div>
+                    <AppProvider>
                         <Header />
-                        <Route exact path="/" component={Temp} />
+                        <Route exact path="/" render={() => <Redirect to="/discover" />} />
                         <Route path="/discover" component={Discover} />
                         <Route path="/shop" component={null} />
                         <Route path="/profile/:userId" component={null} />
                         <Route path="/shop" component={null} />
                         <Footer />
-                    </div>
+                    </AppProvider>
                 </Router>
-            </AppProvider>
+            </ErrorBoundary>
         );
     }
 }
