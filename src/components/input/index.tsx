@@ -2,8 +2,6 @@ import * as React from "react";
 import { ChangeEvent } from "react";
 import autobind from "autobind-decorator";
 
-import enumify from "../../libs/enumify";
-
 import "./style.scss";
 
 export enum InputType {

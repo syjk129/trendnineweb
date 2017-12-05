@@ -62,6 +62,7 @@ export default class App extends React.Component<AppProps, never> {
                         <Header />
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
                         <Route path="/login" component={Auth} />
+                        <Route path="/register" component={Auth} />
                         <Route path="/discover" component={Discover} />
                         <Route path="/shop" component={null} />
                         <Route path="/profile/:userId" component={null} />
