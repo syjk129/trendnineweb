@@ -3,6 +3,7 @@ import { PropTypes } from "prop-types";
 import { BrowserRouter as Router, Link, Redirect, Route, browserHistory } from "react-router-dom";
 
 import Temp from "../components/temp";
+import Auth from "../flows/auth";
 import Discover from "../flows/discover";
 import Api from "../api";
 
@@ -60,6 +61,7 @@ export default class App extends React.Component<AppProps, never> {
                     <AppProvider>
                         <Header />
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
+                        <Route path="/login" component={Auth} />
                         <Route path="/discover" component={Discover} />
                         <Route path="/shop" component={null} />
                         <Route path="/profile/:userId" component={null} />
