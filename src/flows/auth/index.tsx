@@ -14,6 +14,7 @@ import { AuthData, RegisterData, RegisterDataProps } from "./types";
 interface AuthProps {
     match: match<string>;
     apiUrl: string;
+    setLoggedState(loggedIn: boolean): void;
 }
 
 interface AuthState {
@@ -81,19 +82,21 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     private _login(event: any) {
         event.preventDefault();
         this.context.api.authenticate(this.state.username, this.state.password);
+        this.props.setLoggedState(true);
     }
 
     @autobind
     private _register(event: any) {
         event.preventDefault();
         this.context.api.register(this.state.firstName, this.state.lastName, this.state.username, this.state.password);
+        this.props.setLoggedState(true);
     }
 
     @autobind
     private _handleFormChange(data: AuthFormData) {
         this.setState({
-            username: data.username || this.state.username,
-            password: data.password || this.state.password,
+            username: data.username !== undefined ? data.username : this.state.username,
+            password: data.password !== undefined ? data.password : this.state.password,
             firstName: data.firstName || this.state.firstName,
             lastName: data.lastName || this.state.lastName,
         });

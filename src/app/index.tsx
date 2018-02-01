@@ -1,8 +1,8 @@
 import * as React from "react";
 import { PropTypes } from "prop-types";
 import { BrowserRouter as Router, Link, Redirect, Route, browserHistory } from "react-router-dom";
+import autobind from "autobind-decorator";
 
-import Temp from "../components/temp";
 import Auth from "../flows/auth";
 import Discover from "../flows/discover";
 import Api from "../api";
@@ -12,6 +12,10 @@ import Footer from "./footer";
 import ErrorBoundary from "./errorBoundary";
 
 export interface AppProps {
+}
+
+interface AppState {
+    loggedIn: boolean;
 }
 
 export interface AppContext {
@@ -27,8 +31,7 @@ class AppProvider extends React.Component<AppProviderProps, never> {
         super(props);
 
         const api = new Api({
-            apiUrl: "http://54.175.34.30:8000", // TODO: get apiUrl from webpack env
-            token: "", // TODO: get token from session
+            apiUrl: "http://54.175.34.30:8000",
         });
 
         this._api = api;
@@ -53,15 +56,19 @@ AppProvider.childContextTypes = {
     api: PropTypes.any,
 };
 
-export default class App extends React.Component<AppProps, never> {
+export default class App extends React.Component<AppProps, AppState> {
+    state: AppState = {
+        loggedIn: false,
+    };
+
     render() {
         return (
-            <ErrorBoundary>
+            <ErrorBoundary setLoggedState={this._setLoggedState}>
                 <Router history={browserHistory}>
                     <AppProvider>
-                        <Header />
+                        <Header loggedIn={this.state.loggedIn} />
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
-                        <Route path="/login" component={Auth} />
+                        <Route path="/login" setLoggedState={this._setLoggedState} component={Auth} />
                         <Route path="/register" component={Auth} />
                         <Route path="/discover" component={Discover} />
                         <Route path="/shop" component={null} />
@@ -72,5 +79,10 @@ export default class App extends React.Component<AppProps, never> {
                 </Router>
             </ErrorBoundary>
         );
+    }
+
+    @autobind
+    private _setLoggedState(loggedIn: boolean) {
+        this.setState({ loggedIn });
     }
 }

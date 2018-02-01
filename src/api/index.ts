@@ -2,8 +2,9 @@ import { Post } from "./models";
 
 export interface ApiOptions {
     apiUrl: string;
-    token: string;
 }
+
+const tokenName = "tn_auth_token";
 
 export default class Api {
     constructor(options: ApiOptions) {
@@ -12,23 +13,31 @@ export default class Api {
 
     async authenticate(email: string, password: string): Promise<void> {
         const request = { email, password };
-        const token = await this._POST(`${this._apiUrl}/api/v1/users/authenticate`, request);
-        window.sessionStorage.setItem("token", token);
+        try {
+            const token = await this._POST("/api/v1/users/authenticate", request);
+            localStorage.setItem(tokenName, token.token);
+        } catch (error) {
+            throw error;
+        }
     }
 
     getLatestPosts(): Promise<Array<Post>> {
-        return this._GET(`${this._apiUrl}/api/v1/posts`);
+        return this._GET("/api/v1/posts");
+    }
+
+    getCart(): Promise<any> {
+        return this._GET("/api/v1/marketplace/carts");
     }
 
     private _apiUrl: string;
 
-    private async _GET(url: string): Promise<any> {
-        const headers = new Headers();
-        headers.append("Content-Type", "text/plain");
+    private async _GET(path: string): Promise<any> {
+        const url = `${this._apiUrl}${path}`;
 
         try {
             const response = await fetch(url, {
                 method: "GET",
+                headers: this._getRequestHeader(),
             });
 
             if (!response.ok) {
@@ -42,14 +51,14 @@ export default class Api {
         }
     }
 
-    private async _POST(url: string, request: any): Promise<any> {
-        const headers = new Headers();
-        headers.append("Content-Type", "text/plain");
+    private async _POST(path: string, request: any): Promise<any> {
+        const url = `${this._apiUrl}${path}`;
 
         try {
             const response = await fetch(url, {
                 method: "POST",
-                ...request,
+                headers: this._getRequestHeader(),
+                body: JSON.stringify(Object.assign(request, this._getRequestHeader())),
             });
 
             if (!response.ok) {
@@ -61,5 +70,14 @@ export default class Api {
         } catch (err) {
             throw new Error(err);
         }
+    }
+
+    private _getRequestHeader() {
+        const token = localStorage.getItem(tokenName);
+        return {
+            "Accept": "application/json",
+            "Authorization": `JWT ${token}`,
+            "Content-Type": "application/json",
+        };
     }
 }

@@ -3,7 +3,6 @@ import { PropTypes } from "prop-types";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 
 import { AppContext } from "../app";
-import Temp from "../components/temp";
 
 export interface FooterProps {
 }
