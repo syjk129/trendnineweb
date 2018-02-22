@@ -76,7 +76,7 @@ export default class Api {
         const token = localStorage.getItem(tokenName);
         return {
             "Accept": "application/json",
-            "Authorization": `JWT ${token}`,
+            "Authorization": token ? `JWT ${token}` : "",
             "Content-Type": "application/json",
         };
     }
