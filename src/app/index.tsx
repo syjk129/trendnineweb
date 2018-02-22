@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PropTypes } from "prop-types";
-import { BrowserRouter as Router, Link, Redirect, Route, browserHistory } from "react-router-dom";
+import { BrowserRouter as Router, Link, Redirect, Route, browserHistory, hashHistory } from "react-router-dom";
 import autobind from "autobind-decorator";
 
 import Auth from "../flows/auth";
@@ -64,7 +64,7 @@ export default class App extends React.Component<AppProps, AppState> {
     render() {
         return (
             <ErrorBoundary setLoggedState={this._setLoggedState}>
-                <Router history={browserHistory}>
+                <Router history={hashHistory}>
                     <AppProvider>
                         <Header loggedIn={this.state.loggedIn} />
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
