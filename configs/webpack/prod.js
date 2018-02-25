@@ -12,5 +12,20 @@ module.exports = merge(commonConfig, {
     publicPath: '/',
   },
   devtool: 'source-map',
+  module: {
+      rules: [
+            {
+                test: /\.(jpg|png|svg)$/i,
+                loaders: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[path][name].[hash].[ext]'
+                        }
+                    }
+                ]
+            }
+      ]
+  },
   plugins: [],
 });

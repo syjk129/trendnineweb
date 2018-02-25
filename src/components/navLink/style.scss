@@ -1,0 +1,22 @@
+@import "../../styles/variables";
+
+.nav-link {
+    display: inline-block;
+    padding: $base-spacing $large-spacing;
+
+    a {
+        font-size: $font-size-1;
+        color: $text-primary;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+    }
+
+    &:first-child {
+        padding-left: 0;
+    }
+
+    &:last-child {
+        padding-right: 0;
+    }
+}

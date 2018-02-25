@@ -3,10 +3,13 @@ import { match } from "react-router";
 import { PropTypes } from "prop-types";
 import autobind from "autobind-decorator";
 
-import Sidebar from "../components/sidebar";
-import Content from "../components/content";
-import { AppContext } from "../app";
-import { Post } from "../api/models";
+import Card, { CardContainer } from "../../components/card";
+import Content from "../../components/content";
+import Sidebar from "../../components/sidebar";
+import { AppContext } from "../../app";
+import { Post } from "../../api/models";
+
+import "./style.scss";
 
 interface DiscoverProps {
     match: match<String>;
@@ -34,12 +37,14 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     render() {
         return (
-            <div>
+            <div className="discover">
                 <Sidebar>
                     sidebar
                 </Sidebar>
                 <Content>
-                    {this._renderPosts()}
+                    <CardContainer>
+                        {this._renderPosts()}
+                    </CardContainer>
                 </Content>
             </div>
         );
@@ -48,9 +53,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     @autobind
     private _renderPosts() {
         return this.state.posts.map(post => (
-            <div>
-                {post.title}
-            </div>
+            <Card post={post} />
         ));
     }
 }

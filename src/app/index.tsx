@@ -11,6 +11,8 @@ import Header from "./header";
 import Footer from "./footer";
 import ErrorBoundary from "./errorBoundary";
 
+import "../styles/base.scss";
+
 export interface AppProps {
 }
 

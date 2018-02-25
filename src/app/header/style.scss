@@ -1,0 +1,32 @@
+@import "../../styles/variables.scss";
+
+.main-header {
+    background-color: #fff;
+
+    .user-header,
+    .nav-header {
+        border-bottom: $standard-border-width solid $standard-border-color;
+    }
+
+    .user-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 $base-spacing * 2;
+    }
+
+    .nav-header {
+        .nav-pages,
+        .nav-logo,
+        .search {
+            display: inline-block;
+        }
+
+        .nav-logo {
+            width: 300px;
+        }
+
+        .search {
+            float: right;
+        }
+    }
+}

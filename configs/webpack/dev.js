@@ -16,6 +16,22 @@ module.exports = merge(commonConfig, {
     hot: true,
   },
   devtool: 'cheap-module-eval-source-map',
+  module: {
+      rules: [
+          {
+            test: /\.(png|jpg|jpeg|svg)$/i,
+            loaders: [
+                {
+                    loader: 'url-loader',
+                    options: {
+                        name: '[path][name].[hash].[ext]',
+                        limit: 10000
+                    }
+                }
+            ]
+          }
+      ]
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),

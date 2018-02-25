@@ -1,1 +1,12 @@
+@import "./typography";
+
+// Colors
+$text-primary: #666;
+$color-accent: #cd203e;
+
+// Styles
 $base-spacing: 12px;
+$large-spacing: 18px;
+
+$standard-border-width: 1px;
+$standard-border-color: $text-primary;
