@@ -5,9 +5,10 @@ import autobind from "autobind-decorator";
 
 import Card, { CardContainer } from "../../components/card";
 import Content from "../../components/content";
+import Featured from "../../components/featured";
 import Sidebar from "../../components/sidebar";
 import { AppContext } from "../../app";
-import { Post } from "../../api/models";
+import { Person, Post } from "../../api/models";
 
 import "./style.scss";
 
@@ -17,6 +18,7 @@ interface DiscoverProps {
 
 interface DiscoverState {
     posts: Array<Post>;
+    featuredTrendnines: Array<Person>;
 }
 
 export default class Discover extends React.Component<DiscoverProps, DiscoverState> {
@@ -24,12 +26,17 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     state: DiscoverState = {
         posts: [],
+        featuredTrendnines: [],
     };
 
     async componentWillMount() {
         try {
             const posts = await this.context.api.getLatestPosts();
-            this.setState({ posts: posts.result });
+            const featuredTrendnines = await this.context.api.getFeaturedTrendnines();
+            this.setState({
+                posts: posts.result,
+                featuredTrendnines: featuredTrendnines.result,
+            });
         } catch (err) {
             console.warn(err);
         }
@@ -39,7 +46,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         return (
             <div className="discover">
                 <Sidebar>
-                    sidebar
+                    <Featured featuredTrendnines={this.state.featuredTrendnines} />
                 </Sidebar>
                 <Content>
                     <CardContainer>

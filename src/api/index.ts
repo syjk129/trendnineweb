@@ -1,4 +1,4 @@
-import { Post } from "./models";
+import { Person, Post } from "./models";
 
 export interface ApiOptions {
     apiUrl: string;
@@ -23,6 +23,10 @@ export default class Api {
 
     getLatestPosts(): Promise<Array<Post>> {
         return this._GET("/api/v1/posts");
+    }
+
+    getFeaturedTrendnines(): Promise<Array<Person>> {
+        return this._GET("/api/v1/influencers");
     }
 
     getCart(): Promise<any> {

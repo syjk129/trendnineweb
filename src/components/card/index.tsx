@@ -16,7 +16,17 @@ export default function Card({ post }: CardProps) {
                 <img src={post.cover_image.small_image_url} />
             </div>
             <div className="card-content">
-                {post.title}
+                <p className="title">
+                    {post.title}
+                </p>
+                <div className="author">
+                    <img src={post.author.profile_image_url} />
+                    <span className="author-name">
+                        {post.author.username}
+                    </span>
+                </div>
+                <div className="actions">
+                </div>
             </div>
         </div>
     );

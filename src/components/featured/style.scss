@@ -1,0 +1,29 @@
+@import "../../styles/variables";
+
+.featured {
+    margin-bottom: $base-spacing;
+    padding-right: $base-spacing * 2;
+
+    .featured-title {
+        font-size: $font-size-3;
+    }
+
+    .featured-trendnine {
+        display: flex;
+
+        img {
+            flex-shrink: 0;
+            display: inline-block;
+            height: 100px;
+            width: 100px;
+            border-radius: 100%;
+            object-fit: cover;
+            margin-right: $base-spacing;
+        }
+
+        .trendnine-details {
+            display: flex;
+            align-items: center;
+        }
+    }
+}
