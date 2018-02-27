@@ -7,6 +7,7 @@ import Card, { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Featured from "../../components/featured";
 import Sidebar from "../../components/sidebar";
+import Trending from "../../components/trending";
 import { AppContext } from "../../app";
 import { Person, Post } from "../../api/models";
 
@@ -47,6 +48,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             <div className="discover">
                 <Sidebar>
                     <Featured featuredTrendnines={this.state.featuredTrendnines} />
+                    <Trending trendingPosts={this.state.posts} />
                 </Sidebar>
                 <Content>
                     <CardContainer>

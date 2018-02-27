@@ -1,0 +1,22 @@
+@import "../../styles/variables";
+
+.button {
+    font-size: $font-size-1;
+    font-family: "lato", sans-serif;
+    text-transform: uppercase;
+    padding: $base-spacing;
+    width: 100%;
+    letter-spacing: 0.04em;
+    outline: none;
+    border: none;
+
+    &.inline {
+        display: inline-block;
+        width: auto;
+    }
+
+    &.button-primary {
+        background-color: $color-accent;
+        color: #fff;
+    }
+}

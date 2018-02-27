@@ -1,25 +1,28 @@
 @import "../../styles/variables";
 
-.featured {
+.trending {
     margin-bottom: $base-spacing;
-    padding-right: $base-spacing * 2;
+    padding-right: $base-spacing;
 
-    .featured-title {
+    .trending-title {
         font-size: $font-size-3;
     }
 
-    .featured-trendnine {
+    .trending-post {
         display: flex;
-        margin-bottom: $base-spacing;
 
         img {
             flex-shrink: 0;
             display: inline-block;
             height: 100px;
             width: 100px;
-            border-radius: 100%;
             object-fit: cover;
             margin-right: $base-spacing;
         }
+    }
+
+    // Find a better way
+    button {
+        margin-top: $base-spacing;
     }
 }

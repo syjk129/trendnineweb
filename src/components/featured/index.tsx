@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { Person } from "../../api/models";
+import Button, { ButtonVariant } from "../../components/button";
 
 import "./style.scss";
 
@@ -29,6 +30,9 @@ export default class Featured extends React.Component<FeaturedProps> {
                             </div>
                         </div>
                     ))}
+                <Button variant={ButtonVariant.PRIMARY}>
+                    View More
+                </Button>
             </div>
         );
     }
