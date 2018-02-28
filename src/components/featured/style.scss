@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 
 .featured {
-    margin-bottom: $base-spacing;
+    margin-bottom: $base-spacing * 4;
     padding-right: $base-spacing * 2;
 
     .featured-title {
@@ -12,6 +12,10 @@
         display: flex;
         margin-bottom: $base-spacing;
 
+        &:last-of-type {
+            margin-bottom: $base-spacing * 2;
+        }
+
         img {
             flex-shrink: 0;
             display: inline-block;
@@ -20,6 +24,20 @@
             border-radius: 100%;
             object-fit: cover;
             margin-right: $base-spacing;
+        }
+
+        .trendnine-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            .trendnine-name {
+                font-size: $font-size-2;
+            }
+
+            .trendnine-introduction {
+                font-size: $font-size-1;
+            }
         }
     }
 }

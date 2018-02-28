@@ -34,6 +34,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         try {
             const posts = await this.context.api.getLatestPosts();
             const featuredTrendnines = await this.context.api.getFeaturedTrendnines();
+
             this.setState({
                 posts: posts.result,
                 featuredTrendnines: featuredTrendnines.result,
@@ -48,6 +49,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             <div className="discover">
                 <Sidebar>
                     <Featured featuredTrendnines={this.state.featuredTrendnines} />
+                    {/* TODO: Get real trending items */}
                     <Trending trendingPosts={this.state.posts} />
                 </Sidebar>
                 <Content>

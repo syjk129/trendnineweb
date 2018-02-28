@@ -22,11 +22,9 @@ export default class Featured extends React.Component<FeaturedProps> {
                                 <p className="trendnine-name">
                                     {trendnine.first_name}
                                 </p>
-                                {trendnine.introduction &&
-                                    <p className="trendnine-introduction">
-                                        {trendnine.introduction}
-                                    </p>
-                                }
+                                <p className="trendnine-introduction">
+                                    {trendnine.introduction || "Hello!"}
+                                </p>
                             </div>
                         </div>
                     ))}

@@ -12,7 +12,7 @@ interface TrendingProps {
 export default function Trending({ trendingPosts }: TrendingProps) {
     return (
         <div className="trending">
-            <p className="trending-title">Today's Trendnine</p>
+            <p className="trending-title">Trending Now</p>
             {trendingPosts.slice(0, 5)
                 .map(post => (
                     <div className="trending-post">
@@ -29,7 +29,7 @@ export default function Trending({ trendingPosts }: TrendingProps) {
                         </div>
                     </div>
                 ))}
-            <Button variant={ButtonVariant.PRIMARY}>
+            <Button variant={ButtonVariant.OUTLINE}>
                 View More
             </Button>
         </div>

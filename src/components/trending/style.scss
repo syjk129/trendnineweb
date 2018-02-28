@@ -1,8 +1,8 @@
 @import "../../styles/variables";
 
 .trending {
-    margin-bottom: $base-spacing;
-    padding-right: $base-spacing;
+    margin-bottom: $base-spacing * 4;
+    padding-right: $base-spacing * 2;
 
     .trending-title {
         font-size: $font-size-3;
@@ -11,11 +11,15 @@
     .trending-post {
         display: flex;
 
+        &:last-of-type {
+            margin-bottom: $base-spacing * 2;
+        }
+
         img {
             flex-shrink: 0;
             display: inline-block;
-            height: 100px;
-            width: 100px;
+            height: 80px;
+            width: 80px;
             object-fit: cover;
             margin-right: $base-spacing;
         }
