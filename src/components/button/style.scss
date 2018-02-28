@@ -8,7 +8,11 @@
     width: 100%;
     letter-spacing: 0.04em;
     outline: none;
-    border: none;
+    border: $standard-border-width solid transparent;
+
+    &:hover {
+        cursor: pointer;
+    }
 
     &.inline {
         display: inline-block;
@@ -18,5 +22,21 @@
     &.button-primary {
         background-color: $color-accent;
         color: #fff;
+        $dark-background-color: darken($color-accent, 20%);
+
+        &:hover {
+            background-color: darken($color-accent, 20%);
+        }
+    }
+
+    &.button-outline {
+        background-color: transparent;
+        border: $standard-border-width solid $standard-border-color;
+
+        &:hover {
+            background-color: $color-accent;
+            color: #fff;
+            border: none;
+        }
     }
 }

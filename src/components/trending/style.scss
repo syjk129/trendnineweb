@@ -23,6 +23,13 @@
             object-fit: cover;
             margin-right: $base-spacing;
         }
+
+        .trending-post-detail {
+            .trending-post-name,
+            .trending-post-title {
+                font-size: $font-size-1;
+            }
+        }
     }
 
     // Find a better way

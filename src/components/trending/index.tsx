@@ -22,7 +22,7 @@ export default function Trending({ trendingPosts }: TrendingProps) {
                                 {post.author.first_name}
                             </p>
                             {post.title &&
-                                <p className="trendnine-introduction">
+                                <p className="trending-post-title">
                                     {post.title}
                                 </p>
                             }
