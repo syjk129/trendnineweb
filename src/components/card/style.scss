@@ -3,6 +3,11 @@
 .card {
     background-color: #fff;
 
+    &:hover {
+        cursor: pointer;
+        box-shadow: 0 0 12px #ccc;
+    }
+
     // Logic to constrain cover image to be max width but maintain aspect ratio of 1:1
     // DO NOT TOUCH
     .card-cover {
