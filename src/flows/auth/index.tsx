@@ -37,6 +37,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     };
 
     render() {
+        console.log(this.props.match);
         return (
             <div>
                 {this._isNewUser() ? this._renderRegisterForm() : this._renderLoginForm()}

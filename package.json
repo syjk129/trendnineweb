@@ -21,6 +21,7 @@
     "jest": "^21.2.1"
   },
   "dependencies": {
+    "@types/history": "^4.6.2",
     "@types/node": "^8.0.53",
     "@types/react": "^16.0.25",
     "@types/react-dom": "^16.0.3",
@@ -34,6 +35,7 @@
     "css-loader": "^0.28.7",
     "express": "^4.16.2",
     "file-loader": "^1.1.5",
+    "history": "^4.7.2",
     "html-webpack-plugin": "^2.30.1",
     "image-webpack-loader": "^3.4.2",
     "node-sass": "^4.7.2",

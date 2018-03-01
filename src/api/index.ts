@@ -25,6 +25,10 @@ export default class Api {
         return this._GET("/api/v1/posts");
     }
 
+    getPost(postId: string): Promise<Post> {
+        return this._GET(`/api/v1/posts/${postId}`);
+    }
+
     getFeaturedTrendnines(): Promise<Array<Person>> {
         return this._GET("/api/v1/influencers");
     }

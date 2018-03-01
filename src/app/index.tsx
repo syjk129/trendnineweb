@@ -5,6 +5,7 @@ import autobind from "autobind-decorator";
 
 import Auth from "../flows/auth";
 import Discover from "../flows/discover";
+import PostView from "../flows/post";
 import Api from "../api";
 
 import Header from "./header";
@@ -74,8 +75,9 @@ export default class App extends React.Component<AppProps, AppState> {
                         <Route path="/register" component={Auth} />
                         <Route path="/discover" component={Discover} />
                         <Route path="/shop" component={null} />
-                        <Route path="/profile/:userId" component={null} />
+                        <Route path="/post/:postId" component={PostView} />
                         <Route path="/shop" component={null} />
+                        <Route path="*" component={null} />
                         <Footer />
                     </AppProvider>
                 </Router>

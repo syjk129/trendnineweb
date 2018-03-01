@@ -1,9 +1,8 @@
 import * as React from "react";
-import { match, withRouter } from "react-router";
+import { match } from "react-router";
 import { PropTypes } from "prop-types";
 import autobind from "autobind-decorator";
 
-import Card, { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Featured from "../../components/featured";
 import Sidebar from "../../components/sidebar";
@@ -13,29 +12,33 @@ import { Person, Post } from "../../api/models";
 
 import "./style.scss";
 
-interface DiscoverProps {
-    match: match<String>;
+interface PostProps {
+    match: match<any>;
 }
 
-interface DiscoverState {
+interface PostState {
+    currentPost: Post;
     posts: Array<Post>;
     featuredTrendnines: Array<Person>;
 }
 
-export default class Discover extends React.Component<DiscoverProps, DiscoverState> {
+export default class PostView extends React.Component<PostProps, PostState> {
     static contextTypes: AppContext;
 
-    state: DiscoverState = {
+    state: PostState = {
+        currentPost: null,
         posts: [],
         featuredTrendnines: [],
     };
 
     async componentWillMount() {
         try {
+            const currentPost = await this.context.api.getPost(this.props.match.params.postId);
             const posts = await this.context.api.getLatestPosts();
             const featuredTrendnines = await this.context.api.getFeaturedTrendnines();
 
             this.setState({
+                currentPost: currentPost.result,
                 posts: posts.result,
                 featuredTrendnines: featuredTrendnines.result,
             });
@@ -46,29 +49,25 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     render() {
         return (
-            <div className="discover">
+            <div className="post">
                 <Sidebar>
                     <Featured featuredTrendnines={this.state.featuredTrendnines} />
                     {/* TODO: Get real trending items */}
                     <Trending trendingPosts={this.state.posts} />
                 </Sidebar>
                 <Content>
-                    <CardContainer>
-                        {this._renderPosts()}
-                    </CardContainer>
+                    {this.state.currentPost && (
+                        <div>
+                            <p>{this.state.currentPost.title}</p>
+                            <p>{this.state.currentPost.content}</p>
+                        </div>
+                    )}
                 </Content>
             </div>
         );
     }
-
-    @autobind
-    private _renderPosts() {
-        return this.state.posts.map(post => (
-            <Card post={post} />
-        ));
-    }
 }
 
-Discover.contextTypes = {
+PostView.contextTypes = {
     api: PropTypes.any,
 };

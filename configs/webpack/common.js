@@ -35,6 +35,12 @@ module.exports = {
       }
     ],
   },
+  output: {
+    path: resolve(__dirname, '..', 'build'),
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
+    publicPath: '/'
+  },
   plugins: [
     new CheckerPlugin(),
     new StyleLintPlugin(),
