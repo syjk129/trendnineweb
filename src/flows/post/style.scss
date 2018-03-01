@@ -6,8 +6,6 @@
     margin-top: $base-spacing * 2;
 
     .post-content {
-        color: #000;
-
         .post-cover {
             width: 100%;
             margin-bottom: $base-spacing * 2;
@@ -15,6 +13,12 @@
 
         .post-title {
             font-size: $header-font-size-1;
+            color: #000;
+        }
+
+        .post-details {
+            line-height: $font-size-1 * 2;
+            letter-spacing: 0.01em;
         }
     }
 }

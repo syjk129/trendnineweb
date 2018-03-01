@@ -10,6 +10,8 @@ import Trending from "../../components/trending";
 import { AppContext } from "../../app";
 import { Person, Post } from "../../api/models";
 
+import PostAuthorDetails from "./postAuthorDetails";
+
 import "./style.scss";
 
 interface PostProps {
@@ -64,8 +66,13 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             <p className="post-title">
                                 {this.state.currentPost.title}
                             </p>
+                            <PostAuthorDetails
+                                author={this.state.currentPost.author}
+                                postDate={new Date(this.state.currentPost.created)}
+                            />
                             <div className="post-details">
-                                {this.state.currentPost.content}
+                                {/* TODO: Don't use dangerouslySetInnerHTML. Make this safer */}
+                                <div dangerouslySetInnerHTML={{ __html: this.state.currentPost.content }} />
                             </div>
                         </div>
                     )}

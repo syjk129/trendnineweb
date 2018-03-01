@@ -12,4 +12,5 @@ export default class Post {
     liked: boolean;
     likes: number;
     content: string;
+    created: string; // TODO: serialize into Date
 }
