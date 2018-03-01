@@ -1,7 +1,7 @@
 import CoverImage from "./cover-image";
 import Person from "./person";
 
-export default class Post {
+export default class PostPreview {
     id: string;
     title: string;
     author: Person;
@@ -11,5 +11,4 @@ export default class Post {
     wishlisted: boolean;
     liked: boolean;
     likes: number;
-    content: string;
 }

@@ -52,14 +52,21 @@ export default class PostView extends React.Component<PostProps, PostState> {
             <div className="post">
                 <Sidebar>
                     <Featured featuredTrendnines={this.state.featuredTrendnines} />
-                    {/* TODO: Get real trending items */}
                     <Trending trendingPosts={this.state.posts} />
                 </Sidebar>
                 <Content>
                     {this.state.currentPost && (
-                        <div>
-                            <p>{this.state.currentPost.title}</p>
-                            <p>{this.state.currentPost.content}</p>
+                        <div className="post-content">
+                            <img
+                                className="post-cover"
+                                src={this.state.currentPost.cover_image.original_image_url}
+                            />
+                            <p className="post-title">
+                                {this.state.currentPost.title}
+                            </p>
+                            <div className="post-details">
+                                {this.state.currentPost.content}
+                            </div>
                         </div>
                     )}
                 </Content>

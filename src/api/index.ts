@@ -1,4 +1,4 @@
-import { Person, Post } from "./models";
+import { Person, Post, PostPreview } from "./models";
 
 export interface ApiOptions {
     apiUrl: string;
@@ -21,7 +21,7 @@ export default class Api {
         }
     }
 
-    getLatestPosts(): Promise<Array<Post>> {
+    getLatestPosts(): Promise<Array<PostPreview>> {
         return this._GET("/api/v1/posts");
     }
 

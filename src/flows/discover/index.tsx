@@ -9,7 +9,7 @@ import Featured from "../../components/featured";
 import Sidebar from "../../components/sidebar";
 import Trending from "../../components/trending";
 import { AppContext } from "../../app";
-import { Person, Post } from "../../api/models";
+import { Person, PostPreview } from "../../api/models";
 
 import "./style.scss";
 
@@ -18,7 +18,7 @@ interface DiscoverProps {
 }
 
 interface DiscoverState {
-    posts: Array<Post>;
+    posts: Array<PostPreview>;
     featuredTrendnines: Array<Person>;
 }
 

@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { Post } from "../../api/models";
+import { PostPreview } from "../../api/models";
 import Button, { ButtonVariant } from "../../components/button";
 
 import "./style.scss";
 
 interface TrendingProps {
-    trendingPosts: Array<Post>;
+    trendingPosts: Array<PostPreview>;
 }
 
 export default function Trending({ trendingPosts }: TrendingProps) {
