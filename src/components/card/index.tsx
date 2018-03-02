@@ -16,12 +16,12 @@ class Card extends React.Component<CardProps> {
     render() {
         const { post, history } = this.props;
         return (
-            <div className="card" onClick={() => history.push(`/post/${post.id}`)}>
-                <div className="card-cover">
+            <div className="card">
+                <div className="card-cover" onClick={() => history.push(`/post/${post.id}`)}>
                     <img src={post.cover_image.small_image_url} />
                 </div>
                 <div className="card-content">
-                    <p className="title">
+                    <p className="title" onClick={() => history.push(`/post/${post.id}`)}>
                         {post.title}
                     </p>
                     <Author author={post.author} />

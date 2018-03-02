@@ -6,8 +6,8 @@
 
     img {
         display: inline-block;
-        height: 16px;
-        width: 16px;
+        height: $icon-size-1;
+        width: $icon-size-1;
         border-radius: 100%;
         object-fit: cover;
         margin-right: $base-spacing;
