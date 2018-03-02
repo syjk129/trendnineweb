@@ -1,10 +1,13 @@
 @import "./typography";
+@import "./color";
 
 // Colors
-$text-primary: #666;
-$color-accent: #cd203e;
+$brand-color: $red;
+$text-primary: $dark-grey;
+$color-accent: $brand-color;
 
 // Styles
+$card-spacing: 15px;
 $base-spacing: 12px;
 $large-spacing: 18px;
 

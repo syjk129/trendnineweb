@@ -34,11 +34,36 @@
 
     .card-content {
         height: 140px;
-        padding: $base-spacing;
+        font-size: $font-size-1;
 
         .title {
             font-size: $font-size-2;
+            line-height: $line-height-2;
             font-weight: bold;
+            height: 44px;
+            margin: 0;
+            padding: $card-spacing;
+        }
+
+        .author {
+            padding: 0 $card-spacing;
+            height: 18px;
+        }
+
+        .card-footer {
+            padding: $card-spacing;
+
+            .created {
+                float: left;
+            }
+
+            .action-btns {
+                float: right;
+
+                a:first-child {
+                    padding-right: $base-spacing;
+                }
+            }
         }
     }
 }
