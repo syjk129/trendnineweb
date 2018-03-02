@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { Post } from "../../api/models";
 
 import CardContainer from "./cardContainer";
+import Author from "../../components/author";
 import "./style.scss";
 
 interface CardProps {
@@ -23,12 +24,7 @@ class Card extends React.Component<CardProps> {
                     <p className="title">
                         {post.title}
                     </p>
-                    <div className="author">
-                        <img src={post.author.profile_image_url} />
-                        <span className="author-name">
-                            {post.author.username}
-                        </span>
-                    </div>
+                    <Author author={post.author} />
                     <div className="actions">
                     </div>
                 </div>
