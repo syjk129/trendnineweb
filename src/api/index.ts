@@ -1,4 +1,9 @@
-import { Person, Post, PostPreview } from "./models";
+import {
+    Comment,
+    Person,
+    Post,
+    PostPreview,
+} from "./models";
 
 export interface ApiOptions {
     apiUrl: string;
@@ -37,6 +42,14 @@ export default class Api {
         return this._GET("/api/v1/marketplace/carts");
     }
 
+    getComments(postId: string): Promise<Array<Comment>> {
+        return this._GET(`/api/v1/posts/${postId}/comments`);
+    }
+
+    submitComment(postId: string, comment: Comment): Promise<void> {
+        return this._POST(`/api/v1/posts/${postId}/comments`, comment);
+    }
+
     private _apiUrl: string;
 
     private async _GET(path: string): Promise<any> {
@@ -53,7 +66,7 @@ export default class Api {
             }
 
             const responseJson = await response.json();
-            return responseJson;
+            return responseJson.result;
         } catch (err) {
             throw new Error(err);
         }

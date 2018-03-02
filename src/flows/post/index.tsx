@@ -1,12 +1,14 @@
+import autobind from "autobind-decorator";
 import * as React from "react";
 import { match } from "react-router";
 import { PropTypes } from "prop-types";
-import autobind from "autobind-decorator";
 
 import Content from "../../components/content";
-import Featured from "../../components/featured";
 import Sidebar from "../../components/sidebar";
-import Trending from "../../components/trending";
+import Comments from "../flowComponents/comments";
+import Featured from "../flowComponents/featured";
+import SectionHeader from "../flowComponents/sectionHeader";
+import Trending from "../flowComponents/trending";
 import { AppContext } from "../../app";
 import { Person, Post } from "../../api/models";
 
@@ -20,6 +22,7 @@ interface PostProps {
 
 interface PostState {
     currentPost: Post;
+    comments: Array<Comment>;
     posts: Array<Post>;
     featuredTrendnines: Array<Person>;
 }
@@ -29,27 +32,39 @@ export default class PostView extends React.Component<PostProps, PostState> {
 
     state: PostState = {
         currentPost: null,
+        comments: [],
         posts: [],
         featuredTrendnines: [],
     };
 
     async componentWillMount() {
-        try {
-            const currentPost = await this.context.api.getPost(this.props.match.params.postId);
-            const posts = await this.context.api.getLatestPosts();
-            const featuredTrendnines = await this.context.api.getFeaturedTrendnines();
+        this._postId = this.props.match.params.postId;
 
-            this.setState({
-                currentPost: currentPost.result,
-                posts: posts.result,
-                featuredTrendnines: featuredTrendnines.result,
-            });
+        try {
+            const [
+                currentPost,
+                posts,
+                featuredTrendnines,
+            ] = await Promise.all([
+                this.context.api.getPost(this._postId),
+                this.context.api.getLatestPosts(),
+                this.context.api.getFeaturedTrendnines(),
+            ]);
+            // const currentPost = await this.context.api.getPost(this.props.match.params.postId);
+            // const posts = await this.context.api.getLatestPosts();
+            // const featuredTrendnines = await this.context.api.getFeaturedTrendnines();
+
+            this.setState({ currentPost, posts, featuredTrendnines });
         } catch (err) {
             console.warn(err);
         }
     }
 
     render() {
+        const commentsTitle = this.state.comments && this.state.comments.length > 0 ? (
+            `Comments (${this.state.comments.length})`
+        )  : "Comments";
+
         return (
             <div className="post">
                 <Sidebar>
@@ -76,10 +91,17 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             </div>
                         </div>
                     )}
+                    <SectionHeader title={commentsTitle} />
+                    <Comments
+                        comments={this.state.comments}
+                        submitComment={this.context.api.submitComment}
+                    />
                 </Content>
             </div>
         );
     }
+
+    private _postId: string;
 }
 
 PostView.contextTypes = {

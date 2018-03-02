@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { Person } from "../../api/models";
-import Button, { ButtonVariant } from "../../components/button";
+import { Person } from "../../../api/models";
+import Button, { ButtonVariant } from "../../../components/button";
 
 import "./style.scss";
 

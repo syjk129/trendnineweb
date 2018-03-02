@@ -1,7 +1,7 @@
 import * as React from "react";
 
-import { PostPreview } from "../../api/models";
-import Button, { ButtonVariant } from "../../components/button";
+import { PostPreview } from "../../../api/models";
+import Button, { ButtonVariant } from "../../../components/button";
 
 import "./style.scss";
 

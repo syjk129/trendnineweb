@@ -1,39 +1,30 @@
-import * as React from "react";
-import { ChangeEvent } from "react";
 import autobind from "autobind-decorator";
+import { ChangeEvent } from "react";
+import * as React from "react";
 
 import "./style.scss";
 
-export enum InputType {
-    TEXT = "text",
-    PASSWORD = "password",
-}
-
-interface InputProps {
+interface TextAreaProps {
     value: string;
+    placeholder?: string;
     className?: string;
-    type?: InputType;
     onChange(value: string): void;
 }
 
-export default class Input extends React.Component<InputProps, never> {
-    static defaultProps = {
-        type: InputType.TEXT,
-    };
-
+export default class TextArea extends React.Component<TextAreaProps, never> {
     render() {
         return (
-            <input
+            <textarea
                 className={this.props.className}
+                placeholder={this.props.placeholder}
                 value={this.props.value}
                 onChange={this._handleChange}
-                type={this.props.type}
             />
         );
     }
 
     @autobind
-    private _handleChange(event: ChangeEvent<HTMLInputElement>) {
+    private _handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
         event.preventDefault();
         this.props.onChange(event.target.value);
     }

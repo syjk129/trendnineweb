@@ -10,6 +10,7 @@ interface AuthorProps {
     author: Person;
     history: H.History;
 }
+
 class Author extends React.Component<AuthorProps> {
     render() {
         const { author, history } = this.props;

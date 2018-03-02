@@ -1,6 +1,11 @@
 {
   "extends": "stylelint-config-standard",
   "rules": {
-    "indentation": 4
+    "indentation": 4,
+    "at-rule-empty-line-before": null,
+    "declaration-block-no-duplicate-properties": true,
+    "declaration-colon-newline-after": null,
+    "property-no-vendor-prefix": true,
+    "value-list-comma-newline-after": "always-multi-line",
   }
 }

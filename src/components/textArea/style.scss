@@ -1,8 +1,13 @@
 @import "../../styles/variables";
 
-input {
+textarea {
+    font-size: $font-size-2;
+    background-color: transparent;
     border: $standard-border-width solid $standard-border-color;
     padding: $base-spacing;
-    width: 100%;
     text-align: left;
+    width: 100%;
+    outline: none;
+    height: auto;
+    resize: none;
 }

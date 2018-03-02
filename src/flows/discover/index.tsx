@@ -5,9 +5,9 @@ import autobind from "autobind-decorator";
 
 import Card, { CardContainer } from "../../components/card";
 import Content from "../../components/content";
-import Featured from "../../components/featured";
 import Sidebar from "../../components/sidebar";
-import Trending from "../../components/trending";
+import Featured from "../flowComponents/featured";
+import Trending from "../flowComponents/trending";
 import { AppContext } from "../../app";
 import { Person, PostPreview } from "../../api/models";
 
@@ -35,10 +35,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             const posts = await this.context.api.getLatestPosts();
             const featuredTrendnines = await this.context.api.getFeaturedTrendnines();
 
-            this.setState({
-                posts: posts.result,
-                featuredTrendnines: featuredTrendnines.result,
-            });
+            this.setState({ posts, featuredTrendnines });
         } catch (err) {
             console.warn(err);
         }
