@@ -27,6 +27,10 @@ export default function Trending({ trendingPosts }: TrendingProps) {
                                 </p>
                             }
                         </div>
+                        <div className="trending-post-ranking">
+                            <div className="trending-post-ranking-number">1000</div>
+                            <div className="trending-post-ranking-icon">--</div>
+                        </div>
                     </div>
                 ))}
             <Button variant={ButtonVariant.OUTLINE}>

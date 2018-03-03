@@ -1,11 +1,13 @@
 @import "../../../styles/variables";
 
 .featured {
-    margin-bottom: $base-spacing * 4;
-    padding-right: $base-spacing * 2;
+    margin-bottom: $base-spacing * 5;
+    padding-right: $base-spacing * 4.5;
 
     .featured-title {
         font-size: $font-size-3;
+        font-family: $font-family-2;
+        margin-bottom: $base-spacing * 1.5;
     }
 
     .featured-trendnine {

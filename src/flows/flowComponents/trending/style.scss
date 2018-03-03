@@ -1,11 +1,13 @@
 @import "../../../styles/variables";
 
 .trending {
-    margin-bottom: $base-spacing * 4;
-    padding-right: $base-spacing * 2;
+    margin-bottom: $base-spacing * 5;
+    padding-right: $base-spacing * 4.5;
 
     .trending-title {
         font-size: $font-size-3;
+        font-family: $font-family-2;
+        margin-bottom: $base-spacing * 1.5;
     }
 
     .trending-post {
@@ -25,9 +27,28 @@
         }
 
         .trending-post-detail {
+            width: 125px;
+            margin: 0 $base-spacing;
+
             .trending-post-name,
             .trending-post-title {
                 font-size: $font-size-1;
+            }
+        }
+
+        .trending-post-ranking {
+            width: 60px;
+            margin: auto;
+            display: inline-flex;
+
+            .trending-post-ranking-number {
+                width: 40px;
+                text-align: center;
+            }
+
+            .trending-post-ranking-icon {
+                width: 20px;
+                text-align: right;
             }
         }
     }
