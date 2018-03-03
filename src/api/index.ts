@@ -50,6 +50,10 @@ export default class Api {
         return this._POST(`/api/v1/posts/${postId}/comments`, comment);
     }
 
+    toggleWishlist(id: string, type: string): Promise<void> {
+        return this._PUT(`/api/v1/wishlist`, { item_id: id, item_type: type });
+    }
+
     private _apiUrl: string;
 
     private async _GET(path: string): Promise<any> {
@@ -73,11 +77,19 @@ export default class Api {
     }
 
     private async _POST(path: string, request: any): Promise<any> {
+        return this._update(path, request, "POST");
+    }
+
+    private async _PUT(path: string, request: any): Promise<any> {
+        return this._update(path, request, "PUT");
+    }
+
+    private async _update(path: string, request: any, method: string) {
         const url = `${this._apiUrl}${path}`;
 
         try {
             const response = await fetch(url, {
-                method: "POST",
+                method: method,
                 headers: this._getRequestHeader(),
                 body: JSON.stringify(Object.assign(request, this._getRequestHeader())),
             });

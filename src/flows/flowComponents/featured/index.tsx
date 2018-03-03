@@ -28,9 +28,6 @@ export default class Featured extends React.Component<FeaturedProps> {
                             </div>
                         </div>
                     ))}
-                <Button variant={ButtonVariant.PRIMARY}>
-                    View More
-                </Button>
             </div>
         );
     }

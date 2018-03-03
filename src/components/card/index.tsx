@@ -7,6 +7,7 @@ import { Post } from "../../api/models";
 import CardContainer from "./cardContainer";
 import Author from "../../components/author";
 import Anchor, {AnchorVariant} from "../../components/anchor";
+import Wishlist, { WishlistType } from "../../components/anchor/wishlist";
 import Icon from "../../components/icon";
 import "./style.scss";
 
@@ -36,7 +37,7 @@ class Card extends React.Component<CardProps> {
                         </div>
                         <div className="action-btns">
                             <Anchor variant={anchorVariant}><Icon></Icon>&nbsp;{post.likes} {likeText}</Anchor>
-                            <Anchor variant={anchorVariant}><Icon></Icon>&nbsp; Wishlist</Anchor>
+                            <Wishlist id={post.id}  type={WishlistType.POST} wishlisted={post.liked}></Wishlist>
                         </div>
                     </div>
                 </div>
