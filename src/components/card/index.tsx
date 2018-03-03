@@ -6,7 +6,7 @@ import { Post } from "../../api/models";
 
 import CardContainer from "./cardContainer";
 import Author from "../../components/author";
-import Anchor, {AnchorVariant} from "../../components/anchor";
+import Anchor, { AnchorVariant } from "../../components/anchor";
 import Wishlist, { WishlistType } from "../../components/anchor/wishlist";
 import Icon from "../../components/icon";
 import "./style.scss";

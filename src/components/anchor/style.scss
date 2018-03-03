@@ -4,7 +4,7 @@
     background-color: transparent;
     font-size: $font-size-1;
     font-family: $font-family-1;
-    letter-spacing: 0.04em;
+    letter-spacing: $letter-spacing-1;
     outline: none;
 
     &:hover {
@@ -20,7 +20,7 @@
     }
 
     &.anchor-secondary {
-        color: $dark-grey;
+        color: $color-grey-1;
 
         &:hover {
             color: $color-accent;
