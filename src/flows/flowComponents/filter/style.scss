@@ -1,0 +1,31 @@
+@import "../../../styles/variables";
+
+.filter-container {
+    .hidden {
+        display: none;
+    }
+
+    .filter-anchor {
+        padding-bottom: $card-spacing;
+    }
+
+    .filter-list {
+        background-color: $color-white;
+        border: solid $standard-border-width $color-grey-2;
+        padding-top: $card-spacing;
+        padding-bottom: $card-spacing;
+
+        .anchor {
+            &:first-child {
+                padding-left: $card-spacing;
+            }
+
+            &:last-child {
+                padding-right: $card-spacing;
+            }
+
+            padding-left: $base-spacing * 3;
+            padding-right: $base-spacing * 3;
+        }
+    }
+}

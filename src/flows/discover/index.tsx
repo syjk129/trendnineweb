@@ -4,6 +4,7 @@ import { PropTypes } from "prop-types";
 import autobind from "autobind-decorator";
 
 import Card, { CardContainer } from "../../components/card";
+import Filter from "../flowComponents/filter";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import Featured from "../flowComponents/featured";
@@ -50,6 +51,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     <Trending trendingPosts={this.state.posts} />
                 </Sidebar>
                 <Content>
+                    <Filter></Filter>
                     <CardContainer>
                         {this._renderPosts()}
                     </CardContainer>
