@@ -25,14 +25,17 @@ interface WishlistState {
 class Wishlist extends React.Component<WishlistProps, WishlistState> {
     static contextTypes: AppContext;
 
+    state: WishlistState = {
+        active: this.props.wishlisted,
+    };
+
     render() {
         const { id, type, wishlisted } = this.props;
-        this.state = { active: wishlisted };
 
         return (
             <Anchor
                 variant={this.state.active ? AnchorVariant.PRIMARY : AnchorVariant.SECONDARY}
-                onClick={() => this._toggleWishlist(id, type)}
+                onClick={this._toggleWishlist}
             >
                 <Icon></Icon>&nbsp; Wishlist
             </Anchor>
@@ -40,9 +43,9 @@ class Wishlist extends React.Component<WishlistProps, WishlistState> {
     }
 
     @autobind
-    private _toggleWishlist(id, type) {
-        this.context.api.toggleWishlist(id, type);
-        this.state = {active: !this.state.active};
+    private _toggleWishlist() {
+        this.context.api.toggleWishlist(this.props.id, this.props.type);
+        this.setState({active: !this.state.active});
         console.log(this.state);
     }
 }
