@@ -10,7 +10,7 @@ import Featured from "../flowComponents/featured";
 import SectionHeader from "../flowComponents/sectionHeader";
 import Trending from "../flowComponents/trending";
 import { AppContext } from "../../app";
-import { Person, Post } from "../../api/models";
+import { Comment, Person, Post } from "../../api/models";
 
 import PostAuthorDetails from "./postAuthorDetails";
 
@@ -43,10 +43,12 @@ export default class PostView extends React.Component<PostProps, PostState> {
         try {
             const [
                 currentPost,
+                comments,
                 posts,
                 featuredTrendnines,
             ] = await Promise.all([
                 this.context.api.getPost(this._postId),
+                this.context.api.getComments(this._postId),
                 this.context.api.getLatestPosts(),
                 this.context.api.getFeaturedTrendnines(),
             ]);
@@ -54,7 +56,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
             // const posts = await this.context.api.getLatestPosts();
             // const featuredTrendnines = await this.context.api.getFeaturedTrendnines();
 
-            this.setState({ currentPost, posts, featuredTrendnines });
+            this.setState({ currentPost, comments, posts, featuredTrendnines });
         } catch (err) {
             console.warn(err);
         }
@@ -94,7 +96,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                     <SectionHeader title={commentsTitle} />
                     <Comments
                         comments={this.state.comments}
-                        submitComment={this.context.api.submitComment}
+                        submitComment={this._submitComment}
                     />
                 </Content>
             </div>
@@ -102,6 +104,11 @@ export default class PostView extends React.Component<PostProps, PostState> {
     }
 
     private _postId: string;
+
+    @autobind
+    private _submitComment(comment: string) {
+        this.context.api.submitComment(this._postId, comment);
+    }
 }
 
 PostView.contextTypes = {

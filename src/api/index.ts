@@ -46,8 +46,14 @@ export default class Api {
         return this._GET(`/api/v1/posts/${postId}/comments`);
     }
 
-    submitComment(postId: string, comment: Comment): Promise<void> {
-        return this._POST(`/api/v1/posts/${postId}/comments`, comment);
+    submitComment(postId: string, comment: string): Promise<void> {
+        const request = {
+            content: comment,
+            parent_comment_id: null,
+            is_private: false,
+        };
+
+        return this._POST(`/api/v1/posts/${postId}/comments`, request);
     }
 
     toggleWishlist(id: string, type: string): Promise<void> {
@@ -67,6 +73,10 @@ export default class Api {
 
             if (!response.ok) {
                 console.warn("not ok");
+            }
+
+            if (response.status === 204) {
+                return [];
             }
 
             const responseJson = await response.json();

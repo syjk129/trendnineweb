@@ -1,5 +1,14 @@
+import Person from "./person";
+
 export default class Comment {
-    content: string;
-    parent_content_id: string | null;
+    id: string;
+    author: Person;
+    liked: boolean;
+    likes: number;
     is_private: boolean;
+    created: Date;
+    modified: Date;
+    content: string;
+    parent_comment_id: string | null;
+    parent_post_id: string;
 }

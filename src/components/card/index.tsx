@@ -37,7 +37,7 @@ class Card extends React.Component<CardProps> {
                         </div>
                         <div className="action-btns">
                             <Anchor variant={anchorVariant}><Icon></Icon>&nbsp;{post.likes} {likeText}</Anchor>
-                            <Wishlist id={post.id}  type={WishlistType.POST} wishlisted={post.liked}></Wishlist>
+                            <Wishlist id={post.id} type={WishlistType.POST} wishlisted={post.liked}></Wishlist>
                         </div>
                     </div>
                 </div>
