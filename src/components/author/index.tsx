@@ -8,6 +8,7 @@ import "./style.scss";
 
 interface AuthorProps {
     author: Person;
+    date?: Date;
     history: H.History;
 }
 

@@ -21,12 +21,10 @@ export default function Anchor({ className, variant, children, onClick }: Anchor
     }
 
     switch (variant) {
-        case AnchorVariant.PRIMARY:
-            classes += " anchor-primary";
-            break;
         case AnchorVariant.SECONDARY:
             classes += " anchor-secondary";
             break;
+        case AnchorVariant.PRIMARY:
         default:
             classes += " anchor-primary";
             break;

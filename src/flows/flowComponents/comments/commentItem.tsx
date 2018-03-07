@@ -3,7 +3,7 @@ import * as React from "React";
 
 import { Comment } from "../../../api/models";
 import Author from "../../../components/author";
-import Anchor from "../../../components/anchor";
+import Anchor, { AnchorVariant } from "../../../components/anchor";
 
 import CommentInput from "./commentInput";
 import "./style.scss";
@@ -34,11 +34,11 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
                 <Author author={this.props.comment.author} />
                 <p>{this.props.comment.content}</p>
                 <div className="comment-item-actions">
-                    <Anchor onClick={this._likeComment}>
-                        {this.state.liked ? "Unlike" : "Like"}
+                    <Anchor onClick={this._likeComment} variant={AnchorVariant.SECONDARY}>
+                        {this.state.liked ? "Unlike" : `Like (${this.props.comment.likes})`}
                     </Anchor>
-                    <Anchor onClick={this._toggleReply}>
-                        Reply
+                    <Anchor onClick={this._toggleReply} variant={AnchorVariant.SECONDARY}>
+                        {this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
                     </Anchor>
                 </div>
                 {this.props.submitReply && this.state.showReply && (
