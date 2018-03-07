@@ -1,0 +1,9 @@
+@import "../../../../styles/variables";
+
+.filter-content-container {
+    background-color: $color-white;
+    border: solid $standard-border-width $color-grey-2;
+    border-top: 0;
+    padding: $base-spacing * 2;
+    font-size: $font-size-1;
+}
