@@ -52,9 +52,6 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 this.context.api.getLatestPosts(),
                 this.context.api.getFeaturedTrendnines(),
             ]);
-            // const currentPost = await this.context.api.getPost(this.props.match.params.postId);
-            // const posts = await this.context.api.getLatestPosts();
-            // const featuredTrendnines = await this.context.api.getFeaturedTrendnines();
 
             this.setState({ currentPost, comments, posts, featuredTrendnines });
         } catch (err) {
@@ -96,6 +93,8 @@ export default class PostView extends React.Component<PostProps, PostState> {
                     <SectionHeader title={commentsTitle} />
                     <Comments
                         comments={this.state.comments}
+                        likeComment={this._likeComment}
+                        unlikeComment={this._unlikeComment}
                         submitComment={this._submitComment}
                     />
                 </Content>
@@ -106,8 +105,18 @@ export default class PostView extends React.Component<PostProps, PostState> {
     private _postId: string;
 
     @autobind
-    private _submitComment(comment: string) {
-        this.context.api.submitComment(this._postId, comment);
+    private _submitComment(comment: string, parentCommentId: string) {
+        return this.context.api.submitComment(this._postId, comment, parentCommentId);
+    }
+
+    @autobind
+    private _likeComment(commentId: string) {
+        return this.context.api.likeComment(this._postId, commentId);
+    }
+
+    @autobind
+    private _unlikeComment(commentId: string) {
+        return this.context.api.unlikeComment(this._postId, commentId);
     }
 }
 

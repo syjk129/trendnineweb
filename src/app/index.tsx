@@ -35,6 +35,7 @@ class AppProvider extends React.Component<AppProviderProps, never> {
 
         const api = new Api({
             apiUrl: "http://54.175.34.30:8000",
+            // apiUrl: "http://54.84.23.234:8000",
         });
 
         this._api = api;

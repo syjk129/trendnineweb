@@ -46,10 +46,18 @@ export default class Api {
         return this._GET(`/api/v1/posts/${postId}/comments`);
     }
 
-    submitComment(postId: string, comment: string): Promise<void> {
+    likeComment(postId: string, commentId: string): Promise<void> {
+        return this._POST(`/api/v1/posts/${postId}/comments/${commentId}/like`);
+    }
+
+    unlikeComment(postId: string, commentId: string): Promise<void> {
+        return this._DELETE(`/api/v1/posts/${postId}/comments/${commentId}/unlike`);
+    }
+
+    submitComment(postId: string, comment: string, parentCommentId?: string): Promise<void> {
         const request = {
             content: comment,
-            parent_comment_id: null,
+            parent_comment_id: parentCommentId || null,
             is_private: false,
         };
 
@@ -57,7 +65,12 @@ export default class Api {
     }
 
     toggleWishlist(id: string, type: string): Promise<void> {
-        return this._PUT(`/api/v1/wishlist`, { item_id: id, item_type: type });
+        const request = {
+            item_id: id,
+            item_type: type,
+        };
+
+        return this._PUT(`/api/v1/wishlist`, request);
     }
 
     private _apiUrl: string;
@@ -86,22 +99,27 @@ export default class Api {
         }
     }
 
-    private async _POST(path: string, request: any): Promise<any> {
-        return this._update(path, request, "POST");
+    private async _POST(path: string, request?: any): Promise<any> {
+        return this._update(path, "POST", request);
     }
 
     private async _PUT(path: string, request: any): Promise<any> {
-        return this._update(path, request, "PUT");
+        return this._update(path, "PUT", request);
     }
 
-    private async _update(path: string, request: any, method: string) {
+    private async _DELETE(path: string, request?: any): Promise<any> {
+        return this._update(path, "DELETE", request);
+    }
+
+    private async _update(path: string, method: string, request?: any) {
         const url = `${this._apiUrl}${path}`;
 
         try {
+            const requestObject = request ? Object.assign(request, this._getRequestHeader()) : this._getRequestHeader();
             const response = await fetch(url, {
                 method: method,
                 headers: this._getRequestHeader(),
-                body: JSON.stringify(Object.assign(request, this._getRequestHeader())),
+                body: JSON.stringify(requestObject),
             });
 
             if (!response.ok) {

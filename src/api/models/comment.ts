@@ -11,4 +11,5 @@ export default class Comment {
     content: string;
     parent_comment_id: string | null;
     parent_post_id: string;
+    threaded_comments: Array<Comment>;
 }
