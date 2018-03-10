@@ -6,4 +6,29 @@
     border-top: 0;
     padding: $base-spacing * 2;
     font-size: $font-size-1;
+
+    .filter-action-bar {
+        position: relative;
+        display: flex;
+
+        .filter-action-buttons {
+            button {
+                margin: 0;
+                width: $button-width-sm;
+                height: $button-height-sm;
+
+                &:first-child {
+                    border-right: 0;
+                }
+            }
+
+            position: absolute;
+            right: 0;
+        }
+
+        .filter-action {
+            min-width: $min-card-width;
+            width: calc(100% - #{$button-width-sm} * 2 - #{$base-spacing} * 4);
+        }
+    }
 }

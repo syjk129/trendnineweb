@@ -4,7 +4,7 @@ import autobind from "autobind-decorator";
 import { withRouter } from "react-router-dom";
 
 import Anchor, {AnchorVariant} from "../../anchor";
-import Icon from "../../icon";
+import Icon, { IconVariant } from "../../icon";
 import { AppContext } from "../../../app";
 
 export enum WishlistType {
@@ -37,7 +37,7 @@ class Wishlist extends React.Component<WishlistProps, WishlistState> {
                 variant={this.state.active ? AnchorVariant.PRIMARY : AnchorVariant.SECONDARY}
                 onClick={this._toggleWishlist}
             >
-                <Icon></Icon>&nbsp; Wishlist
+                <Icon variant={IconVariant.WISHLIST}></Icon>&nbsp;&nbsp;Wishlist
             </Anchor>
         );
     }
