@@ -37,9 +37,11 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
                     <Anchor onClick={this._likeComment} variant={AnchorVariant.SECONDARY}>
                         {this.state.liked ? "Unlike" : `Like (${this.props.comment.likes})`}
                     </Anchor>
-                    <Anchor onClick={this._toggleReply} variant={AnchorVariant.SECONDARY}>
-                        {this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
-                    </Anchor>
+                    {this.props.submitReply && (
+                        <Anchor onClick={this._toggleReply} variant={AnchorVariant.SECONDARY}>
+                            {this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
+                        </Anchor>
+                    )}
                 </div>
                 {this.props.submitReply && this.state.showReply && (
                     <div className="comment-reply">

@@ -13,4 +13,5 @@ export default class Post {
     likes: number;
     content: string;
     created: string; // TODO: serialize into Date
+    tags: Array<any>; // TODO
 }

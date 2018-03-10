@@ -7,6 +7,7 @@ import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
+import Tag from "../flowComponents/tag";
 import SectionHeader from "../flowComponents/sectionHeader";
 import Trending from "../flowComponents/trending";
 import { AppContext } from "../../app";
@@ -90,6 +91,12 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             </div>
                         </div>
                     )}
+                    <SectionHeader title="Tags" />
+                    <div className="tag-list">
+                        {this.state.currentPost && this.state.currentPost.tags.map(tag => (
+                            <Tag tag={tag} />
+                        ))}
+                    </div>
                     <SectionHeader title={commentsTitle} />
                     <Comments
                         comments={this.state.comments}
