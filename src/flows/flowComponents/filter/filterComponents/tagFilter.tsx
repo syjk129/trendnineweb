@@ -2,7 +2,8 @@ import * as React from "react";
 import autobind from "autobind-decorator";
 
 import Button, { ButtonVariant } from "../../../../components/button";
-import Search from "../../../../components/search";
+import Checkbox from "../../../../components/checkbox";
+import SearchFilterInput from "./searchFilterInput";
 
 import "./style.scss";
 
@@ -28,7 +29,7 @@ export default class TagFilter extends React.Component<TagFilterProps, TagFilter
             <div className={`filter-content-container ${active ? "" : "hidden"}`}>
                 <div className="filter-action-bar">
                     <div className="filter-action">
-                        <Search placeholder="Search for Tags"></Search>
+                        <SearchFilterInput placeholder="Search for Tags" onSearch={this._onSearch}></SearchFilterInput>
                     </div>
                     <div className="filter-action-buttons">
                         <Button variant={ButtonVariant.OUTLINE} onClick={this._apply}>APPLY</Button>
@@ -36,9 +37,15 @@ export default class TagFilter extends React.Component<TagFilterProps, TagFilter
                     </div>
                 </div>
                 <div className="filter-content">
+                    <Checkbox label="test" id="test1" value="test" onChange={(v) => { console.log(v); }}/>
                 </div>
             </div>
         );
+    }
+
+    @autobind
+    private _onSearch(value: string) {
+        console.log(value);
     }
 
     @autobind

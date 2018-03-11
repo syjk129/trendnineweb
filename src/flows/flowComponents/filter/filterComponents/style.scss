@@ -32,3 +32,18 @@
         }
     }
 }
+
+.search-filter-input-container {
+    .search-filter-input {
+        outline: none;
+        border: 0;
+        padding: $base-spacing 0;
+        margin-left: $base-spacing;
+    }
+
+    border: $standard-border-width solid $color-grey-2;
+    padding: 0 $base-spacing;
+    height: $button-height-sm;
+    display: flex;
+    vertical-align: middle;
+}
