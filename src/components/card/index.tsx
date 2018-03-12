@@ -2,13 +2,15 @@ import * as React from "react";
 import * as H from "history";
 import { withRouter } from "react-router-dom";
 import TimeAgo from "react-timeago";
-import { Post } from "../../api/models";
 
-import CardContainer from "./cardContainer";
+import { Post } from "../../api/models";
 import Author from "../../components/author";
 import Anchor, { AnchorVariant } from "../../components/anchor";
 import Wishlist, { WishlistType } from "../../components/anchor/wishlist";
 import Icon from "../../components/icon";
+import Image from "../../components/image";
+
+import CardContainer from "./cardContainer";
 import "./style.scss";
 
 interface CardProps {
@@ -23,9 +25,11 @@ class Card extends React.Component<CardProps> {
 
         return (
             <div className="card">
-                <div className="card-cover" onClick={() => history.push(`/post/${post.id}`)}>
-                    <img src={post.cover_image.small_image_url} />
-                </div>
+                <Image
+                    src={post.cover_image.small_image_url}
+                    onClick={() => history.push(`/post/${post.id}`)}
+                    square
+                />
                 <div className="card-content">
                     <p className="title" onClick={() => history.push(`/post/${post.id}`)}>
                         {post.title}

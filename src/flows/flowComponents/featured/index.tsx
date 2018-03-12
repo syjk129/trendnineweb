@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Person } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
+import { SidebarHeader } from "../header";
 
 import "./style.scss";
 
@@ -13,7 +14,7 @@ export default class Featured extends React.Component<FeaturedProps> {
     render() {
         return (
             <div className="featured">
-                <p className="featured-title">Today's Trendnine</p>
+                <SidebarHeader title="Today's Trendnine" />
                 {this.props.featuredTrendnines.slice(0, 2)
                     .map(trendnine => (
                         <div className="featured-trendnine">

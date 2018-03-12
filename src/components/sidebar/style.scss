@@ -1,4 +1,7 @@
+@import "../../styles/variables";
+
 .sidebar {
     display: inline-block;
-    width: 340px;
+    width: $sidebar-width;
+    padding-right: $sidebar-padding;
 }

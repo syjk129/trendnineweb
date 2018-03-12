@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { PostPreview } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
+import { SidebarHeader } from "../header";
 
 import "./style.scss";
 
@@ -12,7 +13,7 @@ interface TrendingProps {
 export default function Trending({ trendingPosts }: TrendingProps) {
     return (
         <div className="trending">
-            <p className="trending-title">Trending Now</p>
+            <SidebarHeader title="Trending Now" />
             {trendingPosts.slice(0, 5)
                 .map(post => (
                     <div className="trending-post">

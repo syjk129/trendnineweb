@@ -34,6 +34,14 @@ export default class Api {
         return this._GET(`/api/v1/posts/${postId}`);
     }
 
+    getRelatedPosts(): Promise<Post> {
+        return this._GET(`/api/v1/posts/related`);
+    }
+
+    getRelatedProducts(): Promise<any> {
+        return this._GET(`/api/v1/marketplace/products/related`);
+    }
+
     getFeaturedTrendnines(): Promise<Array<Person>> {
         return this._GET("/api/v1/influencers");
     }
