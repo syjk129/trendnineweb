@@ -33,7 +33,25 @@
         }
     }
 
+    ::-webkit-scrollbar {
+        width: $scroll-width;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: $color-grey-2;
+        border-left: $color-white solid ($scroll-width - $scroll-track-width - $scroll-track-thumb-width);
+        border-right: $color-white solid $scroll-track-thumb-width;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: $color-accent;
+        border-right: $color-white solid ($scroll-width - $scroll-track-thumb-width);
+    }
+
     .filter-content {
+        max-height: $filter-content-max-height - $base-spacing * 4 - $button-height-sm;
+        overflow-y: auto;
+
         .filter-result-list {
             padding: 0 $base-spacing * 2 $base-spacing * 2 $base-spacing * 2;
             margin: 0;
