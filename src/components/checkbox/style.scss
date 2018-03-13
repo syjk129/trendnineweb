@@ -19,7 +19,8 @@
 
     input {
         position: absolute;
-        opacity: 0;
+        display: none;
+        width: 0;
         cursor: pointer;
 
         &:checked ~ .checkbox-checkmark {

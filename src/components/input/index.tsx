@@ -15,6 +15,7 @@ interface InputProps {
     className?: string;
     type?: InputType;
     placeholder?: string;
+    disabled?: boolean;
     onChange(value: string): void;
 }
 
@@ -30,6 +31,7 @@ export default class Input extends React.Component<InputProps, never> {
                 value={this.props.value}
                 onChange={this._handleChange}
                 placeholder={this.props.placeholder}
+                disabled={this.props.disabled}
                 type={this.props.type}
             />
         );

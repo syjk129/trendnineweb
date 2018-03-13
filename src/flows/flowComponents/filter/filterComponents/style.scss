@@ -4,12 +4,13 @@
     background-color: $color-white;
     border: solid $standard-border-width $color-grey-2;
     border-top: 0;
-    padding: $base-spacing * 2;
     font-size: $font-size-1;
+    max-height: $filter-content-max-height;
 
     .filter-action-bar {
         position: relative;
         display: flex;
+        padding: $base-spacing * 2;
 
         .filter-action-buttons {
             button {
@@ -23,12 +24,23 @@
             }
 
             position: absolute;
-            right: 0;
+            right: $base-spacing * 2;
         }
 
         .filter-action {
             min-width: $min-card-width;
-            width: calc(100% - #{$button-width-sm} * 2 - #{$base-spacing} * 4);
+            width: calc(100% - #{$button-width-sm} * 2 - #{$base-spacing} * 2);
+        }
+    }
+
+    .filter-content {
+        .filter-result-list {
+            padding: 0 $base-spacing * 2 $base-spacing * 2 $base-spacing * 2;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-gap: 20px;
+            list-style: none;
         }
     }
 }
