@@ -121,6 +121,10 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
     @autobind
     private async _onSearchTags(value: string) {
+        if (value.length < 1) {
+            return;
+        }
+
         const tags = await this.context.api.getTags(value);
         const searchedTagCheckboxes = tags.map(t => {
             return new SearchCheckbox(t.id, t.content);

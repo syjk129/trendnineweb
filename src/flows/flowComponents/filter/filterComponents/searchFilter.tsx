@@ -19,6 +19,7 @@ interface SearchFilterProps {
 interface SearchFilterState {
     values: Set<string>;
     previousValues: Set<string>;
+    hasSearched: boolean;
 }
 
  export class SearchCheckbox {
@@ -35,6 +36,7 @@ export default class SearchFilter extends React.Component<SearchFilterProps, Sea
     state: SearchFilterState = {
         values: new Set(),
         previousValues: new Set(),
+        hasSearched: false,
     };
 
     render() {
@@ -44,12 +46,12 @@ export default class SearchFilter extends React.Component<SearchFilterProps, Sea
                     <div className="filter-action">
                         <SearchFilterInput
                             placeholder={this.props.placeholder}
-                            onSearch={this.props.onSearch} />
+                            onSearch={this._onSearch} />
                     </div>
                     <div className="filter-action-buttons">
                         <Button
                             variant={ButtonVariant.OUTLINE}
-                            onClick={() => this.props.onApply(this.state.values)}>APPLY</Button>
+                            onClick={this._onApply}>APPLY</Button>
                         <Button variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
                     </div>
                 </div>
@@ -57,9 +59,27 @@ export default class SearchFilter extends React.Component<SearchFilterProps, Sea
                     <ul className={`filter-result-list ${this.props.searchResult.length > 0 ? "" : "hidden"}`}>
                         { this._renderSearchResult() }
                     </ul>
+                    <div className={`filter-no-result ${!this.state.hasSearched || this.props.searchResult.length > 0 ? "hidden" : ""}`}>
+                        No results found.
+                    </div>
                 </div>
             </div>
         );
+    }
+
+    @autobind
+    private _onSearch(value: string) {
+        this.props.onSearch(value);
+        if (value.length > 0) {
+            this.setState({hasSearched: true});
+        } else {
+            this.setState({hasSearched: false});
+        }
+    }
+
+    @autobind
+    private _onApply() {
+        this.props.onApply(this.state.values);
     }
 
     @autobind
@@ -77,11 +97,17 @@ export default class SearchFilter extends React.Component<SearchFilterProps, Sea
 
     @autobind
     private _updateValues(value: string) {
+        console.log("BEGINNING");
+        console.log(this.state);
         let v = this.state.values;
-        if (!v.delete(value)) {
+        if (v.has(value)) {
+            v.delete(value);
+        } else {
             v.add(value);
         }
         this.setState({values: v});
+        console.log("END");
+        console.log(this.state);
     }
 
     @autobind

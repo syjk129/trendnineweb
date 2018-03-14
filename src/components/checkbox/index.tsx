@@ -29,7 +29,6 @@ export default class Checkbox extends React.Component<CheckboxProps, never> {
 
     @autobind
     private _handleChange(value: string) {
-        event.preventDefault();
         this.props.onChange(value);
     }
 }
