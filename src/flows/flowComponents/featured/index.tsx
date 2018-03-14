@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Person } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
-import { SidebarHeader } from "../header";
+import { SidebarSection } from "../section";
 
 import "./style.scss";
 
@@ -13,8 +13,7 @@ interface FeaturedProps {
 export default class Featured extends React.Component<FeaturedProps> {
     render() {
         return (
-            <div className="featured">
-                <SidebarHeader title="Today's Trendnine" />
+            <SidebarSection title="Today's Trendnine">
                 {this.props.featuredTrendnines.slice(0, 2)
                     .map(trendnine => (
                         <div className="featured-trendnine">
@@ -29,7 +28,7 @@ export default class Featured extends React.Component<FeaturedProps> {
                             </div>
                         </div>
                     ))}
-            </div>
+            </SidebarSection>
         );
     }
 }

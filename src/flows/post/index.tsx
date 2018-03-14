@@ -132,7 +132,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                         </div>
                     )}
                     <ContentSection title="Products in this post">
-                        <Carousel>
+                        <Carousel slidesToShow={5}>
                             {this.state.currentPost && this.state.currentPost.products.map(product => (
                                 <div>
                                     <CarouselItem
@@ -151,7 +151,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                         ))}
                     </ContentSection>
                     <ContentSection title="You may also like">
-                        <Carousel>
+                        <Carousel slidesToShow={5}>
                             {this.state.relatedProducts && this.state.relatedProducts.map(product => (
                                 <div>
                                     <CarouselItem

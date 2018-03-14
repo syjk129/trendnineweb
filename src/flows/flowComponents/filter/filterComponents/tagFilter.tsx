@@ -6,7 +6,7 @@ import Button, { ButtonVariant } from "../../../../components/button";
 import Checkbox from "../../../../components/checkbox";
 import SearchFilterInput from "./searchFilterInput";
 import { AppContext } from "../../../../app";
-import Tag from "../../../../api/models/tag";
+import { Tag } from "../../../../api/models";
 
 import "./style.scss";
 

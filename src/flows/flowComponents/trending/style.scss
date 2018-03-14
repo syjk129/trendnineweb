@@ -1,53 +1,44 @@
 @import "../../../styles/variables";
 
-.trending {
-    margin-bottom: $base-spacing * 5;
+.trending-post {
+    display: flex;
 
-    .trending-post {
-        display: flex;
+    &:last-of-type {
+        margin-bottom: $base-spacing * 2;
+    }
 
-        &:last-of-type {
-            margin-bottom: $base-spacing * 2;
-        }
+    img {
+        flex-shrink: 0;
+        display: inline-block;
+        height: 80px;
+        width: 80px;
+        object-fit: cover;
+        margin-right: $base-spacing;
+    }
 
-        img {
-            flex-shrink: 0;
-            display: inline-block;
-            height: 80px;
-            width: 80px;
-            object-fit: cover;
-            margin-right: $base-spacing;
-        }
+    .trending-post-detail {
+        width: 125px;
+        margin: 0 $base-spacing;
 
-        .trending-post-detail {
-            width: 125px;
-            margin: 0 $base-spacing;
-
-            .trending-post-name,
-            .trending-post-title {
-                font-size: $font-size-1;
-            }
-        }
-
-        .trending-post-ranking {
-            width: 60px;
-            margin: auto;
-            display: inline-flex;
-
-            .trending-post-ranking-number {
-                width: 40px;
-                text-align: center;
-            }
-
-            .trending-post-ranking-icon {
-                width: 20px;
-                text-align: right;
-            }
+        .trending-post-name,
+        .trending-post-title {
+            font-size: $font-size-1;
         }
     }
 
-    // Find a better way
-    button {
-        margin-top: $base-spacing;
+    .trending-post-ranking {
+        width: 60px;
+        margin: auto;
+        display: inline-flex;
+
+        .trending-post-ranking-number {
+            width: 40px;
+            text-align: center;
+        }
+
+        .trending-post-ranking-icon {
+            width: 20px;
+            text-align: right;
+        }
     }
 }

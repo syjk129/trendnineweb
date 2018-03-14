@@ -1,38 +1,34 @@
 @import "../../../styles/variables";
 
-.featured {
-    margin-bottom: $base-spacing * 5;
+.featured-trendnine {
+    display: flex;
+    margin-bottom: $base-spacing;
 
-    .featured-trendnine {
+    &:last-of-type {
+        margin-bottom: $base-spacing * 2;
+    }
+
+    img {
+        flex-shrink: 0;
+        display: inline-block;
+        height: 100px;
+        width: 100px;
+        border-radius: 100%;
+        object-fit: cover;
+        margin-right: $base-spacing;
+    }
+
+    .trendnine-details {
         display: flex;
-        margin-bottom: $base-spacing;
+        flex-direction: column;
+        justify-content: space-around;
 
-        &:last-of-type {
-            margin-bottom: $base-spacing * 2;
+        .trendnine-name {
+            font-size: $font-size-2;
         }
 
-        img {
-            flex-shrink: 0;
-            display: inline-block;
-            height: 100px;
-            width: 100px;
-            border-radius: 100%;
-            object-fit: cover;
-            margin-right: $base-spacing;
-        }
-
-        .trendnine-details {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-
-            .trendnine-name {
-                font-size: $font-size-2;
-            }
-
-            .trendnine-introduction {
-                font-size: $font-size-1;
-            }
+        .trendnine-introduction {
+            font-size: $font-size-1;
         }
     }
 }

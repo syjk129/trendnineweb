@@ -23,6 +23,7 @@
   "dependencies": {
     "@types/history": "^4.6.2",
     "@types/node": "^8.0.53",
+    "@types/rc-slider": "^8.2.3",
     "@types/react": "^16.0.25",
     "@types/react-dom": "^16.0.3",
     "@types/react-router": "^4.0.19",
@@ -42,6 +43,7 @@
     "image-webpack-loader": "^3.4.2",
     "node-sass": "^4.7.2",
     "postcss-loader": "^2.0.9",
+    "rc-slider": "^8.6.1",
     "react": "^16.1.1",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.1.1",

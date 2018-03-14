@@ -8,11 +8,10 @@ import Author from "../../components/author";
 import Anchor, { AnchorVariant } from "../../components/anchor";
 import Wishlist, { WishlistType } from "../../components/anchor/wishlist";
 import Carousel, { CarouselItem } from "../../components/carousel";
-import Icon from "../../components/icon";
+import Icon, { IconVariant } from "../../components/icon";
 import Image from "../../components/image";
 
 import CardContainer from "./cardContainer";
-import Icon, { IconVariant } from "../../components/icon";
 import "./style.scss";
 
 interface CardProps {

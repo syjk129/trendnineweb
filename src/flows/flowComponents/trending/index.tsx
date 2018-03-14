@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { PostPreview } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
-import { SidebarHeader } from "../header";
+import { SidebarSection } from "../section";
 
 import "./style.scss";
 
@@ -12,8 +12,7 @@ interface TrendingProps {
 
 export default function Trending({ trendingPosts }: TrendingProps) {
     return (
-        <div className="trending">
-            <SidebarHeader title="Trending Now" />
+        <SidebarSection title="Trending Now">
             {trendingPosts.filter(post => post.cover_image != null).slice(0, 5)
                 .map(post => (
                     <div className="trending-post">
@@ -37,6 +36,6 @@ export default function Trending({ trendingPosts }: TrendingProps) {
             <Button variant={ButtonVariant.OUTLINE}>
                 View More
             </Button>
-        </div>
+        </SidebarSection>
     );
 }
