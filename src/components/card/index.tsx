@@ -10,8 +10,8 @@ import Wishlist, { WishlistType } from "../../components/anchor/wishlist";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Icon, { IconVariant } from "../../components/icon";
 import Image from "../../components/image";
-
 import CardContainer from "./cardContainer";
+
 import "./style.scss";
 
 interface CardProps {

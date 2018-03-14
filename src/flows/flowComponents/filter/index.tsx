@@ -1,101 +1,139 @@
 import * as React from "react";
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
 
 import { Person } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
 import Anchor, { AnchorVariant } from "../../../components/anchor";
 import Icon, { IconVariant } from "../../../components/icon";
-import CategoryFilter from "./filterComponents/categoryFilter";
 import PriceFilter from "./filterComponents/priceFilter";
-import BrandFilter from "./filterComponents/brandFilter";
-import NewArrivalsFilter from "./filterComponents/newArrivalsFilter";
-import OnSaleFilter from "./filterComponents/onSaleFilter";
-import RetailerFilter from "./filterComponents/retailerFilter";
-import TagFilter from "./filterComponents/tagFilter";
+import { AppContext } from "../../../app";
+import SearchFilter, { SearchCheckbox } from "./filterComponents/searchFilter";
 
 import "./style.scss";
 
 interface FilterProps { }
 
 interface FilterState {
-    active: boolean;
-    isCategoryActive: boolean;
-    isBrandActive: boolean;
-    isPriceRangeActive: boolean;
-    isOnSaleActive: boolean;
-    isNewArrivalsActive: boolean;
-    isRetailerActive: boolean;
-    isTagActive: boolean;
+    isFilterActive: boolean;
+    activeFilter: string;
+    searchResult: Array<SearchCheckbox>;
 }
 
 export default class Filter extends React.Component<FilterProps, FilterState> {
+    static contextTypes: AppContext;
+    static CATEGORY = "CATEGORY";
+    static BRAND = "BRAND";
+    static PRICE_RANGE = "PRICE RANGE";
+    static ON_SALE = "ON SALE";
+    static NEW_ARRIVALS = "NEW ARRIVALS";
+    static RETAILER = "RETAILER";
+    static TAG = "TAG";
+    static FILTER_LIST = [
+        Filter.CATEGORY,
+        Filter.BRAND,
+        Filter.PRICE_RANGE,
+        Filter.ON_SALE,
+        Filter.NEW_ARRIVALS,
+        Filter.RETAILER,
+        Filter.TAG,
+    ];
+
     state: FilterState = {
-        active: false,
-        isCategoryActive: false,
-        isBrandActive: false,
-        isPriceRangeActive: false,
-        isOnSaleActive: false,
-        isNewArrivalsActive: false,
-        isRetailerActive: false,
-        isTagActive: false,
+        isFilterActive: false,
+        activeFilter: Filter.CATEGORY,
+        searchResult: [],
     };
 
     render() {
-        let filterMap = {
-            "CATEGORY": "isCategoryActive",
-            "BRAND": "isBrandActive",
-            "PRICE RANGE": "isPriceRangeActive",
-            "ON SALE": "isOnSaleActive",
-            "NEW ARRIVALS": "isNewArrivalsActive",
-            "RETAILER": "isRetailerActive",
-            "TAG": "isTagActive",
-        };
-
         return (
             <div className="filter-container">
                 <div className="filter-anchor">
                     <Anchor
                         variant={AnchorVariant.SECONDARY}
-                        onClick={() => this._toggleFilter("active")}>Filter&nbsp;&nbsp;
-                        <Icon variant={this.state.active ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
+                        onClick={this._toggleFilter}>Filter&nbsp;&nbsp;
+                        <Icon variant={this.state.isFilterActive ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
                     </Anchor>
                 </div>
-                <div className={`filter-content ${this.state.active ? "" : "hidden"}`}>
+                <div className={`filter-content ${this.state.isFilterActive ? "" : "hidden"}`}>
                     <ul className="filter-list" >
-                        {Object.keys(filterMap)
+                        {Filter.FILTER_LIST
                         .map(filter => (
                             <li>
                                 <Anchor
-                                    className={this.state[filterMap[filter]] ? "selected" : ""}
+                                    className={this.state.activeFilter === filter ? "selected" : ""}
                                     variant={AnchorVariant.SECONDARY}
-                                    onClick={() => this._toggleFilter(filterMap[filter])}>{filter}</Anchor>
+                                    onClick={() => this._toggleSubFilter(filter)}>{filter}</Anchor>
                             </li>
                         ))}
                     </ul>
-                    <CategoryFilter active={this.state.isCategoryActive}></CategoryFilter>
-                    <BrandFilter active={this.state.isBrandActive}></BrandFilter>
-                    <PriceFilter min={0} max={5000} step={10} active={this.state.isPriceRangeActive}></PriceFilter>
-                    <OnSaleFilter active={this.state.isOnSaleActive}></OnSaleFilter>
-                    <NewArrivalsFilter active={this.state.isNewArrivalsActive}></NewArrivalsFilter>
-                    <RetailerFilter active={this.state.isRetailerActive}></RetailerFilter>
-                    <TagFilter active={this.state.isTagActive}></TagFilter>
+                    <SearchFilter
+                        placeholder="Search for Categories"
+                        active={this.state.activeFilter === Filter.CATEGORY}
+                        onApply={this._apply}
+                        onSearch={this._onSearchTags}
+                        searchResult={this.state.searchResult} />
+                    <SearchFilter
+                        placeholder="Search for Brands"
+                        active={this.state.activeFilter === Filter.BRAND}
+                        onApply={this._apply}
+                        onSearch={this._onSearchTags}
+                        searchResult={this.state.searchResult} />
+                    <PriceFilter min={0} max={5000} step={10} active={this.state.activeFilter === Filter.PRICE_RANGE}></PriceFilter>
+                    <SearchFilter
+                        placeholder="Search for Categories On Sale"
+                        active={this.state.activeFilter === Filter.ON_SALE}
+                        onApply={this._apply}
+                        onSearch={this._onSearchTags}
+                        searchResult={this.state.searchResult} />
+                    <SearchFilter
+                        placeholder="Search for New Arrival Categories"
+                        active={this.state.activeFilter === Filter.NEW_ARRIVALS}
+                        onApply={this._apply}
+                        onSearch={this._onSearchTags}
+                        searchResult={this.state.searchResult} />
+                    <SearchFilter
+                        placeholder="Search for Retailer"
+                        active={this.state.activeFilter === Filter.RETAILER}
+                        onApply={this._apply}
+                        onSearch={this._onSearchTags}
+                        searchResult={this.state.searchResult} />
+                    <SearchFilter
+                        placeholder="Search for Tags"
+                        active={this.state.activeFilter === Filter.TAG}
+                        onApply={this._apply}
+                        onSearch={this._onSearchTags}
+                        searchResult={this.state.searchResult} />
                 </div>
             </div>
         );
     }
 
     @autobind
-    private _toggleFilter(stateField: string) {
-        let newState = this.state;
-        newState[stateField] = !newState[stateField];
+    private _toggleFilter() {
+        this.setState({isFilterActive: !this.state.isFilterActive});
+    }
 
-        if (stateField !== "active" && newState[stateField]) {
-            for (let key of Object.keys(newState)) {
-                if (key !== "active" && key !== stateField) {
-                    newState[key] = false;
-                }
-            }
-        }
-        this.setState(newState);
+    @autobind
+    private _toggleSubFilter(stateField: string) {
+        this.setState({activeFilter: stateField});
+    }
+
+    @autobind
+    private async _onSearchTags(value: string) {
+        const tags = await this.context.api.getTags(value);
+        const searchedTagCheckboxes = tags.map(t => {
+            return new SearchCheckbox(t.id, t.content);
+        });
+        this.setState({searchResult: searchedTagCheckboxes});
+    }
+
+    @autobind
+    private _apply(values: Set<string>) {
+        console.log(values);
     }
 }
+
+Filter.contextTypes = {
+    api: PropTypes.any,
+};
