@@ -7,17 +7,29 @@ import "./style.scss";
 
 interface TagProps {
     tag: any;
+    className?: string;
+    inline?: boolean;
     history: H.History;
 }
 
 class Tag extends React.Component<TagProps> {
     render() {
-        const { tag, history } = this.props;
+        const { tag, inline, history, className } = this.props;
+
+        let classes = "tag";
+
+        if (className) {
+            classes += ` ${className}`;
+        }
+
+        if (inline) {
+            classes += " inline-tag";
+        }
 
         return (
-            <span className="tag" onClick={() => history.push(`/tag/${tag.id}`)}>
+            <div className={classes} onClick={() => history.push(`/tag/${tag.id}`)}>
                 {tag.content}
-            </span>
+            </div>
         );
     }
 }

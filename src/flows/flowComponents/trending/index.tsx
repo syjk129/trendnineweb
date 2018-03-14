@@ -14,7 +14,7 @@ export default function Trending({ trendingPosts }: TrendingProps) {
     return (
         <div className="trending">
             <SidebarHeader title="Trending Now" />
-            {trendingPosts.slice(0, 5)
+            {trendingPosts.filter(post => post.cover_image != null).slice(0, 5)
                 .map(post => (
                     <div className="trending-post">
                         <img src={post.cover_image.small_image_url} />

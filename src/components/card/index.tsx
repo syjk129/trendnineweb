@@ -7,6 +7,7 @@ import { Post } from "../../api/models";
 import Author from "../../components/author";
 import Anchor, { AnchorVariant } from "../../components/anchor";
 import Wishlist, { WishlistType } from "../../components/anchor/wishlist";
+import Carousel, { CarouselItem } from "../../components/carousel";
 import Icon from "../../components/icon";
 import Image from "../../components/image";
 
@@ -25,8 +26,29 @@ class Card extends React.Component<CardProps> {
 
         return (
             <div className="card">
+                {post.products.length > 0 && (
+                    <div className="card-hover-details">
+                        <div className="card-hover-header-container">
+                            <span className="card-hover-header">
+                                Products in this post
+                            </span>
+                        </div>
+                        <Carousel>
+                            {post.products.map(product => (
+                                <div>
+                                    <CarouselItem
+                                        imageUrl={product.image.small_image_url}
+                                        title={product.brand}
+                                        detail={product.title}
+                                        subdetail={`$${product.price}`}
+                                    />
+                                </div>
+                            ))}
+                        </Carousel>
+                    </div>
+                )}
                 <Image
-                    src={post.cover_image.small_image_url}
+                    src={post.cover_image && post.cover_image.small_image_url}
                     onClick={() => history.push(`/post/${post.id}`)}
                     square
                 />

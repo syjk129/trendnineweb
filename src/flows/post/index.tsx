@@ -3,13 +3,15 @@ import * as React from "react";
 import { match } from "react-router";
 import { PropTypes } from "prop-types";
 
+import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
+import { ContentSection, SidebarSection } from "../flowComponents/section";
+import SidebarGrid from "../flowComponents/sidebarGrid";
 import Tag from "../flowComponents/tag";
-import { SectionHeader, SidebarHeader } from "../flowComponents/header";
 import Trending from "../flowComponents/trending";
 import { AppContext } from "../../app";
 import { Comment, Person, Post } from "../../api/models";
@@ -73,16 +75,41 @@ export default class PostView extends React.Component<PostProps, PostState> {
         return (
             <div className="post">
                 <Sidebar>
-                    <SidebarHeader title="Products in this post" />
-                    {this.state.currentPost && this.state.currentPost.products.map(product => (
-                        <CarouselItem
-                            imageUrl={product.image.small_image_url}
-                            title={product.brand}
-                            detail={product.title}
-                            subdetail={`$${product.price}`}
-                        />
-                    ))}
-                    <Trending trendingPosts={this.state.posts} />
+                    <SidebarSection title="Products in this post">
+                        {this.state.currentPost && this.state.currentPost.products.slice(0, 4).map(product => (
+                            <SidebarGrid>
+                                <CarouselItem
+                                    imageUrl={product.image.small_image_url}
+                                    title={product.brand}
+                                    detail={product.title}
+                                    subdetail={`$${product.price}`}
+                                />
+                            </SidebarGrid>
+                        ))}
+                        <Button variant={ButtonVariant.OUTLINE}>
+                            View More
+                        </Button>
+                    </SidebarSection>
+                    <SidebarSection title="Tags">
+                        {this.state.currentPost && this.state.currentPost.tags.map(tag => (
+                            <Tag tag={tag} />
+                        ))}
+                    </SidebarSection>
+                    <SidebarSection title="You may also like">
+                        {this.state.relatedProducts && this.state.relatedProducts.slice(0, 4).map(product => (
+                            <SidebarGrid>
+                                <CarouselItem
+                                    imageUrl={product.image.small_image_url}
+                                    title={product.brand}
+                                    detail={product.title}
+                                    subdetail={`$${product.price}`}
+                                />
+                            </SidebarGrid>
+                        ))}
+                        <Button variant={ButtonVariant.OUTLINE}>
+                            View More
+                        </Button>
+                    </SidebarSection>
                 </Sidebar>
                 <Content>
                     {this.state.currentPost && (
@@ -104,45 +131,47 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             </div>
                         </div>
                     )}
-                    <SectionHeader title="Products in this post" />
-                    <Carousel>
-                        {this.state.currentPost && this.state.currentPost.products.map(product => (
-                            <div>
-                                <CarouselItem
-                                    imageUrl={product.image.small_image_url}
-                                    title={product.brand}
-                                    detail={product.title}
-                                    subdetail={`$${product.price}`}
-                                />
-                            </div>
-                        ))}
-                    </Carousel>
-                    <SectionHeader title="Tags" />
-                    <div className="tag-list">
+                    <ContentSection title="Products in this post">
+                        <Carousel>
+                            {this.state.currentPost && this.state.currentPost.products.map(product => (
+                                <div>
+                                    <CarouselItem
+                                        imageUrl={product.image.small_image_url}
+                                        title={product.brand}
+                                        detail={product.title}
+                                        subdetail={`$${product.price}`}
+                                    />
+                                </div>
+                            ))}
+                        </Carousel>
+                    </ContentSection>
+                    <ContentSection title="Tags">
                         {this.state.currentPost && this.state.currentPost.tags.map(tag => (
-                            <Tag tag={tag} />
+                            <Tag tag={tag} inline />
                         ))}
-                    </div>
-                    <SectionHeader title="You may also like" />
-                    <Carousel>
-                        {this.state.relatedProducts && this.state.relatedProducts.map(product => (
-                            <div>
-                                <CarouselItem
-                                    imageUrl={product.image.small_image_url}
-                                    title={product.brand}
-                                    detail={product.title}
-                                    subdetail={`$${product.price}`}
-                                />
-                            </div>
-                        ))}
-                    </Carousel>
-                    <SectionHeader title={commentsTitle} />
-                    <Comments
-                        comments={this.state.comments}
-                        likeComment={this._likeComment}
-                        unlikeComment={this._unlikeComment}
-                        submitComment={this._submitComment}
-                    />
+                    </ContentSection>
+                    <ContentSection title="You may also like">
+                        <Carousel>
+                            {this.state.relatedProducts && this.state.relatedProducts.map(product => (
+                                <div>
+                                    <CarouselItem
+                                        imageUrl={product.image.small_image_url}
+                                        title={product.brand}
+                                        detail={product.title}
+                                        subdetail={`$${product.price}`}
+                                    />
+                                </div>
+                            ))}
+                        </Carousel>
+                    </ContentSection>
+                    <ContentSection title={commentsTitle}>
+                        <Comments
+                            comments={this.state.comments}
+                            likeComment={this._likeComment}
+                            unlikeComment={this._unlikeComment}
+                            submitComment={this._submitComment}
+                        />
+                    </ContentSection>
                 </Content>
             </div>
         );

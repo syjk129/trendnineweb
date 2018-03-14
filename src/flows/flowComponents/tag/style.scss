@@ -1,8 +1,14 @@
 @import "../../../styles/variables";
 
 .tag {
-    margin-right: $base-spacing;
+    margin-bottom: $base-spacing;
     font-size: $font-size-1;
+
+    &.inline-tag {
+        display: inline-block;
+        margin-right: $base-spacing;
+        margin-bottom: 0;
+    }
 
     &:hover {
         cursor: pointer;

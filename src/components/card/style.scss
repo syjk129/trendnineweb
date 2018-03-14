@@ -3,9 +3,27 @@
 .card {
     background-color: #fff;
 
-    &:hover {
-        cursor: pointer;
-        box-shadow: 0 0 12px #ccc;
+    .card-hover-details {
+        visibility: hidden;
+        z-index: 1;
+        position: absolute;
+        width: 420px;
+        height: 340px;
+        padding: $base-spacing * 2;
+        background-color: #fff;
+        margin-left: 300px;
+
+        .card-hover-header-container {
+            border-bottom: $standard-border-width solid $standard-border-color;
+            margin-bottom: $base-spacing;
+            padding-bottom: $base-spacing + 1;
+        }
+
+        .card-hover-header {
+            font-size: $font-size-3;
+            padding-bottom: $base-spacing;
+            border-bottom: $standard-border-width * 3 solid $color-accent;
+        }
     }
 
     .card-content {
@@ -40,6 +58,15 @@
                     padding-right: $base-spacing;
                 }
             }
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: 0 0 12px #ccc;
+
+        .card-hover-details {
+            visibility: visible;
         }
     }
 }

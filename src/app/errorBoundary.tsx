@@ -12,7 +12,7 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps, n
         console.warn(error);
 
         // If unauthorized error
-        this.props.setLoggedState(false);
+        // this.props.setLoggedState(false);
     }
 
     render() {

@@ -5,7 +5,7 @@ export default class Post {
     id: string;
     title: string;
     author: Person;
-    cover_image: CoverImage;
+    cover_image: CoverImage | null;
     modified: string; // TODO: use date
     products: Array<any>; // TODO: create product model
     wishlisted: boolean;
