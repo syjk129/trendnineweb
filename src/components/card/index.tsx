@@ -12,6 +12,7 @@ import Icon from "../../components/icon";
 import Image from "../../components/image";
 
 import CardContainer from "./cardContainer";
+import Icon, { IconVariant } from "../../components/icon";
 import "./style.scss";
 
 interface CardProps {
@@ -59,10 +60,10 @@ class Card extends React.Component<CardProps> {
                     <Author author={post.author} />
                     <div className="card-footer">
                         <div className="created">
-                            <Icon></Icon>&nbsp;<TimeAgo date={post.created} />
+                            <Icon variant={IconVariant.TIME}></Icon>&nbsp;&nbsp;<TimeAgo date={post.created} />
                         </div>
                         <div className="action-btns">
-                            <Anchor variant={anchorVariant}><Icon></Icon>&nbsp;{post.likes} {likeText}</Anchor>
+                            <Anchor variant={anchorVariant}><Icon variant={IconVariant.LIKE}></Icon>&nbsp;&nbsp;{post.likes} {likeText}</Anchor>
                             <Wishlist id={post.id} type={WishlistType.POST} wishlisted={post.liked}></Wishlist>
                         </div>
                     </div>

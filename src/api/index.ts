@@ -3,6 +3,7 @@ import {
     Person,
     Post,
     PostPreview,
+    Tag,
 } from "./models";
 
 export interface ApiOptions {
@@ -24,6 +25,10 @@ export default class Api {
         } catch (error) {
             throw error;
         }
+    }
+
+    getTags(keyword: string): Promise<Array<Tag>> {
+        return this._GET(`/api/v1/posts/tags?keyword=${keyword}`);
     }
 
     getLatestPosts(): Promise<Array<PostPreview>> {

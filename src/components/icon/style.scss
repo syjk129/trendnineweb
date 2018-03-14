@@ -6,12 +6,39 @@
     height: $icon-size-1;
     text-decoration: none;
     vertical-align: middle;
+    margin: auto;
 
     &::before {
         content: "";
         width: $icon-size-1 - 1;
         height: $icon-size-1 - 1;
-        background-size: cover;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
         position: absolute;
     }
+}
+
+.icon-arrow-down::before {
+    background-image: url("/img/icons/arrow_down.png");
+}
+
+.icon-arrow-up::before {
+    background-image: url("/img/icons/arrow_up.png");
+}
+
+.icon-like::before {
+    background-image: url("/img/icons/like.png");
+}
+
+.icon-search::before {
+    background-image: url("/img/icons/search.png");
+}
+
+.icon-time::before {
+    background-image: url("/img/icons/time.png");
+}
+
+.icon-wishlist::before {
+    background-image: url("/img/icons/wishlist.png");
 }

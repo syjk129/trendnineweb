@@ -15,7 +15,7 @@ module.exports = merge(commonConfig, {
   module: {
       rules: [
             {
-                test: /\.(jpg|png|svg)$/i,
+                test: /\.(jpg|jpeg|png|svg)$/i,
                 loaders: [
                     {
                         loader: 'file-loader',

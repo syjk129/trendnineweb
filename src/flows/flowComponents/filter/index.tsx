@@ -56,7 +56,9 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                 <div className="filter-anchor">
                     <Anchor
                         variant={AnchorVariant.SECONDARY}
-                        onClick={() => this._toggleFilter("active")}>Filter <Icon></Icon></Anchor>
+                        onClick={() => this._toggleFilter("active")}>Filter&nbsp;&nbsp;
+                        <Icon variant={this.state.active ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
+                    </Anchor>
                 </div>
                 <div className={`filter-content ${this.state.active ? "" : "hidden"}`}>
                     <ul className="filter-list" >
@@ -72,7 +74,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                     </ul>
                     <CategoryFilter active={this.state.isCategoryActive}></CategoryFilter>
                     <BrandFilter active={this.state.isBrandActive}></BrandFilter>
-                    <PriceFilter active={this.state.isPriceRangeActive}></PriceFilter>
+                    <PriceFilter min={0} max={5000} step={10} active={this.state.isPriceRangeActive}></PriceFilter>
                     <OnSaleFilter active={this.state.isOnSaleActive}></OnSaleFilter>
                     <NewArrivalsFilter active={this.state.isNewArrivalsActive}></NewArrivalsFilter>
                     <RetailerFilter active={this.state.isRetailerActive}></RetailerFilter>
@@ -83,7 +85,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     }
 
     @autobind
-    private _toggleFilter(stateField) {
+    private _toggleFilter(stateField: string) {
         let newState = this.state;
         newState[stateField] = !newState[stateField];
 

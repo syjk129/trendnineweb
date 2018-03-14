@@ -12,6 +12,11 @@ $base-spacing: 10px;
 $large-spacing: 18px;
 $button-height: 40px;
 
+$button-width-sm: 130px;
+$button-height-sm: 38px;
+
+$min-card-width: 280px;
+
 $standard-border-width: 1px;
 $standard-border-color: $text-primary;
 
@@ -19,3 +24,8 @@ $sidebar-width: 340px;
 $sidebar-padding: $base-spacing * 4.5;
 
 $section-spacing: 50px;
+$filter-content-max-height: 360px;
+
+$scroll-width: 10px;
+$scroll-track-width: 1px;
+$scroll-track-thumb-width: 6px;

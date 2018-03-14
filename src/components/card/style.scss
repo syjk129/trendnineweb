@@ -49,10 +49,18 @@
 
             .created {
                 float: left;
+
+                time {
+                    vertical-align: middle;
+                }
             }
 
             .action-btns {
                 float: right;
+
+                a {
+                    vertical-align: middle;
+                }
 
                 a:first-child {
                     padding-right: $base-spacing;
@@ -74,6 +82,6 @@
 .card-container {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(#{$min-card-width}, 1fr));
     grid-gap: 20px;
 }

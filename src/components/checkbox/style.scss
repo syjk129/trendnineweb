@@ -1,0 +1,40 @@
+@import "../../styles/variables";
+
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: $checkbox-size + $base-spacing;
+    cursor: pointer;
+    user-select: none;
+
+    .checkbox-checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: $checkbox-size - 2 * $standard-border-width;
+        width: $checkbox-size - 2 * $standard-border-width;
+        background-color: transparent;
+        border: $color-grey-2 $standard-border-width solid;
+    }
+
+    input {
+        position: absolute;
+        display: none;
+        width: 0;
+        cursor: pointer;
+
+        &:checked ~ .checkbox-checkmark {
+            background-color: $color-accent;
+            height: $checkbox-size;
+            width: $checkbox-size;
+            border: 0;
+        }
+    }
+
+    &:hover input ~ .checkbox-checkmark {
+        background-color: $color-accent;
+        height: $checkbox-size;
+        width: $checkbox-size;
+        border: 0;
+    }
+}

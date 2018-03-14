@@ -7,12 +7,15 @@ import "./style.scss";
 export enum InputType {
     TEXT = "text",
     PASSWORD = "password",
+    CHECKBOX = "checkbox",
 }
 
 interface InputProps {
     value: string;
     className?: string;
     type?: InputType;
+    placeholder?: string;
+    disabled?: boolean;
     onChange(value: string): void;
 }
 
@@ -27,6 +30,8 @@ export default class Input extends React.Component<InputProps, never> {
                 className={this.props.className}
                 value={this.props.value}
                 onChange={this._handleChange}
+                placeholder={this.props.placeholder}
+                disabled={this.props.disabled}
                 type={this.props.type}
             />
         );
