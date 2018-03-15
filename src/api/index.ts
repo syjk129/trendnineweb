@@ -59,6 +59,10 @@ export default class Api {
         return this._GET(`/api/v1/posts/${postId}/comments`);
     }
 
+    getInfluencer(userId: string): Promise<any> {
+        return this._GET(`/api/v1/influencers/${userId}`);
+    }
+
     likeComment(postId: string, commentId: string): Promise<void> {
         return this._POST(`/api/v1/posts/${postId}/comments/${commentId}/like`);
     }

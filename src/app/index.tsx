@@ -35,8 +35,8 @@ class AppProvider extends React.Component<AppProviderProps, never> {
         super(props);
 
         const api = new Api({
-            // apiUrl: "http://54.175.34.30:8000",
-            apiUrl: "http://54.84.23.234:8000",
+            apiUrl: "http://54.175.34.30:8000",
+            // apiUrl: "http://54.84.23.234:8000",
         });
 
         this._api = api;
@@ -76,7 +76,7 @@ export default class App extends React.Component<AppProps, AppState> {
                         <Route path="/login" setLoggedState={this._setLoggedState} component={Auth} />
                         <Route path="/register" component={Auth} />
                         <Route path="/discover" component={Discover} />
-                        <Route path="/user" component={User} />
+                        <Route path="/user/:userId" component={User} />
                         <Route path="/shop" component={null} />
                         <Route path="/post/:postId" component={PostView} />
                         <Route path="/shop" component={null} />
