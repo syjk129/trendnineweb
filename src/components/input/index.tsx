@@ -16,7 +16,7 @@ interface InputProps {
     type?: InputType;
     placeholder?: string;
     disabled?: boolean;
-    onChange(value: string): void;
+    onChange(value: any): void;
 }
 
 export default class Input extends React.Component<InputProps, never> {
@@ -39,7 +39,9 @@ export default class Input extends React.Component<InputProps, never> {
 
     @autobind
     private _handleChange(event: ChangeEvent<HTMLInputElement>) {
-        event.preventDefault();
+        if (this.props.type !== InputType.CHECKBOX) {
+            event.preventDefault();
+        }
         this.props.onChange(event.target.value);
     }
 }

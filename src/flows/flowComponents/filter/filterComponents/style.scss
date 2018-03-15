@@ -60,6 +60,10 @@
             grid-gap: 20px;
             list-style: none;
         }
+
+        .filter-no-result {
+            padding: 0 $base-spacing * 2 $base-spacing * 2 $base-spacing * 2;
+        }
     }
 }
 
