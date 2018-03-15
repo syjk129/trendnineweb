@@ -4,6 +4,7 @@ import {
     Post,
     PostPreview,
     Tag,
+    Retailer,
 } from "./models";
 
 export interface ApiOptions {
@@ -29,6 +30,10 @@ export default class Api {
 
     getTags(keyword: string): Promise<Array<Tag>> {
         return this._GET(`/api/v1/posts/tags?keyword=${keyword}`);
+    }
+
+    getRetailers(keyword: string): Promise<Array<Tag>> {
+        return this._GET(`/api/v1/posts/merchants?keyword=${keyword}`);
     }
 
     getLatestPosts(): Promise<Array<PostPreview>> {

@@ -96,7 +96,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         placeholder="Search for Retailer"
                         active={this.state.activeFilter === Filter.RETAILER}
                         onApply={this._apply}
-                        onSearch={this._onSearchTags}
+                        onSearch={this._onSearchRetailers}
                         searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Tags"
@@ -117,6 +117,15 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     @autobind
     private _toggleSubFilter(stateField: string) {
         this.setState({activeFilter: stateField});
+
+        switch (stateField) {
+            case Filter.RETAILER:
+                this._onSearchRetailers("");
+                break;
+            default:
+                this.setState({searchResult: []});
+                break;
+        }
     }
 
     @autobind
@@ -127,9 +136,18 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
         const tags = await this.context.api.getTags(value);
         const searchedTagCheckboxes = tags.map(t => {
-            return new SearchCheckbox(t.id, t.content);
+            return new SearchCheckbox(t.id, `${t.content} (${t.item_count})`);
         });
         this.setState({searchResult: searchedTagCheckboxes});
+    }
+
+    @autobind
+    private async _onSearchRetailers(value: string) {
+        const retailers = await this.context.api.getRetailers(value);
+        const searchedRetailerCheckboxes = retailers.map(r => {
+            return new SearchCheckbox(r.merchant, `${r.merchant} (${r.item_count})`);
+        });
+        this.setState({searchResult: searchedRetailerCheckboxes});
     }
 
     @autobind
