@@ -17,7 +17,7 @@ interface FilterProps { }
 interface FilterState {
     isFilterActive: boolean;
     activeFilter: string;
-    searchResult: Array<SearchCheckbox>;
+    searchResult: Set<SearchCheckbox>;
 }
 
 export default class Filter extends React.Component<FilterProps, FilterState> {
@@ -42,7 +42,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     state: FilterState = {
         isFilterActive: false,
         activeFilter: Filter.CATEGORY,
-        searchResult: [],
+        searchResult: new Set(),
     };
 
     render() {
@@ -72,38 +72,44 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         active={this.state.activeFilter === Filter.CATEGORY}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult} />
+                        searchResult={this.state.searchResult}
+                        selectedValues={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Brands"
                         active={this.state.activeFilter === Filter.BRAND}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult} />
+                        searchResult={this.state.searchResult}
+                        selectedValues={this.state.searchResult} />
                     <PriceFilter min={0} max={5000} step={10} active={this.state.activeFilter === Filter.PRICE_RANGE}></PriceFilter>
                     <SearchFilter
                         placeholder="Search for Categories On Sale"
                         active={this.state.activeFilter === Filter.ON_SALE}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult} />
+                        searchResult={this.state.searchResult}
+                        selectedValues={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for New Arrival Categories"
                         active={this.state.activeFilter === Filter.NEW_ARRIVALS}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult} />
+                        searchResult={this.state.searchResult}
+                        selectedValues={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Retailer"
                         active={this.state.activeFilter === Filter.RETAILER}
                         onApply={this._apply}
                         onSearch={this._onSearchRetailers}
-                        searchResult={this.state.searchResult} />
+                        searchResult={this.state.searchResult}
+                        selectedValues={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Tags"
                         active={this.state.activeFilter === Filter.TAG}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult} />
+                        searchResult={this.state.searchResult}
+                        selectedValues={new Set([new SearchCheckbox("ea8f8489-2e34-4f18-9442-ec6dd60193be", "Sweater (0)")])} />
                 </div>
             </div>
         );
@@ -123,7 +129,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                 this._onSearchRetailers("");
                 break;
             default:
-                this.setState({searchResult: []});
+                this.setState({searchResult: new Set()});
                 break;
         }
     }
@@ -138,7 +144,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
         const searchedTagCheckboxes = tags.map(t => {
             return new SearchCheckbox(t.id, `${t.content} (${t.item_count})`);
         });
-        this.setState({searchResult: searchedTagCheckboxes});
+        this.setState({searchResult: new Set(searchedTagCheckboxes)});
     }
 
     @autobind
@@ -147,7 +153,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
         const searchedRetailerCheckboxes = retailers.map(r => {
             return new SearchCheckbox(r.merchant, `${r.merchant} (${r.item_count})`);
         });
-        this.setState({searchResult: searchedRetailerCheckboxes});
+        this.setState({searchResult: new Set(searchedRetailerCheckboxes)});
     }
 
     @autobind

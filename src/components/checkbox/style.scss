@@ -30,11 +30,4 @@
             border: 0;
         }
     }
-
-    &:hover input ~ .checkbox-checkmark {
-        background-color: $color-accent;
-        height: $checkbox-size;
-        width: $checkbox-size;
-        border: 0;
-    }
 }

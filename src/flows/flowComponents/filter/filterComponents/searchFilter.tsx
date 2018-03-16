@@ -11,15 +11,16 @@ import "./style.scss";
 interface SearchFilterProps {
     placeholder: string;
     active: boolean;
-    searchResult: Array<SearchCheckbox>;
+    searchResult: Set<SearchCheckbox>;
     onSearch(value: string): void;
     onApply(values: Set<string>): void;
  }
 
 interface SearchFilterState {
-    values: Set<string>;
+    selectedValues: Set<string>;
     previousValues: Set<string>;
     hasSearched: boolean;
+    selectedCheckboxes: Array<SearchCheckbox>;
 }
 
  export class SearchCheckbox {
@@ -30,13 +31,15 @@ interface SearchFilterState {
         this.value = value;
         this.label = label;
     }
+
 }
 
 export default class SearchFilter extends React.Component<SearchFilterProps, SearchFilterState> {
     state: SearchFilterState = {
-        values: new Set(),
+        selectedValues: new Set(),
         previousValues: new Set(),
         hasSearched: false,
+        selectedCheckboxes: [],
     };
 
     render() {
@@ -56,10 +59,12 @@ export default class SearchFilter extends React.Component<SearchFilterProps, Sea
                     </div>
                 </div>
                 <div className="filter-content">
-                    <ul className={`filter-result-list ${this.props.searchResult.length > 0 ? "" : "hidden"}`}>
-                        { this._renderSearchResult() }
+                    <ul className={`filter-result-list ${this.props.searchResult.size > 0 || this.state.selectedValues.size > 0 ? "" : "hidden"}`}>
+                        { this._renderSearchResult(Array.from(this.state.selectedCheckboxes), true) }
+                        { this._renderSearchResult(Array.from(this.props.searchResult), false) }
                     </ul>
-                    <div className={`filter-no-result ${!this.state.hasSearched || this.props.searchResult.length > 0 ? "hidden" : ""}`}>
+                    <div
+                        className={`filter-no-result ${!this.state.hasSearched || this.props.searchResult.size > 0 ? "hidden" : ""}`}>
                         No results found.
                     </div>
                 </div>
@@ -79,40 +84,42 @@ export default class SearchFilter extends React.Component<SearchFilterProps, Sea
 
     @autobind
     private _onApply() {
-        this.props.onApply(this.state.values);
+        this.setState({previousValues: new Set(this.state.selectedValues)});
+        this.props.onApply(this.state.selectedValues);
     }
 
     @autobind
-    private _renderSearchResult() {
-        return this.props.searchResult.map(v => (
+    private _renderSearchResult(values: Array<SearchCheckbox>, shouldFilter: boolean) {
+        return values
+        .filter(v => !shouldFilter || Array.from(this.props.searchResult).filter(vv => vv.value === v.value).length < 1)
+        .map(v => (
             <li>
                 <Checkbox
                     value={v.value}
                     label={v.label}
-                    onChange={this._updateValues}
+                    onChange={(value) => this._updateValues(v)}
+                    checked={this.state.selectedValues.has(v.value)}
                 />
              </li>
         ));
     }
 
     @autobind
-    private _updateValues(value: string) {
-        console.log("BEGINNING");
-        console.log(this.state);
-        let v = this.state.values;
-        if (v.has(value)) {
-            v.delete(value);
+    private _updateValues(searchCheckbox: SearchCheckbox) {
+        let v = this.state.selectedValues;
+        let selected = this.state.selectedCheckboxes;
+        if (v.has(searchCheckbox.value)) {
+            v.delete(searchCheckbox.value);
+            selected = selected.filter(s => s.value !== searchCheckbox.value);
         } else {
-            v.add(value);
+            v.add(searchCheckbox.value);
+            selected.push(searchCheckbox);
         }
-        this.setState({values: v});
-        console.log("END");
-        console.log(this.state);
+        this.setState({selectedValues: v, selectedCheckboxes: selected});
     }
 
     @autobind
     private _cancel() {
-        this.setState({values: this.state.previousValues});
-        // TODO: unselect the checkboxes
+        this.setState({selectedValues: new Set(this.state.previousValues)});
     }
 }
