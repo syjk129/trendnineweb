@@ -6,11 +6,12 @@ interface ImageProps {
     src: string;
     className?: string;
     square?: boolean;
+    circle?: boolean;
     onClick?(): void;
 }
 
 
-export default function Image({ src, className, square, onClick }: ImageProps) {
+export default function Image({ src, className, square, circle, onClick }: ImageProps) {
     let classes = "image-container";
 
     if (className) {
@@ -19,6 +20,10 @@ export default function Image({ src, className, square, onClick }: ImageProps) {
 
     if (square) {
         classes += " square-image";
+    }
+
+    if (circle) {
+        classes += " circle-image";
     }
 
     return (

@@ -63,6 +63,14 @@ export default class Api {
         return this._GET(`/api/v1/influencers/${userId}`);
     }
 
+    followUser(userId: string): Promise<any> {
+        return this._PUT(`/api/v1/users/${userId}/follow`);
+    }
+
+    unfollowUser(userId: string): Promise<any> {
+        return this._DELETE(`/api/v1/users/${userId}/follow`);
+    }
+
     likeComment(postId: string, commentId: string): Promise<void> {
         return this._POST(`/api/v1/posts/${postId}/comments/${commentId}/like`);
     }
@@ -120,7 +128,7 @@ export default class Api {
         return this._update(path, "POST", request);
     }
 
-    private async _PUT(path: string, request: any): Promise<any> {
+    private async _PUT(path: string, request?: any): Promise<any> {
         return this._update(path, "PUT", request);
     }
 
