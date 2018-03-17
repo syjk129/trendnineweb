@@ -2,7 +2,7 @@ import * as React from "react";
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 
-import { Person } from "../../../api/models";
+import { Person, Category } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
 import Anchor, { AnchorVariant } from "../../../components/anchor";
 import Icon, { IconVariant } from "../../../components/icon";
@@ -18,6 +18,7 @@ interface FilterState {
     isFilterActive: boolean;
     activeFilter: string;
     searchResult: Set<SearchCheckbox>;
+    categories: Array<SearchCheckbox>;
 }
 
 export default class Filter extends React.Component<FilterProps, FilterState> {
@@ -43,7 +44,28 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
         isFilterActive: false,
         activeFilter: Filter.CATEGORY,
         searchResult: new Set(),
+        categories: [],
     };
+
+    async componentWillMount() {
+        try {
+            const categories = await this.context.api.getCategories();
+            let fullCategories = new Array<SearchCheckbox>();
+            const searchedCategoryCheckboxes = categories.forEach(c => {
+                fullCategories.push(new SearchCheckbox(c.id, `${c.display_name}`));
+                c.subcategories.map(sc => {
+                    fullCategories.push(new SearchCheckbox(sc.id, `${sc.display_name}`));
+                });
+            });
+            this.setState({
+                categories: fullCategories,
+                searchResult: new Set(fullCategories),
+            });
+        } catch (err) {
+            console.warn(err);
+        }
+        console.log(this.state);
+    }
 
     render() {
         return (
@@ -71,45 +93,39 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         placeholder="Search for Categories"
                         active={this.state.activeFilter === Filter.CATEGORY}
                         onApply={this._apply}
-                        onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult}
-                        selectedValues={this.state.searchResult} />
+                        onSearch={this._onSearchCategories}
+                        searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Brands"
                         active={this.state.activeFilter === Filter.BRAND}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult}
-                        selectedValues={this.state.searchResult} />
+                        searchResult={this.state.searchResult} />
                     <PriceFilter min={0} max={5000} step={10} active={this.state.activeFilter === Filter.PRICE_RANGE}></PriceFilter>
                     <SearchFilter
                         placeholder="Search for Categories On Sale"
                         active={this.state.activeFilter === Filter.ON_SALE}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult}
-                        selectedValues={this.state.searchResult} />
+                        searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for New Arrival Categories"
                         active={this.state.activeFilter === Filter.NEW_ARRIVALS}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult}
-                        selectedValues={this.state.searchResult} />
+                        searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Retailer"
                         active={this.state.activeFilter === Filter.RETAILER}
                         onApply={this._apply}
                         onSearch={this._onSearchRetailers}
-                        searchResult={this.state.searchResult}
-                        selectedValues={this.state.searchResult} />
+                        searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Tags"
                         active={this.state.activeFilter === Filter.TAG}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult}
-                        selectedValues={new Set([new SearchCheckbox("ea8f8489-2e34-4f18-9442-ec6dd60193be", "Sweater (0)")])} />
+                        searchResult={this.state.searchResult} />
                 </div>
             </div>
         );
@@ -128,8 +144,14 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
             case Filter.RETAILER:
                 this._onSearchRetailers("");
                 break;
-            default:
+            case Filter.TAG:
                 this.setState({searchResult: new Set()});
+                break;
+            case Filter.BRAND:
+                this.setState({searchResult: new Set()});
+                break;
+            default:
+                this.setState({searchResult: new Set(this.state.categories)});
                 break;
         }
     }
@@ -154,6 +176,10 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
             return new SearchCheckbox(r.merchant, `${r.merchant} (${r.item_count})`);
         });
         this.setState({searchResult: new Set(searchedRetailerCheckboxes)});
+    }
+
+    @autobind
+    private async _onSearchCategories(value: string) {
     }
 
     @autobind

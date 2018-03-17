@@ -5,6 +5,7 @@ import {
     PostPreview,
     Tag,
     Retailer,
+    Category,
 } from "./models";
 
 export interface ApiOptions {
@@ -28,11 +29,15 @@ export default class Api {
         }
     }
 
+    getCategories(categoryId?: string): Promise<Array<Category>> {
+        return this._GET(`/api/v1/marketplace/products/categories${categoryId !== null ? "" : "/" + categoryId}`);
+    }
+
     getTags(keyword: string): Promise<Array<Tag>> {
         return this._GET(`/api/v1/posts/tags?keyword=${keyword}`);
     }
 
-    getRetailers(keyword: string): Promise<Array<Tag>> {
+    getRetailers(keyword: string): Promise<Array<Retailer>> {
         return this._GET(`/api/v1/posts/merchants?keyword=${keyword}`);
     }
 
