@@ -10,6 +10,7 @@ interface CheckboxProps {
     value: string;
     label?: string;
     className?: string;
+    checked?: boolean;
     onChange(value: string): void;
 }
 
@@ -21,6 +22,7 @@ export default class Checkbox extends React.Component<CheckboxProps, never> {
                     className="checkbox"
                     type={InputType.CHECKBOX}
                     value={this.props.value}
+                    checked={this.props.checked}
                     onChange={this._handleChange} />
                 <span className="checkbox-checkmark"></span>
             </label>

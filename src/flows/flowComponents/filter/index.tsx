@@ -2,7 +2,7 @@ import * as React from "react";
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 
-import { Person } from "../../../api/models";
+import { Person, Category } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
 import Anchor, { AnchorVariant } from "../../../components/anchor";
 import Icon, { IconVariant } from "../../../components/icon";
@@ -17,7 +17,8 @@ interface FilterProps { }
 interface FilterState {
     isFilterActive: boolean;
     activeFilter: string;
-    searchResult: Array<SearchCheckbox>;
+    searchResult: Set<SearchCheckbox>;
+    categories: Array<SearchCheckbox>;
 }
 
 export default class Filter extends React.Component<FilterProps, FilterState> {
@@ -42,8 +43,29 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     state: FilterState = {
         isFilterActive: false,
         activeFilter: Filter.CATEGORY,
-        searchResult: [],
+        searchResult: new Set(),
+        categories: [],
     };
+
+    async componentWillMount() {
+        try {
+            const categories = await this.context.api.getCategories();
+            let fullCategories = new Array<SearchCheckbox>();
+            const searchedCategoryCheckboxes = categories.forEach(c => {
+                fullCategories.push(new SearchCheckbox(c.id, `${c.display_name}`));
+                c.subcategories.map(sc => {
+                    fullCategories.push(new SearchCheckbox(sc.id, `${sc.display_name}`));
+                });
+            });
+            this.setState({
+                categories: fullCategories,
+                searchResult: new Set(fullCategories),
+            });
+        } catch (err) {
+            console.warn(err);
+        }
+        console.log(this.state);
+    }
 
     render() {
         return (
@@ -71,7 +93,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         placeholder="Search for Categories"
                         active={this.state.activeFilter === Filter.CATEGORY}
                         onApply={this._apply}
-                        onSearch={this._onSearchTags}
+                        onSearch={this._onSearchCategories}
                         searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Brands"
@@ -96,7 +118,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         placeholder="Search for Retailer"
                         active={this.state.activeFilter === Filter.RETAILER}
                         onApply={this._apply}
-                        onSearch={this._onSearchTags}
+                        onSearch={this._onSearchRetailers}
                         searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Tags"
@@ -117,6 +139,21 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     @autobind
     private _toggleSubFilter(stateField: string) {
         this.setState({activeFilter: stateField});
+
+        switch (stateField) {
+            case Filter.RETAILER:
+                this._onSearchRetailers("");
+                break;
+            case Filter.TAG:
+                this.setState({searchResult: new Set()});
+                break;
+            case Filter.BRAND:
+                this.setState({searchResult: new Set()});
+                break;
+            default:
+                this.setState({searchResult: new Set(this.state.categories)});
+                break;
+        }
     }
 
     @autobind
@@ -127,9 +164,22 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
         const tags = await this.context.api.getTags(value);
         const searchedTagCheckboxes = tags.map(t => {
-            return new SearchCheckbox(t.id, t.content);
+            return new SearchCheckbox(t.id, `${t.content} (${t.item_count})`);
         });
-        this.setState({searchResult: searchedTagCheckboxes});
+        this.setState({searchResult: new Set(searchedTagCheckboxes)});
+    }
+
+    @autobind
+    private async _onSearchRetailers(value: string) {
+        const retailers = await this.context.api.getRetailers(value);
+        const searchedRetailerCheckboxes = retailers.map(r => {
+            return new SearchCheckbox(r.merchant, `${r.merchant} (${r.item_count})`);
+        });
+        this.setState({searchResult: new Set(searchedRetailerCheckboxes)});
+    }
+
+    @autobind
+    private async _onSearchCategories(value: string) {
     }
 
     @autobind
