@@ -1,0 +1,32 @@
+@import "../../styles/variables";
+
+.user {
+    display: flex;
+    padding: 0 $base-spacing * 2;
+    margin-top: $base-spacing * 2;
+
+    .followers {
+        display: flex;
+        justify-content: space-between;
+
+        .identifier {
+            display: inline-block;
+            margin-right: $base-spacing;
+            font-size: $font-size-1;
+        }
+
+        .count {
+            font-size: $font-size-2;
+        }
+    }
+
+    .user-image {
+        padding: 0 50px;
+    }
+
+    .sidebar {
+        button {
+            margin-bottom: $base-spacing * 2;
+        }
+    }
+}

@@ -73,6 +73,22 @@ export default class Api {
         return this._GET(`/api/v1/influencers/${userId}`);
     }
 
+    getPostsForUser(userId: string): Promise<Array<PostPreview>> {
+        return this._GET(`/api/v1/users/${userId}/posts`);
+    }
+
+    getProductsForUser(userId: string): Promise<Array<PostPreview>> {
+        return this._GET(`/api/v1/users/${userId}/products`);
+    }
+
+    getUserFollowers(userId: string): Promise<Array<Person>> {
+        return this._GET(`/api/v1/users/${userId}/followers`);
+    }
+
+    getUserFollowing(userId: string): Promise<Array<Person>> {
+        return this._GET(`/api/v1/users/${userId}/followings`);
+    }
+
     followUser(userId: string): Promise<any> {
         return this._PUT(`/api/v1/users/${userId}/follow`);
     }

@@ -5,14 +5,15 @@ import "./style.scss";
 
 interface NavLinkProps {
     url: string;
-    name: string;
+    children?: React.ReactNode;
+    onClick?(): void;
 }
 
-export default function NavLink({ url, name }: NavLinkProps) {
+export default function NavLink({ url, children, onClick }: NavLinkProps) {
     return (
         <div className="nav-link">
-            <Link to={url}>
-                {name}
+            <Link to={url} onClick={onClick}>
+                {children}
             </Link>
         </div>
     );

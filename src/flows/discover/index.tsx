@@ -8,6 +8,9 @@ import Filter from "../flowComponents/filter";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import Featured from "../flowComponents/featured";
+import { PostCard } from "../flowComponents/cardView";
+import { PostRank } from "../flowComponents/ranking";
+import { SidebarSection } from "../flowComponents/section";
 import Trending from "../flowComponents/trending";
 import { AppContext } from "../../app";
 import { Person, PostPreview } from "../../api/models";
@@ -48,12 +51,14 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                 <Sidebar>
                     <Featured featuredTrendnines={this.state.featuredTrendnines} />
                     {/* TODO: Get real trending items */}
-                    <Trending trendingPosts={this.state.posts} />
+                    <SidebarSection title="Trending Posts">
+                        <PostRank posts={this.state.posts} />
+                    </SidebarSection>
                 </Sidebar>
                 <Content>
                     <Filter></Filter>
                     <CardContainer>
-                        {this._renderPosts()}
+                        {this.state.posts && this._renderPosts()}
                     </CardContainer>
                 </Content>
             </div>
@@ -63,7 +68,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     @autobind
     private _renderPosts() {
         return this.state.posts.map(post => (
-            <Card post={post} />
+            <PostCard post={post} />
         ));
     }
 }

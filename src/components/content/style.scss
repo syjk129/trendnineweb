@@ -5,10 +5,3 @@
     flex: 1;
     max-width: calc(100% - #{$sidebar-width} - #{$sidebar-padding});
 }
-
-.grid-content {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(#{$min-card-width}, 1fr));
-    grid-gap: 20px;
-}

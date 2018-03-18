@@ -15,57 +15,41 @@ import CardContainer from "./cardContainer";
 import "./style.scss";
 
 interface CardProps {
-    post: Post;
+    imageUrl: string;
+    redirectUrl?: string;
+    title: string;
     history: H.History;
+    hoverItem?: React.ReactNode;
+    footerItem?: React.ReactNode;
 }
+
 class Card extends React.Component<CardProps> {
     render() {
-        const { post, history } = this.props;
-        const anchorVariant = post.liked ? AnchorVariant.PRIMARY : AnchorVariant.SECONDARY;
-        const likeText = post.likes === 1 ? "Like" : "Likes";
+        const { imageUrl, redirectUrl, title, history, hoverItem, footerItem } = this.props;
+
+        const onClick = redirectUrl ? () => history.push(redirectUrl) : undefined;
 
         return (
             <div className="card">
-                {post.products.length > 0 && (
+                {hoverItem && (
                     <div className="card-hover-details">
-                        <div className="card-hover-header-container">
-                            <span className="card-hover-header">
-                                Products in this post
-                            </span>
-                        </div>
-                        <Carousel>
-                            {post.products.map(product => (
-                                <div>
-                                    <CarouselItem
-                                        imageUrl={product.image.small_image_url}
-                                        title={product.brand}
-                                        detail={product.title}
-                                        subdetail={`$${product.price}`}
-                                    />
-                                </div>
-                            ))}
-                        </Carousel>
+                        {hoverItem}
                     </div>
                 )}
                 <Image
-                    src={post.cover_image && post.cover_image.small_image_url}
-                    onClick={() => history.push(`/post/${post.id}`)}
+                    src={imageUrl}
+                    onClick={onClick}
                     square
                 />
                 <div className="card-content">
-                    <p className="title" onClick={() => history.push(`/post/${post.id}`)}>
-                        {post.title}
+                    <p className="title" onClick={onClick}>
+                        {title}
                     </p>
-                    <Author author={post.author} />
-                    <div className="card-footer">
-                        <div className="created">
-                            <Icon variant={IconVariant.TIME}></Icon>&nbsp;&nbsp;<TimeAgo date={post.created} />
+                    {footerItem && (
+                        <div className="card-footer">
+                            {footerItem}
                         </div>
-                        <div className="action-btns">
-                            <Anchor variant={anchorVariant}><Icon variant={IconVariant.LIKE}></Icon>&nbsp;&nbsp;{post.likes} {likeText}</Anchor>
-                            <Wishlist id={post.id} type={WishlistType.POST} wishlisted={post.liked}></Wishlist>
-                        </div>
-                    </div>
+                    )}
                 </div>
             </div>
         );

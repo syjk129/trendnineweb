@@ -1,0 +1,45 @@
+@import "../../../styles/variables";
+
+.card-hover {
+    .card-hover-header-container {
+        border-bottom: $standard-border-width solid $standard-border-color;
+        margin-bottom: $base-spacing;
+        padding-bottom: $base-spacing + 1;
+    }
+
+    .card-hover-header {
+        font-size: $font-size-3;
+        padding-bottom: $base-spacing;
+        border-bottom: $standard-border-width * 3 solid $color-accent;
+    }
+}
+
+.card-content {
+    .author {
+        margin-bottom: $base-spacing;
+    }
+
+    .card-footer {
+        height: 40px;
+    }
+}
+
+.created {
+    float: left;
+
+    time {
+        vertical-align: middle;
+    }
+}
+
+.action-btns {
+    float: right;
+
+    a {
+        vertical-align: middle;
+    }
+
+    a:first-child {
+        padding-right: $base-spacing;
+    }
+}

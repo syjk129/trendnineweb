@@ -3,6 +3,8 @@ import Slider, { Settings } from "react-slick";
 
 import CarouselItem from "./carouselItem";
 
+import "./style.scss";
+
 interface CarouselProps {
     slidesToShow?: number;
     children?: React.ReactNode;

@@ -16,12 +16,12 @@ export default class Header extends React.Component<HeaderProps, never> {
             <div className="main-header">
                 <div className="user-header">
                     <div className="header-left-buttons">
-                        <NavLink url="/shop" name="Shop" />
-                        <NavLink url="/discover" name="Discover" />
+                        <NavLink url="/shop">Shop</NavLink>
+                        <NavLink url="/discover">Discover</NavLink>
                     </div>
                     <div className="header-right-buttons">
                         {!this.props.loggedIn &&
-                            <NavLink url="/login" name="Log In" />
+                            <NavLink url="/login">Log In</NavLink>
                         }
                     </div>
                 </div>
@@ -30,10 +30,10 @@ export default class Header extends React.Component<HeaderProps, never> {
                         asdf
                     </div>
                     <div className="nav-pages">
-                        <NavLink url="/discover" name="Trending" />
-                        <NavLink url="/discover" name="Feed" />
-                        <NavLink url="/discover" name="New Arrivals" />
-                        <NavLink url="/discover" name="Brands" />
+                        <NavLink url="/discover">Trending</NavLink>
+                        <NavLink url="/discover">Feed</NavLink>
+                        <NavLink url="/discover">New Arrivals</NavLink>
+                        <NavLink url="/discover">Brands</NavLink>
                     </div>
                     <div className="search">
                         Search

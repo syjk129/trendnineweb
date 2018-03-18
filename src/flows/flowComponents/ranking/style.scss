@@ -1,6 +1,6 @@
 @import "../../../styles/variables";
 
-.trending-post {
+.post-rank {
     display: flex;
 
     &:last-of-type {
@@ -16,27 +16,27 @@
         margin-right: $base-spacing;
     }
 
-    .trending-post-detail {
+    .post-rank-detail {
         width: 125px;
         margin: 0 $base-spacing;
 
-        .trending-post-name,
-        .trending-post-title {
+        .post-rank-name,
+        .post-rank-title {
             font-size: $font-size-1;
         }
     }
 
-    .trending-post-ranking {
+    .post-rank-ranking {
         width: 60px;
         margin: auto;
         display: inline-flex;
 
-        .trending-post-ranking-number {
+        .post-rank-ranking-number {
             width: 40px;
             text-align: center;
         }
 
-        .trending-post-ranking-icon {
+        .post-rank-ranking-icon {
             width: 20px;
             text-align: right;
         }
