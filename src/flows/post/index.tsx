@@ -12,7 +12,6 @@ import Featured from "../flowComponents/featured";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
 import Tag from "../flowComponents/tag";
-import Trending from "../flowComponents/trending";
 import { AppContext } from "../../app";
 import { Comment, Person, Post } from "../../api/models";
 

@@ -11,7 +11,6 @@ import Featured from "../flowComponents/featured";
 import { PostCard } from "../flowComponents/cardView";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
-import Trending from "../flowComponents/trending";
 import { AppContext } from "../../app";
 import { Person, PostPreview } from "../../api/models";
 
