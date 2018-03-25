@@ -77,7 +77,6 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     private async _filterPosts(queryString: string) {
         const posts = await this.context.api.getLatestPosts(queryString);
         this.setState({posts: posts});
-        console.log(this.state);
     }
 }
 

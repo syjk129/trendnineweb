@@ -11,6 +11,7 @@
         position: relative;
         display: flex;
         padding: $base-spacing * 2;
+        height: $button-height-sm;
 
         .filter-action-buttons {
             button {
@@ -53,7 +54,7 @@
         overflow-y: auto;
 
         .filter-result-list {
-            padding: 0 $base-spacing * 2 $base-spacing * 2 $base-spacing * 2;
+            padding: $base-spacing * 2;
             margin: 0;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -62,7 +63,7 @@
         }
 
         .filter-no-result {
-            padding: 0 $base-spacing * 2 $base-spacing * 2 $base-spacing * 2;
+            padding: $base-spacing * 2;
         }
     }
 }

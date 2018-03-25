@@ -6,8 +6,9 @@ import { Person, Category } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
 import Anchor, { AnchorVariant } from "../../../components/anchor";
 import Icon, { IconVariant } from "../../../components/icon";
-import RangeFilter from "./filterComponents/rangeFilter";
 import { AppContext } from "../../../app";
+import CategoryTreeFilter from "./filterComponents/categoryTreeFilter";
+import RangeFilter from "./filterComponents/rangeFilter";
 import SearchFilter, { SearchCheckbox } from "./filterComponents/searchFilter";
 import { FilterConstants } from "./filterComponents/types";
 
@@ -22,7 +23,7 @@ interface FilterState {
     activeFilter: string;
     searchResult: Set<SearchCheckbox>;
     filterMap: Map<string, string>;
-    categories: Array<SearchCheckbox>;
+    categories: Array<Category>;
 }
 
 export default class Filter extends React.Component<FilterProps, FilterState> {
@@ -40,21 +41,13 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     async componentWillMount() {
         try {
             const categories = await this.context.api.getCategories();
-            let fullCategories = new Array<SearchCheckbox>();
-            const searchedCategoryCheckboxes = categories.forEach(c => {
-                fullCategories.push(new SearchCheckbox(c.id, `${c.display_name}`));
-                c.subcategories.map(sc => {
-                    fullCategories.push(new SearchCheckbox(sc.id, `${sc.display_name}`));
-                });
-            });
+
             this.setState({
-                categories: fullCategories,
-                searchResult: new Set(fullCategories),
+                categories: categories,
             });
         } catch (err) {
             console.warn(err);
         }
-        console.log(this.state);
     }
 
     render() {
@@ -79,12 +72,10 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                             </li>
                         ))}
                     </ul>
-                    <SearchFilter
-                        placeholder="Search for Categories"
+                    <CategoryTreeFilter
+                        categoryList={this.state.categories}
                         active={this.state.activeFilter === FilterConstants.CATEGORY}
-                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
-                        onSearch={this._onSearchCategories}
-                        searchResult={this.state.searchResult} />
+                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)} />
                     <SearchFilter
                         placeholder="Search for Brands"
                         active={this.state.activeFilter === FilterConstants.BRAND}
@@ -98,18 +89,14 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         active={this.state.activeFilter === FilterConstants.PRICE_RANGE}
                         onApply={this._applyPriceRange}
                     />
-                    <SearchFilter
-                        placeholder="Search for Categories On Sale"
+                    <CategoryTreeFilter
+                        categoryList={this.state.categories}
                         active={this.state.activeFilter === FilterConstants.ON_SALE}
-                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
-                        onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult} />
-                    <SearchFilter
-                        placeholder="Search for New Arrival Categories"
+                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)} />
+                    <CategoryTreeFilter
+                        categoryList={this.state.categories}
                         active={this.state.activeFilter === FilterConstants.NEW_ARRIVALS}
-                        onApply={(v) => this._applyFilter(FilterConstants.NEW_ARRIVALS_PARAM_STRING, v)}
-                        onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult} />
+                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)} />
                     <SearchFilter
                         placeholder="Search for Retailer"
                         active={this.state.activeFilter === FilterConstants.RETAILER}
@@ -147,7 +134,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                 this.setState({searchResult: new Set()});
                 break;
             default:
-                this.setState({searchResult: new Set(this.state.categories)});
+                this.setState({searchResult: new Set()});
                 break;
         }
     }
