@@ -14,6 +14,7 @@ interface SearchFilterProps {
     searchResult: Set<SearchCheckbox>;
     onSearch(value: string): void;
     onApply(values: Set<string>): void;
+    onCancel(): void;
  }
 
 interface SearchFilterState {
@@ -121,5 +122,6 @@ export default class SearchFilter extends React.Component<SearchFilterProps, Sea
     @autobind
     private _cancel() {
         this.setState({selectedValues: new Set(this.state.previousValues)});
+        this.props.onCancel();
     }
 }

@@ -75,40 +75,46 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                     <CategoryTreeFilter
                         categoryList={this.state.categories}
                         active={this.state.activeFilter === FilterConstants.CATEGORY}
-                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)} />
+                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
+                        onCancel={this._cancel} />
                     <SearchFilter
                         placeholder="Search for Brands"
                         active={this.state.activeFilter === FilterConstants.BRAND}
                         onApply={(v) => this._applyFilter(FilterConstants.BRAND_PARAM_STRING, v)}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult} />
+                        searchResult={this.state.searchResult}
+                        onCancel={this._cancel} />
                     <RangeFilter
                         min={0}
                         max={Filter.MAX_PRICE}
                         step={10}
                         active={this.state.activeFilter === FilterConstants.PRICE_RANGE}
                         onApply={this._applyPriceRange}
-                    />
+                        onCancel={this._cancel} />
                     <CategoryTreeFilter
                         categoryList={this.state.categories}
                         active={this.state.activeFilter === FilterConstants.ON_SALE}
-                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)} />
+                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
+                        onCancel={this._cancel} />
                     <CategoryTreeFilter
                         categoryList={this.state.categories}
                         active={this.state.activeFilter === FilterConstants.NEW_ARRIVALS}
-                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)} />
+                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
+                        onCancel={this._cancel} />
                     <SearchFilter
                         placeholder="Search for Retailer"
                         active={this.state.activeFilter === FilterConstants.RETAILER}
                         onApply={(v) => this._applyFilter(FilterConstants.RETAILER_PARAM_STRING, v)}
                         onSearch={this._onSearchRetailers}
-                        searchResult={this.state.searchResult} />
+                        searchResult={this.state.searchResult}
+                        onCancel={this._cancel} />
                     <SearchFilter
                         placeholder="Search for Tags"
                         active={this.state.activeFilter === FilterConstants.TAG}
                         onApply={(v) => this._applyFilter(FilterConstants.TAG_PARAM_STRING, v)}
                         onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult} />
+                        searchResult={this.state.searchResult}
+                        onCancel={this._cancel} />
                 </div>
             </div>
         );
@@ -198,9 +204,14 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
     @autobind
     private _apply(filters: Map<string, string>) {
-        this.setState({filterMap: filters, isFilterActive: false});
+        this.setState({ filterMap: filters, isFilterActive: false });
         const queryString = Array.from(filters.keys()).map(key => key + "=" + filters.get(key)).join("&");
         this.props.onApply(queryString);
+    }
+
+    @autobind
+    private _cancel() {
+        this.setState({ isFilterActive: false });
     }
 }
 

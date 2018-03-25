@@ -14,6 +14,7 @@ interface RangeFilterProps {
     max: number;
     step: number;
     onApply(min: number, max: number): void;
+    onCancel(): void;
 }
 
 interface RangeFilterState {
@@ -58,6 +59,7 @@ export default class RangeFilter extends React.Component<RangeFilterProps, Range
     @autobind
     private _cancel() {
         this.setState({value: this.state.previousValue});
+        this.props.onCancel();
     }
 
     @autobind

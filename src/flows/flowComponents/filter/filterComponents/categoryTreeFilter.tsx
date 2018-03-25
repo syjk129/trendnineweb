@@ -13,6 +13,7 @@ interface CategoryTreeFilterProps {
     active: boolean;
     categoryList: Array<Category>;
     onApply(values: Set<string>): void;
+    onCancel(): void;
  }
 
 interface CategoryTreeFilterState {
@@ -103,6 +104,7 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
     @autobind
     private _cancel() {
         this.setState({selectedValues: new Set(this.state.previousValues)});
+        this.props.onCancel();
     }
 
     private _toggleSubCategories(v: Set<string>, category: Category, remove: boolean) {
