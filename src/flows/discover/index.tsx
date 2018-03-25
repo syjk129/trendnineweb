@@ -55,7 +55,9 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     </SidebarSection>
                 </Sidebar>
                 <Content>
-                    <Filter></Filter>
+                    <Filter
+                        onApply={this._filterPosts}
+                    />
                     <CardContainer>
                         {this.state.posts && this._renderPosts()}
                     </CardContainer>
@@ -69,6 +71,12 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         return this.state.posts.map(post => (
             <PostCard post={post} />
         ));
+    }
+
+    @autobind
+    private async _filterPosts(queryString: string) {
+        const posts = await this.context.api.getLatestPosts(queryString);
+        this.setState({posts: posts});
     }
 }
 

@@ -46,7 +46,6 @@ class Wishlist extends React.Component<WishlistProps, WishlistState> {
     private _toggleWishlist() {
         this.context.api.toggleWishlist(this.props.id, this.props.type);
         this.setState({active: !this.state.active});
-        console.log(this.state);
     }
 }
 

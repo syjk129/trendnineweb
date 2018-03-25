@@ -41,8 +41,8 @@ export default class Api {
         return this._GET(`/api/v1/posts/merchants?keyword=${keyword}`);
     }
 
-    getLatestPosts(): Promise<Array<PostPreview>> {
-        return this._GET("/api/v1/posts");
+    getLatestPosts(queryString?: string): Promise<Array<PostPreview>> {
+        return this._GET(`/api/v1/posts?${queryString}`);
     }
 
     getPost(postId: string): Promise<Post> {

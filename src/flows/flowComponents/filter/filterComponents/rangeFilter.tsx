@@ -8,20 +8,22 @@ import Button, { ButtonVariant } from "../../../../components/button";
 import "./style.scss";
 import "rc-slider/assets/index.css";
 
-interface PriceFilterProps {
+interface RangeFilterProps {
     active: boolean;
     min: number;
     max: number;
     step: number;
+    onApply(min: number, max: number): void;
+    onCancel(): void;
 }
 
-interface PriceFilterState {
+interface RangeFilterState {
     value: Array<number>;
     previousValue: Array<number>;
 }
 
-export default class PriceFilter extends React.Component<PriceFilterProps, PriceFilterState> {
-    state: PriceFilterState = {
+export default class RangeFilter extends React.Component<RangeFilterProps, RangeFilterState> {
+    state: RangeFilterState = {
         value: [this.props.min, this.props.max],
         previousValue: [this.props.min, this.props.max],
     };
@@ -57,10 +59,12 @@ export default class PriceFilter extends React.Component<PriceFilterProps, Price
     @autobind
     private _cancel() {
         this.setState({value: this.state.previousValue});
+        this.props.onCancel();
     }
 
     @autobind
     private _apply() {
         this.setState({previousValue: this.state.value});
+        this.props.onApply(this.state.value[0], this.state.value[1]);
     }
 }

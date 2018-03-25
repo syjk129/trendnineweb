@@ -11,13 +11,14 @@ export enum InputType {
 }
 
 interface InputProps {
-    value: string;
+    value?: string;
     className?: string;
     type?: InputType;
     placeholder?: string;
     disabled?: boolean;
     checked?: boolean;
-    onChange(value: any): void;
+    onChange?(value: any): void;
+    onEnterPress?(value: any): void;
 }
 
 export default class Input extends React.Component<InputProps, never> {
@@ -31,6 +32,7 @@ export default class Input extends React.Component<InputProps, never> {
                 className={this.props.className}
                 value={this.props.value}
                 onChange={this._handleChange}
+                onKeyPress={this._handleKeyPress}
                 placeholder={this.props.placeholder}
                 disabled={this.props.disabled}
                 checked={this.props.checked}
@@ -41,9 +43,19 @@ export default class Input extends React.Component<InputProps, never> {
 
     @autobind
     private _handleChange(event: ChangeEvent<HTMLInputElement>) {
-        if (this.props.type !== InputType.CHECKBOX) {
+        if (this.props.onChange && this.props.type !== InputType.CHECKBOX) {
             event.preventDefault();
         }
-        this.props.onChange(event.target.value);
+        if (this.props.onChange) {
+            this.props.onChange(event.target.value);
+        }
+    }
+
+    @autobind
+    private _handleKeyPress(event) {
+        if (this.props.onEnterPress && event.key === "Enter") {
+            event.preventDefault();
+            this.props.onEnterPress(event.target.value);
+        }
     }
 }

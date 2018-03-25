@@ -1,6 +1,13 @@
 @import "../../styles/variables.scss";
 
 .main-header {
+    height: $navbar-height;
+    background-color: $color-grey-0;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    top: 0;
+
     .user-header,
     .nav-header {
         border-bottom: $standard-border-width solid $standard-border-color;
@@ -13,6 +20,8 @@
     }
 
     .nav-header {
+        height: $navbar-menu-height;
+
         .nav-pages,
         .nav-logo,
         .search {
@@ -24,7 +33,15 @@
         }
 
         .search {
+            display: flex;
             float: right;
+
+            input {
+                border: none;
+                background-color: transparent;
+                user-select: none;
+                outline: none;
+            }
         }
     }
 }
