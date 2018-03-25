@@ -33,7 +33,15 @@
         }
 
         .search {
+            display: flex;
             float: right;
+
+            input {
+                border: none;
+                background-color: transparent;
+                user-select: none;
+                outline: none;
+            }
         }
     }
 }

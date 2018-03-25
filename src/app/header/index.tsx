@@ -2,6 +2,8 @@ import * as React from "react";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 
 import NavLink from "../../components/navLink";
+import Icon, { IconVariant } from "../../components/icon";
+import Input, { InputType } from "../../components/input";
 // import logo from "./logo.png";
 
 import "./style.scss";
@@ -36,10 +38,15 @@ export default class Header extends React.Component<HeaderProps, never> {
                         <NavLink url="/discover">Brands</NavLink>
                     </div>
                     <div className="search">
-                        Search
+                        <Icon variant={IconVariant.SEARCH}></Icon>
+                        <Input placeholder="SEARCH" onEnterPress={this._onSearch}/>
                     </div>
                 </div>
             </div>
         );
+    }
+
+    private _onSearch(value: string) {
+        // TODO
     }
 }

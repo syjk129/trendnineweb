@@ -33,7 +33,6 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
         let childToParentMap = new Map<string, Category>();
         this.props.categoryList.map(c => this._populateChildToParent(childToParentMap, c));
         this.setState({childToParentMap: childToParentMap});
-        console.log(childToParentMap);
     }
 
     render() {
