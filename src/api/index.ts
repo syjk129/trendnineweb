@@ -53,6 +53,10 @@ export default class Api {
         return this._GET(`/api/v1/posts/related`);
     }
 
+    getProduct(productId: string): Promise<any> {
+        return this._GET(`/api/v1/marketplace/products/${productId}`);
+    }
+
     getRelatedProducts(): Promise<any> {
         return this._GET(`/api/v1/marketplace/products/related`);
     }
@@ -63,6 +67,10 @@ export default class Api {
 
     getCart(): Promise<any> {
         return this._GET("/api/v1/marketplace/carts");
+    }
+
+    getReviews(productId: string): Promise<Array<any>> {
+        return this._GET(`/api/v1/marketplace/products/${productId}/reviews`);
     }
 
     getComments(postId: string): Promise<Array<Comment>> {
@@ -113,6 +121,15 @@ export default class Api {
         };
 
         return this._POST(`/api/v1/posts/${postId}/comments`, request);
+    }
+
+    submitReview(productId: string, comment: string, parentCommentId?: string): Promise<void> {
+        const request = {
+            content: comment,
+            rating: 5,
+        };
+
+        return this._POST(`/api/v1/marketplace/products/${productId}/reviews`, request);
     }
 
     toggleWishlist(id: string, type: string): Promise<void> {

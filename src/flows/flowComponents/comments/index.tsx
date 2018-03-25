@@ -10,10 +10,11 @@ import CommentItem from "./commentItem";
 import "./style.scss";
 
 interface CommentsProps {
+    placeholder?: string;
     comments: Array<Comment>;
     repliesEnabled?: boolean;
-    likeComment(commentId: string): Promise<void>;
-    unlikeComment(commentId: string): Promise<void>;
+    likeComment?(commentId: string): Promise<void>;
+    unlikeComment?(commentId: string): Promise<void>;
     submitComment(comment: string, parentCommentId?: string): Promise<void>;
 }
 
@@ -31,7 +32,7 @@ export default class Comments extends React.Component<CommentsProps, CommentsSta
             <div className="comments">
                 <CommentInput
                     comment={this.state.comment}
-                    placeholder="Write a comment"
+                    placeholder={this.props.placeholder || "Write a comment"}
                     onChange={this._updateComment}
                     submitComment={this._submitComment}
                 />

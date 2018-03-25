@@ -6,6 +6,10 @@
 
     .carousel-item-cover {
         margin-bottom: $base-spacing;
+
+        &.selected {
+            border: $standard-border-width solid $standard-border-color;
+        }
     }
 
     .carousel-item-title {

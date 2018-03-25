@@ -10,8 +10,8 @@ import "./style.scss";
 
 interface CommentItemProps {
     comment: Comment;
-    likeComment(commentId: string): Promise<void>;
-    unlikeComment(commentId: string): Promise<void>;
+    likeComment?(commentId: string): Promise<void>;
+    unlikeComment?(commentId: string): Promise<void>;
     submitReply?(parentCommentId: string, reply: string): Promise<void>;
 }
 
@@ -34,10 +34,12 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
                 <Author author={this.props.comment.author} />
                 <p>{this.props.comment.content}</p>
                 <div className="comment-item-actions">
-                    <Anchor onClick={this._likeComment} variant={AnchorVariant.SECONDARY}>
-                        {this.state.liked ? "Unlike" : `Like (${this.props.comment.likes})`}
-                    </Anchor>
-                    {this.props.submitReply && (
+                    {this.props.likeComment && (
+                        <Anchor onClick={this._likeComment} variant={AnchorVariant.SECONDARY}>
+                            {this.state.liked ? "Unlike" : `Like (${this.props.comment.likes})`}
+                        </Anchor>
+                    )}
+                    {this.props.submitReply && this.props.comment.threaded_comments && (
                         <Anchor onClick={this._toggleReply} variant={AnchorVariant.SECONDARY}>
                             {this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
                         </Anchor>

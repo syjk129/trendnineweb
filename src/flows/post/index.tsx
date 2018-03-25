@@ -1,6 +1,6 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
-import { match } from "react-router";
+import { match } from "react-router-dom";
 import { PropTypes } from "prop-types";
 
 import Button, { ButtonVariant } from "../../components/button";

@@ -1,0 +1,56 @@
+@import "../../styles/variables";
+
+.product {
+    padding: $base-spacing * 2;
+
+    .product-view {
+        display: flex;
+        width: 100%;
+    }
+
+    .product-images,
+    .product-details {
+        display: inline-block;
+        width: 50%;
+    }
+
+    .product-images {
+        margin-right: $base-spacing * 2;
+    }
+
+    .product-details {
+        .product-brand {
+            font-size: $font-size-3;
+            margin-bottom: $base-spacing * 2;
+        }
+
+        .product-name {
+            font-size: $font-size-4;
+        }
+
+        .product-seller {
+            font-size: $font-size-1;
+        }
+
+        .product-price {
+            font-size: $font-size-3;
+            margin-bottom: $base-spacing * 5;
+        }
+    }
+
+    .button-container {
+        display: flex;
+
+        button {
+            margin: 0 $base-spacing;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

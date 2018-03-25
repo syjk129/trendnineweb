@@ -8,19 +8,27 @@ import "./style.scss";
 
 interface CarouselItemProps {
     imageUrl: string;
-    title: string;
-    detail: string;
+    title?: string;
+    detail?: string;
+    selected?: boolean;
     subdetail?: string;
+    onClick?(): void;
     history: H.History;
 }
 
 class CarouselItem extends React.Component<CarouselItemProps> {
     render() {
-        const { imageUrl, title, detail, subdetail } = this.props;
+        const { imageUrl, title, detail, subdetail, selected, onClick } = this.props;
+
+        let classes = "carousel-item-cover";
+
+        if (selected) {
+            classes += " selected";
+        }
 
         return (
-            <div className="carousel-item" onClick={() => { console.log("wtf"); }}>
-                <Image className="carousel-item-cover" src={imageUrl} square />
+            <div className="carousel-item" onClick={onClick}>
+                <Image className={classes} src={imageUrl} square />
                 <p className="carousel-item-title">{title}</p>
                 <p>{detail}</p>
                 <p>{subdetail}</p>
