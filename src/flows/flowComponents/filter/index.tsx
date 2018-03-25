@@ -9,6 +9,7 @@ import Icon, { IconVariant } from "../../../components/icon";
 import PriceFilter from "./filterComponents/priceFilter";
 import { AppContext } from "../../../app";
 import SearchFilter, { SearchCheckbox } from "./filterComponents/searchFilter";
+import { FilterConstants } from "./filterComponents/types";
 
 import "./style.scss";
 
@@ -23,26 +24,10 @@ interface FilterState {
 
 export default class Filter extends React.Component<FilterProps, FilterState> {
     static contextTypes: AppContext;
-    static CATEGORY = "CATEGORY";
-    static BRAND = "BRAND";
-    static PRICE_RANGE = "PRICE RANGE";
-    static ON_SALE = "ON SALE";
-    static NEW_ARRIVALS = "NEW ARRIVALS";
-    static RETAILER = "RETAILER";
-    static TAG = "TAG";
-    static FILTER_LIST = [
-        Filter.CATEGORY,
-        Filter.BRAND,
-        Filter.PRICE_RANGE,
-        Filter.ON_SALE,
-        Filter.NEW_ARRIVALS,
-        Filter.RETAILER,
-        Filter.TAG,
-    ];
 
     state: FilterState = {
         isFilterActive: false,
-        activeFilter: Filter.CATEGORY,
+        activeFilter: FilterConstants.CATEGORY,
         searchResult: new Set(),
         categories: [],
     };
@@ -79,7 +64,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                 </div>
                 <div className={`filter-content ${this.state.isFilterActive ? "" : "hidden"}`}>
                     <ul className="filter-list" >
-                        {Filter.FILTER_LIST
+                        {FilterConstants.FILTER_LIST
                         .map(filter => (
                             <li>
                                 <Anchor
@@ -91,38 +76,38 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                     </ul>
                     <SearchFilter
                         placeholder="Search for Categories"
-                        active={this.state.activeFilter === Filter.CATEGORY}
+                        active={this.state.activeFilter === FilterConstants.CATEGORY}
                         onApply={this._apply}
                         onSearch={this._onSearchCategories}
                         searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Brands"
-                        active={this.state.activeFilter === Filter.BRAND}
+                        active={this.state.activeFilter === FilterConstants.BRAND}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
                         searchResult={this.state.searchResult} />
-                    <PriceFilter min={0} max={5000} step={10} active={this.state.activeFilter === Filter.PRICE_RANGE}></PriceFilter>
+                    <PriceFilter min={0} max={5000} step={10} active={this.state.activeFilter === FilterConstants.PRICE_RANGE}></PriceFilter>
                     <SearchFilter
                         placeholder="Search for Categories On Sale"
-                        active={this.state.activeFilter === Filter.ON_SALE}
+                        active={this.state.activeFilter === FilterConstants.ON_SALE}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
                         searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for New Arrival Categories"
-                        active={this.state.activeFilter === Filter.NEW_ARRIVALS}
+                        active={this.state.activeFilter === FilterConstants.NEW_ARRIVALS}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
                         searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Retailer"
-                        active={this.state.activeFilter === Filter.RETAILER}
+                        active={this.state.activeFilter === FilterConstants.RETAILER}
                         onApply={this._apply}
                         onSearch={this._onSearchRetailers}
                         searchResult={this.state.searchResult} />
                     <SearchFilter
                         placeholder="Search for Tags"
-                        active={this.state.activeFilter === Filter.TAG}
+                        active={this.state.activeFilter === FilterConstants.TAG}
                         onApply={this._apply}
                         onSearch={this._onSearchTags}
                         searchResult={this.state.searchResult} />
@@ -141,13 +126,13 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
         this.setState({activeFilter: stateField});
 
         switch (stateField) {
-            case Filter.RETAILER:
+            case FilterConstants.RETAILER:
                 this._onSearchRetailers("");
                 break;
-            case Filter.TAG:
+            case FilterConstants.TAG:
                 this.setState({searchResult: new Set()});
                 break;
-            case Filter.BRAND:
+            case FilterConstants.BRAND:
                 this.setState({searchResult: new Set()});
                 break;
             default:

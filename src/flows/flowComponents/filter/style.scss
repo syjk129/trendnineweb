@@ -1,8 +1,15 @@
 @import "../../../styles/variables";
 
 .filter-container {
+    position: fixed;
+    z-index: 999;
+    width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - 4 * #{$base-spacing});
+
     .filter-anchor {
-        padding-bottom: $card-spacing;
+        padding-bottom: $filter-padding;
+        height: $filter-height;
+        background-color: $color-grey-0;
+        padding-top: $content-spacing;
     }
 
     .filter-list {
