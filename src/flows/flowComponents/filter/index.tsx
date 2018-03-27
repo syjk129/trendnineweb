@@ -94,7 +94,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         active={this.state.activeFilter === FilterConstants.PRICE_RANGE}
                         onApply={this._applyPriceRange}
                         onCancel={this._cancel} />
-                    <CategoryTreeFilter
+                    {/* <CategoryTreeFilter
                         categoryList={this.state.categories}
                         active={this.state.activeFilter === FilterConstants.ON_SALE}
                         onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
@@ -103,7 +103,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         categoryList={this.state.categories}
                         active={this.state.activeFilter === FilterConstants.NEW_ARRIVALS}
                         onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
-                        onCancel={this._cancel} />
+                        onCancel={this._cancel} /> */}
                     <SearchFilter
                         placeholder="Search for Retailer"
                         active={this.state.activeFilter === FilterConstants.RETAILER}
@@ -134,7 +134,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
         switch (stateField) {
             case FilterConstants.RETAILER:
-                this._onSearchRetailers("");
+                this._onSearchRetailers();
                 break;
             case FilterConstants.TAG:
                 this.setState({searchResult: new Set()});
@@ -162,10 +162,10 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     }
 
     @autobind
-    private async _onSearchRetailers(value: string) {
+    private async _onSearchRetailers(value?: string) {
         const retailers = await this.context.api.getRetailers(value);
         const searchedRetailerCheckboxes = retailers.map(r => {
-            return new SearchCheckbox(r.id, `${r.merchant} (${r.item_count})`);
+            return new SearchCheckbox(r.merchant, `${r.merchant} (${r.item_count})`);
         });
         this.setState({searchResult: new Set(searchedRetailerCheckboxes)});
     }
