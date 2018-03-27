@@ -1,5 +1,5 @@
 import * as React from "react";
-import { match, withRouter } from "react-router";
+import { withRouter } from "react-router";
 import { PropTypes } from "prop-types";
 import autobind from "autobind-decorator";
 
@@ -17,11 +17,12 @@ import { Person, PostPreview } from "../../api/models";
 import "./style.scss";
 
 interface DiscoverProps {
-    match: match<String>;
+    location: any;
 }
 
 interface DiscoverState {
     posts: Array<PostPreview>;
+    keyword: string;
     featuredTrendnines: Array<Person>;
 }
 
@@ -30,21 +31,42 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     state: DiscoverState = {
         posts: [],
+        keyword: "",
         featuredTrendnines: [],
     };
 
     async componentWillMount() {
-        try {
-            const posts = await this.context.api.getLatestPosts();
-            const featuredTrendnines = await this.context.api.getFeaturedTrendnines();
+        const queryString = this.props.location.search;
+        const params = new URLSearchParams(queryString);
+        const keyword = params.get("q") || "";
+        let posts = new Array();
+        let featuredTrendnines = new Array();
 
-            this.setState({ posts, featuredTrendnines });
+        try {
+            posts = keyword === "" ?
+                await this.context.api.getLatestPosts() :
+                await this.context.api.getLatestPosts("keyword=" + keyword);
         } catch (err) {
             console.warn(err);
         }
+
+        try {
+            featuredTrendnines = await this.context.api.getFeaturedTrendnines();
+        } catch (err) {
+            console.warn(err);
+        }
+
+        this.setState({ posts, keyword, featuredTrendnines });
     }
 
     render() {
+        const keywordNode = this.state.keyword !== "" ? (
+            <div className="search-text-container">
+                <div className="search-help">You searched for</div>
+                <div className="search-text">{this.state.keyword}</div>
+            </div>
+        ) : null;
+
         return (
             <div className="discover">
                 <Sidebar>
@@ -55,10 +77,10 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     </SidebarSection>
                 </Sidebar>
                 <Content>
-                    <Filter
-                        onApply={this._filterPosts}
-                    />
-                    <CardContainer>
+                    <Filter onApply={this._filterPosts}>
+                        {keywordNode}
+                    </Filter>
+                    <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
                         {this.state.posts && this._renderPosts()}
                     </CardContainer>
                 </Content>
@@ -75,7 +97,9 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     @autobind
     private async _filterPosts(queryString: string) {
-        const posts = await this.context.api.getLatestPosts(queryString);
+        const posts = this.state.keyword === "" ?
+            await this.context.api.getLatestPosts(queryString) :
+            await this.context.api.getLatestPosts("keyword=" + this.state.keyword + "&" + queryString);
         this.setState({posts: posts});
     }
 }

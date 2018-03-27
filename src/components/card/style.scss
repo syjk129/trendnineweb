@@ -43,3 +43,7 @@
     padding-top: $filter-height + $filter-padding + $content-spacing;
     grid-gap: 2 * $base-spacing;
 }
+
+.card-container-extra-space {
+    margin-top: $search-text-height + $content-spacing;
+}

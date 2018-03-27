@@ -15,6 +15,7 @@ import { FilterConstants } from "./filterComponents/types";
 import "./style.scss";
 
 interface FilterProps {
+    children?: React.ReactNode;
     onApply(queryString: string): void;
 }
 
@@ -53,6 +54,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     render() {
         return (
             <div className="filter-container">
+                {this.props.children}
                 <div className="filter-anchor">
                     <Anchor
                         variant={AnchorVariant.SECONDARY}
@@ -153,7 +155,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
         const tags = await this.context.api.getTags(value);
         const searchedTagCheckboxes = tags.map(t => {
-            return new SearchCheckbox(t.content, `${t.content} (${t.item_count})`);
+            return new SearchCheckbox(t.id, `${t.content} (${t.item_count})`);
         });
         this.setState({searchResult: new Set(searchedTagCheckboxes)});
     }
@@ -162,7 +164,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     private async _onSearchRetailers(value: string) {
         const retailers = await this.context.api.getRetailers(value);
         const searchedRetailerCheckboxes = retailers.map(r => {
-            return new SearchCheckbox(r.merchant, `${r.merchant} (${r.item_count})`);
+            return new SearchCheckbox(r.id, `${r.merchant} (${r.item_count})`);
         });
         this.setState({searchResult: new Set(searchedRetailerCheckboxes)});
     }

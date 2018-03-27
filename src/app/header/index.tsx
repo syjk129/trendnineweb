@@ -1,6 +1,6 @@
 import * as React from "react";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-
+import { withRouter } from "react-router-dom";
+import * as H from "history";
 import NavLink from "../../components/navLink";
 import Icon, { IconVariant } from "../../components/icon";
 import Input, { InputType } from "../../components/input";
@@ -10,10 +10,16 @@ import "./style.scss";
 
 export interface HeaderProps {
     loggedIn: boolean;
+    history: H.History;
 }
 
-export default class Header extends React.Component<HeaderProps, never> {
+export class Header extends React.Component<HeaderProps, never> {
     render() {
+        const { loggedIn, history } = this.props;
+        const onSearch = (value) => history.push({
+            pathname: "/discover",
+            search: `?q=${value}`,
+        });
         return (
             <div className="main-header">
                 <div className="user-header">
@@ -22,7 +28,7 @@ export default class Header extends React.Component<HeaderProps, never> {
                         <NavLink url="/discover">Discover</NavLink>
                     </div>
                     <div className="header-right-buttons">
-                        {!this.props.loggedIn &&
+                        {!loggedIn &&
                             <NavLink url="/login">Log In</NavLink>
                         }
                     </div>
@@ -39,14 +45,12 @@ export default class Header extends React.Component<HeaderProps, never> {
                     </div>
                     <div className="search">
                         <Icon variant={IconVariant.SEARCH}></Icon>
-                        <Input placeholder="SEARCH" onEnterPress={this._onSearch}/>
+                        <Input placeholder="SEARCH" onEnterPress={ onSearch }/>
                     </div>
                 </div>
             </div>
         );
     }
-
-    private _onSearch(value: string) {
-        // TODO
-    }
 }
+
+export default withRouter(Header);

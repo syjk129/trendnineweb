@@ -4,12 +4,18 @@ import "./style.scss";
 
 interface CardContainerProps {
     children?: React.ReactNode;
+    className?: string;
 }
 
-export default function CardContainer({ children }: CardContainerProps) {
+export default function CardContainer({ children, className }: CardContainerProps) {
+    let classes = "card-container";
+    if (className) {
+        classes += ` ${className}`;
+    }
+
     return (
-        <div className="card-container">
-            {children}
+        <div className={ classes }>
+            { children }
         </div>
     );
 }

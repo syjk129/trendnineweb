@@ -4,11 +4,11 @@
     position: fixed;
     z-index: 999;
     width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - 4 * #{$base-spacing});
+    background-color: $color-grey-0;
 
     .filter-anchor {
         padding-bottom: $filter-padding;
         height: $filter-height;
-        background-color: $color-grey-0;
         padding-top: $content-spacing;
     }
 
