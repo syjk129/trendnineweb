@@ -17,4 +17,12 @@
             border-bottom: solid $standard-border-width $standard-border-color;
         }
     }
+
+    .no-search-result-text {
+        margin-top: -1 * ($filter-height + $filter-padding + $content-spacing) + 2 * $base-spacing;
+    }
+
+    .hide {
+        display: none;
+    }
 }

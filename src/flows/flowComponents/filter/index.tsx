@@ -15,6 +15,7 @@ import { FilterConstants } from "./filterComponents/types";
 import "./style.scss";
 
 interface FilterProps {
+    className?: string;
     children?: React.ReactNode;
     onApply(queryString: string): void;
 }
@@ -55,14 +56,14 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
         return (
             <div className="filter-container">
                 {this.props.children}
-                <div className="filter-anchor">
+                <div className={`filter-anchor ${this.props.className}`}>
                     <Anchor
                         variant={AnchorVariant.SECONDARY}
                         onClick={this._toggleFilter}>Filter&nbsp;&nbsp;
                         <Icon variant={this.state.isFilterActive ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
                     </Anchor>
                 </div>
-                <div className={`filter-content ${this.state.isFilterActive ? "" : "hidden"}`}>
+                <div className={`filter-content ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>
                     <ul className="filter-list" >
                         {FilterConstants.FILTER_LIST
                         .map(filter => (

@@ -77,12 +77,17 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     </SidebarSection>
                 </Sidebar>
                 <Content>
-                    <Filter onApply={this._filterPosts}>
+                    <Filter
+                        onApply={this._filterPosts}
+                        className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""}
+                    >
                         {keywordNode}
                     </Filter>
                     <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
                         {this.state.posts && this._renderPosts()}
                     </CardContainer>
+
+                    {this._noSearchResult()}
                 </Content>
             </div>
         );
@@ -93,6 +98,15 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         return this.state.posts.map(post => (
             <PostCard post={post} />
         ));
+    }
+
+    @autobind
+    private _noSearchResult() {
+        return (this.state.keyword !== "" && this.state.posts.length < 1) ? (
+            <div className="no-search-result-text">
+                No result for "{ this.state.keyword }"
+            </div>
+        ) : null;
     }
 
     @autobind
