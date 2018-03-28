@@ -42,8 +42,15 @@ export default class Api {
     }
 
     getLatestPosts(queryString?: string): Promise<Array<PostPreview>> {
+        let url = "/api/v1/posts";
+
+        if (queryString) {
+            url += `?query=${queryString}`;
+        }
+
         return this._GET(`/api/v1/posts?${queryString}`);
     }
+
     searchPosts(queryString?: string): Promise<Array<PostPreview>> {
         return this._GET(`/api/v1/posts/search?keyword=${queryString}`);
     }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withRouter } from "react-router";
+import { match, withRouter } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import autobind from "autobind-decorator";
 
@@ -18,12 +18,15 @@ import "./style.scss";
 
 interface DiscoverProps {
     location: any;
+    match: match<any>;
 }
 
 interface DiscoverState {
     posts: Array<PostPreview>;
-    keyword: string;
     featuredTrendnines: Array<Person>;
+    keyword: string;
+    pageName: string;
+    isLoading: boolean;
 }
 
 export default class Discover extends React.Component<DiscoverProps, DiscoverState> {
@@ -31,41 +34,40 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     state: DiscoverState = {
         posts: [],
-        keyword: "",
         featuredTrendnines: [],
+        keyword: "",
+        pageName: "discover",
+        isLoading: true,
     };
 
     async componentWillMount() {
-        const queryString = this.props.location.search;
-        const params = new URLSearchParams(queryString);
-        const keyword = params.get("q") || "";
-        let posts = new Array();
-        let featuredTrendnines = new Array();
-
         try {
-            posts = keyword === "" ?
-                await this.context.api.getLatestPosts() :
-                await this.context.api.getLatestPosts("keyword=" + keyword);
+            const queryString = this.props.location.search;
+            const keyword = new URLSearchParams(queryString);
+            const [
+                posts,
+                featuredTrendnines,
+            ] = await Promise.all([
+                this.context.api.getLatestPosts(queryString),
+                this.context.api.getFeaturedTrendnines(),
+            ]);
+
+            this.setState({
+                posts,
+                featuredTrendnines,
+                keyword: keyword.get("q") || "",
+                pageName: this.props.match.params.pageName || "discover",
+                isLoading: false,
+            });
         } catch (err) {
             console.warn(err);
         }
-
-        try {
-            featuredTrendnines = await this.context.api.getFeaturedTrendnines();
-        } catch (err) {
-            console.warn(err);
-        }
-
-        this.setState({ posts, keyword, featuredTrendnines });
     }
 
     render() {
-        const keywordNode = this.state.keyword !== "" ? (
-            <div className="search-text-container">
-                <div className="search-help">You searched for</div>
-                <div className="search-text">{this.state.keyword}</div>
-            </div>
-        ) : null;
+        if (this.state.isLoading) {
+            return null;
+        }
 
         return (
             <div className="discover">
@@ -81,13 +83,22 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                         onApply={this._filterPosts}
                         className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""}
                     >
-                        {keywordNode}
+                        {this.state.keyword !== "" && (
+                            <div className="search-text-container">
+                                <div className="search-help">You searched for</div>
+                                <div className="search-text">{this.state.keyword}</div>
+                            </div>
+                        )}
                     </Filter>
                     <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this.state.posts && this._renderPosts()}
+                        {this._renderPosts()}
                     </CardContainer>
 
-                    {this._noSearchResult()}
+                    {this.state.keyword !== "" && this.state.posts.length < 1 && (
+                        <div className="no-search-result-text">
+                            No results for "{ this.state.keyword }"
+                        </div>
+                    )}
                 </Content>
             </div>
         );
@@ -101,20 +112,15 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     }
 
     @autobind
-    private _noSearchResult() {
-        return (this.state.keyword !== "" && this.state.posts.length < 1) ? (
-            <div className="no-search-result-text">
-                No result for "{ this.state.keyword }"
-            </div>
-        ) : null;
-    }
-
-    @autobind
     private async _filterPosts(queryString: string) {
-        const posts = this.state.keyword === "" ?
-            await this.context.api.getLatestPosts(queryString) :
-            await this.context.api.getLatestPosts("keyword=" + this.state.keyword + "&" + queryString);
-        this.setState({posts: posts});
+        let query = queryString;
+
+        if (this.state.keyword !== "") {
+            query = `keyword=${this.state.keyword}&${query}`;
+        }
+
+        const newPosts = await this.context.api.getLatestPosts(query);
+        this.setState({ posts: newPosts });
     }
 }
 

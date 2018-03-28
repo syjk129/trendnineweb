@@ -73,16 +73,18 @@ export default class App extends React.Component<AppProps, AppState> {
                 <Router history={browserHistory}>
                     <AppProvider>
                         <Header loggedIn={this.state.loggedIn} />
-                        <Route exact path="/" render={() => <Redirect to="/discover" />} />
-                        <Route path="/login" setLoggedState={this._setLoggedState} component={Auth} />
-                        <Route path="/register" component={Auth} />
-                        <Route path="/discover" component={Discover} />
-                        <Route path="/user/:userId/:pageName?" component={User} />
-                        <Route path="/shop" component={null} />
-                        <Route path="/post/:postId" component={PostView} />
-                        <Route path="/product/:productId" component={ProductView} />
-                        <Route path="/shop" component={null} />
-                        <Route path="*" component={null} />
+                        <div className="main-content">
+                            <Route exact path="/" render={() => <Redirect to="/discover" />} />
+                            <Route path="/login" setLoggedState={this._setLoggedState} component={Auth} />
+                            <Route path="/register" component={Auth} />
+                            <Route path="/discover/:pageName?" component={Discover} />
+                            <Route path="/user/:userId/:pageName?" component={User} />
+                            <Route path="/shop" component={null} />
+                            <Route path="/post/:postId" component={PostView} />
+                            <Route path="/product/:productId" component={ProductView} />
+                            <Route path="/shop" component={null} />
+                            <Route path="*" component={null} />
+                        </div>
                         <Footer />
                     </AppProvider>
                 </Router>

@@ -57,7 +57,7 @@ export default function PostCard({ post }: PostCardProps) {
     return (
         <Card
             imageUrl={post.cover_image.small_image_url}
-            redirectUrl={post.id}
+            redirectUrl={`/post/${post.id}`}
             title={post.title}
             hoverItem={post.products.length > 0 && hoverItem}
             footerItem={footerItem}

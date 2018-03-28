@@ -1,7 +1,6 @@
 @import "../../styles/variables.scss";
 
 .main-header {
-    height: $navbar-height;
     background-color: $color-grey-0;
     position: fixed;
     z-index: 1000;
@@ -20,7 +19,8 @@
     }
 
     .nav-header {
-        height: $navbar-menu-height;
+        display: flex;
+        padding: 0 $base-spacing * 2;
 
         .nav-pages,
         .nav-logo,
@@ -30,17 +30,34 @@
 
         .nav-logo {
             width: 300px;
+
+            &::before {
+                content: "";
+                width: 222px;
+                height: 60px;
+                position: absolute;
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-image: url("/img/logo.png");
+            }
         }
 
-        .search {
+        .nav-header-links {
             display: flex;
-            float: right;
+            justify-content: space-between;
+            flex-grow: 1;
 
-            input {
-                border: none;
-                background-color: transparent;
-                user-select: none;
-                outline: none;
+            .search {
+                display: flex;
+                float: right;
+
+                input {
+                    border: none;
+                    background-color: transparent;
+                    user-select: none;
+                    outline: none;
+                }
             }
         }
     }

@@ -92,7 +92,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                             <Carousel slidesToShow={5}>
                                 {images.map(image => (
                                     <div>
-                                        <CarouselItem
+                                    <CarouselItem
                                             imageUrl={image}
                                             selected={this.state.selectedImage === image}
                                             onClick={() => this._selectImage(image)}
