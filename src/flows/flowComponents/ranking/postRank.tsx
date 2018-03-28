@@ -7,13 +7,19 @@ import "./style.scss";
 
 interface PostRankProps {
     posts: Array<PostPreview>;
+    hideViewMore?: boolean;
 }
 
-export default function PostRank({ posts }: PostRankProps) {
+export default function PostRank({ posts, hideViewMore }: PostRankProps) {
+    const vieMoreNode = hideViewMore ? null : (
+        <Button variant={ButtonVariant.OUTLINE}>
+            View More
+        </Button>
+    );
+
     return (
         <div>
-            {posts.filter(post => post.cover_image != null).slice(0, 5)
-                .map(post => (
+            {posts.filter(post => post.cover_image != null).slice(0, 5).map(post => (
                     <div className="post-rank">
                         <img src={post.cover_image.small_image_url} />
                         <div className="post-rank-detail">
@@ -32,9 +38,7 @@ export default function PostRank({ posts }: PostRankProps) {
                         </div>
                     </div>
                 ))}
-            <Button variant={ButtonVariant.OUTLINE}>
-                View More
-            </Button>
+            { vieMoreNode }
         </div>
     );
 }

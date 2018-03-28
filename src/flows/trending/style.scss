@@ -1,0 +1,11 @@
+@import "../../styles/variables";
+
+.trending {
+    display: flex;
+    padding: 0 $base-spacing * 2;
+    margin-top: $navbar-height + $content-spacing;
+
+    .content {
+        max-width: 100%;
+    }
+}
