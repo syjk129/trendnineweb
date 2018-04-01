@@ -75,6 +75,15 @@ export default class Api {
         return this._GET("/api/v1/influencers");
     }
 
+    getTodaysTrendnines(pageSize?: number): Promise<Array<Person>> {
+        let url = "/api/v1/todaytrendnine";
+
+        if (pageSize) {
+            url += `?page_size=${pageSize}`;
+        }
+        return this._GET(url);
+    }
+
     getCart(): Promise<any> {
         return this._GET("/api/v1/marketplace/carts");
     }
