@@ -24,9 +24,9 @@ interface DiscoverProps {
 
 interface DiscoverState {
     posts: Array<PostPreview>;
+    trendingPosts: Array<PostPreview>;
     featuredTrendnines: Array<Person>;
     keyword: string;
-    pageName: string;
     isLoading: boolean;
 }
 
@@ -35,9 +35,9 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     state: DiscoverState = {
         posts: [],
+        trendingPosts: [],
         featuredTrendnines: [],
         keyword: "",
-        pageName: "discover",
         isLoading: true,
     };
 
@@ -46,18 +46,25 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             const queryString = this.props.location.search;
             const keyword = new URLSearchParams(queryString);
             const [
-                posts,
+                trendingPosts,
                 featuredTrendnines,
             ] = await Promise.all([
-                this.context.api.getLatestPosts(queryString),
+                this.context.api.getTrendingPosts(),
                 this.context.api.getTodaysTrendnines(),
             ]);
 
+            let posts;
+            if (this.props.location.pathname === "/feed") {
+                posts = await this.context.api.getFeedPosts();
+            } else {
+                posts = await this.context.api.getLatestPosts(queryString);
+            }
+
             this.setState({
                 posts,
+                trendingPosts,
                 featuredTrendnines,
                 keyword: keyword.get("q") || "",
-                pageName: this.props.match.params.pageName || "discover",
                 isLoading: false,
             });
         } catch (err) {
@@ -74,9 +81,8 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             <div className="discover">
                 <Sidebar>
                     <Featured featuredTrendnines={this.state.featuredTrendnines} />
-                    {/* TODO: Get real trending items */}
                     <SidebarSection title="Trending Posts">
-                        <PostRank posts={this.state.posts} />
+                        <PostRank posts={this.state.trendingPosts} />
                     </SidebarSection>
                 </Sidebar>
                 <Content>

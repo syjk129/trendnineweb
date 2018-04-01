@@ -169,7 +169,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                     )}
                     {relatedInPost && relatedInPost.length > 3 && (
                         <ContentSection title="You may also like">
-                            <Carousel slidesToShow={5}>
+                            <Carousel slidesToShow={relatedInPost.length >= 5 ? 5 : relatedInPost.length}>
                                 {relatedInPost.map(product => (
                                     <div>
                                         <CarouselItem

@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 
 .product {
-    padding: $base-spacing * 2;
+    padding: $page-spacing $content-spacing;
 
     .product-view {
         display: flex;
@@ -15,7 +15,16 @@
     }
 
     .product-images {
+        display: flex;
         margin-right: $base-spacing * 2;
+
+        .carousel-container {
+            width: 150px;
+        }
+
+        .product-main-image {
+            width: 100%;
+        }
     }
 
     .product-details {
@@ -35,6 +44,10 @@
         .product-price {
             font-size: $font-size-3;
             margin-bottom: $base-spacing * 5;
+        }
+
+        select {
+            margin-bottom: $base-spacing;
         }
     }
 

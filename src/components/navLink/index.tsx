@@ -14,7 +14,7 @@ interface NavLinkProps {
 export default function NavLink({ url, pathname, large, children, onClick }: NavLinkProps) {
     let classes = "nav-link";
 
-    if (pathname.indexOf(url) !== -1) {
+    if (pathname === url) {
         classes += " selected";
     }
 

@@ -58,7 +58,7 @@ export class Header extends React.Component<HeaderProps, never> {
                     <div className="nav-header-links">
                         <div className="nav-pages">
                             <NavLink url="/discover" pathname={pathname} large>Trending</NavLink>
-                            <NavLink url="/discover/feed" pathname={pathname} large>Feed</NavLink>
+                            <NavLink url="/feed" pathname={pathname} large>Feed</NavLink>
                             {/* <NavLink url="/discover/new" pathname={pathname} large>New Arrivals</NavLink>
                             <NavLink url="/discover/brands" pathname={pathname} large>Brands</NavLink> */}
                         </div>

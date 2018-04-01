@@ -72,6 +72,14 @@ export default class Api {
         return this._GET(`/api/v1/posts?${queryString}`);
     }
 
+    getTrendingPosts(): Promise<Array<PostPreview>> {
+        return this._GET("/api/v1/posts/trending");
+    }
+
+    getFeedPosts(): Promise<Array<PostPreview>> {
+        return this._GET("/api/v1/posts?following_only=true");
+    }
+
     searchPosts(queryString?: string): Promise<Array<PostPreview>> {
         return this._GET(`/api/v1/posts/search?keyword=${queryString}`);
     }
@@ -187,10 +195,12 @@ export default class Api {
         const url = `${this._apiUrl}${path}`;
 
         try {
+            console.log(url);
             const response = await fetch(url, {
                 method: "GET",
                 headers: this._getRequestHeader(),
             });
+            console.log(response);
 
             if (!response.ok) {
                 console.warn("not ok");

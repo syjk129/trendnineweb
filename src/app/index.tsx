@@ -87,6 +87,7 @@ export default class App extends React.Component<AppProps, AppState> {
                             <Route path="/login" setLoggedState={this._setLoggedState} component={Auth} />
                             <Route path="/register" setLoggedState={this._setLoggedState} component={Auth} />
                             <Route path="/discover/:pageName?" component={Discover} />
+                            <Route path="/feed" component={Discover} />
                             <Route path="/user/:userId/:pageName?" component={User} />
                             <Route path="/shop" component={null} />
                             <Route path="/post/:postId" component={PostView} />

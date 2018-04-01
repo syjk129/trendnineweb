@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match } from "react-router";
-import { PropTypes } from "prop-types";
 
 import { Person, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
@@ -11,6 +11,7 @@ import Image from "../../components/image";
 import NavLink from "../../components/navLink";
 import Sidebar from "../../components/sidebar";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
+import Filter from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
@@ -155,6 +156,8 @@ export default class User extends React.Component<UserProps, UserState> {
                             </NavLink>
                         </div>
                     )}
+                    <Filter onApply={() => {}}>
+                    </Filter>
                     <CardContainer>
                         {this._renderContent()}
                     </CardContainer>

@@ -54,7 +54,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
             this.setState({
                 currentProduct,
                 relatedProducts,
-                selectedImage: currentProduct.image.small_image_url,
+                selectedImage: currentProduct.image.original_image_url,
                 reviews,
             });
         } catch (err) {
@@ -83,16 +83,19 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
 
         // const currentImage = this.state.currentProduct.alt_images.find(image => image.id === this.state.selectedImage);
 
+        const carouselSettings = {
+            vertical: true,
+        };
+
         return (
             <div className="product">
                 {this.state.currentProduct && (
                     <div className="product-view">
                         <div className="product-images">
-                            <Image src={this.state.selectedImage} square/>
-                            <Carousel slidesToShow={5}>
+                            <Carousel slidesToShow={5} attributes={carouselSettings}>
                                 {images.map(image => (
                                     <div>
-                                    <CarouselItem
+                                        <CarouselItem
                                             imageUrl={image}
                                             selected={this.state.selectedImage === image}
                                             onClick={() => this._selectImage(image)}
@@ -100,16 +103,19 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                                     </div>
                                 ))}
                             </Carousel>
+                            <div className="product-main-image">
+                                <Image src={this.state.selectedImage} square/>
+                            </div>
                         </div>
                         <div className="product-details">
                             <p className="product-brand">{this.state.currentProduct.brand.name}</p>
                             <p className="product-name">{this.state.currentProduct.title}</p>
-                            <p className="product-seller">Sold by {this.state.currentProduct.merchant}</p>
+                            <p className="product-seller">Sold by {this.state.currentProduct.merchant.name}</p>
                             <p className="product-price">${this.state.currentProduct.price}</p>
                             <p className="product-color">Color</p>
                             <select>
                                 {this.state.currentProduct.colors.map(color => (
-                                    <option value={color}>{color}</option>
+                                    <option value={color.id}>{color.name}</option>
                                 ))}
                             </select>
                             <p>Size</p>
@@ -124,20 +130,22 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                         </div>
                     </div>
                 )}
-                <ContentSection title="You may also like">
-                    <Carousel slidesToShow={5}>
-                        {this.state.relatedProducts && this.state.relatedProducts.map(product => (
-                            <div>
-                                <CarouselItem
-                                    imageUrl={product.image.small_image_url}
-                                    title={product.brand.name}
-                                    detail={product.title}
-                                    subdetail={`$${product.price}`}
-                                />
-                            </div>
-                        ))}
-                    </Carousel>
-                </ContentSection>
+                {this.state.relatedProducts && (
+                    <ContentSection title="You may also like">
+                        <Carousel slidesToShow={this.state.relatedProducts.length >= 5 ? 5 : this.state.relatedProducts.length}>
+                            {this.state.relatedProducts.map(product => (
+                                <div>
+                                    <CarouselItem
+                                        imageUrl={product.image.small_image_url}
+                                        title={product.brand.name}
+                                        detail={product.title}
+                                        subdetail={`$${product.price}`}
+                                    />
+                                </div>
+                            ))}
+                        </Carousel>
+                    </ContentSection>
+                )}
                 <ContentSection title={reviewsTitle}>
                     <Comments
                         placeholder="Write a review"
