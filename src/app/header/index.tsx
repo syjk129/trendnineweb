@@ -2,6 +2,7 @@ import * as H from "history";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
+import Anchor from "../../components/anchor";
 import Icon, { IconVariant } from "../../components/icon";
 import Input, { InputType, InputVariant } from "../../components/input";
 import NavLink from "../../components/navLink";
@@ -39,6 +40,16 @@ export class Header extends React.Component<HeaderProps, never> {
                     <div className="header-right-buttons">
                         {!loggedIn &&
                             <NavLink url="/login" pathname={pathname}>Log In</NavLink>
+                        }
+                        {loggedIn &&
+                            <div className="user-logged-in-buttons">
+                                <Anchor>
+                                    <Icon variant={IconVariant.BAG} large />
+                                </Anchor>
+                                <Anchor onClick={() => history.push("/profile")}>
+                                    <Icon variant={IconVariant.GIRL} large />
+                                </Anchor>
+                            </div>
                         }
                     </div>
                 </div>

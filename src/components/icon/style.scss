@@ -8,6 +8,16 @@
     vertical-align: middle;
     margin: auto;
 
+    &.large {
+        width: $icon-size-2;
+        height: $icon-size-2;
+
+        &::before {
+            width: $icon-size-2 - 1;
+            height: $icon-size-2 - 1;
+        }
+    }
+
     &::before {
         content: "";
         width: $icon-size-1 - 1;
@@ -41,4 +51,12 @@
 
 .icon-wishlist::before {
     background-image: url("/img/icons/wishlist.png");
+}
+
+.icon-bag::before {
+    background-image: url("/img/icons/bag.png");
+}
+
+.icon-girl::before {
+    background-image: url("/img/icons/girl.png");
 }

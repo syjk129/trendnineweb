@@ -59,3 +59,25 @@
         }
     }
 }
+
+.user-logged-in-buttons {
+    height: 100%;
+    display: flex;
+
+    .icon {
+        margin-right: $base-spacing * 3;
+
+        &::before {
+            width: 25px;
+            height: 25px;
+        }
+    }
+
+    .anchor {
+        display: flex;
+
+        &:last-child .icon {
+            margin-right: 0;
+        }
+    }
+}

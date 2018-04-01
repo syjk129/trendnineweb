@@ -10,18 +10,25 @@ export enum IconVariant {
     SEARCH,
     TIME,
     WISHLIST,
+    GIRL,
+    BAG,
 }
 
 interface IconProps {
+    large?: boolean;
     className?: string;
     variant?: IconVariant;
     children?: React.ReactNode;
 }
 
-export default function Icon({ className, variant, children }: IconProps) {
+export default function Icon({ className, large, variant, children }: IconProps) {
     let classes = "icon";
     if (className) {
         classes += ` ${className}`;
+    }
+
+    if (large) {
+        classes += " large";
     }
 
     switch (variant) {
@@ -42,6 +49,12 @@ export default function Icon({ className, variant, children }: IconProps) {
             break;
         case IconVariant.WISHLIST:
             classes += " icon-wishlist";
+            break;
+        case IconVariant.GIRL:
+            classes += " icon-bag";
+            break;
+        case IconVariant.BAG:
+            classes += " icon-girl";
             break;
         default:
             break;
