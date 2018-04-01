@@ -37,8 +37,22 @@ export default class Api {
         return this._GET(`/api/v1/posts/tags?keyword=${keyword}`);
     }
 
-    getRetailers(keyword: string): Promise<Array<Retailer>> {
-        return this._GET(`/api/v1/posts/merchants?keyword=${keyword}`);
+    getRetailers(keyword?: string): Promise<Array<Retailer>> {
+        let url = "/api/v1/marketplace/products/merchants";
+
+        if (keyword) {
+            url += `?keyword=${keyword}`;
+        }
+        return this._GET(url);
+    }
+
+    getBrands(keyword?: string): Promise<Array<Retailer>> {
+        let url = "/api/v1/marketplace/products/brands";
+
+        if (keyword) {
+            url += `?keyword=${keyword}`;
+        }
+        return this._GET(url);
     }
 
     getLatestPosts(queryString?: string): Promise<Array<PostPreview>> {

@@ -84,7 +84,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         placeholder="Search for Brands"
                         active={this.state.activeFilter === FilterConstants.BRAND}
                         onApply={(v) => this._applyFilter(FilterConstants.BRAND_PARAM_STRING, v)}
-                        onSearch={this._onSearchTags}
+                        onSearch={this._onSearchBrands}
                         searchResult={this.state.searchResult}
                         onCancel={this._cancel} />
                     <RangeFilter
@@ -140,7 +140,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                 this.setState({searchResult: new Set()});
                 break;
             case FilterConstants.BRAND:
-                this.setState({searchResult: new Set()});
+                this._onSearchBrands();
                 break;
             default:
                 this.setState({searchResult: new Set()});
@@ -156,16 +156,25 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
         const tags = await this.context.api.getTags(value);
         const searchedTagCheckboxes = tags.map(t => {
-            return new SearchCheckbox(t.id, `${t.content} (${t.item_count})`);
+            return new SearchCheckbox(t.content, `${t.content} (${t.item_count})`);
         });
         this.setState({searchResult: new Set(searchedTagCheckboxes)});
+    }
+
+    @autobind
+    private async _onSearchBrands(value?: string) {
+        const brands = await this.context.api.getBrands(value);
+        const searchedRetailerCheckboxes = brands.map(b => {
+            return new SearchCheckbox(b.id, `${b.name} (${b.item_count})`);
+        });
+        this.setState({searchResult: new Set(searchedRetailerCheckboxes)});
     }
 
     @autobind
     private async _onSearchRetailers(value?: string) {
         const retailers = await this.context.api.getRetailers(value);
         const searchedRetailerCheckboxes = retailers.map(r => {
-            return new SearchCheckbox(r.merchant, `${r.merchant} (${r.item_count})`);
+            return new SearchCheckbox(r.id, `${r.name} (${r.item_count})`);
         });
         this.setState({searchResult: new Set(searchedRetailerCheckboxes)});
     }
