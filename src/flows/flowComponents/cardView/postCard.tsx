@@ -28,7 +28,7 @@ export default function PostCard({ post }: PostCardProps) {
                     <div>
                         <CarouselItem
                             imageUrl={product.image.small_image_url}
-                            title={product.brand}
+                            title={product.brand.name}
                             detail={product.title}
                             subdetail={`$${product.price}`}
                         />
