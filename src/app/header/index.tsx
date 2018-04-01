@@ -1,10 +1,10 @@
+import * as H from "history";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
-import * as H from "history";
 
-import NavLink from "../../components/navLink";
 import Icon, { IconVariant } from "../../components/icon";
-import Input, { InputType } from "../../components/input";
+import Input, { InputType, InputVariant } from "../../components/input";
+import NavLink from "../../components/navLink";
 // import logo from "./logo.png";
 
 import "./style.scss";
@@ -53,7 +53,7 @@ export class Header extends React.Component<HeaderProps, never> {
                         </div>
                         <div className="search">
                             <Icon variant={IconVariant.SEARCH}></Icon>
-                            <Input placeholder="SEARCH" onEnterPress={ onSearch }/>
+                            <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
                         </div>
                     </div>
                 </div>

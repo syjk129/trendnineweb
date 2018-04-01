@@ -8,6 +8,7 @@ import { AppContext } from "../../app";
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
+import Image, { ImageRatioVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
@@ -86,7 +87,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                 <SidebarGrid>
                                     <CarouselItem
                                         imageUrl={product.image.small_image_url}
-                                        title={product.brand}
+                                        title={product.brand.name}
                                         detail={product.title}
                                         subdetail={`$${product.price}`}
                                     />
@@ -110,7 +111,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                 <SidebarGrid>
                                     <CarouselItem
                                         imageUrl={product.image.small_image_url}
-                                        title={product.brand}
+                                        title={product.brand.name}
                                         detail={product.title}
                                         subdetail={`$${product.price}`}
                                     />
@@ -125,9 +126,10 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 <Content>
                     {currentPost && (
                         <div className="post-content">
-                            <img
+                            <Image
                                 className="post-cover"
                                 src={this.state.currentPost.cover_image.original_image_url}
+                                ratio={ImageRatioVariant.POST_COVER}
                             />
                             <p className="post-title">
                                 {this.state.currentPost.title}
@@ -142,14 +144,14 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             </div>
                         </div>
                     )}
-                    {productsInPost && (
+                    {productsInPost && productsInPost.length > 3 && (
                         <ContentSection title="Products in this post">
                             <Carousel slidesToShow={5}>
                                 {productsInPost.map(product => (
                                     <div>
                                         <CarouselItem
                                             imageUrl={product.image.small_image_url}
-                                            title={product.brand}
+                                            title={product.brand.name}
                                             detail={product.title}
                                             subdetail={`$${product.price}`}
                                         />
@@ -165,14 +167,14 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             ))}
                         </ContentSection>
                     )}
-                    {relatedInPost && (
+                    {relatedInPost && relatedInPost.length > 3 && (
                         <ContentSection title="You may also like">
                             <Carousel slidesToShow={5}>
                                 {relatedInPost.map(product => (
                                     <div>
                                         <CarouselItem
                                             imageUrl={product.image.small_image_url}
-                                            title={product.brand}
+                                            title={product.brand.name}
                                             detail={product.title}
                                             subdetail={`$${product.price}`}
                                         />

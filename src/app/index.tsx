@@ -68,6 +68,14 @@ export default class App extends React.Component<AppProps, AppState> {
         loggedIn: false,
     };
 
+    componentWillMount() {
+        const token = localStorage.getItem("tn_auth_token");
+
+        if (token && token !== "undefined") {
+            this.setState({ loggedIn: true });
+        }
+    }
+
     render() {
         return (
             <ErrorBoundary setLoggedState={this._setLoggedState}>
@@ -77,7 +85,7 @@ export default class App extends React.Component<AppProps, AppState> {
                         <div className="main-content">
                             <Route exact path="/" render={() => <Redirect to="/discover" />} />
                             <Route path="/login" setLoggedState={this._setLoggedState} component={Auth} />
-                            <Route path="/register" component={Auth} />
+                            <Route path="/register" setLoggedState={this._setLoggedState} component={Auth} />
                             <Route path="/discover/:pageName?" component={Discover} />
                             <Route path="/user/:userId/:pageName?" component={User} />
                             <Route path="/shop" component={null} />

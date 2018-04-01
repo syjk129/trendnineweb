@@ -1,11 +1,11 @@
 import {
+    Category,
     Comment,
     Person,
     Post,
     PostPreview,
-    Tag,
     Retailer,
-    Category,
+    Tag,
 } from "./models";
 
 export interface ApiOptions {
@@ -19,10 +19,17 @@ export default class Api {
         this._apiUrl = options.apiUrl;
     }
 
-    async authenticate(email: string, password: string): Promise<void> {
-        const request = { email, password };
+    async authenticate(email: string, password: string, firstName?: string, lastName?: string): Promise<void> {
         try {
-            const token = await this._POST("/api/v1/users/authenticate", request);
+            let token;
+            let request;
+            if (firstName && lastName) {
+                request = { email, password, first_name: firstName, last_name: lastName, is_blogger: false };
+                token = await this._POST("/api/v1/users", request);
+            } else {
+                request = { email, password, firstName, lastName };
+                token = await this._POST("/api/v1/users/authenticate", request);
+            }
             localStorage.setItem(tokenName, token.token);
         } catch (error) {
             throw error;
@@ -236,9 +243,10 @@ export default class Api {
 
     private _getRequestHeader() {
         const token = localStorage.getItem(tokenName);
+
         return {
             "Accept": "application/json",
-            "Authorization": token ? `JWT ${token}` : "",
+            "Authorization": (token && token !== "undefined") ? `JWT ${token}` : "",
             "Content-Type": "application/json",
         };
     }

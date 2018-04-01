@@ -28,6 +28,8 @@ export default function PostCard({ post }: PostCardProps) {
                     <div>
                         <CarouselItem
                             imageUrl={product.image.small_image_url}
+                            large
+                            redirectUrl={`/product/${product.id}`}
                             title={product.brand.name}
                             detail={product.title}
                             subdetail={`$${product.price}`}

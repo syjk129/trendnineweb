@@ -1,5 +1,5 @@
-import * as React from "react";
 import * as H from "history";
+import * as React from "react";
 import { withRouter } from "react-router-dom";
 
 import Image from "../image";
@@ -8,6 +8,8 @@ import "./style.scss";
 
 interface CarouselItemProps {
     imageUrl: string;
+    redirectUrl?: string;
+    large?: boolean;
     title?: string;
     detail?: string;
     selected?: boolean;
@@ -18,17 +20,25 @@ interface CarouselItemProps {
 
 class CarouselItem extends React.Component<CarouselItemProps> {
     render() {
-        const { imageUrl, title, detail, subdetail, selected, onClick } = this.props;
+        const { imageUrl, redirectUrl, large, title, detail, subdetail, selected, onClick, history } = this.props;
 
-        let classes = "carousel-item-cover";
+        let imageClasses = "carousel-item-cover";
 
         if (selected) {
-            classes += " selected";
+            imageClasses += " selected";
         }
 
+        let classes = "carousel-item";
+
+        if (large) {
+            classes += " large";
+        }
+
+        const clickHandler = redirectUrl ? () => history.push(redirectUrl) : onClick;
+
         return (
-            <div className="carousel-item" onClick={onClick}>
-                <Image className={classes} src={imageUrl} square />
+            <div className={classes} onClick={clickHandler}>
+                <Image className={imageClasses} src={imageUrl} square />
                 <p className="carousel-item-title">{title}</p>
                 <p>{detail}</p>
                 <p>{subdetail}</p>

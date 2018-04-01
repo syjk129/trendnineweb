@@ -89,7 +89,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     @autobind
     private _register(event: any) {
         event.preventDefault();
-        this.context.api.register(this.state.firstName, this.state.lastName, this.state.username, this.state.password);
+        this.context.api.authenticate(this.state.username, this.state.password, this.state.firstName, this.state.lastName);
         this.props.setLoggedState(true);
     }
 

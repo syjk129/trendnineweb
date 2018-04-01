@@ -5,4 +5,11 @@ input {
     padding: $base-spacing;
     width: 100%;
     text-align: left;
+
+    &.blank {
+        border: none;
+        background-color: transparent;
+        user-select: none;
+        outline: none;
+    }
 }

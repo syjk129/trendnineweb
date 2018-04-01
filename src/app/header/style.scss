@@ -9,19 +9,16 @@
 
     .user-header,
     .nav-header {
+        display: flex;
         border-bottom: $standard-border-width solid $standard-border-color;
+        padding: 0 $page-spacing;
     }
 
     .user-header {
-        display: flex;
         justify-content: space-between;
-        padding: 0 $base-spacing * 2;
     }
 
     .nav-header {
-        display: flex;
-        padding: 0 $base-spacing * 2;
-
         .nav-pages,
         .nav-logo,
         .search {
@@ -53,10 +50,10 @@
                 float: right;
 
                 input {
-                    border: none;
-                    background-color: transparent;
-                    user-select: none;
-                    outline: none;
+                    font-size: $font-size-2;
+                    letter-spacing: $letter-spacing-1;
+                    width: 80px;
+                    text-align: right;
                 }
             }
         }

@@ -15,10 +15,23 @@
 
     &.large {
         padding: ($base-spacing * 2) 0;
+        margin: 0 ($large-spacing * 2);
+
+        a {
+            font-size: $font-size-2;
+        }
     }
 
     &.selected {
         margin-bottom: $standard-border-width * -2;
         border-bottom: ($standard-border-width * 3) solid $color-accent;
+    }
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &:last-child {
+        margin-right: 0;
     }
 }

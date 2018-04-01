@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match } from "react-router-dom";
-import { PropTypes } from "prop-types";
 
 import { Post } from "../../api/models";
 import { AppContext } from "../../app";
@@ -102,7 +102,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                             </Carousel>
                         </div>
                         <div className="product-details">
-                            <p className="product-brand">{this.state.currentProduct.brand}</p>
+                            <p className="product-brand">{this.state.currentProduct.brand.name}</p>
                             <p className="product-name">{this.state.currentProduct.title}</p>
                             <p className="product-seller">Sold by {this.state.currentProduct.merchant}</p>
                             <p className="product-price">${this.state.currentProduct.price}</p>
@@ -130,7 +130,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                             <div>
                                 <CarouselItem
                                     imageUrl={product.image.small_image_url}
-                                    title={product.brand}
+                                    title={product.brand.name}
                                     detail={product.title}
                                     subdetail={`$${product.price}`}
                                 />

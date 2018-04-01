@@ -1,6 +1,6 @@
+import autobind from "autobind-decorator";
 import * as React from "react";
 import { ChangeEvent } from "react";
-import autobind from "autobind-decorator";
 
 import "./style.scss";
 
@@ -10,10 +10,16 @@ export enum InputType {
     CHECKBOX = "checkbox",
 }
 
+export enum InputVariant {
+    BLANK,
+    OUTLINE,
+}
+
 interface InputProps {
     value?: string;
     className?: string;
     type?: InputType;
+    variant?: InputVariant;
     placeholder?: string;
     disabled?: boolean;
     checked?: boolean;
@@ -27,9 +33,26 @@ export default class Input extends React.Component<InputProps, never> {
     };
 
     render() {
+        const { className, variant } = this.props;
+
+        let classes = "";
+
+        if (className) {
+            classes += ` ${className}`;
+        }
+
+        switch (variant) {
+            case InputVariant.BLANK:
+                classes += " blank";
+                break;
+            case InputVariant.OUTLINE:
+                classes += " outlin";
+                break;
+        }
+
         return (
             <input
-                className={this.props.className}
+                className={classes}
                 value={this.props.value}
                 onChange={this._handleChange}
                 onKeyPress={this._handleKeyPress}

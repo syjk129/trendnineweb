@@ -2,15 +2,16 @@
 
 .post {
     display: flex;
-    padding: 0 $base-spacing * 2;
+    padding: 0 $page-spacing;
     margin-top: $navbar-height;
 
     .post-content {
         margin-bottom: $base-spacing * 2;
+        margin-top: $content-spacing;
 
         .post-cover {
             width: 100%;
-            margin-bottom: $base-spacing * 2;
+            margin-bottom: $base-spacing * 4;
         }
 
         .post-title {
