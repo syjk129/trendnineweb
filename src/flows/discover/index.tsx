@@ -50,7 +50,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                 featuredTrendnines,
             ] = await Promise.all([
                 this.context.api.getLatestPosts(queryString),
-                this.context.api.getFeaturedTrendnines(),
+                this.context.api.getTodaysTrendnines(),
             ]);
 
             this.setState({

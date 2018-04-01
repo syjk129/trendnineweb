@@ -76,7 +76,7 @@ export default class Api {
     }
 
     getTodaysTrendnines(pageSize?: number): Promise<Array<Person>> {
-        let url = "/api/v1/todaytrendnine";
+        let url = "/api/v1/influencers/today";
 
         if (pageSize) {
             url += `?page_size=${pageSize}`;
