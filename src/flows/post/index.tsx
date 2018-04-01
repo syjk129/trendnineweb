@@ -1,8 +1,10 @@
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match } from "react-router-dom";
-import { PropTypes } from "prop-types";
 
+import { Comment, Person, Post } from "../../api/models";
+import { AppContext } from "../../app";
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
@@ -12,8 +14,6 @@ import Featured from "../flowComponents/featured";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
 import Tag from "../flowComponents/tag";
-import { AppContext } from "../../app";
-import { Comment, Person, Post } from "../../api/models";
 
 import PostAuthorDetails from "./postAuthorDetails";
 

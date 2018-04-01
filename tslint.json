@@ -17,6 +17,10 @@
         "no-eval": true,
         "no-trailing-whitespace": true,
         "no-unsafe-finally": true,
+        "object-curly-spacing": [
+            true,
+            "always"
+        ],
         "one-line": [
             true,
             "check-open-brace",
@@ -72,6 +76,7 @@
             "check-open-brace",
             "check-whitespace"
         ],
+        "ordered-imports": true,
         "quotemark": [
             true,
             "double"

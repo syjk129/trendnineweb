@@ -20,6 +20,7 @@ import "./style.scss";
 
 interface UserProps {
     match: match<any>;
+    location: any;
     followUser(userId: string): void;
 }
 
@@ -76,6 +77,7 @@ export default class User extends React.Component<UserProps, UserState> {
 
     render() {
         const user = this.state.profile ? this.state.profile.user : null;
+        const pathname = this.props.location.pathname;
 
         return (
             <div className="user">
@@ -119,19 +121,35 @@ export default class User extends React.Component<UserProps, UserState> {
                 <Content>
                     {this.state.profile && (
                         <div className="user-nav">
-                            <NavLink url={`/user/${this._userId}`} onClick={() => this._updatePageName("posts")}>
+                            <NavLink
+                                url={`/user/${this._userId}`}
+                                pathname={pathname}
+                                onClick={() => this._updatePageName("posts")}
+                            >
                                 <p>POSTS</p>
                                 <p>{this.state.profile.blog_post_count}</p>
                             </NavLink>
-                            <NavLink url={`/user/${this._userId}/products`} onClick={() => this._updatePageName("products")}>
+                            <NavLink
+                                url={`/user/${this._userId}/products`}
+                                pathname={pathname}
+                                onClick={() => this._updatePageName("products")}
+                            >
                                 <p>PRODUCTS</p>
                                 <p>{this.state.profile.blog_post_count}</p>
                             </NavLink>
-                            <NavLink url={`/user/${this._userId}/followers`} onClick={() => this._updatePageName("followers")}>
+                            <NavLink
+                                url={`/user/${this._userId}/followers`}
+                                pathname={pathname}
+                                onClick={() => this._updatePageName("followers")}
+                            >
                                 <p>FOLLOWERS</p>
                                 <p>{this.state.profile.follower_count}</p>
                             </NavLink>
-                            <NavLink url={`/user/${this._userId}/following`} onClick={() => this._updatePageName("following")}>
+                            <NavLink
+                                url={`/user/${this._userId}/following`}
+                                pathname={pathname}
+                                onClick={() => this._updatePageName("following")}
+                            >
                                 <p>FOLLOWING</p>
                                 <p>{this.state.profile.following_count}</p>
                             </NavLink>

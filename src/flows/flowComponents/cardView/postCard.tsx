@@ -1,9 +1,9 @@
 import * as React from "react";
 import TimeAgo from "react-timeago";
 
+import { PostPreview } from "../../../api/models";
 import Anchor, { AnchorVariant } from "../../../components/anchor";
 import Wishlist, { WishlistType } from "../../../components/anchor/wishlist";
-import { PostPreview } from "../../../api/models";
 import Author from "../../../components/author";
 import Card from "../../../components/card";
 import Carousel, { CarouselItem } from "../../../components/carousel";

@@ -1,18 +1,19 @@
+
+import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
-import { PropTypes } from "prop-types";
-import autobind from "autobind-decorator";
 
+import { Person, PostPreview } from "../../api/models";
+import { AppContext } from "../../app";
 import Card, { CardContainer } from "../../components/card";
-import Filter from "../flowComponents/filter";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
-import Featured from "../flowComponents/featured";
 import { PostCard } from "../flowComponents/cardView";
+import Featured from "../flowComponents/featured";
+import Filter from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
-import { AppContext } from "../../app";
-import { Person, PostPreview } from "../../api/models";
 
 import "./style.scss";
 

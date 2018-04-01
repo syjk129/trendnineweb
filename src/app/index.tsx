@@ -1,19 +1,19 @@
-import * as React from "react";
-import { PropTypes } from "prop-types";
-import { BrowserRouter as Router, Link, Redirect, Route, browserHistory } from "react-router-dom";
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
+import * as React from "react";
+import { browserHistory, BrowserRouter as Router, Link, Redirect, Route } from "react-router-dom";
 
+import Api from "../api";
 import Auth from "../flows/auth";
 import Discover from "../flows/discover";
 import PostView from "../flows/post";
-import Trending from "../flows/trending";
 import ProductView from "../flows/product";
+import Trending from "../flows/trending";
 import User from "../flows/user";
-import Api from "../api";
 
-import Header from "./header";
-import Footer from "./footer";
 import ErrorBoundary from "./errorBoundary";
+import Footer from "./footer";
+import Header from "./header";
 
 import "../styles/base.scss";
 

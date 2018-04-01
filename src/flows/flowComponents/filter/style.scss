@@ -2,7 +2,7 @@
 
 .filter-container {
     position: fixed;
-    z-index: 999;
+    z-index: 1;
     width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - 4 * #{$base-spacing});
     background-color: $color-grey-0;
 
