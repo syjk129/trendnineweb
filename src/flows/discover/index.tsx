@@ -4,7 +4,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
-import { Person, PostPreview } from "../../api/models";
+import { FeaturedInfleuncer, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
 import Card, { CardContainer } from "../../components/card";
 import Content from "../../components/content";
@@ -25,7 +25,7 @@ interface DiscoverProps {
 interface DiscoverState {
     posts: Array<PostPreview>;
     trendingPosts: Array<PostPreview>;
-    featuredTrendnines: Array<Person>;
+    featuredTrendnines: Array<FeaturedInfleuncer>;
     keyword: string;
     isLoading: boolean;
 }

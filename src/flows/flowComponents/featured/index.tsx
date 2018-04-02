@@ -1,13 +1,13 @@
 import * as React from "react";
 
-import { Person } from "../../../api/models";
+import { FeaturedInfleuncer } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
 import { SidebarSection } from "../section";
 
 import "./style.scss";
 
 interface FeaturedProps {
-    featuredTrendnines: Array<Person>;
+    featuredTrendnines: Array<FeaturedInfleuncer>;
 }
 
 export default class Featured extends React.Component<FeaturedProps> {
@@ -17,13 +17,13 @@ export default class Featured extends React.Component<FeaturedProps> {
                 {this.props.featuredTrendnines.slice(0, 2)
                     .map(trendnine => (
                         <div className="featured-trendnine">
-                            <img src={trendnine.profile_image_url} />
+                            <img src={trendnine.user.profile_image_url} />
                             <div className="trendnine-details">
                                 <p className="trendnine-name">
-                                    {trendnine.first_name}
+                                    {trendnine.user.first_name}
                                 </p>
                                 <p className="trendnine-introduction">
-                                    {trendnine.introduction || "Hello!"}
+                                    {trendnine.user.introduction || "Hello!"}
                                 </p>
                             </div>
                         </div>

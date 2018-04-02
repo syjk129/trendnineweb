@@ -1,17 +1,19 @@
+import Category from "./category";
 import Comment from "./comment";
+import FeaturedInfleuncer from "./featured-influencer";
 import Person from "./person";
 import Post from "./post";
 import PostPreview from "./post-preview";
-import Tag from "./tag";
 import Retailer from "./retailer";
-import Category from "./category";
+import Tag from "./tag";
 
 export {
+    Category,
     Comment,
+    FeaturedInfleuncer,
     Person,
     Post,
     PostPreview,
-    Tag,
     Retailer,
-    Category,
+    Tag,
 };

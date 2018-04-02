@@ -13,13 +13,13 @@ export class FilterConstants {
     static RETAILER = "RETAILER";
     static TAG = "TAG";
 
-    static CATEGORY_PARAM_STRING = "categories";
-    static BRAND_PARAM_STRING = "brands";
+    static CATEGORY_PARAM_STRING = "category_ids";
+    static BRAND_PARAM_STRING = "brand_ids";
     static MAX_PRICE_PARAM_STRING = "max_price";
     static MIN_PRICE_PARAM_STRING = "min_price";
     // static ON_SALE_PARAM_STRING = "isOnSale";
     // static NEW_ARRIVALS_PARAM_STRING = "isNewArrivals";
-    static RETAILER_PARAM_STRING = "merchants";
+    static RETAILER_PARAM_STRING = "merchant_ids";
     static TAG_PARAM_STRING = "tags";
 
     static FILTER_LIST = [
