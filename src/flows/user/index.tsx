@@ -88,7 +88,7 @@ export default class User extends React.Component<UserProps, UserState> {
                             <SidebarSection title={user.username}>
                                 <div className="user-image">
                                     <Image
-                                        src={user.profile_image_url}
+                                        src={user.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
                                         circle
                                     />
                                 </div>

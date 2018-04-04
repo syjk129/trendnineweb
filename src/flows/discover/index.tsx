@@ -80,7 +80,9 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         return (
             <div className="discover">
                 <Sidebar>
-                    <Featured featuredTrendnines={this.state.featuredTrendnines} />
+                    {this.state.featuredTrendnines && this.state.featuredTrendnines.length > 0 &&
+                        <Featured featuredTrendnines={this.state.featuredTrendnines} />
+                    }
                     <SidebarSection title="Trending Posts">
                         <PostRank posts={this.state.trendingPosts} />
                     </SidebarSection>

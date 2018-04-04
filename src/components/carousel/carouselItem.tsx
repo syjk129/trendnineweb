@@ -24,14 +24,14 @@ class CarouselItem extends React.Component<CarouselItemProps> {
 
         let imageClasses = "carousel-item-cover";
 
-        if (selected) {
-            imageClasses += " selected";
-        }
-
         let classes = "carousel-item";
 
         if (large) {
             classes += " large";
+        }
+
+        if (selected) {
+            classes += " selected";
         }
 
         const clickHandler = redirectUrl ? () => history.push(redirectUrl) : onClick;

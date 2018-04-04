@@ -73,7 +73,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
             this.state.currentProduct.alt_images.forEach(image => {
                 images.push(image.url);
             });
-            images.push(this.state.currentProduct.image.small_image_url);
+            images.push(this.state.currentProduct.image.original_image_url);
         }
         // const images = this.state.currentProduct.alt_images.map(image => image.id).concat();
 
@@ -85,6 +85,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
 
         const carouselSettings = {
             vertical: true,
+            focusOnSelect: true,
         };
 
         return (
@@ -92,7 +93,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                 {this.state.currentProduct && (
                     <div className="product-view">
                         <div className="product-images">
-                            <Carousel slidesToShow={5} attributes={carouselSettings}>
+                            <Carousel slidesToShow={images && images.length >= 4 ? 4 : images.length} attributes={carouselSettings}>
                                 {images.map(image => (
                                     <div>
                                         <CarouselItem
@@ -112,19 +113,17 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                             <p className="product-name">{this.state.currentProduct.title}</p>
                             <p className="product-seller">Sold by {this.state.currentProduct.merchant.name}</p>
                             <p className="product-price">${this.state.currentProduct.price}</p>
-                            <p className="product-color">Color</p>
+                            {/* <p className="product-color">Color</p>
                             <select>
                                 {this.state.currentProduct.colors.map(color => (
                                     <option value={color.id}>{color.name}</option>
                                 ))}
-                            </select>
-                            <p>Size</p>
-                            {Array.from(productSizes).map(size => (
-                                <Button variant={ButtonVariant.OUTLINE} inline>{size}</Button>
-                            ))}
-                            <p>Quantity</p>
+                            </select> */}
+                            <p className="product-information">
+                                <div dangerouslySetInnerHTML={{ __html: this.state.currentProduct.description }} />
+                            </p>
                             <div className="button-container">
-                                <Button variant={ButtonVariant.PRIMARY}>Add to bag</Button>
+                                <Button variant={ButtonVariant.PRIMARY} onClick={() => location = this.state.currentProduct.url}>Buy Now</Button>
                                 <Button variant={ButtonVariant.OUTLINE} onClick={this._toggleWishlist}>Add to wishlist</Button>
                             </div>
                         </div>

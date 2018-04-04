@@ -87,6 +87,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                 <SidebarGrid>
                                     <CarouselItem
                                         imageUrl={product.image.small_image_url}
+                                        redirectUrl={`/product/${product.id}`}
                                         title={product.brand.name}
                                         detail={product.title}
                                         subdetail={`$${product.price}`}
@@ -111,6 +112,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                 <SidebarGrid>
                                     <CarouselItem
                                         imageUrl={product.image.small_image_url}
+                                        redirectUrl={`/product/${product.id}`}
                                         title={product.brand.name}
                                         detail={product.title}
                                         subdetail={`$${product.price}`}
@@ -151,6 +153,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                     <div>
                                         <CarouselItem
                                             imageUrl={product.image.small_image_url}
+                                            redirectUrl={`/product/${product.id}`}
                                             title={product.brand.name}
                                             detail={product.title}
                                             subdetail={`$${product.price}`}
@@ -174,6 +177,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                     <div>
                                         <CarouselItem
                                             imageUrl={product.image.small_image_url}
+                                            redirectUrl={`/product/${product.id}`}
                                             title={product.brand.name}
                                             detail={product.title}
                                             subdetail={`$${product.price}`}
