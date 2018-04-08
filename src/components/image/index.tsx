@@ -17,30 +17,34 @@ interface ImageProps {
     onClick?(): void;
 }
 
-export default function Image({ src, className, ratio, square, circle, onClick }: ImageProps) {
-    let classes = "image-container";
+export default class Image extends React.Component<ImageProps> {
+    render() {
+        const { className, square, circle, ratio, onClick, src } = this.props;
 
-    if (className) {
-        classes += ` ${className}`;
+        let classes = "image-container";
+
+        if (className) {
+            classes += ` ${className}`;
+        }
+
+        if (square) {
+            classes += " square-image";
+        }
+
+        if (circle) {
+            classes += " circle-image";
+        }
+
+        switch (ratio) {
+            case ImageRatioVariant.POST_COVER:
+                classes += " post-cover-ratio";
+                break;
+        }
+
+        return (
+            <div className={classes} onClick={onClick}>
+                <img src={src} />
+            </div>
+        );
     }
-
-    if (square) {
-        classes += " square-image";
-    }
-
-    if (circle) {
-        classes += " circle-image";
-    }
-
-    switch (ratio) {
-        case ImageRatioVariant.POST_COVER:
-            classes += " post-cover-ratio";
-            break;
-    }
-
-    return (
-        <div className={classes} onClick={onClick}>
-            <img src={src} />
-        </div>
-    );
 }

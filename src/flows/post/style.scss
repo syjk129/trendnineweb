@@ -26,6 +26,23 @@
     }
 }
 
+.product-tag {
+    background-color: black;
+    color: white;
+    position: absolute;
+    padding: $base-spacing;
+    border-radius: $base-spacing;
+
+    .product-dot {
+        position: absolute;
+        margin-left: -30px;
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        background-color: white;
+    }
+}
+
 .tag-list {
     margin-bottom: $section-spacing;
 }

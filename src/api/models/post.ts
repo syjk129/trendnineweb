@@ -8,6 +8,7 @@ export default class Post {
     cover_image: CoverImage | null;
     modified: string; // TODO: use date
     products: Array<any>; // TODO: create product model
+    product_tags: Array<any>;
     wishlisted: boolean;
     liked: boolean;
     likes: number;

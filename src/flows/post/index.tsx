@@ -1,6 +1,7 @@
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { match } from "react-router-dom";
 
 import { Comment, Person, Post } from "../../api/models";
@@ -17,6 +18,7 @@ import SidebarGrid from "../flowComponents/sidebarGrid";
 import Tag from "../flowComponents/tag";
 
 import PostAuthorDetails from "./postAuthorDetails";
+import ProductTag from "./productTag";
 
 import "./style.scss";
 
@@ -26,6 +28,9 @@ interface PostProps {
 
 interface PostState {
     currentPost: Post;
+    productTags: Array<any>;
+    shouldUpdate: boolean;
+    imageRef: any;
     comments: Array<Comment>;
     posts: Array<Post>;
     relatedProducts: Array<any>;
@@ -37,6 +42,9 @@ export default class PostView extends React.Component<PostProps, PostState> {
 
     state: PostState = {
         currentPost: null,
+        productTags: [],
+        shouldUpdate: true,
+        imageRef: null,
         comments: [],
         posts: [],
         relatedProducts: [],
@@ -67,6 +75,23 @@ export default class PostView extends React.Component<PostProps, PostState> {
         }
     }
 
+    updateTags() {
+        if (this.state.imageRef && this.state.shouldUpdate) {
+            const rect = ReactDOM.findDOMNode(this.state.imageRef).getBoundingClientRect();
+
+            const productTags = this.state.currentPost.product_tags.map(tag => ({
+                product_id: tag.product_id,
+                name: this.state.currentPost.products.find(product => product.id === tag.product_id).title,
+                style: {
+                    left: rect.left + rect.width * tag.x_axis,
+                    top: rect.top + rect.height * tag.y_axis,
+                },
+            }));
+
+            this.setState({ productTags, shouldUpdate: false });
+        }
+    }
+
     render() {
         const { currentPost, comments, relatedProducts } = this.state;
 
@@ -77,6 +102,10 @@ export default class PostView extends React.Component<PostProps, PostState> {
         const productsInPost = currentPost && currentPost.products.length > 0 && this.state.currentPost.products.slice(0, 4);
         const tagsInPost = currentPost && currentPost.tags.length > 0 && currentPost.tags;
         const relatedInPost = relatedProducts && relatedProducts.length > 0 && relatedProducts.slice(0, 4);
+
+        if (currentPost) {
+            this.updateTags();
+        }
 
         return (
             <div className="post">
@@ -127,12 +156,16 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 </Sidebar>
                 <Content>
                     {currentPost && (
-                        <div className="post-content">
+                        <div className="post-content" ref="cover">
                             <Image
                                 className="post-cover"
                                 src={this.state.currentPost.cover_image.original_image_url}
                                 ratio={ImageRatioVariant.POST_COVER}
+                                ref={this._setImageRef}
                             />
+                            {this.state.productTags.map(tag => (
+                                <ProductTag tag={tag} />
+                            ))}
                             <p className="post-title">
                                 {this.state.currentPost.title}
                             </p>
@@ -201,6 +234,12 @@ export default class PostView extends React.Component<PostProps, PostState> {
     }
 
     private _postId: string;
+    private _imageRef: any;
+
+    @autobind
+    private _setImageRef(element: any) {
+        this.setState({ imageRef: element });
+    }
 
     @autobind
     private _submitComment(comment: string, parentCommentId: string) {
