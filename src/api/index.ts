@@ -195,12 +195,10 @@ export default class Api {
         const url = `${this._apiUrl}${path}`;
 
         try {
-            console.log(url);
             const response = await fetch(url, {
                 method: "GET",
                 headers: this._getRequestHeader(),
             });
-            console.log(response);
 
             if (!response.ok) {
                 console.warn("not ok");

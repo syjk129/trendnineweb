@@ -15,7 +15,6 @@ interface CarouselProps {
 export default function Carousel({ className, attributes, children, slidesToShow }: CarouselProps) {
     let settings = {
         adaptiveHeight: false,
-        centerMode: true,
         infinite: true,
         slidesToShow: slidesToShow || 3,
         slidesToScroll: 1,

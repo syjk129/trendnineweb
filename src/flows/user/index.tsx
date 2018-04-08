@@ -90,6 +90,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                     <Image
                                         src={user.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
                                         circle
+                                        square
                                     />
                                 </div>
                                 <p>{user.introduction}</p>
@@ -136,7 +137,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                 onClick={() => this._updatePageName("products")}
                             >
                                 <p>PRODUCTS</p>
-                                <p>{this.state.profile.blog_post_count}</p>
+                                <p>{this.state.profile.product_count}</p>
                             </NavLink>
                             <NavLink
                                 url={`/user/${this._userId}/followers`}

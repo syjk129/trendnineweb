@@ -1,7 +1,15 @@
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import { browserHistory, BrowserRouter as Router, Link, Redirect, Route } from "react-router-dom";
+import {
+    browserHistory,
+    BrowserRouter as Router,
+    Link,
+    match,
+    Redirect,
+    Route,
+    withRouter,
+} from "react-router-dom";
 
 import Api from "../api";
 import Auth from "../flows/auth";
@@ -30,22 +38,28 @@ export interface AppContext {
 
 interface AppProviderProps {
     children: React.ReactNode;
+    location: any;
+    match: match<any>;
 }
 
-class AppProvider extends React.Component<AppProviderProps, never> {
+class AppProviderComponent extends React.Component<AppProviderProps, never> {
     constructor(props: AppProviderProps) {
         super(props);
 
         const api = new Api({
-            apiUrl: "http://54.175.34.30:8000",
+            // apiUrl: "http://54.175.34.30:8000",
             // apiUrl: "http://54.84.23.234:8000",
-            // apiUrl: "http://52.91.113.226:8000",
+            apiUrl: "http://52.91.113.226:8000",
         });
 
         this._api = api;
     }
 
     static childContextTypes: AppContext;
+
+    componentWillReceiveProps() {
+        this.forceUpdate();
+    }
 
     getChildContext(): AppContext {
         return {
@@ -60,9 +74,11 @@ class AppProvider extends React.Component<AppProviderProps, never> {
     private _api: any;
 }
 
-AppProvider.childContextTypes = {
+AppProviderComponent.childContextTypes = {
     api: PropTypes.any,
 };
+
+const AppProvider = withRouter(AppProviderComponent);
 
 export default class App extends React.Component<AppProps, AppState> {
     state: AppState = {

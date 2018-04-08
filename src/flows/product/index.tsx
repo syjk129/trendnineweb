@@ -37,29 +37,33 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
         selectedImage: null,
     };
 
-    async componentWillMount() {
-        this._productId = this.props.match.params.productId;
+    componentWillMount() {
+        this.refreshContent(this.props);
+    }
 
-        try {
-            const [
-                currentProduct,
-                relatedProducts,
-                reviews,
-            ] = await Promise.all([
-                this.context.api.getProduct(this._productId),
-                this.context.api.getRelatedProducts(),
-                this.context.api.getReviews(this._productId),
-            ]);
+    componentWillReceiveProps(props: ProductProps) {
+        this.refreshContent(props);
+    }
 
-            this.setState({
-                currentProduct,
-                relatedProducts,
-                selectedImage: currentProduct.image.original_image_url,
-                reviews,
-            });
-        } catch (err) {
-            console.warn(err);
-        }
+    async refreshContent(props: ProductProps) {
+        this._productId = props.match.params.productId;
+
+        const [
+            currentProduct,
+            relatedProducts,
+            reviews,
+        ] = await Promise.all([
+            this.context.api.getProduct(this._productId),
+            this.context.api.getRelatedProducts(),
+            this.context.api.getReviews(this._productId),
+        ]);
+
+        this.setState({
+            currentProduct,
+            relatedProducts,
+            selectedImage: currentProduct.image.original_image_url,
+            reviews,
+        });
     }
 
     render() {
@@ -86,6 +90,8 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
         const carouselSettings = {
             vertical: true,
             focusOnSelect: true,
+            verticalSwiping: true,
+            arrows: false,
         };
 
         return (
@@ -136,6 +142,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                                 <div>
                                     <CarouselItem
                                         imageUrl={product.image.small_image_url}
+                                        redirectUrl={`/product/${product.id}`}
                                         title={product.brand.name}
                                         detail={product.title}
                                         subdetail={`$${product.price}`}
