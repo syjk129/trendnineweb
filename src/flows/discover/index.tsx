@@ -41,35 +41,39 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         isLoading: true,
     };
 
-    async componentWillMount() {
-        try {
-            const queryString = this.props.location.search;
-            const keyword = new URLSearchParams(queryString);
-            const [
-                trendingPosts,
-                featuredTrendnines,
-            ] = await Promise.all([
-                this.context.api.getTrendingPosts(),
-                this.context.api.getTodaysTrendnines(),
-            ]);
+    componentWillMount() {
+        this.refreshContent(this.props);
+    }
 
-            let posts;
-            if (this.props.location.pathname === "/feed") {
-                posts = await this.context.api.getFeedPosts();
-            } else {
-                posts = await this.context.api.getLatestPosts(queryString);
-            }
+    componentWillReceiveProps(props: DiscoverProps) {
+        this.refreshContent(props);
+    }
 
-            this.setState({
-                posts,
-                trendingPosts,
-                featuredTrendnines,
-                keyword: keyword.get("q") || "",
-                isLoading: false,
-            });
-        } catch (err) {
-            console.warn(err);
+    async refreshContent(props: DiscoverProps) {
+        const queryString = location.search;
+        const keyword = new URLSearchParams(queryString);
+        const [
+            trendingPosts,
+            featuredTrendnines,
+        ] = await Promise.all([
+            this.context.api.getTrendingPosts(),
+            this.context.api.getTodaysTrendnines(),
+        ]);
+
+        let posts;
+        if (location.pathname === "/feed") {
+            posts = await this.context.api.getFeedPosts();
+        } else {
+            posts = await this.context.api.getLatestPosts(queryString);
         }
+
+        this.setState({
+            posts,
+            trendingPosts,
+            featuredTrendnines,
+            keyword: keyword.get("q") || "",
+            isLoading: false,
+        });
     }
 
     render() {
