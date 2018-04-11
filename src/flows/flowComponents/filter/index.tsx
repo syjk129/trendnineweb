@@ -1,12 +1,12 @@
-import * as React from "react";
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
+import * as React from "react";
 
-import { Person, Category } from "../../../api/models";
-import Button, { ButtonVariant } from "../../../components/button";
-import Anchor, { AnchorVariant } from "../../../components/anchor";
-import Icon, { IconVariant } from "../../../components/icon";
+import { Category, Person } from "../../../api/models";
 import { AppContext } from "../../../app";
+import Anchor, { AnchorVariant } from "../../../components/anchor";
+import Button, { ButtonVariant } from "../../../components/button";
+import Icon, { IconVariant } from "../../../components/icon";
 import CategoryTreeFilter from "./filterComponents/categoryTreeFilter";
 import RangeFilter from "./filterComponents/rangeFilter";
 import SearchFilter, { SearchCheckbox } from "./filterComponents/searchFilter";

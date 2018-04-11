@@ -19,21 +19,34 @@
         }
     }
 
-    .content {
-        margin-top: $content-spacing;
-    }
-
     .user-nav {
         border-bottom: $standard-border-width solid $standard-border-color;
     }
 
     .user-image {
         padding: 0 50px;
+        margin-bottom: $base-spacing * 2;
+    }
+
+    .introduction {
+        font-size: $font-size-small;
     }
 
     .sidebar {
         button {
             margin-bottom: $base-spacing * 2;
         }
+    }
+
+    .filter-container {
+        padding-top: $content-spacing;
+
+        .filter-anchor {
+            padding-top: $base-spacing * 2;
+        }
+    }
+
+    .card-container {
+        padding-top: $filter-height + $filter-padding + $content-spacing + 70px;
     }
 }
