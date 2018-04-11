@@ -113,7 +113,7 @@ export default class App extends React.Component<AppProps, AppState> {
                             <Route path="/shop" component={null} />
                             <Route path="*" component={null} />
                         </div>
-                        <Footer />
+                        {/* <Footer /> */}
                     </AppProvider>
                 </Router>
             </ErrorBoundary>

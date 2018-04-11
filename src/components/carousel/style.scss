@@ -1,8 +1,10 @@
 @import "../../styles/variables";
 
 .carousel-item {
-    display: block;
     margin: 0 $base-spacing;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     &.selected {
         border: $standard-border-width solid $standard-border-color;

@@ -8,6 +8,8 @@ import "./style.scss";
 
 interface CarouselItemProps {
     imageUrl: string;
+    imageClass?: string;
+    className?: string;
     redirectUrl?: string;
     large?: boolean;
     title?: string;
@@ -20,11 +22,19 @@ interface CarouselItemProps {
 
 class CarouselItem extends React.Component<CarouselItemProps> {
     render() {
-        const { imageUrl, redirectUrl, large, title, detail, subdetail, selected, onClick, history } = this.props;
+        const { imageUrl, className, imageClass, redirectUrl, large, title, detail, subdetail, selected, onClick, history } = this.props;
 
         let imageClasses = "carousel-item-cover";
 
+        if (imageClass) {
+            imageClasses += ` ${imageClass}`;
+        }
+
         let classes = "carousel-item";
+
+        if (className) {
+            classes += ` ${className}`;
+        }
 
         if (large) {
             classes += " large";
