@@ -1,5 +1,5 @@
 import autobind from "autobind-decorator";
-import * as React from "React";
+import * as React from "react";
 
 import { Comment } from "../../../api/models";
 import Author from "../../../components/author";
