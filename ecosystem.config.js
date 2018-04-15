@@ -2,7 +2,7 @@ module.exports = {
     apps : [
         {
           name: "trendnine",
-          script: "./configs/webpack/prod.js",
+          script: "npm run build && node express.js",
           watch: true,
           env: {
               "PORT": 8080,//you can choose
