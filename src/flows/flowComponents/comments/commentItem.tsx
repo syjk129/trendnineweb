@@ -2,8 +2,8 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import { Comment } from "../../../api/models";
-import Author from "../../../components/author";
 import Anchor, { AnchorVariant } from "../../../components/anchor";
+import Author from "../../../components/author";
 
 import CommentInput from "./commentInput";
 import "./style.scss";

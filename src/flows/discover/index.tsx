@@ -55,17 +55,12 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         const [
             trendingPosts,
             featuredTrendnines,
+            posts,
         ] = await Promise.all([
             this.context.api.getTrendingPosts(),
             this.context.api.getTodaysTrendnines(),
+            location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(queryString),
         ]);
-
-        let posts;
-        if (location.pathname === "/feed") {
-            posts = await this.context.api.getFeedPosts();
-        } else {
-            posts = await this.context.api.getLatestPosts(queryString);
-        }
 
         this.setState({
             posts,
