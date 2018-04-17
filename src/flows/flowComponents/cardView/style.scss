@@ -22,23 +22,20 @@
     .author {
         margin-bottom: $base-spacing;
     }
+}
 
-    .card-footer {
-        height: 40px;
-    }
+.post-card-footer {
+    display: flex;
+    justify-content: space-between;
 }
 
 .created {
-    float: left;
-
     time {
         vertical-align: middle;
     }
 }
 
 .action-btns {
-    float: right;
-
     a {
         vertical-align: middle;
     }

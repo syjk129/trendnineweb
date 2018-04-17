@@ -8,15 +8,6 @@
         margin-bottom: $base-spacing * 2;
     }
 
-    &:hover {
-        cursor: pointer;
-
-        p {
-            color: $color-accent;
-            text-decoration: underline;
-        }
-    }
-
     img {
         flex-shrink: 0;
         display: inline-block;

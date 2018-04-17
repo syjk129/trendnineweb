@@ -123,9 +123,11 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                     />
                                 </SidebarGrid>
                             ))}
-                            <Button variant={ButtonVariant.OUTLINE}>
-                                View More
-                            </Button>
+                            {currentPost.products.length > 4 && (
+                                <Button variant={ButtonVariant.OUTLINE}>
+                                    View More
+                                </Button>
+                            )}
                         </SidebarSection>
                     )}
                     {tagsInPost && (
@@ -137,7 +139,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                     )}
                     {relatedInPost && (
                         <SidebarSection title="You may also like">
-                            {relatedProducts.map(product => (
+                            {relatedInPost.map(product => (
                                 <SidebarGrid>
                                     <CarouselItem
                                         imageUrl={product.image.small_image_url}
@@ -148,9 +150,11 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                     />
                                 </SidebarGrid>
                             ))}
-                            <Button variant={ButtonVariant.OUTLINE}>
-                                View More
-                            </Button>
+                            {relatedProducts.length > 4 && (
+                                <Button variant={ButtonVariant.OUTLINE}>
+                                    View More
+                                </Button>
+                            )}
                         </SidebarSection>
                     )}
                 </Sidebar>
@@ -179,7 +183,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             </div>
                         </div>
                     )}
-                    {productsInPost && productsInPost.length > 3 && (
+                    {productsInPost && (
                         <ContentSection title="Products in this post">
                             <Carousel slidesToShow={5}>
                                 {productsInPost.map(product => (

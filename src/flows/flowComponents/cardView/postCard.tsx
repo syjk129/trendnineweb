@@ -47,12 +47,14 @@ export default function PostCard({ post }: PostCardProps) {
     const footerItem = (
         <div>
             <Author author={post.author} />
-            <div className="created">
-                <Icon variant={IconVariant.TIME}></Icon>&nbsp;&nbsp;<TimeAgo date={post.created} />
-            </div>
-            <div className="action-btns">
-                <Anchor variant={anchorVariant}><Icon variant={IconVariant.LIKE}></Icon>&nbsp;&nbsp;{post.likes} {likeText}</Anchor>
-                <Wishlist id={post.id} type={WishlistType.POST} wishlisted={post.liked}></Wishlist>
+            <div className="post-card-footer">
+                <div className="created">
+                    <Icon variant={IconVariant.TIME}></Icon>&nbsp;&nbsp;<TimeAgo date={post.created} />
+                </div>
+                <div className="action-btns">
+                    <Anchor variant={anchorVariant}><Icon variant={IconVariant.LIKE}></Icon>&nbsp;&nbsp;{post.likes} {likeText}</Anchor>
+                    <Wishlist id={post.id} type={WishlistType.POST} wishlisted={post.liked}></Wishlist>
+                </div>
             </div>
         </div>
     );

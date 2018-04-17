@@ -1,11 +1,10 @@
 import * as React from "react";
 
-import "./style.scss";
+import LinkButton from "./linkButton";
 
-export enum ButtonVariant {
-    PRIMARY = "primary",
-    OUTLINE = "outline",
-}
+import { ButtonVariant } from "./types";
+
+import "./style.scss";
 
 interface ButtonProps {
     className?: string;
@@ -43,3 +42,8 @@ export default function Button({ className, inline, variant, children, onClick }
         </button>
     );
 }
+
+export {
+    ButtonVariant,
+    LinkButton,
+};

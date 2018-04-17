@@ -51,10 +51,10 @@ export default function Icon({ className, large, variant, children }: IconProps)
             classes += " icon-wishlist";
             break;
         case IconVariant.GIRL:
-            classes += " icon-bag";
+            classes += " icon-girl";
             break;
         case IconVariant.BAG:
-            classes += " icon-girl";
+            classes += " icon-bag";
             break;
         default:
             break;

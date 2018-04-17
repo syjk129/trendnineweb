@@ -12,4 +12,5 @@ export default class PostPreview {
     wishlisted: boolean;
     liked: boolean;
     likes: number;
+    rank_change?: number;
 }

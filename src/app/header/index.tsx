@@ -28,7 +28,7 @@ export class Header extends React.Component<HeaderProps, never> {
 
         return (
             <div className="main-header">
-                <div className="user-header">
+                {/* <div className="user-header">
                     <div className="header-left-buttons">
                         <NavLink url="/shop" pathname={pathname}>
                             Shop
@@ -52,19 +52,21 @@ export class Header extends React.Component<HeaderProps, never> {
                             </div>
                         }
                     </div>
-                </div>
+                </div> */}
                 <div className="nav-header">
                     <div className="nav-logo" />
                     <div className="nav-header-links">
                         <div className="nav-pages">
                             <NavLink url="/discover" pathname={pathname} large>Trending</NavLink>
                             <NavLink url="/feed" pathname={pathname} large>Feed</NavLink>
-                            {/* <NavLink url="/discover/new" pathname={pathname} large>New Arrivals</NavLink>
-                            <NavLink url="/discover/brands" pathname={pathname} large>Brands</NavLink> */}
                         </div>
                         <div className="search">
-                            <Icon variant={IconVariant.SEARCH}></Icon>
                             <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
+                            <div className="user-logged-in-buttons">
+                                <Anchor onClick={() => history.push("/profile")}>
+                                    <Icon variant={IconVariant.GIRL} large />
+                                </Anchor>
+                            </div>
                         </div>
                     </div>
                 </div>

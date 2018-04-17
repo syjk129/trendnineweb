@@ -8,10 +8,16 @@ export enum ImageRatioVariant {
     POST_COVER,
 }
 
+export enum ImageFitVariant {
+    COVER,
+    SCALED,
+}
+
 interface ImageProps {
     src: string;
     className?: string;
     ratio?: ImageRatioVariant;
+    fit?: ImageFitVariant;
     square?: boolean;
     circle?: boolean;
     onClick?(): void;
@@ -19,7 +25,7 @@ interface ImageProps {
 
 export default class Image extends React.Component<ImageProps> {
     render() {
-        const { className, square, circle, ratio, onClick, src } = this.props;
+        const { className, square, circle, fit, ratio, onClick, src } = this.props;
 
         let classes = "image-container";
 
@@ -33,6 +39,16 @@ export default class Image extends React.Component<ImageProps> {
 
         if (circle) {
             classes += " circle-image";
+        }
+
+        switch (fit) {
+            case ImageFitVariant.SCALED:
+                classes += " scaled";
+                break;
+            case ImageFitVariant.COVER:
+            default:
+                classes += " cover";
+                break;
         }
 
         switch (ratio) {

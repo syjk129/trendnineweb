@@ -3,7 +3,7 @@ import * as React from "react";
 import { withRouter } from "react-router-dom";
 
 import { FeaturedInfleuncer } from "../../../api/models";
-import Button, { ButtonVariant } from "../../../components/button";
+import Button, { ButtonVariant, LinkButton } from "../../../components/button";
 import { SidebarSection } from "../section";
 
 import "./style.scss";
@@ -20,7 +20,11 @@ class Featured extends React.Component<FeaturedProps> {
             <SidebarSection title="Today's Trendnine">
                 {this.props.featuredTrendnines.slice(0, 2)
                     .map(trendnine => (
-                        <div className="featured-trendnine" onClick={() => history.push(`/user/${trendnine.user.username}`)}>
+                        <LinkButton
+                            className="featured-trendnine"
+                            url={`/user/${trendnine.user.username}`}
+                            variant={ButtonVariant.SECONDARY}
+                        >
                             <img src={trendnine.user.profile_image_url} />
                             <div className="trendnine-details">
                                 <p className="trendnine-name">
@@ -30,7 +34,7 @@ class Featured extends React.Component<FeaturedProps> {
                                     {trendnine.user.introduction || "Hello!"}
                                 </p>
                             </div>
-                        </div>
+                        </LinkButton>
                     ))}
             </SidebarSection>
         );

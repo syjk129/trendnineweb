@@ -2,7 +2,7 @@ import * as H from "history";
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 
-import Image from "../image";
+import Image, { ImageFitVariant } from "../image";
 
 import "./style.scss";
 
@@ -48,7 +48,7 @@ class CarouselItem extends React.Component<CarouselItemProps> {
 
         return (
             <div className={classes} onClick={clickHandler}>
-                <Image className={imageClasses} src={imageUrl} square />
+                <Image className={imageClasses} src={imageUrl} fit={ImageFitVariant.SCALED} square />
                 <p className="carousel-item-title">{title}</p>
                 <p>{detail}</p>
                 <p>{subdetail}</p>
