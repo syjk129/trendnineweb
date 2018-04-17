@@ -191,7 +191,12 @@ export default class User extends React.Component<UserProps, UserState> {
     @autobind
     private _renderPosts() {
         return this.state.posts.map(post => (
-            <PostCard post={post} />
+            <PostCard
+                post={post}
+                likePost={this.context.api.likePost}
+                unlikePost={this.context.api.unlikePost}
+                toggleWishlist={this.context.api.toggleWishlist}
+            />
         ));
     }
 

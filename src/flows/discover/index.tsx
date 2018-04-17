@@ -115,7 +115,12 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     @autobind
     private _renderPosts() {
         return this.state.posts.map(post => (
-            <PostCard post={post} />
+            <PostCard
+                post={post}
+                likePost={() => this.context.api.likePost(post.id)}
+                unlikePost={() => this.context.api.unlikePost(post.id)}
+                toggleWishlist={this.context.api.toggleWishlist}
+            />
         ));
     }
 

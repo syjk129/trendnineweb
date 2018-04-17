@@ -19,6 +19,10 @@
 }
 
 .card-content {
+    .title {
+        height: 40px;
+    }
+
     .author {
         margin-bottom: $base-spacing;
     }

@@ -153,6 +153,14 @@ export default class Api {
         return this._DELETE(`/api/v1/users/${userId}/follow`);
     }
 
+    likePost(postId: string): Promise<void> {
+        return this._POST(`/api/v1/posts/${postId}/like`);
+    }
+
+    unlikePost(postId: string): Promise<void> {
+        return this._DELETE(`/api/v1/posts/${postId}/like`);
+    }
+
     likeComment(postId: string, commentId: string): Promise<void> {
         return this._POST(`/api/v1/posts/${postId}/comments/${commentId}/like`);
     }
