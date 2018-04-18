@@ -54,7 +54,7 @@ export class Header extends React.Component<HeaderProps, never> {
                     </div>
                 </div> */}
                 <div className="nav-header">
-                    <div className="nav-logo" />
+                    <div className="nav-logo" onClick={() => history.push("/discover")} />
                     <div className="nav-header-links">
                         <div className="nav-pages">
                             <NavLink url="/discover" pathname={pathname} large>Trending</NavLink>

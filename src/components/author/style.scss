@@ -4,6 +4,11 @@
     display: flex;
     font-size: $font-size-1;
 
+    &:hover {
+        cursor: pointer;
+        color: $color-accent;
+    }
+
     img {
         display: inline-block;
         height: $icon-size-1;

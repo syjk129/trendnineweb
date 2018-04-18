@@ -10,7 +10,7 @@ import Wishlist, { WishlistType } from "../../components/anchor/wishlist";
 import Author from "../../components/author";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Icon, { IconVariant } from "../../components/icon";
-import Image from "../../components/image";
+import Image, { ImageFitVariant } from "../../components/image";
 import CardContainer from "./cardContainer";
 
 import "./style.scss";
@@ -18,6 +18,7 @@ import "./style.scss";
 interface CardProps {
     imageUrl: string;
     redirectUrl?: string;
+    scaleImage?: boolean;
     title: string;
     history: H.History;
     hoverItem?: React.ReactNode;
@@ -45,7 +46,7 @@ class Card extends React.Component<CardProps, CardState> {
     }
 
     render() {
-        const { imageUrl, redirectUrl, title, history, hoverItem, footerItem } = this.props;
+        const { imageUrl, scaleImage, redirectUrl, title, history, hoverItem, footerItem } = this.props;
 
         const onClick = redirectUrl ? () => history.push(redirectUrl) : undefined;
 
@@ -63,6 +64,7 @@ class Card extends React.Component<CardProps, CardState> {
                 <Image
                     src={imageUrl}
                     onClick={onClick}
+                    fit={scaleImage ? ImageFitVariant.SCALED : ImageFitVariant.COVER}
                     square
                 />
                 <div className="card-content">

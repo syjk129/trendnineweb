@@ -1,5 +1,5 @@
-import * as React from "react";
 import * as H from "history";
+import * as React from "react";
 import { withRouter } from "react-router-dom";
 
 // import { Tag } from "../../../api/models";
@@ -27,7 +27,7 @@ class Tag extends React.Component<TagProps> {
         }
 
         return (
-            <div className={classes} onClick={() => history.push(`/tag/${tag.id}`)}>
+            <div className={classes} onClick={() => history.push(`/discover?q=${tag.content}`)}>
                 {tag.content}
             </div>
         );

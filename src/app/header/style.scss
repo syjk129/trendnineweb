@@ -28,6 +28,10 @@
         .nav-logo {
             width: 300px;
 
+            &:hover {
+                cursor: pointer;
+            }
+
             &::before {
                 content: "";
                 width: 222px;

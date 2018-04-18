@@ -133,6 +133,10 @@ export default class Api {
         return this._GET(`/api/v1/users/${userId}/posts`);
     }
 
+    getWishlist(): Promise<Array<any>> {
+        return this._GET(`/api/v1/wishlist`);
+    }
+
     getProductsForUser(userId: string): Promise<Array<PostPreview>> {
         return this._GET(`/api/v1/users/${userId}/products`);
     }

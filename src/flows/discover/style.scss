@@ -17,6 +17,33 @@
         }
     }
 
+    .card-container:last-of-type {
+        padding-top: $base-spacing * 2;
+    }
+
+    .recommended-trendsetters {
+        margin-top: $base-spacing * 2;
+        margin-bottom: 0;
+        background-color: black;
+        padding: $base-spacing * 3;
+
+        .title {
+            font-size: $font-size-4;
+            margin-bottom: $base-spacing * 2;
+            color: #fff;
+        }
+
+        .slick-prev::before,
+        .slick-next::before {
+            color: #fff;
+        }
+
+        .carousel-item-title {
+            color: #fff;
+            text-transform: none;
+        }
+    }
+
     .no-search-result-text {
         margin-top: -1 * ($filter-height + $filter-padding + $content-spacing) + 2 * $base-spacing;
     }

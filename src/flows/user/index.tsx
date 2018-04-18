@@ -33,6 +33,7 @@ interface UserState {
     products: Array<any>;
     followers: Array<Person>;
     following: Array<Person>;
+    wishlist: any;
 }
 
 export default class User extends React.Component<UserProps, UserState> {
@@ -46,6 +47,7 @@ export default class User extends React.Component<UserProps, UserState> {
         products: [],
         followers: [],
         following: [],
+        wishlist: null,
     };
 
     async componentWillMount() {
@@ -57,12 +59,14 @@ export default class User extends React.Component<UserProps, UserState> {
             products,
             followers,
             following,
+            wishlist,
         ] = await Promise.all([
             this.context.api.getInfluencer(this._userId),
             this.context.api.getPostsForUser(this._userId),
             this.context.api.getProductsForUser(this._userId),
             this.context.api.getUserFollowers(this._userId),
             this.context.api.getUserFollowing(this._userId),
+            this.context.api.getWishlist(),
         ]);
 
         this.setState({
@@ -73,6 +77,7 @@ export default class User extends React.Component<UserProps, UserState> {
             products,
             followers,
             following,
+            wishlist,
         });
     }
 
@@ -110,7 +115,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                 </div>
                             </SidebarSection>
                             <SidebarSection title={`${user.first_name}'s Top Posts`}>
-                                <PostRank posts={this.state.profile.top_posts} />
+                                <PostRank posts={this.state.profile.top_posts} hideRanks hideName />
                             </SidebarSection>
                             <SidebarSection title={`${user.first_name}'s Top Tags`}>
                                 {this.state.profile.top_post_tags.map(tag => (
@@ -156,6 +161,26 @@ export default class User extends React.Component<UserProps, UserState> {
                                     <p>FOLLOWING</p>
                                     <p>{this.state.profile.following_count}</p>
                                 </NavLink>
+                                {this.state.wishlist.post_items &&
+                                    <NavLink
+                                        url={`/user/${this._userId}/post-wishlist`}
+                                        pathname={pathname}
+                                        onClick={() => this._updatePageName("post-wishlist")}
+                                    >
+                                        <p>WISHLIST (Posts)</p>
+                                        <p>&nbsp;</p>
+                                    </NavLink>
+                                }
+                                {this.state.wishlist.product_items &&
+                                    <NavLink
+                                        url={`/user/${this._userId}/product-wishlist`}
+                                        pathname={pathname}
+                                        onClick={() => this._updatePageName("product-wishlist")}
+                                    >
+                                        <p>WISHLIST (Products)</p>
+                                        <p>&nbsp;</p>
+                                    </NavLink>
+                                }
                             </div>
                         )}
                     </Filter>
@@ -185,7 +210,30 @@ export default class User extends React.Component<UserProps, UserState> {
                 return this._renderFollowing();
             case "posts":
                 return this._renderPosts();
+            case "product-wishlist":
+                return this._renderPostWishlist();
+            case "post-wishlist":
+                return this._renderProductWishlist();
         }
+    }
+
+    @autobind
+    private _renderPostWishlist() {
+        return this.state.wishlist.post_items.map(post => (
+            <PostCard
+                post={post}
+                likePost={() => this.context.api.likePost(post.id)}
+                unlikePost={() => this.context.api.unlikePost(post.id)}
+                toggleWishlist={this.context.api.toggleWishlist}
+            />
+        ));
+    }
+
+    @autobind
+    private _renderProductWishlist() {
+        return this.state.wishlist.product_items.map(product => (
+            <ProductCard product={product} />
+        ));
     }
 
     @autobind
@@ -193,8 +241,8 @@ export default class User extends React.Component<UserProps, UserState> {
         return this.state.posts.map(post => (
             <PostCard
                 post={post}
-                likePost={this.context.api.likePost}
-                unlikePost={this.context.api.unlikePost}
+                likePost={() => this.context.api.likePost(post.id)}
+                unlikePost={() => this.context.api.unlikePost(post.id)}
                 toggleWishlist={this.context.api.toggleWishlist}
             />
         ));

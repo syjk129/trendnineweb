@@ -7,6 +7,7 @@ import { match, withRouter } from "react-router-dom";
 import { FeaturedInfleuncer, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
 import Card, { CardContainer } from "../../components/card";
+import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import { PostCard } from "../flowComponents/cardView";
@@ -26,6 +27,7 @@ interface DiscoverState {
     posts: Array<PostPreview>;
     trendingPosts: Array<PostPreview>;
     featuredTrendnines: Array<FeaturedInfleuncer>;
+    recommendedTrendnines: Array<FeaturedInfleuncer>;
     keyword: string;
     isLoading: boolean;
 }
@@ -37,6 +39,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         posts: [],
         trendingPosts: [],
         featuredTrendnines: [],
+        recommendedTrendnines: [],
         keyword: "",
         isLoading: true,
     };
@@ -55,10 +58,12 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         const [
             trendingPosts,
             featuredTrendnines,
+            recommendedTrendnines,
             posts,
         ] = await Promise.all([
             this.context.api.getTrendingPosts(),
             this.context.api.getTodaysTrendnines(),
+            this.context.api.getFeaturedTrendnines(),
             location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(queryString),
         ]);
 
@@ -66,6 +71,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             posts,
             trendingPosts,
             featuredTrendnines,
+            recommendedTrendnines,
             keyword: keyword.get("q") || "",
             isLoading: false,
         });
@@ -99,7 +105,24 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                         )}
                     </Filter>
                     <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this._renderPosts()}
+                        {this._renderPosts(this.state.posts.slice(0, 8))}
+                    </CardContainer>
+                    <div className="recommended-trendsetters">
+                        <p className="title">We recommend these trendesetters</p>
+                        <Carousel slidesToShow={5}>
+                            {this.state.trendingPosts.map(post => (
+                                <div>
+                                    <CarouselItem
+                                        imageUrl={post.cover_image}
+                                        redirectUrl={`/user/${post.id}`}
+                                        title="Scarlett Johannson"
+                                    />
+                                </div>
+                            ))}
+                        </Carousel>
+                    </div>
+                    <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
+                        {this._renderPosts(this.state.posts.slice(8))}
                     </CardContainer>
 
                     {this.state.keyword !== "" && this.state.posts.length < 1 && (
@@ -113,8 +136,8 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     }
 
     @autobind
-    private _renderPosts() {
-        return this.state.posts.map(post => (
+    private _renderPosts(posts: Array<PostPreview>) {
+        return posts.map((post, index) => (
             <PostCard
                 post={post}
                 likePost={() => this.context.api.likePost(post.id)}
