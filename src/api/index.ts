@@ -31,9 +31,14 @@ export default class Api {
                 token = await this._POST("/api/v1/users/authenticate", request);
             }
             localStorage.setItem(tokenName, token.token);
+            return token.token;
         } catch (error) {
             throw error;
         }
+    }
+
+    verifyToken(token: string): Promise<void> {
+        return this._POST("/api/v1/users/token_verify", { token });
     }
 
     getCategories(categoryId?: string): Promise<Array<Category>> {
@@ -139,6 +144,10 @@ export default class Api {
 
     getProductsForUser(userId: string): Promise<Array<PostPreview>> {
         return this._GET(`/api/v1/users/${userId}/products`);
+    }
+
+    getUser(): Promise<Person> {
+        return this._GET("/api/v1/users");
     }
 
     getUserFollowers(userId: string): Promise<Array<Person>> {

@@ -2,6 +2,7 @@ import * as H from "history";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
+import { Person } from "../../api/models";
 import Anchor from "../../components/anchor";
 import Icon, { IconVariant } from "../../components/icon";
 import Input, { InputType, InputVariant } from "../../components/input";
@@ -25,6 +26,7 @@ export class Header extends React.Component<HeaderProps, never> {
         });
 
         const pathname = location.pathname;
+        const user: Person = JSON.parse(localStorage.getItem("user"));
 
         return (
             <div className="main-header">
@@ -63,7 +65,7 @@ export class Header extends React.Component<HeaderProps, never> {
                         <div className="search">
                             <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
                             <div className="user-logged-in-buttons">
-                                <Anchor onClick={() => history.push("/profile")}>
+                                <Anchor onClick={() => history.push(`/user/${user.username}`)}>
                                     <Icon variant={IconVariant.GIRL} large />
                                 </Anchor>
                             </div>

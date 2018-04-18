@@ -34,6 +34,14 @@
         .post-rank-ranking-number {
             width: 40px;
             text-align: center;
+
+            &.positive {
+                color: $color-green-1;
+            }
+
+            &.negative {
+                color: $color-accent;
+            }
         }
 
         .post-rank-ranking-icon {

@@ -38,7 +38,7 @@ class PostRank extends React.Component<PostRankProps> {
                         </div>
                         {!hideRanks && (
                             <div className="post-rank-ranking">
-                                <div className="post-rank-ranking-number">{post.rank_change || 0}</div>
+                                <div className={`post-rank-ranking-number ${this._getRankChangeClasses(post.rank_change)}`}>{post.rank_change || 0}</div>
                                 <div className="post-rank-ranking-number-icon">
                                     {this._getRankIcon(post.rank_change)}
                                 </div>
@@ -53,6 +53,15 @@ class PostRank extends React.Component<PostRankProps> {
                 }
             </div>
         );
+    }
+
+    private _getRankChangeClasses(rankChange: number) {
+        if (rankChange > 0) {
+            return "positive";
+        } else if (rankChange < 0) {
+            return "negative";
+        }
+        return "";
     }
 
     private _getRankIcon(rankChange: number) {

@@ -80,9 +80,11 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     }
 
     @autobind
-    private _login(event: any) {
+    private async _login(event: any) {
         event.preventDefault();
         this.context.api.authenticate(this.state.username, this.state.password);
+        const user = await this.context.api.getUser();
+        localStorage.setItem("user", JSON.stringify(user));
         this.props.setLoggedState(true);
     }
 
