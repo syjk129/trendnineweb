@@ -4,7 +4,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
-import { FeaturedInfleuncer, PostPreview } from "../../api/models";
+import { FeaturedInfleuncer, Person, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
 import Card, { CardContainer } from "../../components/card";
 import Carousel, { CarouselItem } from "../../components/carousel";
@@ -27,7 +27,7 @@ interface DiscoverState {
     posts: Array<PostPreview>;
     trendingPosts: Array<PostPreview>;
     featuredTrendnines: Array<FeaturedInfleuncer>;
-    recommendedTrendnines: Array<FeaturedInfleuncer>;
+    recommendedTrendnines: Array<Person>;
     keyword: string;
     isLoading: boolean;
 }
@@ -110,12 +110,12 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     <div className="recommended-trendsetters">
                         <p className="title">We recommend these trendesetters</p>
                         <Carousel slidesToShow={5}>
-                            {this.state.trendingPosts.map(post => (
+                            {this.state.recommendedTrendnines.map(trendsetter => (
                                 <div>
                                     <CarouselItem
-                                        imageUrl={post.cover_image}
-                                        redirectUrl={`/user/${post.id}`}
-                                        title="Scarlett Johannson"
+                                        imageUrl={trendsetter.profile_image_url}
+                                        redirectUrl={`/user/${trendsetter.id}`}
+                                        title={`${trendsetter.first_name} ${trendsetter.last_name}`}
                                     />
                                 </div>
                             ))}
