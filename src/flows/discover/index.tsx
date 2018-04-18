@@ -55,6 +55,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     async refreshContent(props: DiscoverProps) {
         const queryString = location.search;
         const keyword = new URLSearchParams(queryString);
+        const query = keyword.get("q") ? `keyword=${keyword.get("q")}` : "";
         const [
             trendingPosts,
             featuredTrendnines,
@@ -64,7 +65,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             this.context.api.getTrendingPosts(),
             this.context.api.getTodaysTrendnines(),
             this.context.api.getFeaturedTrendnines(),
-            location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(queryString),
+            location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(query),
         ]);
 
         this.setState({

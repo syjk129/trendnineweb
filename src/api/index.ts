@@ -71,10 +71,9 @@ export default class Api {
         let url = "/api/v1/posts";
 
         if (queryString) {
-            url += `?query=${queryString}`;
+            url += `?${queryString}`;
         }
-
-        return this._GET(`/api/v1/posts?${queryString}`);
+        return this._GET(url);
     }
 
     getTrendingPosts(): Promise<Array<PostPreview>> {
