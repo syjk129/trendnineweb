@@ -145,22 +145,6 @@ export default class User extends React.Component<UserProps, UserState> {
                                     <p>PRODUCTS</p>
                                     <p>{this.state.profile.product_count}</p>
                                 </NavLink>
-                                <NavLink
-                                    url={`/user/${this._userId}/followers`}
-                                    pathname={pathname}
-                                    onClick={() => this._updatePageName("followers")}
-                                >
-                                    <p>FOLLOWERS</p>
-                                    <p>{this.state.profile.follower_count}</p>
-                                </NavLink>
-                                <NavLink
-                                    url={`/user/${this._userId}/following`}
-                                    pathname={pathname}
-                                    onClick={() => this._updatePageName("following")}
-                                >
-                                    <p>FOLLOWING</p>
-                                    <p>{this.state.profile.following_count}</p>
-                                </NavLink>
                                 {this.state.wishlist.post_items &&
                                     <NavLink
                                         url={`/user/${this._userId}/post-wishlist`}
@@ -181,6 +165,22 @@ export default class User extends React.Component<UserProps, UserState> {
                                         <p>&nbsp;</p>
                                     </NavLink>
                                 }
+                                <NavLink
+                                    url={`/user/${this._userId}/followers`}
+                                    pathname={pathname}
+                                    onClick={() => this._updatePageName("followers")}
+                                >
+                                    <p>FOLLOWERS</p>
+                                    <p>{this.state.profile.follower_count}</p>
+                                </NavLink>
+                                <NavLink
+                                    url={`/user/${this._userId}/following`}
+                                    pathname={pathname}
+                                    onClick={() => this._updatePageName("following")}
+                                >
+                                    <p>FOLLOWING</p>
+                                    <p>{this.state.profile.following_count}</p>
+                                </NavLink>
                             </div>
                         )}
                     </Filter>
@@ -211,9 +211,9 @@ export default class User extends React.Component<UserProps, UserState> {
             case "posts":
                 return this._renderPosts();
             case "product-wishlist":
-                return this._renderPostWishlist();
-            case "post-wishlist":
                 return this._renderProductWishlist();
+            case "post-wishlist":
+                return this._renderPostWishlist();
         }
     }
 

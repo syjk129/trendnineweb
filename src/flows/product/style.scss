@@ -30,11 +30,15 @@
 
     .product-details {
         .product-brand {
+            font-family: $font-family-serif;
+            font-weight: $font-weight-bold;
             font-size: $font-size-3;
             margin-bottom: $base-spacing * 2;
         }
 
         .product-name {
+            font-family: $font-family-serif;
+            font-weight: $font-weight-bold;
             font-size: $font-size-4;
         }
 
@@ -43,8 +47,14 @@
         }
 
         .product-price {
+            font-family: $font-family-serif;
+            font-weight: $font-weight-bold;
             font-size: $font-size-3;
             margin-bottom: $base-spacing * 5;
+        }
+
+        .product-information {
+            margin-bottom: $base-spacing * 2;
         }
 
         select {

@@ -29,6 +29,8 @@
 
         .title {
             font-size: $font-size-4;
+            font-family: $font-family-serif;
+            font-weight: $font-weight-bold;
             margin-bottom: $base-spacing * 2;
             color: #fff;
         }
@@ -38,9 +40,15 @@
             color: #fff;
         }
 
+        .image-container {
+            img {
+                object-fit: cover;
+            }
+        }
+
         .carousel-item-title {
+            font-family: $font-family-sans-serif;
             color: #fff;
-            text-transform: none;
         }
     }
 

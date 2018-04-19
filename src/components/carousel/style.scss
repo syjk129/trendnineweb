@@ -23,7 +23,8 @@
     }
 
     .carousel-item-title {
-        text-transform: uppercase;
+        font-family: $font-family-serif;
+        font-weight: $font-weight-bold;
     }
 }
 

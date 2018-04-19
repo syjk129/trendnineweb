@@ -109,7 +109,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                         {this._renderPosts(this.state.posts.slice(0, 8))}
                     </CardContainer>
                     <div className="recommended-trendsetters">
-                        <p className="title">We recommend these trendesetters</p>
+                        <p className="title">Trendesetters you might like</p>
                         <Carousel slidesToShow={5}>
                             {this.state.recommendedTrendnines.map(trendsetter => (
                                 <div>
