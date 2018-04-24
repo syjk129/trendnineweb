@@ -46,12 +46,14 @@
     font-size: $font-size-1;
     letter-spacing: $letter-spacing-1 * 2;
     text-decoration: none;
+    color: $color-grey-2;
 
     &:hover {
         cursor: pointer;
+        color: $color-accent;
     }
 
-    &.link-button-primary {
+    &.selected {
         color: $color-accent;
 
         &:hover {
@@ -59,11 +61,7 @@
         }
     }
 
-    &.link-button-secondary {
-        color: $color-grey-2;
-
-        &:hover {
-            color: $color-accent;
-        }
+    .icon {
+        margin-right: $base-spacing / 2;
     }
 }

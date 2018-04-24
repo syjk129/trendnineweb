@@ -5,8 +5,6 @@ import { withRouter } from "react-router-dom";
 import TimeAgo from "react-timeago";
 
 import { Post } from "../../api/models";
-import Anchor, { AnchorVariant } from "../../components/anchor";
-import Wishlist, { WishlistType } from "../../components/anchor/wishlist";
 import Author from "../../components/author";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Icon, { IconVariant } from "../../components/icon";

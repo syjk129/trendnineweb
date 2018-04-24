@@ -41,20 +41,22 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         featuredTrendnines: [],
         recommendedTrendnines: [],
         keyword: "",
-        isLoading: true,
+        isLoading: false,
     };
 
     componentWillMount() {
+        this.setState({ isLoading: true });
         this.refreshContent(this.props);
     }
 
     componentWillReceiveProps(props: DiscoverProps) {
+        this.setState({ isLoading: true });
         this.refreshContent(props);
     }
 
     async refreshContent(props: DiscoverProps) {
         const queryString = location.search;
-        const keyword = new URLSearchParams(queryString);
+        const keyword = new URLSearchParams(location.search);
         const [
             trendingPosts,
             featuredTrendnines,
@@ -79,7 +81,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     render() {
         if (this.state.isLoading) {
-            return null;
+            return "Loading...";
         }
 
         return (
@@ -140,11 +142,26 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         return posts.map((post, index) => (
             <PostCard
                 post={post}
-                likePost={() => this.context.api.likePost(post.id)}
-                unlikePost={() => this.context.api.unlikePost(post.id)}
-                toggleWishlist={this.context.api.toggleWishlist}
+                likePost={this._likePost}
+                unlikePost={this._unlikePost}
+                toggleWishlist={this._toggleWishlist}
             />
         ));
+    }
+
+    @autobind
+    private _toggleWishlist(postId: string, type: string) {
+        return this.context.api.toggleWishlist(postId, type);
+    }
+
+    @autobind
+    private _likePost(postId: string) {
+        return this.context.api.likePost(postId);
+    }
+
+    @autobind
+    private _unlikePost(postId: string) {
+        return this.context.api.unlikePost(postId);
     }
 
     @autobind

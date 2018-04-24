@@ -1,12 +1,11 @@
-import * as React from "react";
-import { Range } from "rc-slider";
 import autobind from "autobind-decorator";
+import { Range } from "rc-slider";
+import "rc-slider/assets/index.css";
+import * as React from "react";
 
-import Anchor, { AnchorVariant } from "../../../../components/anchor";
 import Button, { ButtonVariant } from "../../../../components/button";
 
 import "./style.scss";
-import "rc-slider/assets/index.css";
 
 interface RangeFilterProps {
     active: boolean;

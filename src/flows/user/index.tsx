@@ -222,9 +222,9 @@ export default class User extends React.Component<UserProps, UserState> {
         return this.state.wishlist.post_items.map(post => (
             <PostCard
                 post={post}
-                likePost={() => this.context.api.likePost(post.id)}
-                unlikePost={() => this.context.api.unlikePost(post.id)}
-                toggleWishlist={this.context.api.toggleWishlist}
+                likePost={this._likePost}
+                unlikePost={this._unlikePost}
+                toggleWishlist={this._toggleWishlist}
             />
         ));
     }
@@ -232,7 +232,7 @@ export default class User extends React.Component<UserProps, UserState> {
     @autobind
     private _renderProductWishlist() {
         return this.state.wishlist.product_items.map(product => (
-            <ProductCard product={product} />
+            <ProductCard product={product} toggleWishlist={this._toggleWishlist} />
         ));
     }
 
@@ -241,9 +241,9 @@ export default class User extends React.Component<UserProps, UserState> {
         return this.state.posts.map(post => (
             <PostCard
                 post={post}
-                likePost={() => this.context.api.likePost(post.id)}
-                unlikePost={() => this.context.api.unlikePost(post.id)}
-                toggleWishlist={this.context.api.toggleWishlist}
+                likePost={this._likePost}
+                unlikePost={this._unlikePost}
+                toggleWishlist={this._toggleWishlist}
             />
         ));
     }
@@ -251,7 +251,7 @@ export default class User extends React.Component<UserProps, UserState> {
     @autobind
     private _renderProducts() {
         return this.state.products.map(product => (
-            <ProductCard product={product} />
+            <ProductCard product={product} toggleWishlist={this._toggleWishlist} />
         ));
     }
 
@@ -270,15 +270,26 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 
     @autobind
+    private _likePost(postId: string) {
+        return this.context.api.likePost(postId);
+    }
+
+    @autobind
+    private _unlikePost(postId: string) {
+        return this.context.api.unlikePost(postId);
+    }
+
+    @autobind
+    private _toggleWishlist(postId: string, type: string) {
+        return this.context.api.toggleWishlist(postId, type);
+    }
+
+    @autobind
     private _toggleSubscribe() {
-        try {
-            if (this.state.followed) {
-                this.context.api.unfollowUser(this._userId);
-            } else {
-                this.context.api.followUser(this._userId);
-            }
-        } catch (error) {
-            throw new Error(error);
+        if (this.state.followed) {
+            this.context.api.unfollowUser(this._userId);
+        } else {
+            this.context.api.followUser(this._userId);
         }
 
         this.setState({ followed: !this.state.followed });

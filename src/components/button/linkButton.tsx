@@ -2,35 +2,45 @@ import * as H from "history";
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 
+import Icon, { IconVariant } from "../icon";
+
 import { ButtonProps, ButtonVariant } from "./types";
 
-interface LinkButtonProps extends ButtonProps {
+interface LinkButtonProps {
+    selected?: boolean;
     url?: string;
+    icon?: IconVariant;
+    className?: string;
+    inline?: boolean;
+    children: React.ReactNode;
     history: H.History;
+    onClick?(): void;
 }
 
 class LinkButton extends React.Component<LinkButtonProps> {
     render() {
-        const { url, history, className, variant, children, onClick } = this.props;
+        const {
+            selected,
+            url,
+            icon,
+            history,
+            className,
+            children,
+            onClick,
+        } = this.props;
 
         let classes = "link-button";
         if (className) {
             classes += ` ${className}`;
         }
 
-        switch (variant) {
-            case ButtonVariant.SECONDARY:
-                classes += " link-button-secondary";
-                break;
-            case ButtonVariant.PRIMARY:
-            default:
-                classes += " link-button-primary";
-                break;
+        if (selected) {
+            classes += " selected";
         }
-
 
         return (
             <a className={classes} onClick={onClick || (() => history.push(url))}>
+                {icon && <Icon variant={icon} />}
                 {children}
             </a>
         );
