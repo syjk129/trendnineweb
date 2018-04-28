@@ -31,13 +31,13 @@ class Wishlist extends React.Component<WishlistProps, WishlistState> {
 
     render() {
         const { id, type, wishlisted } = this.props;
-
+        const wishlistVariant = this.state.active ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
         return (
             <Anchor
-                variant={this.state.active ? AnchorVariant.PRIMARY : AnchorVariant.SECONDARY}
+                variant={AnchorVariant.SECONDARY}
                 onClick={this._toggleWishlist}
             >
-                <Icon variant={IconVariant.WISHLIST}></Icon>&nbsp;&nbsp;Wishlist
+                <Icon variant={wishlistVariant}></Icon>&nbsp;&nbsp;Wishlist
             </Anchor>
         );
     }

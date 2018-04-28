@@ -63,6 +63,7 @@ export class Header extends React.Component<HeaderProps, never> {
                             <NavLink url="/feed" pathname={pathname} large>Feed</NavLink>
                         </div>
                         <div className="search">
+                            <Icon variant={IconVariant.SEARCH}></Icon>
                             <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
                             <div className="user-logged-in-buttons">
                                 <Anchor onClick={() => history.push(`/user/${user.username}`)}>

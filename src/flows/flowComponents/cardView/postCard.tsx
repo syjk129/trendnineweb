@@ -58,7 +58,7 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
             </div>
         );
 
-        const anchorVariant = this.state.liked ? AnchorVariant.PRIMARY : AnchorVariant.SECONDARY;
+        const likeVariant =  this.state.liked ? IconVariant.LIKE_FILLED : IconVariant.LIKE;
         const likeText = this.state.liked ? "Likes" : "Like";
 
         const footerItem = (
@@ -70,10 +70,10 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                     </div>
                     <div className="action-btns">
                         <Anchor
-                            variant={anchorVariant}
+                            variant={AnchorVariant.SECONDARY}
                             onClick={this._likeUnlikePost}
                         >
-                            <Icon variant={IconVariant.LIKE}></Icon>&nbsp;&nbsp;{this.state.likes} {likeText}
+                            <Icon variant={likeVariant}></Icon>&nbsp;&nbsp;{this.state.likes} {likeText}
                         </Anchor>
                         <Wishlist
                             id={post.id}

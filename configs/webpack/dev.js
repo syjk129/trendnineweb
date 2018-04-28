@@ -19,11 +19,15 @@ module.exports = merge(commonConfig, {
   module: {
       rules: [
           {
-            test: /\.(gif|png|jpg|jpeg)$/,
-            loader: 'url-loader',
-            options: {
-                limit: 8192
-            }
+            test: /\.(jpg|jpeg|png|svg)$/i,
+            loaders: [
+                {
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[hash].[ext]'
+                    }
+                }
+            ]
           }
       ]
   },
