@@ -123,7 +123,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         var clientHeight = document.documentElement.clientHeight || window.innerHeight;
         var scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-        if (scrolledToBottom && !this.props.isLoading) {
+        if (scrolledToBottom) {
             this.paginateNextPosts(this.props);
         }
     }
