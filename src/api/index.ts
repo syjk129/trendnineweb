@@ -4,8 +4,8 @@ import {
     Pagination,
     Person,
     Post,
-    Posts,
     PostPreview,
+    Posts,
     Retailer,
     Tag,
 } from "./models";
@@ -69,8 +69,8 @@ export default class Api {
         return this._GET(url);
     }
 
-    getLatestPosts(queryString?: string, next_token: string): Promise<Posts> {
-        return this._GET_PAGINATION(`/api/v1/posts?${queryString}`, next_token);
+    getLatestPosts(queryString?: string, nextToken?: string): Promise<Posts> {
+        return this._GET_PAGINATION(`/api/v1/posts?${queryString}`, nextToken);
     }
 
     getTrendingPosts(): Promise<Array<PostPreview>> {
@@ -233,13 +233,13 @@ export default class Api {
     }
 
     private async _GET_PAGINATION(path: string, next_token: string): Promise<any> {
-        const url = `${this._apiUrl}${path}`;
+        let url = `${this._apiUrl}${path}`;
 
         if (next_token != null) {
-            url += `&next_token=${next_token}`
+            url += `&next_token=${next_token}`;
         }
 
-        console.log(url)
+        console.log(url);
 
         try {
             const response = await fetch(url, {
@@ -256,7 +256,7 @@ export default class Api {
             }
 
             const responseJson = await response.json();
-            return { 
+            return {
                 list: responseJson.result,
                 next_token: responseJson.next_token,
             };

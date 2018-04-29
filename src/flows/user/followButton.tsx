@@ -10,7 +10,7 @@ interface FollowButtonProps {
 
 export default function FollowButton({ followed, children, onClick }: FollowButtonProps) {
     return (
-        <Button variant={followed ? ButtonVariant.PRIMARY : ButtonVariant.OUTLINE} onClick={onClick}>
+        <Button variant={followed ? ButtonVariant.OUTLINE : ButtonVariant.PRIMARY } onClick={onClick}>
             {followed ? "Unfollow" : "Follow"}
         </Button>
     );

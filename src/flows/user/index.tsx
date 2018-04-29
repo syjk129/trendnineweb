@@ -101,7 +101,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                 <p className="introduction">{user.introduction}</p>
                                 <FollowButton
                                     followed={this.state.followed}
-                                    onClick={this._toggleSubscribe}
+                                    onClick={() => this._toggleSubscribe(this._userId)}
                                 />
                                 <div className="followers">
                                     <div>
@@ -126,7 +126,7 @@ export default class User extends React.Component<UserProps, UserState> {
                     )}
                 </Sidebar>
                 <Content>
-                    <Filter onApply={() => {}}>
+                    <div className="filter-container">
                         {this.state.profile && (
                             <div className="user-nav">
                                 <NavLink
@@ -183,7 +183,10 @@ export default class User extends React.Component<UserProps, UserState> {
                                 </NavLink>
                             </div>
                         )}
-                    </Filter>
+                        <Filter
+                            className={this.state.pageName === "followers" || this.state.pageName === "following"  ? "hidden" : ""}
+                            onApply={() => {}} />
+                    </div>
                     <CardContainer>
                         {this._renderContent()}
                     </CardContainer>
@@ -258,14 +261,14 @@ export default class User extends React.Component<UserProps, UserState> {
     @autobind
     private _renderFollowers() {
         return this.state.followers.map(user => (
-            <UserCard user={user} />
+            <UserCard user={user} following={false} toggleFollowing={() => this._toggleSubscribe(user.id)} />
         ));
     }
 
     @autobind
     private _renderFollowing() {
         return this.state.following.map(user => (
-            <UserCard user={user} />
+            <UserCard user={user} following={true} toggleFollowing={() => this._toggleSubscribe(user.id)}/>
         ));
     }
 
@@ -285,11 +288,11 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 
     @autobind
-    private _toggleSubscribe() {
+    private _toggleSubscribe(userId: string) {
         if (this.state.followed) {
-            this.context.api.unfollowUser(this._userId);
+            this.context.api.unfollowUser(userId);
         } else {
-            this.context.api.followUser(this._userId);
+            this.context.api.followUser(userId);
         }
 
         this.setState({ followed: !this.state.followed });

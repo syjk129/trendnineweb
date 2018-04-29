@@ -57,11 +57,11 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     }
 
     componentDidMount() {
-        window.addEventListener('scroll', this.onScroll, false);
+        window.addEventListener("scroll", this.onScroll, false);
     }
 
     componentDidUnmount() {
-        window.removeEventListener('scroll', this.onScroll, false);
+        window.removeEventListener("scroll", this.onScroll, false);
     }
 
     async refreshContent(props: DiscoverProps) {
@@ -86,7 +86,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             posts_next_token: posts.next_token,
             trendingPosts: trendingPosts,
             featuredTrendnines: featuredTrendnines,
-            recommendedTrendnines:recommendedTrendnines,
+            recommendedTrendnines: recommendedTrendnines,
             keyword: keyword.get("q") || "",
             isLoading: false,
         });
@@ -94,7 +94,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     async paginateNextPosts(props: DiscoverProps) {
         if (this.state.posts_next_token == null) {
-            return
+            return;
         }
 
         const queryString = location.search;
@@ -102,7 +102,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         const [
             new_posts,
         ] = await Promise.all([
-            location.pathname === "/feed" ? this.context.api.getFeedPosts(this.state.posts_next_token) 
+            location.pathname === "/feed" ? this.context.api.getFeedPosts(this.state.posts_next_token)
                                             : this.context.api.getLatestPosts(queryString, this.state.posts_next_token),
         ]);
 
@@ -118,12 +118,12 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     }
 
     onScroll = () => {
-        var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        var scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-        var clientHeight = document.documentElement.clientHeight || window.innerHeight;
-        var scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+        let clientHeight = document.documentElement.clientHeight || window.innerHeight;
+        let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-        if (scrolledToBottom && !this.props.isLoading) {
+        if (scrolledToBottom && !this.state.isLoading) {
             this.paginateNextPosts(this.props);
         }
     }
@@ -144,17 +144,17 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     </SidebarSection>
                 </Sidebar>
                 <Content>
-                    <Filter
-                        onApply={this._filterPosts}
-                        className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""}
-                    >
+                    <div className="filter-container">
                         {this.state.keyword !== "" && (
                             <div className="search-text-container">
                                 <div className="search-help">You searched for</div>
                                 <div className="search-text">{this.state.keyword}</div>
                             </div>
                         )}
-                    </Filter>
+                        <Filter
+                        onApply={this._filterPosts}
+                        className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
+                    </div>
                     <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
                         {this._renderPosts(this.state.posts.slice(0, 8))}
                     </CardContainer>
