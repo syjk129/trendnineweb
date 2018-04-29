@@ -25,6 +25,7 @@ interface DiscoverProps {
 
 interface DiscoverState {
     posts: Array<PostPreview>;
+    posts_next_token: string;
     trendingPosts: Array<PostPreview>;
     featuredTrendnines: Array<FeaturedInfleuncer>;
     recommendedTrendnines: Array<Person>;
@@ -37,6 +38,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     state: DiscoverState = {
         posts: [],
+        posts_next_token: "",
         trendingPosts: [],
         featuredTrendnines: [],
         recommendedTrendnines: [],
@@ -52,6 +54,14 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     componentWillReceiveProps(props: DiscoverProps) {
         this.setState({ isLoading: true });
         this.refreshContent(props);
+    }
+
+    componentDidMount() {
+        window.addEventListener('scroll', this.onScroll, false);
+    }
+
+    componentDidUnmount() {
+        window.removeEventListener('scroll', this.onScroll, false);
     }
 
     async refreshContent(props: DiscoverProps) {
@@ -72,13 +82,50 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         ]);
 
         this.setState({
-            posts,
-            trendingPosts,
-            featuredTrendnines,
-            recommendedTrendnines,
+            posts: posts.list,
+            posts_next_token: posts.next_token,
+            trendingPosts: trendingPosts,
+            featuredTrendnines: featuredTrendnines,
+            recommendedTrendnines:recommendedTrendnines,
             keyword: keyword.get("q") || "",
             isLoading: false,
         });
+    }
+
+    async paginateNextPosts(props: DiscoverProps) {
+        if (this.state.posts_next_token == null) {
+            return
+        }
+
+        const queryString = location.search;
+
+        const [
+            new_posts,
+        ] = await Promise.all([
+            location.pathname === "/feed" ? this.context.api.getFeedPosts(this.state.posts_next_token) 
+                                            : this.context.api.getLatestPosts(queryString, this.state.posts_next_token),
+        ]);
+
+        let posts = this.state.posts.concat(new_posts.list);
+        posts = posts.filter((post, index, arr) => {
+            return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
+        });
+
+        this.setState({
+            posts: posts,
+            posts_next_token: new_posts.next_token,
+        });
+    }
+
+    onScroll = () => {
+        var scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        var scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+        var clientHeight = document.documentElement.clientHeight || window.innerHeight;
+        var scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+        if (scrolledToBottom && !this.props.isLoading) {
+            this.paginateNextPosts(this.props);
+        }
     }
 
     render() {
