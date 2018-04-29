@@ -1,8 +1,9 @@
 @import "../../../styles/variables";
 
 .tag {
-    margin-bottom: $base-spacing;
+    margin-bottom: $base-spacing-sm;
     font-size: $font-size-1;
+    line-height: $line-height-1;
 
     &.inline-tag {
         display: inline-block;

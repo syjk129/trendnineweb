@@ -20,8 +20,8 @@
         }
 
         .post-details {
-            line-height: $font-size-1 * 2;
-            letter-spacing: 0.01em;
+            font-size: $font-size-1;
+            line-height: $line-height-1;
         }
     }
 }

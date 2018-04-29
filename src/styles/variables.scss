@@ -11,6 +11,7 @@ $page-spacing: 40px;
 $content-spacing: 45px;
 $card-spacing: 15px;
 $base-spacing: 10px;
+$base-spacing-sm: 5px;
 $large-spacing: 18px;
 $button-height: 40px;
 $filter-height: 16px;
@@ -28,8 +29,11 @@ $min-card-width: 280px;
 $standard-border-width: 1px;
 $standard-border-color: $text-primary;
 
-$sidebar-width: 340px;
+$sidebar-width: 285px;
 $sidebar-padding: $base-spacing * 4.5;
+
+$ranking-img-height: 80px;
+$ranking-img-width: $ranking-img-height;
 
 $section-spacing: 50px;
 $filter-content-max-height: 360px;
