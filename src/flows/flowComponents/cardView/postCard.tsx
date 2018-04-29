@@ -3,9 +3,8 @@ import * as React from "react";
 import TimeAgo from "react-timeago";
 
 import { PostPreview } from "../../../api/models";
-import Anchor, { AnchorVariant } from "../../../components/anchor";
-import Wishlist, { WishlistType } from "../../../components/anchor/wishlist";
 import Author from "../../../components/author";
+import { LinkButton } from "../../../components/button";
 import Card from "../../../components/card";
 import Carousel, { CarouselItem } from "../../../components/carousel";
 import Icon, { IconVariant} from "../../../components/icon";
@@ -14,20 +13,22 @@ import "./style.scss";
 
 interface PostCardProps {
     post: PostPreview;
-    likePost(): Promise<void>;
-    unlikePost(): Promise<void>;
+    likePost(postId: string): Promise<void>;
+    unlikePost(postId: string): Promise<void>;
     toggleWishlist(postId: string, type: string): Promise<void>;
 }
 
 interface PostCardState {
     likes: number;
     liked: boolean;
+    wishlisted: boolean;
 }
 
 export default class PostCard extends React.Component<PostCardProps, PostCardState> {
     state: PostCardState = {
         likes: this.props.post.likes,
         liked: this.props.post.liked,
+        wishlisted: this.props.post.wishlisted,
     };
 
     render() {
@@ -69,18 +70,20 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                         <Icon variant={IconVariant.TIME}></Icon>&nbsp;&nbsp;<TimeAgo date={post.created} />
                     </div>
                     <div className="action-btns">
-                        <Anchor
-                            variant={AnchorVariant.SECONDARY}
+                        <LinkButton
+                            icon={likeVariant}
+                            selected={this.state.liked}
                             onClick={this._likeUnlikePost}
                         >
-                            <Icon variant={likeVariant}></Icon>&nbsp;&nbsp;{this.state.likes} {likeText}
-                        </Anchor>
-                        <Wishlist
-                            id={post.id}
-                            type={WishlistType.POST}
-                            wishlisted={post.wishlisted}
-                            onClick={() => this.props.toggleWishlist(post.id, "blog")}
-                        />
+                            {this.state.likes} {this.state.likes > 1 ? "Likes" : "Like"}
+                        </LinkButton>
+                        <LinkButton
+                            icon={IconVariant.WISHLIST}
+                            selected={this.state.wishlisted}
+                            onClick={this._toggleWishlist}
+                        >
+                            Wishlist
+                        </LinkButton>
                     </div>
                 </div>
             </div>
@@ -98,12 +101,18 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
     }
 
     @autobind
+    private _toggleWishlist() {
+        this.props.toggleWishlist(this.props.post.id, "blog");
+        this.setState({ wishlisted: !this.state.wishlisted });
+    }
+
+    @autobind
     private _likeUnlikePost() {
         if (this.state.liked) {
-            this.props.unlikePost();
+            this.props.unlikePost(this.props.post.id);
             this.setState({ liked: false, likes: this.state.likes - 1 });
         } else {
-            this.props.likePost();
+            this.props.likePost(this.props.post.id);
             this.setState({ liked: true, likes: this.state.likes + 1 });
         }
     }

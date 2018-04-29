@@ -4,8 +4,7 @@ import * as React from "react";
 
 import { Category, Person } from "../../../api/models";
 import { AppContext } from "../../../app";
-import Anchor, { AnchorVariant } from "../../../components/anchor";
-import Button, { ButtonVariant } from "../../../components/button";
+import Button, { ButtonVariant, LinkButton } from "../../../components/button";
 import Icon, { IconVariant } from "../../../components/icon";
 import CategoryTreeFilter from "./filterComponents/categoryTreeFilter";
 import RangeFilter from "./filterComponents/rangeFilter";
@@ -57,21 +56,23 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
             <div className="filter-container">
                 {this.props.children}
                 <div className={`filter-anchor ${this.props.className}`}>
-                    <Anchor
-                        variant={AnchorVariant.SECONDARY}
-                        onClick={this._toggleFilter}>Filter&nbsp;&nbsp;
+                    <LinkButton onClick={this._toggleFilter}>
+                        Filter&nbsp;&nbsp;
                         <Icon variant={this.state.isFilterActive ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
-                    </Anchor>
+                    </LinkButton>
                 </div>
                 <div className={`filter-content ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>
                     <ul className="filter-list" >
                         {FilterConstants.FILTER_LIST
                         .map(filter => (
                             <li>
-                                <Anchor
-                                    className={this.state.activeFilter === filter ? "selected" : ""}
-                                    variant={AnchorVariant.SECONDARY}
-                                    onClick={() => this._toggleSubFilter(filter)}>{filter}</Anchor>
+                                <LinkButton
+                                    className="filter-menu"
+                                    selected={this.state.activeFilter === filter}
+                                    onClick={() => this._toggleSubFilter(filter)}
+                                >
+                                    {filter}
+                                </LinkButton>
                             </li>
                         ))}
                     </ul>

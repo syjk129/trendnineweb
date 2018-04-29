@@ -3,7 +3,7 @@ import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
 import { Person } from "../../api/models";
-import Anchor from "../../components/anchor";
+import { LinkButton } from "../../components/button/index";
 import Icon, { IconVariant } from "../../components/icon";
 import Input, { InputType, InputVariant } from "../../components/input";
 import NavLink from "../../components/navLink";
@@ -30,31 +30,6 @@ export class Header extends React.Component<HeaderProps, never> {
 
         return (
             <div className="main-header">
-                {/* <div className="user-header">
-                    <div className="header-left-buttons">
-                        <NavLink url="/shop" pathname={pathname}>
-                            Shop
-                        </NavLink>
-                        <NavLink url="/discover" pathname={pathname}>
-                            Discover
-                        </NavLink>
-                    </div>
-                    <div className="header-right-buttons">
-                        {!loggedIn &&
-                            <NavLink url="/login" pathname={pathname}>Log In</NavLink>
-                        }
-                        {loggedIn &&
-                            <div className="user-logged-in-buttons">
-                                <Anchor>
-                                    <Icon variant={IconVariant.BAG} large />
-                                </Anchor>
-                                <Anchor onClick={() => history.push("/profile")}>
-                                    <Icon variant={IconVariant.GIRL} large />
-                                </Anchor>
-                            </div>
-                        }
-                    </div>
-                </div> */}
                 <div className="nav-header">
                     <div className="nav-logo" onClick={() => history.push("/discover")} />
                     <div className="nav-header-links">
@@ -66,9 +41,9 @@ export class Header extends React.Component<HeaderProps, never> {
                             <Icon variant={IconVariant.SEARCH}></Icon>
                             <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
                             <div className="user-logged-in-buttons">
-                                <Anchor onClick={() => history.push(`/user/${user.username}`)}>
+                                <LinkButton onClick={() => history.push(`/user/${user.username}`)}>
                                     <Icon variant={IconVariant.GIRL} large />
-                                </Anchor>
+                                </LinkButton>
                             </div>
                         </div>
                     </div>
