@@ -60,6 +60,7 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
         );
 
         const likeVariant =  this.state.liked ? IconVariant.LIKE_FILLED : IconVariant.LIKE;
+        const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
         const likeText = this.state.liked ? "Likes" : "Like";
 
         const footerItem = (
@@ -72,14 +73,12 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                     <div className="action-btns">
                         <LinkButton
                             icon={likeVariant}
-                            selected={this.state.liked}
                             onClick={this._likeUnlikePost}
                         >
                             {this.state.likes} {this.state.likes > 1 ? "Likes" : "Like"}
                         </LinkButton>
                         <LinkButton
-                            icon={IconVariant.WISHLIST}
-                            selected={this.state.wishlisted}
+                            icon={wishlistVariant}
                             onClick={this._toggleWishlist}
                         >
                             Wishlist
