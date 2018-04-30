@@ -8,4 +8,8 @@ export default class Person {
     last_name: string;
     profile_image_url: string;
     introduction: string;
+    product_count: number;
+    follower_count: number;
+    following_count: number;
+    followed: boolean;
 }

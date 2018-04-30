@@ -15,19 +15,18 @@ export default function UserCard({ user, following, toggleFollowing }: UserCardP
         <div>
             <div className="post-card-footer">
                 <div>
-                    posts
+                    { user.product_count } posts
                 </div>
                 <div>
-                    followers
+                    { user.follower_count } followers
                 </div>
                 <div>
-                    following
+                    { user.following_count } following
                 </div>
             </div>
             <div className="post-card-footer">
                 <FollowButton
-                    followed={following}
-                    onClick={toggleFollowing}
+                    user={ user }
                 />
             </div>
         </div>

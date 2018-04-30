@@ -27,7 +27,7 @@
         .post-rank-title {
             margin-top: $base-spacing-sm;
             -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
+            // -webkit-box-orient: vertical;
             display: -webkit-box;
             max-height: $line-height-1 * 3;
             overflow: hidden;

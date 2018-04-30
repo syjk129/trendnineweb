@@ -28,7 +28,6 @@ interface UserProps {
 interface UserState {
     pageName: string;
     profile: any;
-    followed: boolean;
     posts: Array<PostPreview>;
     products: Array<any>;
     followers: Array<Person>;
@@ -42,7 +41,6 @@ export default class User extends React.Component<UserProps, UserState> {
     state: UserState = {
         pageName: "posts",
         profile: null,
-        followed: false,
         posts: [],
         products: [],
         followers: [],
@@ -72,7 +70,6 @@ export default class User extends React.Component<UserProps, UserState> {
         this.setState({
             pageName: this.props.match.params.pageName || "posts",
             profile,
-            followed: profile.followed,
             posts,
             products,
             followers,
@@ -100,8 +97,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                 </div>
                                 <p className="introduction">{user.introduction}</p>
                                 <FollowButton
-                                    followed={this.state.followed}
-                                    onClick={() => this._toggleSubscribe(this._userId)}
+                                    user={ user }
                                 />
                                 <div className="followers">
                                     <div>
@@ -261,14 +257,14 @@ export default class User extends React.Component<UserProps, UserState> {
     @autobind
     private _renderFollowers() {
         return this.state.followers.map(user => (
-            <UserCard user={user} following={false} toggleFollowing={() => this._toggleSubscribe(user.id)} />
+            <UserCard user={user} />
         ));
     }
 
     @autobind
     private _renderFollowing() {
         return this.state.following.map(user => (
-            <UserCard user={user} following={true} toggleFollowing={() => this._toggleSubscribe(user.id)}/>
+            <UserCard user={user} />
         ));
     }
 
@@ -285,17 +281,6 @@ export default class User extends React.Component<UserProps, UserState> {
     @autobind
     private _toggleWishlist(postId: string, type: string) {
         return this.context.api.toggleWishlist(postId, type);
-    }
-
-    @autobind
-    private _toggleSubscribe(userId: string) {
-        if (this.state.followed) {
-            this.context.api.unfollowUser(userId);
-        } else {
-            this.context.api.followUser(userId);
-        }
-
-        this.setState({ followed: !this.state.followed });
     }
 }
 

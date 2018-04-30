@@ -1,6 +1,7 @@
 import * as React from "react";
-import { PropTypes } from "prop-types";
+
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
 import { ChangeEvent } from "react";
 
 import { AppContext } from "../../app";
