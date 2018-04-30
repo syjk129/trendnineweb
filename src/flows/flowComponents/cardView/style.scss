@@ -29,14 +29,34 @@
         text-overflow: ellipsis;
     }
 
+    .title-1 {
+        -webkit-line-clamp: 1;
+        // -webkit-box-orient: vertical;
+        display: -webkit-box;
+        height: $line-height-2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
     .author {
         margin-bottom: $base-spacing;
     }
 }
 
+.post-card-content {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: $base-spacing * 2;
+}
+
 .post-card-footer {
     display: flex;
     justify-content: space-between;
+
+    button {
+        max-width: $button-width-sm;
+        height: $button-height-sm;
+    }
 }
 
 .created {

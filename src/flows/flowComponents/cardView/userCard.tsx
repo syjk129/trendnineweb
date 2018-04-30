@@ -13,7 +13,7 @@ interface UserCardProps {
 export default function UserCard({ user, following, toggleFollowing }: UserCardProps) {
     const footerItem = (
         <div>
-            <div className="post-card-footer">
+            <div className="post-card-content">
                 <div>
                     { user.product_count } posts
                 </div>
@@ -37,6 +37,7 @@ export default function UserCard({ user, following, toggleFollowing }: UserCardP
             redirectUrl={user.id}
             title={user.username}
             footerItem={footerItem}
+            singleLineTitle={true}
         />
     );
 }
