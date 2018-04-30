@@ -3,5 +3,5 @@ import PostPreview from "./post-preview";
 
 export default class Posts {
     list: Array<PostPreview>;
-    token: string;
+    nextToken: string;
 }

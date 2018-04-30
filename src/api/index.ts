@@ -77,8 +77,8 @@ export default class Api {
         return this._GET("/api/v1/posts/trending");
     }
 
-    getFeedPosts(next_token: string): Promise<Posts> {
-        return this._GET_PAGINATION("/api/v1/posts?following_only=true", next_token);
+    getFeedPosts(nextToken?: string): Promise<Posts> {
+        return this._GET_PAGINATION("/api/v1/posts?following_only=true", nextToken);
     }
 
     searchPosts(queryString?: string): Promise<Array<PostPreview>> {
@@ -232,14 +232,12 @@ export default class Api {
         }
     }
 
-    private async _GET_PAGINATION(path: string, next_token: string): Promise<any> {
+    private async _GET_PAGINATION(path: string, nextToken: string): Promise<any> {
         let url = `${this._apiUrl}${path}`;
 
-        if (next_token != null) {
-            url += `&next_token=${next_token}`;
+        if (nextToken != null) {
+            url += `&next_token=${nextToken}`;
         }
-
-        console.log(url);
 
         try {
             const response = await fetch(url, {
@@ -258,7 +256,7 @@ export default class Api {
             const responseJson = await response.json();
             return {
                 list: responseJson.result,
-                next_token: responseJson.next_token,
+                nextToken: responseJson.next_token,
             };
         } catch (err) {
             throw new Error(err);

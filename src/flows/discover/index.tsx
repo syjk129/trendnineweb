@@ -25,7 +25,7 @@ interface DiscoverProps {
 
 interface DiscoverState {
     posts: Array<PostPreview>;
-    posts_next_token: string;
+    postsNextToken: string;
     trendingPosts: Array<PostPreview>;
     featuredTrendnines: Array<FeaturedInfleuncer>;
     recommendedTrendnines: Array<Person>;
@@ -38,7 +38,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     state: DiscoverState = {
         posts: [],
-        posts_next_token: "",
+        postsNextToken: "",
         trendingPosts: [],
         featuredTrendnines: [],
         recommendedTrendnines: [],
@@ -83,7 +83,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
         this.setState({
             posts: posts.list,
-            posts_next_token: posts.next_token,
+            postsNextToken: posts.nextToken,
             trendingPosts: trendingPosts,
             featuredTrendnines: featuredTrendnines,
             recommendedTrendnines: recommendedTrendnines,
@@ -93,27 +93,27 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     }
 
     async paginateNextPosts(props: DiscoverProps) {
-        if (this.state.posts_next_token == null) {
+        if (this.state.postsNextToken == null) {
             return;
         }
 
         const queryString = location.search;
 
         const [
-            new_posts,
+            newPosts,
         ] = await Promise.all([
-            location.pathname === "/feed" ? this.context.api.getFeedPosts(this.state.posts_next_token)
-                                            : this.context.api.getLatestPosts(queryString, this.state.posts_next_token),
+            location.pathname === "/feed" ? this.context.api.getFeedPosts(this.state.postsNextToken)
+                                            : this.context.api.getLatestPosts(queryString, this.state.postsNextToken),
         ]);
 
-        let posts = this.state.posts.concat(new_posts.list);
+        let posts = this.state.posts.concat(newPosts.list);
         posts = posts.filter((post, index, arr) => {
             return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
         });
 
         this.setState({
             posts: posts,
-            posts_next_token: new_posts.next_token,
+            postsNextToken: newPosts.nextToken,
         });
     }
 
@@ -122,7 +122,6 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
         let clientHeight = document.documentElement.clientHeight || window.innerHeight;
         let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-
         if (scrolledToBottom) {
             this.paginateNextPosts(this.props);
         }
