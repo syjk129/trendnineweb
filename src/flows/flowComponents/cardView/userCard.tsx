@@ -15,7 +15,7 @@ export default function UserCard({ user, following, toggleFollowing }: UserCardP
         <div>
             <div className="post-card-content">
                 <div>
-                    { user.product_count } posts
+                    { user.blog_post_count } posts
                 </div>
                 <div>
                     { user.follower_count } followers
