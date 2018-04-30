@@ -150,11 +150,6 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                     />
                                 </SidebarGrid>
                             ))}
-                            {relatedProducts.length > 4 && (
-                                <Button variant={ButtonVariant.OUTLINE}>
-                                    View More
-                                </Button>
-                            )}
                         </SidebarSection>
                     )}
                 </Sidebar>
