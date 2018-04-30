@@ -23,7 +23,6 @@ export default class FollowButton extends React.Component<FollowButtonProps, Fol
     };
 
     render() {
-        console.log(this.state);
         return (
             <Button
                 variant={this.state.followed ? ButtonVariant.OUTLINE : ButtonVariant.PRIMARY }
