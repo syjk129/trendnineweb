@@ -260,7 +260,7 @@ export default class Api {
             });
 
             if (!response.ok) {
-                console.warn("not ok");
+                throw new Error("response");
             }
 
             const responseJson = await response.json();

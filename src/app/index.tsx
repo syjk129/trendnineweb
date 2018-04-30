@@ -101,8 +101,8 @@ export default class App extends React.Component<AppProps, AppState> {
                         <Header loggedIn={this.state.loggedIn} />
                         <div className="main-content">
                             <Route exact path="/" render={() => <Redirect to="/discover" />} />
-                            <Route path="/login" setLoggedState={this._setLoggedState} component={Auth} />
-                            <Route path="/register" setLoggedState={this._setLoggedState} component={Auth} />
+                            <Route path="/login" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />
+                            <Route path="/register" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />
                             <Route path="/discover/:pageName?" component={Discover} />
                             <Route path="/feed" component={Discover} />
                             <Route path="/user/:userId/:pageName?" component={User} />

@@ -71,7 +71,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
 
             this.setState({ currentPost, comments, posts, relatedProducts, featuredTrendnines });
         } catch (err) {
-            console.warn(err);
+            throw new Error(err);
         }
     }
 

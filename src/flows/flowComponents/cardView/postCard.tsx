@@ -99,7 +99,11 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
 
     @autobind
     private _toggleWishlist() {
-        this.props.toggleWishlist(this.props.post.id, "blog");
+        try {
+            this.props.toggleWishlist(this.props.post.id, "blog");
+        } catch (err) {
+            throw new Error(err);
+        }
         this.setState({ wishlisted: !this.state.wishlisted });
     }
 

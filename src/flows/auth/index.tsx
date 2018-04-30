@@ -1,6 +1,6 @@
-import * as React from "react";
-import { PropTypes } from "prop-types";
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
+import * as React from "react";
 import { ChangeEvent } from "react";
 import { match } from "react-router";
 
@@ -37,7 +37,6 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     };
 
     render() {
-        console.log(this.props.match);
         return (
             <div>
                 {this._isNewUser() ? this._renderRegisterForm() : this._renderLoginForm()}
