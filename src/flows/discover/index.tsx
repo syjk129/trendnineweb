@@ -155,24 +155,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                         className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
                     </div>
                     <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this._renderPosts(this.state.posts.slice(0, 8))}
-                    </CardContainer>
-                    <div className="recommended-trendsetters">
-                        <p className="title">Trendesetters you might like</p>
-                        <Carousel slidesToShow={5}>
-                            {this.state.recommendedTrendnines.map(trendsetter => (
-                                <div>
-                                    <CarouselItem
-                                        imageUrl={trendsetter.profile_image_url}
-                                        redirectUrl={`/user/${trendsetter.id}`}
-                                        title={`${trendsetter.first_name} ${trendsetter.last_name}`}
-                                    />
-                                </div>
-                            ))}
-                        </Carousel>
-                    </div>
-                    <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this._renderPosts(this.state.posts.slice(8))}
+                        {this._renderPosts(this.state.posts)}
                     </CardContainer>
 
                     {this.state.keyword !== "" && this.state.posts.length < 1 && (
@@ -187,14 +170,35 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     @autobind
     private _renderPosts(posts: Array<PostPreview>) {
-        return posts.map((post, index) => (
+        const postCards =  posts.map((post, index) => (
             <PostCard
                 post={post}
                 likePost={this._likePost}
                 unlikePost={this._unlikePost}
                 toggleWishlist={this._toggleWishlist}
-            />
-        ));
+            />));
+
+        postCards.splice(8, 0, this._renderRecommendedtrendsetters());
+        return postCards;
+    }
+
+    private _renderRecommendedtrendsetters() {
+        return (
+            <div className="recommended-trendsetters">
+                <p className="title">Trendesetters you might like</p>
+                <Carousel slidesToShow={5}>
+                    {this.state.recommendedTrendnines.map(trendsetter => (
+                        <div>
+                            <CarouselItem
+                                imageUrl={trendsetter.profile_image_url}
+                                redirectUrl={`/user/${trendsetter.id}`}
+                                title={`${trendsetter.first_name} ${trendsetter.last_name}`}
+                            />
+                        </div>
+                    ))}
+                </Carousel>
+            </div>
+        );
     }
 
     @autobind

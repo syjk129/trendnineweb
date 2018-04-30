@@ -36,11 +36,6 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
 
         const hoverItem = (
             <div className="card-hover">
-                <div className="card-hover-header-container">
-                    <span className="card-hover-header">
-                        Products in this post
-                    </span>
-                </div>
                 <Carousel>
                     {post.products.map(product => (
                         <div>
@@ -75,14 +70,12 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                             icon={likeVariant}
                             onClick={this._likeUnlikePost}
                         >
-                            {this.state.likes} {this.state.likes > 1 ? "Likes" : "Like"}
+                            {this.state.likes}
                         </LinkButton>
                         <LinkButton
                             icon={wishlistVariant}
                             onClick={this._toggleWishlist}
-                        >
-                            Wishlist
-                        </LinkButton>
+                        ></LinkButton>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
 .filter-container {
     position: fixed;
     z-index: 2;
-    width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - 4 * #{$base-spacing});
+    width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - 8 * #{$base-spacing});
     background-color: $color-grey-0;
 
     .filter-anchor {
