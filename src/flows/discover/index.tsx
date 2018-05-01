@@ -151,6 +151,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     @autobind
     private _toggleWishlist(postId: string, type: string) {
+        this.context.setError(new Error("toggle"));
         return this.context.api.toggleWishlist(postId, type);
     }
 
@@ -179,4 +180,5 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
 Discover.contextTypes = {
     api: PropTypes.any,
+    setError: PropTypes.func,
 };

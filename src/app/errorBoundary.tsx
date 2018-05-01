@@ -1,6 +1,9 @@
 import * as React from "react";
 
+import { AuthError } from "../api/errors";
+
 interface ErrorBoundaryProps {
+    errors: Array<Error>;
     children?: React.ReactNode;
     setLoggedState(loggedIn: boolean): void;
 }
@@ -9,11 +12,15 @@ interface ErrorBoundaryProps {
 export default class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     // React children will trickle their errors up and this will catch them
     componentDidCatch(error, info) {
-        console.log("yo");
-        console.warn(error);
+        // handle uncaught errors
+    }
 
-        // If unauthorized error
-        // this.props.setLoggedState(false);
+    componentWillReceiveProps(nextProps: ErrorBoundaryProps) {
+        nextProps.errors.forEach(error => {
+            if (error.isAuthError) {
+                console.log("auth");
+            }
+        });
     }
 
     render() {

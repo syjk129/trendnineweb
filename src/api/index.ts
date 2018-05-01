@@ -8,14 +8,20 @@ import {
     Tag,
 } from "./models";
 
+import {
+    createErrorFromResponse,
+} from "./errors";
+
 export interface ApiOptions {
     apiUrl: string;
+    setError(error: Error): void;
 }
 
 const tokenName = "tn_auth_token";
 
 export default class Api {
     constructor(options: ApiOptions) {
+        this._apiOptions = options;
         this._apiUrl = options.apiUrl;
     }
 
@@ -211,6 +217,7 @@ export default class Api {
     }
 
     private _apiUrl: string;
+    private _apiOptions: ApiOptions;
 
     private async _GET(path: string): Promise<any> {
         const url = `${this._apiUrl}${path}`;
@@ -232,7 +239,7 @@ export default class Api {
             const responseJson = await response.json();
             return responseJson.result;
         } catch (err) {
-            throw new Error(err);
+            this._apiOptions.setError(err);
         }
     }
 
@@ -258,15 +265,14 @@ export default class Api {
                 headers: this._getRequestHeader(),
                 body: JSON.stringify(requestObject),
             });
-
             if (!response.ok) {
-                throw new Error("response");
+                this._apiOptions.setError(createErrorFromResponse(response));
             }
 
             const responseJson = await response.json();
             return responseJson;
         } catch (err) {
-            throw new Error(err);
+            this._apiOptions.setError(err);
         }
     }
 

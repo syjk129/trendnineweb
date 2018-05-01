@@ -30,16 +30,19 @@ export interface AppProps {
 
 interface AppState {
     loggedIn: boolean;
+    errors: Array<Error>;
 }
 
 export interface AppContext {
     api: any; // TODO
+    setError(error: Error): void;
 }
 
 interface AppProviderProps {
     children: React.ReactNode;
     location: any;
     match: match<any>;
+    setError(error: Error): void;
 }
 
 class AppProviderComponent extends React.Component<AppProviderProps, never> {
@@ -50,6 +53,7 @@ class AppProviderComponent extends React.Component<AppProviderProps, never> {
             // apiUrl: "http://54.175.34.30:8000",
             // apiUrl: "http://54.84.23.234:8000",
             apiUrl: "http://52.91.113.226:8000",
+            setError: props.setError,
         });
 
         this._api = api;
@@ -64,6 +68,7 @@ class AppProviderComponent extends React.Component<AppProviderProps, never> {
     getChildContext(): AppContext {
         return {
             api: this._api,
+            setError: this.props.setError,
         };
     }
 
@@ -74,15 +79,20 @@ class AppProviderComponent extends React.Component<AppProviderProps, never> {
     private _api: any;
 }
 
-AppProviderComponent.childContextTypes = {
+export const AppContextTypes = {
     api: PropTypes.any,
+    setError: PropTypes.func,
 };
+
+AppProviderComponent.childContextTypes = AppContextTypes;
+
 
 const AppProvider = withRouter(AppProviderComponent);
 
 export default class App extends React.Component<AppProps, AppState> {
     state: AppState = {
         loggedIn: false,
+        errors: [],
     };
 
     componentWillMount() {
@@ -95,9 +105,9 @@ export default class App extends React.Component<AppProps, AppState> {
 
     render() {
         return (
-            <ErrorBoundary setLoggedState={this._setLoggedState}>
+            <ErrorBoundary setLoggedState={this._setLoggedState} errors={this.state.errors}>
                 <Router history={browserHistory}>
-                    <AppProvider>
+                    <AppProvider setError={this._setError}>
                         <Header loggedIn={this.state.loggedIn} />
                         <div className="main-content">
                             <Route exact path="/" render={() => <Redirect to="/discover" />} />
@@ -123,5 +133,12 @@ export default class App extends React.Component<AppProps, AppState> {
     @autobind
     private _setLoggedState(loggedIn: boolean) {
         this.setState({ loggedIn });
+    }
+
+    @autobind
+    private _setError(error: Error) {
+        this.setState({
+            errors: [...this.state.errors, error],
+        });
     }
 }
