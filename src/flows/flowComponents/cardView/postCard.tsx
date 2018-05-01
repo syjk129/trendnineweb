@@ -36,11 +36,6 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
 
         const hoverItem = (
             <div className="card-hover">
-                <div className="card-hover-header-container">
-                    <span className="card-hover-header">
-                        Products in this post
-                    </span>
-                </div>
                 <Carousel>
                     {post.products.map(product => (
                         <div>
@@ -59,6 +54,10 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
             </div>
         );
 
+        const likeVariant =  this.state.liked ? IconVariant.LIKE_FILLED : IconVariant.LIKE;
+        const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
+        const likeText = this.state.liked ? "Likes" : "Like";
+
         const footerItem = (
             <div>
                 <Author author={post.author} />
@@ -68,19 +67,15 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                     </div>
                     <div className="action-btns">
                         <LinkButton
-                            icon={IconVariant.LIKE}
-                            selected={this.state.liked}
+                            icon={likeVariant}
                             onClick={this._likeUnlikePost}
                         >
-                            {this.state.likes} {this.state.likes > 1 ? "Likes" : "Like"}
+                            {this.state.likes}
                         </LinkButton>
                         <LinkButton
-                            icon={IconVariant.WISHLIST}
-                            selected={this.state.wishlisted}
+                            icon={wishlistVariant}
                             onClick={this._toggleWishlist}
-                        >
-                            Wishlist
-                        </LinkButton>
+                        ></LinkButton>
                     </div>
                 </div>
             </div>

@@ -29,6 +29,13 @@
 
         .trendnine-introduction {
             font-size: $font-size-1;
+            line-height: $line-height-1;
+            -webkit-line-clamp: 3;
+            // -webkit-box-orient: vertical;
+            display: -webkit-box;
+            max-height: $line-height-1 * 3;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }

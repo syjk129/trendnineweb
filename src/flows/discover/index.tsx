@@ -25,6 +25,7 @@ interface DiscoverProps {
 
 interface DiscoverState {
     posts: Array<PostPreview>;
+    postsNextToken: string;
     trendingPosts: Array<PostPreview>;
     featuredTrendnines: Array<FeaturedInfleuncer>;
     recommendedTrendnines: Array<Person>;
@@ -37,6 +38,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     state: DiscoverState = {
         posts: [],
+        postsNextToken: "",
         trendingPosts: [],
         featuredTrendnines: [],
         recommendedTrendnines: [],
@@ -54,9 +56,19 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         this.refreshContent(props);
     }
 
+    componentDidMount() {
+        window.addEventListener("scroll", this.onScroll, false);
+    }
+
+    componentDidUnmount() {
+        window.removeEventListener("scroll", this.onScroll, false);
+    }
+
     async refreshContent(props: DiscoverProps) {
         const queryString = location.search;
-        const keyword = new URLSearchParams(location.search);
+        const keyword = new URLSearchParams(queryString);
+        const query = keyword.get("q") ? `keyword=${keyword.get("q")}` : "";
+
         const [
             trendingPosts,
             featuredTrendnines,
@@ -66,17 +78,53 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             this.context.api.getTrendingPosts(),
             this.context.api.getTodaysTrendnines(),
             this.context.api.getFeaturedTrendnines(),
-            location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(queryString),
+            location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(query),
         ]);
 
         this.setState({
-            posts,
-            trendingPosts,
-            featuredTrendnines,
-            recommendedTrendnines,
+            posts: posts.list,
+            postsNextToken: posts.nextToken,
+            trendingPosts: trendingPosts,
+            featuredTrendnines: featuredTrendnines,
+            recommendedTrendnines: recommendedTrendnines,
             keyword: keyword.get("q") || "",
             isLoading: false,
         });
+    }
+
+    async paginateNextPosts(props: DiscoverProps) {
+        if (this.state.postsNextToken == null) {
+            return;
+        }
+
+        const queryString = location.search;
+
+        const [
+            newPosts,
+        ] = await Promise.all([
+            location.pathname === "/feed" ? this.context.api.getFeedPosts(this.state.postsNextToken)
+                                            : this.context.api.getLatestPosts(queryString, this.state.postsNextToken),
+        ]);
+
+        let posts = this.state.posts.concat(newPosts.list);
+        posts = posts.filter((post, index, arr) => {
+            return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
+        });
+
+        this.setState({
+            posts: posts,
+            postsNextToken: newPosts.nextToken,
+        });
+    }
+
+    onScroll = () => {
+        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+        let clientHeight = document.documentElement.clientHeight || window.innerHeight;
+        let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+        if (scrolledToBottom) {
+            this.paginateNextPosts(this.props);
+        }
     }
 
     render() {
@@ -95,36 +143,19 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     </SidebarSection>
                 </Sidebar>
                 <Content>
-                    <Filter
-                        onApply={this._filterPosts}
-                        className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""}
-                    >
+                    <div className="filter-container">
                         {this.state.keyword !== "" && (
                             <div className="search-text-container">
                                 <div className="search-help">You searched for</div>
                                 <div className="search-text">{this.state.keyword}</div>
                             </div>
                         )}
-                    </Filter>
-                    <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this._renderPosts(this.state.posts.slice(0, 8))}
-                    </CardContainer>
-                    <div className="recommended-trendsetters">
-                        <p className="title">We recommend these trendesetters</p>
-                        <Carousel slidesToShow={5}>
-                            {this.state.recommendedTrendnines.map(trendsetter => (
-                                <div>
-                                    <CarouselItem
-                                        imageUrl={trendsetter.profile_image_url}
-                                        redirectUrl={`/user/${trendsetter.id}`}
-                                        title={`${trendsetter.first_name} ${trendsetter.last_name}`}
-                                    />
-                                </div>
-                            ))}
-                        </Carousel>
+                        <Filter
+                        onApply={this._filterPosts}
+                        className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
                     </div>
                     <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this._renderPosts(this.state.posts.slice(8))}
+                        {this._renderPosts(this.state.posts)}
                     </CardContainer>
 
                     {this.state.keyword !== "" && this.state.posts.length < 1 && (
@@ -139,14 +170,35 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     @autobind
     private _renderPosts(posts: Array<PostPreview>) {
-        return posts.map((post, index) => (
+        const postCards =  posts.map((post, index) => (
             <PostCard
                 post={post}
                 likePost={this._likePost}
                 unlikePost={this._unlikePost}
                 toggleWishlist={this._toggleWishlist}
-            />
-        ));
+            />));
+
+        postCards.splice(8, 0, this._renderRecommendedtrendsetters());
+        return postCards;
+    }
+
+    private _renderRecommendedtrendsetters() {
+        return (
+            <div className="recommended-trendsetters">
+                <p className="title">Trendesetters you might like</p>
+                <Carousel slidesToShow={5}>
+                    {this.state.recommendedTrendnines.map(trendsetter => (
+                        <div>
+                            <CarouselItem
+                                imageUrl={trendsetter.profile_image_url}
+                                redirectUrl={`/user/${trendsetter.id}`}
+                                title={`${trendsetter.first_name} ${trendsetter.last_name}`}
+                            />
+                        </div>
+                    ))}
+                </Carousel>
+            </div>
+        );
     }
 
     @autobind

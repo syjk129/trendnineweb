@@ -10,8 +10,8 @@
     img {
         flex-shrink: 0;
         display: inline-block;
-        height: 80px;
-        width: 80px;
+        height: $ranking-img-height;
+        width: $ranking-img-width;
         object-fit: cover;
         margin-right: $base-spacing;
     }
@@ -20,9 +20,25 @@
         width: 125px;
         margin: 0 $base-spacing;
 
+        .post-rank-name {
+            margin-top: $base-spacing-sm;
+        }
+
+        .post-rank-title {
+            margin-top: $base-spacing-sm;
+            -webkit-line-clamp: 3;
+            // -webkit-box-orient: vertical;
+            display: -webkit-box;
+            max-height: $line-height-1 * 3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .post-rank-name,
         .post-rank-title {
             font-size: $font-size-1;
+            line-height: $line-height-1;
+            margin-bottom: 0;
         }
     }
 

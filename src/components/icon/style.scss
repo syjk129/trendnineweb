@@ -33,12 +33,28 @@
     background-image: url("/img/icons/arrow_down.png");
 }
 
+.icon-arrow-down-red::before {
+    background-image: url("/img/icons/arrow_down_red.png");
+}
+
 .icon-arrow-up::before {
     background-image: url("/img/icons/arrow_up.png");
 }
 
+.icon-arrow-up-green::before {
+    background-image: url("/img/icons/arrow_up_green.png");
+}
+
+.icon-arrow-up-zero::before {
+    background-image: url("/img/icons/arrow_up_zero.png");
+}
+
 .icon-like::before {
     background-image: url("/img/icons/like.png");
+}
+
+.icon-like-filled::before {
+    background-image: url("/img/icons/like_filled.png");
 }
 
 .icon-search::before {
@@ -51,6 +67,10 @@
 
 .icon-wishlist::before {
     background-image: url("/img/icons/wishlist.png");
+}
+
+.icon-wishlist-filled::before {
+    background-image: url("/img/icons/wishlist_filled.png");
 }
 
 .icon-bag::before {

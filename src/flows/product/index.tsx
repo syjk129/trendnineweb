@@ -152,13 +152,13 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                         </Carousel>
                     </ContentSection>
                 )}
-                <ContentSection title={reviewsTitle}>
+                {/* <ContentSection title={reviewsTitle}>
                     <Comments
                         placeholder="Write a review"
                         comments={this.state.reviews}
                         submitComment={this._submitReview}
                     />
-                </ContentSection>
+                </ContentSection> */}
             </div>
         );
     }

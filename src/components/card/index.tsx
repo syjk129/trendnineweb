@@ -18,6 +18,7 @@ interface CardProps {
     redirectUrl?: string;
     scaleImage?: boolean;
     title: string;
+    singleLineTitle?: boolean;
     history: H.History;
     hoverItem?: React.ReactNode;
     footerItem?: React.ReactNode;
@@ -44,13 +45,15 @@ class Card extends React.Component<CardProps, CardState> {
     }
 
     render() {
-        const { imageUrl, scaleImage, redirectUrl, title, history, hoverItem, footerItem } = this.props;
+        const { imageUrl, scaleImage, redirectUrl, title, singleLineTitle, history, hoverItem, footerItem } = this.props;
 
         const onClick = redirectUrl ? () => history.push(redirectUrl) : undefined;
 
         const hoverStyles = {
             marginLeft: this.state.hoverX,
         };
+
+        const titleClassName = singleLineTitle ? "title-1" : "title";
 
         return (
             <div className="card" ref="card">
@@ -66,7 +69,7 @@ class Card extends React.Component<CardProps, CardState> {
                     square
                 />
                 <div className="card-content">
-                    <p className="title" onClick={onClick}>
+                    <p className={titleClassName} onClick={onClick}>
                         {title}
                     </p>
                     {footerItem && (

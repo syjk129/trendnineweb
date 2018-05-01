@@ -18,29 +18,35 @@
     }
 
     .card-container:last-of-type {
-        padding-top: $base-spacing * 2;
+        // padding-top: $base-spacing * 2;
     }
 
     .recommended-trendsetters {
-        margin-top: $base-spacing * 2;
-        margin-bottom: 0;
-        background-color: black;
+        background-color: transparent;
+        border: solid $standard-border-color $standard-border-width;
         padding: $base-spacing * 3;
+        grid-column-end: span 2;
 
         .title {
             font-size: $font-size-4;
+            font-family: $font-family-serif;
+            font-weight: $font-weight-bold;
             margin-bottom: $base-spacing * 2;
-            color: #fff;
         }
 
         .slick-prev::before,
         .slick-next::before {
-            color: #fff;
+            // color: #fff;
+        }
+
+        .image-container {
+            img {
+                object-fit: cover;
+            }
         }
 
         .carousel-item-title {
-            color: #fff;
-            text-transform: none;
+            font-family: $font-family-sans-serif;
         }
     }
 

@@ -15,7 +15,6 @@ import "./style.scss";
 
 interface FilterProps {
     className?: string;
-    children?: React.ReactNode;
     onApply(queryString: string): void;
 }
 
@@ -53,8 +52,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
     render() {
         return (
-            <div className="filter-container">
-                {this.props.children}
+            <div>
                 <div className={`filter-anchor ${this.props.className}`}>
                     <LinkButton onClick={this._toggleFilter}>
                         Filter&nbsp;&nbsp;

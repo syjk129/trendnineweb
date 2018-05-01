@@ -1,9 +1,11 @@
 import {
     Category,
     Comment,
+    Pagination,
     Person,
     Post,
     PostPreview,
+    Posts,
     Retailer,
     Tag,
 } from "./models";
@@ -73,22 +75,16 @@ export default class Api {
         return this._GET(url);
     }
 
-    getLatestPosts(queryString?: string): Promise<Array<PostPreview>> {
-        let url = "/api/v1/posts";
-
-        if (queryString) {
-            url += `?query=${queryString}`;
-        }
-
-        return this._GET(`/api/v1/posts?${queryString}`);
+    getLatestPosts(queryString?: string, nextToken?: string): Promise<Posts> {
+        return this._GET_PAGINATION(`/api/v1/posts?${queryString}`, nextToken);
     }
 
     getTrendingPosts(): Promise<Array<PostPreview>> {
         return this._GET("/api/v1/posts/trending");
     }
 
-    getFeedPosts(): Promise<Array<PostPreview>> {
-        return this._GET("/api/v1/posts?following_only=true");
+    getFeedPosts(nextToken?: string): Promise<Posts> {
+        return this._GET_PAGINATION("/api/v1/posts?following_only=true", nextToken);
     }
 
     searchPosts(queryString?: string): Promise<Array<PostPreview>> {
@@ -240,6 +236,37 @@ export default class Api {
             return responseJson.result;
         } catch (err) {
             this._apiOptions.setError(err);
+        }
+    }
+
+    private async _GET_PAGINATION(path: string, nextToken: string): Promise<any> {
+        let url = `${this._apiUrl}${path}`;
+
+        if (nextToken != null) {
+            url += `&next_token=${nextToken}`;
+        }
+
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: this._getRequestHeader(),
+            });
+
+            if (!response.ok) {
+                console.warn("not ok");
+            }
+
+            if (response.status === 204) {
+                return [];
+            }
+
+            const responseJson = await response.json();
+            return {
+                list: responseJson.result,
+                nextToken: responseJson.next_token,
+            };
+        } catch (err) {
+            throw new Error(err);
         }
     }
 
