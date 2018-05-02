@@ -14,7 +14,7 @@
         height: $checkbox-size - 2 * $standard-border-width;
         width: $checkbox-size - 2 * $standard-border-width;
         background-color: transparent;
-        border: $color-grey-2 $standard-border-width solid;
+        border: $standard-border-width solid $standard-border-color;
     }
 
     input {

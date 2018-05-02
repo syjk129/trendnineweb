@@ -3,15 +3,15 @@
 
 // Colors
 $brand-color: $color-red-1;
-$text-primary: $color-grey-2;
+$text-primary: $color-grey-5;
 $color-accent: $brand-color;
 
 // Styles
 $page-spacing: 40px;
-$content-spacing: 45px;
+$content-spacing: 60px;
 $card-spacing: 15px;
-$base-spacing: 10px;
-$base-spacing-sm: 5px;
+$base-spacing: 11px;
+$base-spacing-sm: 7px;
 $large-spacing: 18px;
 $button-height: 40px;
 $filter-height: 16px;
@@ -27,10 +27,10 @@ $button-height-sm: 38px;
 $min-card-width: 235px;
 
 $standard-border-width: 1px;
-$standard-border-color: $text-primary;
+$standard-border-color: $color-grey-2;
 
 $sidebar-width: 235px;
-$sidebar-padding: $base-spacing * 4.5;
+$sidebar-padding: $base-spacing * 2;
 
 $ranking-img-height: 80px;
 $ranking-img-width: $ranking-img-height;

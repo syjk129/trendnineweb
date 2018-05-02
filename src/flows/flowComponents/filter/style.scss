@@ -14,7 +14,7 @@
 
     .filter-list {
         background-color: $color-white;
-        border: solid $standard-border-width $color-grey-2;
+        border: $standard-border-width solid $standard-border-color;
         padding: 0 $base-spacing * 2;
         display: flex;
         justify-content: space-between;

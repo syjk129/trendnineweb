@@ -2,17 +2,14 @@
 
 .featured-trendnine {
     display: flex;
-    margin-bottom: $base-spacing;
-
-    &:last-of-type {
-        margin-bottom: $base-spacing * 2;
-    }
+    padding: $base-spacing;
+    border-bottom: $standard-border-width solid $standard-border-color;
 
     img {
         flex-shrink: 0;
         display: inline-block;
-        height: 100px;
-        width: 100px;
+        height: 85px;
+        width: 85px;
         border-radius: 100%;
         object-fit: cover;
         margin-right: $base-spacing;
@@ -23,8 +20,13 @@
         flex-direction: column;
         justify-content: space-around;
 
+        p {
+            margin-bottom: 0;
+        }
+
         .trendnine-name {
             font-size: $font-size-2;
+            line-height: $line-height-2;
         }
 
         .trendnine-introduction {

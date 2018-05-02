@@ -5,6 +5,7 @@ import TimeAgo from "react-timeago";
 import { PostPreview } from "../../../api/models";
 import Author from "../../../components/author";
 import { LinkButton } from "../../../components/button";
+import {ButtonVariant} from "../../../components/button/types";
 import Card from "../../../components/card";
 import Carousel, { CarouselItem } from "../../../components/carousel";
 import Icon, { IconVariant} from "../../../components/icon";
@@ -36,21 +37,24 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
 
         const hoverItem = (
             <div className="card-hover">
-                <Carousel>
-                    {post.products.map(product => (
-                        <div>
-                            <CarouselItem
-                                imageUrl={product.image.small_image_url}
-                                imageClass="post-card-hover-image"
-                                large
-                                redirectUrl={`/product/${product.id}`}
-                                title={product.brand.name}
-                                detail={product.title}
-                                subdetail={`$${product.price}`}
-                            />
-                        </div>
-                    ))}
-                </Carousel>
+                {post.products.map(product => (
+                    <div className="post-card-hover-item">
+                        <LinkButton className="post-card-hover-btn" url={`/product/${product.id}`} variant={ButtonVariant.SECONDARY}>
+                            <img className="post-card-hover-image" src={product.image.small_image_url} />
+                            <div className="post-card-hover-content">
+                                <p className="post-card-hover-name">
+                                    {product.brand.name}
+                                </p>
+                                <p className="post-card-hover-title">
+                                    {product.title}
+                                </p>
+                                <p className="post-card-hover-price">
+                                    {`$${product.price}`}
+                                </p>
+                            </div>
+                        </LinkButton>
+                    </div>
+                ))}
             </div>
         );
 
@@ -63,7 +67,7 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                 <Author author={post.author} />
                 <div className="post-card-footer">
                     <div className="created">
-                        <Icon variant={IconVariant.TIME}></Icon>&nbsp;&nbsp;<TimeAgo date={post.created} />
+                        <Icon variant={IconVariant.TIME}></Icon>&nbsp;<TimeAgo date={post.created} />
                     </div>
                     <div className="action-btns">
                         <LinkButton

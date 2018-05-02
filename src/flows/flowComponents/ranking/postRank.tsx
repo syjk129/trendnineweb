@@ -27,7 +27,7 @@ class PostRank extends React.Component<PostRankProps> {
                         <div className="post-rank-detail">
                             {!hideName && (
                                 <p className="post-rank-name">
-                                    {post.author.first_name}
+                                    Post
                                 </p>
                             )}
                             {post.title &&

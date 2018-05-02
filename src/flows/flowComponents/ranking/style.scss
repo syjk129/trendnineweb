@@ -2,10 +2,7 @@
 
 .post-rank {
     display: flex;
-
-    &:last-of-type {
-        margin-bottom: $base-spacing * 2;
-    }
+    border-bottom: $standard-border-width solid $standard-border-color;
 
     img {
         flex-shrink: 0;
@@ -13,23 +10,29 @@
         height: $ranking-img-height;
         width: $ranking-img-width;
         object-fit: cover;
-        margin-right: $base-spacing;
     }
 
     .post-rank-detail {
         width: 125px;
-        margin: 0 $base-spacing;
+        margin: $base-spacing 0 $base-spacing $base-spacing;
+
+        p {
+            margin-bottom: 0;
+        }
 
         .post-rank-name {
-            margin-top: $base-spacing-sm;
+            font-family: $font-family-serif;
+            font-size: $font-size-0;
+            font-weight: $font-weight-bold;
+            color: $color-grey-3;
+            padding-bottom: $base-spacing-sm;
         }
 
         .post-rank-title {
-            margin-top: $base-spacing-sm;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 2;
             // -webkit-box-orient: vertical;
             display: -webkit-box;
-            max-height: $line-height-1 * 3;
+            max-height: $line-height-1 * 2;
             overflow: hidden;
             text-overflow: ellipsis;
         }
@@ -44,19 +47,20 @@
 
     .post-rank-ranking {
         width: 60px;
-        margin: auto;
+        padding-top: $base-spacing;
         display: inline-flex;
 
         .post-rank-ranking-number {
             width: 40px;
-            text-align: center;
+            text-align: right;
+            padding-right: $base-spacing-sm;
 
             &.positive {
-                color: $color-green-1;
+                // color: $color-green-1;
             }
 
             &.negative {
-                color: $color-accent;
+                // color: $color-accent;
             }
         }
 

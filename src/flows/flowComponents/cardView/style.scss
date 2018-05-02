@@ -1,22 +1,54 @@
 @import "../../../styles/variables";
 
 .card-hover {
-    .card-hover-header-container {
-        border-bottom: $standard-border-width solid $standard-border-color;
-        margin-bottom: $base-spacing;
-        padding-bottom: $base-spacing + 1;
-    }
-
-    .card-hover-header {
-        font-family: $font-family-serif;
-        font-size: $font-size-3;
-        padding-bottom: $base-spacing;
-        border-bottom: $standard-border-width * 3 solid $color-accent;
-    }
+    border: $standard-border-width solid $standard-border-color;
 }
 
-.post-card-hover-image {
-    max-width: 200px;
+.post-card-hover-item {
+    padding: $base-spacing;
+    border-bottom: $standard-border-width solid $standard-border-color;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    .post-card-hover-btn {
+        display: flex;
+
+        .post-card-hover-image {
+            flex-shrink: 0;
+            display: inline-block;
+            height: $ranking-img-height;
+            width: $ranking-img-width;
+            object-fit: cover;
+            margin: auto;
+        }
+
+        .post-card-hover-content {
+            padding: 0 $base-spacing;
+
+            .post-card-hover-title {
+                -webkit-line-clamp: 2;
+                // -webkit-box-orient: vertical;
+                display: -webkit-box;
+                height: $line-height-1 * 2;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .post-card-hover-name,
+            .post-card-hover-price {
+                font-family: $font-family-serif;
+                color: $color-grey-3;
+                font-weight: $font-weight-bold;
+                font-size: $font-size-0;
+            }
+
+            p {
+                margin-bottom: $base-spacing-sm;
+            }
+        }
+    }
 }
 
 .card-content {

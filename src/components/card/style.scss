@@ -7,11 +7,10 @@
         visibility: hidden;
         z-index: 1;
         position: absolute;
-        width: 420px;
-        padding: $base-spacing * 2;
+        width: $min-card-width;
         background-color: #fff;
         margin-left: 300px;
-        box-shadow: 0 0 15px $color-grey-1;
+        box-shadow: 0 0 15px $color-grey-2;
     }
 
     .card-content {
