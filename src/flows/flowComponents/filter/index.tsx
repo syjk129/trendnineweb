@@ -41,11 +41,11 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     };
 
     async componentDidMount() {
-        document.addEventListener('mousedown', this._handleClickOutside);
+        document.addEventListener("mousedown", this._handleClickOutside);
     }
 
     async componentWillMount() {
-        document.removeEventListener('mousedown', this._handleClickOutside);
+        document.removeEventListener("mousedown", this._handleClickOutside);
 
         try {
             const categories = await this.context.api.getCategories();
@@ -138,8 +138,8 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     @autobind
     private _handleClickOutside(event) {
         if (this.state.isFilterActive && !this.state.filterRef.contains(event.target)) {
-            this._cancel()
-        }   
+            this._cancel();
+        }
     }
 
     @autobind
