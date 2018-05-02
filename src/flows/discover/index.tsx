@@ -170,7 +170,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     @autobind
     private _renderPosts(posts: Array<PostPreview>) {
-        const postCards =  posts.map((post, index) => (
+        const postCards = posts.map((post, index) => (
             <PostCard
                 post={post}
                 likePost={this._likePost}
@@ -226,7 +226,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         }
 
         const newPosts = await this.context.api.getLatestPosts(query);
-        this.setState({ posts: newPosts });
+        this.setState({ posts: newPosts.list });
     }
 }
 
