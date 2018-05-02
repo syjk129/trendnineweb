@@ -98,6 +98,8 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         }
 
         const queryString = location.search;
+        const keyword = new URLSearchParams(queryString);
+        const query = keyword.get("q") ? `keyword=${keyword.get("q")}` : "";
 
         const [
             newPosts,
