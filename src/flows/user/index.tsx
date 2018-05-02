@@ -95,11 +95,15 @@ export default class User extends React.Component<UserProps, UserState> {
                                         square
                                     />
                                 </div>
-                                <p className="introduction">{user.introduction}</p>
-                                <FollowButton
-                                    user={ user }
-                                />
-                                <div className="followers">
+                                <div className="introduction">
+                                    {user.introduction}
+                                </div>
+                                <div className="follow-container">
+                                    <FollowButton
+                                        user={ user }
+                                    />
+                                </div>
+                                <div className="activity-container">
                                     <div>
                                         <span className="identifier">TODAY</span>
                                         <span className="count">{this.state.profile.today_view_count}</span>
@@ -109,14 +113,19 @@ export default class User extends React.Component<UserProps, UserState> {
                                         <span className="count">{this.state.profile.total_view_count}</span>
                                     </div>
                                 </div>
+                                <div className="social-container">
+                                    TODO: SOCIAL links
+                                </div>
                             </SidebarSection>
                             <SidebarSection title={`${user.first_name}'s Top Posts`}>
                                 <PostRank posts={this.state.profile.top_posts} hideRanks hideName />
                             </SidebarSection>
                             <SidebarSection title={`${user.first_name}'s Top Tags`}>
-                                {this.state.profile.top_post_tags.map(tag => (
-                                    <Tag tag={tag} />
-                                ))}
+                                <div className="tag-container">
+                                    {this.state.profile.top_post_tags.map(tag => (
+                                        <Tag tag={tag} />
+                                    ))}
+                                </div>
                             </SidebarSection>
                         </div>
                     )}

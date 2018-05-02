@@ -4,6 +4,10 @@
     display: flex;
     border-bottom: $standard-border-width solid $standard-border-color;
 
+    &:last-child {
+        border-bottom: 0;
+    }
+
     img {
         flex-shrink: 0;
         display: inline-block;

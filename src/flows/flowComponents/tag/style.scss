@@ -5,6 +5,10 @@
     font-size: $font-size-1;
     line-height: $line-height-1;
 
+    &:last-child {
+        margin-bottom: 0;
+    }
+
     &.inline-tag {
         display: inline-block;
         margin-right: $base-spacing;

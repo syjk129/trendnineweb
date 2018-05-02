@@ -4,7 +4,32 @@
     display: flex;
     padding: 0 $page-spacing;
 
-    .followers {
+    .user-nav {
+        border-bottom: $standard-border-width solid $standard-border-color;
+    }
+
+    .user-image {
+        padding: $base-spacing;
+    }
+
+    .introduction {
+        font-size: $font-size-small;
+        padding: $base-spacing;
+    }
+
+    .follow-container {
+        padding: $base-spacing;
+
+        button {
+            height: $button-height-sm;
+            padding: 0;
+        }
+    }
+
+    .activity-container {
+        padding: $base-spacing;
+        border-top: $standard-border-width solid $standard-border-color;
+        border-bottom: $standard-border-width solid $standard-border-color;
         display: flex;
         justify-content: space-between;
 
@@ -21,23 +46,12 @@
         }
     }
 
-    .user-nav {
-        border-bottom: $standard-border-width solid $standard-border-color;
+    .tag-container {
+        padding: $base-spacing;
     }
 
-    .user-image {
-        padding: 0 50px;
-        margin-bottom: $base-spacing * 2;
-    }
-
-    .introduction {
-        font-size: $font-size-small;
-    }
-
-    .sidebar {
-        button {
-            margin-bottom: $base-spacing * 2;
-        }
+    .social-container {
+        padding: $base-spacing;
     }
 
     .filter-container {

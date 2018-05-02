@@ -33,9 +33,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
                         icon={IconVariant.WISHLIST}
                         selected={this.state.wishlisted}
                         onClick={this._toggleWishlist}
-                    >
-                        Wishlist
-                    </LinkButton>
+                    />
                 </div>
             </div>
         );
