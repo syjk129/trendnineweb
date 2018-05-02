@@ -24,6 +24,7 @@ interface FilterState {
     searchResult: Set<SearchCheckbox>;
     filterMap: Map<string, string>;
     categories: Array<Category>;
+    filterRef: any;
 }
 
 export default class Filter extends React.Component<FilterProps, FilterState> {
@@ -36,9 +37,16 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
         searchResult: new Set(),
         categories: [],
         filterMap: new Map(),
+        filterRef: null,
     };
 
+    async componentDidMount() {
+        document.addEventListener('mousedown', this._handleClickOutside);
+    }
+
     async componentWillMount() {
+        document.removeEventListener('mousedown', this._handleClickOutside);
+
         try {
             const categories = await this.context.api.getCategories();
 
@@ -59,7 +67,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         <Icon variant={this.state.isFilterActive ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
                     </LinkButton>
                 </div>
-                <div className={`filter-content ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>
+                <div ref={this._setFilterRef} className={`filter-content ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>
                     <ul className="filter-list" >
                         {FilterConstants.FILTER_LIST
                         .map(filter => (
@@ -120,6 +128,18 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                 </div>
             </div>
         );
+    }
+
+    @autobind
+    private _setFilterRef(element: any) {
+        this.setState({ filterRef: element });
+    }
+
+    @autobind
+    private _handleClickOutside(event) {
+        if (this.state.isFilterActive && !this.state.filterRef.contains(event.target)) {
+            this._cancel()
+        }   
     }
 
     @autobind
