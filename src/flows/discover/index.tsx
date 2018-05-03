@@ -105,7 +105,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             newPosts,
         ] = await Promise.all([
             location.pathname === "/feed" ? this.context.api.getFeedPosts(this.state.postsNextToken)
-                                            : this.context.api.getLatestPosts(queryString, this.state.postsNextToken),
+                                            : this.context.api.getLatestPosts(query, this.state.postsNextToken),
         ]);
 
         let posts = this.state.posts.concat(newPosts.list);
