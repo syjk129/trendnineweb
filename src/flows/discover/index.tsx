@@ -5,7 +5,7 @@ import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
 import { FeaturedInfleuncer, Person, PostPreview } from "../../api/models";
-import { AppContext } from "../../app";
+import { AppContext, AppContextTypes } from "../../app";
 import Card, { CardContainer } from "../../components/card";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";

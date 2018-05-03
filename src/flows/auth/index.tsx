@@ -4,7 +4,7 @@ import * as React from "react";
 import { ChangeEvent } from "react";
 import { match } from "react-router";
 
-import { AppContext } from "../../app";
+import { AppContext, AppContextTypes } from "../../app";
 import Input, { InputType } from "../../components/input";
 
 import LoginForm from "./loginForm";
@@ -105,6 +105,4 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     }
 }
 
-Auth.contextTypes = {
-    api: PropTypes.any,
-};
+Auth.contextTypes = AppContextTypes;

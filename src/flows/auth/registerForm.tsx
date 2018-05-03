@@ -1,10 +1,7 @@
-import * as React from "react";
-
 import autobind from "autobind-decorator";
-import { PropTypes } from "prop-types";
+import * as React from "react";
 import { ChangeEvent } from "react";
 
-import { AppContext } from "../../app";
 import Input, { InputType } from "../../components/input";
 
 import { AuthFormProps } from "./types";

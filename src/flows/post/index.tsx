@@ -1,11 +1,10 @@
 import autobind from "autobind-decorator";
-import { PropTypes } from "prop-types";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { match } from "react-router-dom";
 
 import { Comment, Person, Post } from "../../api/models";
-import { AppContext } from "../../app";
+import { AppContext, AppContextTypes } from "../../app";
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
@@ -256,6 +255,4 @@ export default class PostView extends React.Component<PostProps, PostState> {
     }
 }
 
-PostView.contextTypes = {
-    api: PropTypes.any,
-};
+PostView.contextTypes = AppContextTypes;

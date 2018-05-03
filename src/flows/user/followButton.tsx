@@ -2,7 +2,7 @@ import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 
-import { AppContext } from "../../app";
+import { AppContext, AppContextTypes } from "../../app";
 import Button, { ButtonVariant } from "../../components/button";
 
 import { Person } from "../../api/models";
@@ -44,6 +44,4 @@ export default class FollowButton extends React.Component<FollowButtonProps, Fol
     }
 }
 
-FollowButton.contextTypes = {
-    api: PropTypes.any,
-};
+FollowButton.contextTypes = AppContextTypes;

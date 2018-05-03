@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 
 import { Category, Person } from "../../../api/models";
-import { AppContext } from "../../../app";
+import { AppContext, AppContextTypes } from "../../../app";
 import Button, { ButtonVariant, LinkButton } from "../../../components/button";
 import Icon, { IconVariant } from "../../../components/icon";
 import CategoryTreeFilter from "./filterComponents/categoryTreeFilter";
@@ -226,6 +226,4 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     }
 }
 
-Filter.contextTypes = {
-    api: PropTypes.any,
-};
+Filter.contextTypes = AppContextTypes;

@@ -4,7 +4,7 @@ import * as React from "react";
 import { match } from "react-router";
 
 import { Person, PostPreview } from "../../api/models";
-import { AppContext } from "../../app";
+import { AppContext, AppContextTypes } from "../../app";
 import Card, { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Image from "../../components/image";
@@ -293,6 +293,4 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 }
 
-User.contextTypes = {
-    api: PropTypes.any,
-};
+User.contextTypes = AppContextTypes;

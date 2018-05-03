@@ -1,18 +1,17 @@
+import autobind from "autobind-decorator";
 import * as React from "react";
 import { withRouter } from "react-router";
-import { PropTypes } from "prop-types";
-import autobind from "autobind-decorator";
 
-import Filter from "../flowComponents/filter";
+import { Person, PostPreview } from "../../api/models";
+import { AppContext, AppContextTypes } from "../../app";
+import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
-import Featured from "../flowComponents/featured";
 import { PostCard } from "../flowComponents/cardView";
+import Featured from "../flowComponents/featured";
+import Filter from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { ContentSection } from "../flowComponents/section";
-import Carousel, { CarouselItem } from "../../components/carousel";
-import { AppContext } from "../../app";
-import { Person, PostPreview } from "../../api/models";
 
 import "./style.scss";
 
@@ -81,6 +80,4 @@ export default class Trending extends React.Component<TrendingProps, TrendingSta
     }
 }
 
-Trending.contextTypes = {
-    api: PropTypes.any,
-};
+Trending.contextTypes = AppContextTypes;

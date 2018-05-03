@@ -4,7 +4,7 @@ import * as React from "react";
 import { match } from "react-router-dom";
 
 import { Post } from "../../api/models";
-import { AppContext } from "../../app";
+import { AppContext, AppContextTypes } from "../../app";
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
@@ -181,6 +181,4 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
     }
 }
 
-ProductView.contextTypes = {
-    api: PropTypes.any,
-};
+ProductView.contextTypes = AppContextTypes;
