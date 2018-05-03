@@ -25,6 +25,7 @@ class LinkButton extends React.Component<LinkButtonProps> {
             icon,
             history,
             className,
+            inline,
             children,
             onClick,
         } = this.props;
@@ -36,6 +37,10 @@ class LinkButton extends React.Component<LinkButtonProps> {
 
         if (selected) {
             classes += " selected";
+        }
+
+        if (inline) {
+            classes += " inline";
         }
 
         return (

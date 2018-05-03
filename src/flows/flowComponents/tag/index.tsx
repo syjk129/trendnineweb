@@ -3,6 +3,7 @@ import * as React from "react";
 import { withRouter } from "react-router-dom";
 
 // import { Tag } from "../../../api/models";
+import { LinkButton } from "../../../components/button";
 import "./style.scss";
 
 interface TagProps {
@@ -22,14 +23,14 @@ class Tag extends React.Component<TagProps> {
             classes += ` ${className}`;
         }
 
-        if (inline) {
-            classes += " inline-tag";
-        }
-
         return (
-            <div className={classes} onClick={() => history.push(`/discover?q=${tag.content}`)}>
+            <LinkButton
+                className={classes}
+                url={`/discover?q=${tag.content}`}
+                inline={inline}
+            >
                 {tag.content}
-            </div>
+            </LinkButton>
         );
     }
 }

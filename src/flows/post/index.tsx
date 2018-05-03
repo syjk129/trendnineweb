@@ -1,4 +1,5 @@
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { match } from "react-router-dom";
@@ -255,4 +256,8 @@ export default class PostView extends React.Component<PostProps, PostState> {
     }
 }
 
-PostView.contextTypes = AppContextTypes;
+PostView.contextTypes = {
+    api: PropTypes.any,
+    setError: PropTypes.func,
+};
+

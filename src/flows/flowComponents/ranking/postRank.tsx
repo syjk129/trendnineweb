@@ -49,7 +49,7 @@ class PostRank extends React.Component<PostRankProps> {
                     </LinkButton>
                 ))}
                 {hideViewMore &&
-                    <Button variant={ButtonVariant.OUTLINE}>
+                    <Button variant={ButtonVariant.OUTLINE} onClick={() => history.push("/trending")}>
                         View More
                     </Button>
                 }

@@ -48,6 +48,7 @@
     letter-spacing: $letter-spacing-1 * 2;
     text-decoration: none;
     color: $color-grey-5;
+    display: block;
 
     &:hover {
         cursor: pointer;
@@ -60,6 +61,10 @@
         &:hover {
             color: darken($color-accent, 20%);
         }
+    }
+
+    &.inline {
+        display: inline;
     }
 
     .icon {
