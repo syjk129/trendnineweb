@@ -137,9 +137,11 @@ export default class PostView extends React.Component<PostProps, PostState> {
                     )}
                     {tagsInPost && (
                         <SidebarSection title="Tags">
-                            {tagsInPost.map(tag => (
-                                <Tag tag={tag} />
-                            ))}
+                            <div className="tag-container">
+                                {tagsInPost.map(tag => (
+                                    <Tag tag={tag} />
+                                ))}
+                            </div>
                         </SidebarSection>
                     )}
                     {recommendedPosts && (

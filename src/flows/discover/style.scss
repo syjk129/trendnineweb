@@ -23,7 +23,7 @@
         // padding-top: $base-spacing * 2;
     }
 
-    .recommended-trendsetters {
+    .recommended-trendsetters-container {
         background-color: transparent;
         border: solid $standard-border-color $standard-border-width;
         padding: $base-spacing * 3;
@@ -36,19 +36,23 @@
             margin-bottom: $base-spacing * 2;
         }
 
-        .slick-prev::before,
-        .slick-next::before {
-            // color: #fff;
+        .recommended-trendsetters {
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 153px;
+            display: grid;
         }
+    }
 
-        .image-container {
-            img {
-                object-fit: cover;
-            }
-        }
+    .trendsetter {
+        text-align: center;
+        padding-top: 2 * $base-spacing;
 
-        .carousel-item-title {
-            font-family: $font-family-sans-serif;
+        img {
+            border-radius: 100%;
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            object-fit: cover;
         }
     }
 

@@ -17,6 +17,7 @@ import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 
 import "./style.scss";
+import { LinkButton } from "../../components/button";
 
 interface DiscoverProps {
     location: any;
@@ -187,19 +188,17 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     private _renderRecommendedtrendsetters() {
         return (
-            <div className="recommended-trendsetters">
-                <p className="title">Trendesetters you might like</p>
-                <Carousel slidesToShow={5}>
-                    {this.state.recommendedTrendnines.map(trendsetter => (
-                        <div>
-                            <CarouselItem
-                                imageUrl={trendsetter.profile_image_url}
-                                redirectUrl={`/user/${trendsetter.id}`}
-                                title={`${trendsetter.first_name} ${trendsetter.last_name}`}
-                            />
-                        </div>
+            <div className="recommended-trendsetters-container">
+                <p className="title">Trendsetters you might like</p>
+
+                <div className="recommended-trendsetters">
+                    {this.state.recommendedTrendnines.slice(0, 6).map(trendsetter => (
+                        <LinkButton className="trendsetter" url={`/user/${trendsetter.id}`}>
+                            <img src={trendsetter.profile_image_url} />
+                            <div>{trendsetter.first_name} {trendsetter.last_name}</div>
+                        </LinkButton>
                     ))}
-                </Carousel>
+                </div>
             </div>
         );
     }

@@ -1,5 +1,9 @@
 @import "../../styles/variables";
 
+.tag-container {
+    padding: $base-spacing;
+}
+
 .user {
     display: flex;
     padding: 0 $page-spacing;
@@ -44,10 +48,6 @@
             font-size: $font-size-2;
             line-height: $line-height-2;
         }
-    }
-
-    .tag-container {
-        padding: $base-spacing;
     }
 
     .social-container {
