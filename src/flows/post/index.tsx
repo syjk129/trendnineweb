@@ -13,6 +13,7 @@ import Image, { ImageRatioVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
+import { PostRank } from "../flowComponents/ranking";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
 import Tag from "../flowComponents/tag";
@@ -34,6 +35,7 @@ interface PostState {
     comments: Array<Comment>;
     posts: Array<Post>;
     relatedProducts: Array<any>;
+    relatedPosts: Array<Post>;
     featuredTrendnines: Array<Person>;
 }
 
@@ -48,6 +50,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
         comments: [],
         posts: [],
         relatedProducts: [],
+        relatedPosts: [],
         featuredTrendnines: [],
     };
 
@@ -60,16 +63,18 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 comments,
                 posts,
                 relatedProducts,
+                relatedPosts,
                 featuredTrendnines,
             ] = await Promise.all([
                 this.context.api.getPost(this._postId),
                 this.context.api.getComments(this._postId),
                 this.context.api.getLatestPosts(),
                 this.context.api.getRelatedProducts(),
+                this.context.api.getRelatedPosts(this._postId),
                 this.context.api.getFeaturedTrendnines(),
             ]);
 
-            this.setState({ currentPost, comments, posts, relatedProducts, featuredTrendnines });
+            this.setState({ currentPost, comments, posts, relatedProducts, relatedPosts, featuredTrendnines });
         } catch (err) {
             throw new Error(err);
         }
@@ -93,7 +98,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
     }
 
     render() {
-        const { currentPost, comments, relatedProducts } = this.state;
+        const { currentPost, comments, relatedProducts, relatedPosts } = this.state;
 
         const commentsTitle = this.state.comments && this.state.comments.length > 0 ? (
             `Comments (${this.state.comments.length})`
@@ -101,7 +106,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
 
         const productsInPost = currentPost && currentPost.products.length > 0 && this.state.currentPost.products.slice(0, 4);
         const tagsInPost = currentPost && currentPost.tags.length > 0 && currentPost.tags;
-        const relatedInPost = relatedProducts && relatedProducts.length > 0 && relatedProducts.slice(0, 4);
+        const recommendedPosts = relatedPosts && relatedPosts.length > 0 && relatedPosts.slice(0, 4);
 
         if (currentPost) {
             this.updateTags();
@@ -137,19 +142,9 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             ))}
                         </SidebarSection>
                     )}
-                    {relatedInPost && (
+                    {recommendedPosts && (
                         <SidebarSection title="You may also like">
-                            {relatedInPost.map(product => (
-                                <SidebarGrid>
-                                    <CarouselItem
-                                        imageUrl={product.image.small_image_url}
-                                        redirectUrl={`/product/${product.id}`}
-                                        title={product.brand.name}
-                                        detail={product.title}
-                                        subdetail={`$${product.price}`}
-                                    />
-                                </SidebarGrid>
-                            ))}
+                            <PostRank posts={recommendedPosts} hideRanks />
                         </SidebarSection>
                     )}
                 </Sidebar>
@@ -202,10 +197,10 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             ))}
                         </ContentSection>
                     )}
-                    {relatedInPost && relatedInPost.length > 3 && (
+                    {relatedProducts && relatedProducts.length > 3 && (
                         <ContentSection title="You may also like">
-                            <Carousel slidesToShow={relatedInPost.length >= 5 ? 5 : relatedInPost.length}>
-                                {relatedInPost.map(product => (
+                            <Carousel slidesToShow={relatedProducts.length >= 5 ? 5 : relatedProducts.length}>
+                                {relatedProducts.map(product => (
                                     <div>
                                         <CarouselItem
                                             imageUrl={product.image.small_image_url}

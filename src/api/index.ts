@@ -95,8 +95,8 @@ export default class Api {
         return this._GET(`/api/v1/posts/${postId}`);
     }
 
-    getRelatedPosts(): Promise<Post> {
-        return this._GET(`/api/v1/posts/related`);
+    getRelatedPosts(postId: string): Promise<Post> {
+        return this._GET(`/api/v1/posts/${postId}/related`);
     }
 
     getProduct(productId: string): Promise<any> {
