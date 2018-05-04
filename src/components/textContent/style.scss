@@ -1,0 +1,43 @@
+@import "../../styles/variables";
+
+.truncated {
+    // hide text if it more than N lines
+    overflow: hidden;
+    // for set '...' in absolute position
+    position: relative;
+    // use this value to count block height
+    line-height: $line-height-2;
+    // Default to 3 lines
+    max-height: $line-height-2 * 3;
+    // fix problem when last visible word doesn't adjoin right side
+    text-align: justify;
+    // place for '...'
+    margin-right: -1em;
+    padding-right: 1em;
+
+    &::before {
+        // points in the end
+        content: '...';
+        // absolute position
+        position: absolute;
+        background-color: #fff;
+        padding-left: $base-spacing-sm;
+        right: 1em;
+        bottom: 0;
+    }
+
+    &::after {
+        // points in the end
+        content: '';
+        // absolute position
+        position: absolute;
+        // set position to right bottom corner of text
+        right: 1em;
+        // set width and height
+        width: 1em;
+        height: 1em;
+        margin-top: 0.2em;
+        // bg color = bg color under block
+        background: white;
+    }
+}

@@ -9,6 +9,7 @@ import Author from "../../components/author";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Icon, { IconVariant } from "../../components/icon";
 import Image, { ImageFitVariant } from "../../components/image";
+import TextContent from "../../components/textContent";
 import CardContainer from "./cardContainer";
 
 import "./style.scss";
@@ -53,8 +54,6 @@ class Card extends React.Component<CardProps, CardState> {
             marginLeft: this.state.hoverX,
         };
 
-        const titleClassName = singleLineTitle ? "title-1" : "title";
-
         return (
             <div className="card" ref="card">
                 {hoverItem && (
@@ -69,9 +68,14 @@ class Card extends React.Component<CardProps, CardState> {
                     square
                 />
                 <div className="card-content">
-                    <p className={titleClassName} onClick={onClick}>
+                    <div className="card-title-container">
+                    <TextContent className="title" htmlTag="p" onClick={onClick} maxLines={singleLineTitle ? 1 : 2}>
                         {title}
-                    </p>
+                    </TextContent>
+                    </div>
+                    {/* <p className={titleClassName} onClick={onClick}>
+                        {title}
+                    </p> */}
                     {footerItem && (
                         <div className="card-footer">
                             {footerItem}
