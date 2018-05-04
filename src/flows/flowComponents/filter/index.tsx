@@ -61,14 +61,14 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
     render() {
         return (
-            <div>
+            <div ref={this._setFilterRef}>
                 <div className={`filter-anchor ${this.props.className}`}>
                     <LinkButton onClick={this._toggleFilter}>
                         Filter&nbsp;&nbsp;
                         <Icon variant={this.state.isFilterActive ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
                     </LinkButton>
                 </div>
-                <div ref={this._setFilterRef} className={`filter-content ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>
+                <div className={`filter-content ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>
                     <ul className="filter-list" >
                         {FilterConstants.FILTER_LIST
                         .map(filter => (

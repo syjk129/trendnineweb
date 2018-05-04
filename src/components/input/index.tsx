@@ -46,7 +46,7 @@ export default class Input extends React.Component<InputProps, never> {
                 classes += " blank";
                 break;
             case InputVariant.OUTLINE:
-                classes += " outlin";
+                classes += " outline";
                 break;
         }
 

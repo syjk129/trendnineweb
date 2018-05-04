@@ -156,15 +156,16 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                         onApply={this._filterPosts}
                         className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
                     </div>
-                    <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this._renderPosts(this.state.posts)}
-                    </CardContainer>
 
                     {this.state.keyword !== "" && this.state.posts.length < 1 && (
                         <div className="no-search-result-text">
                             No results for "{ this.state.keyword }"
                         </div>
                     )}
+
+                    <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
+                        {this._renderPosts(this.state.posts)}
+                    </CardContainer>
                 </Content>
             </div>
         );

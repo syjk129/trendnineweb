@@ -1,7 +1,7 @@
+import autobind from "autobind-decorator";
 import * as React from "react";
 import { ChangeEvent } from "react";
 import { withRouter } from "react-router-dom";
-import autobind from "autobind-decorator";
 
 import Icon, { IconVariant } from "../../../../components/icon";
 import Input, { InputType } from "../../../../components/input";
