@@ -212,6 +212,37 @@ export default class Api {
         return this._PUT(`/api/v1/wishlist`, request);
     }
 
+    wishlistPost(postId: string): Promise<void> {
+        const request = {
+            item_id: postId,
+            item_type: "blog",
+        };
+
+        return this._PUT(`/api/v1/wishlist`, request);
+    }
+
+    unwishlistPost(postId: string): Promise<void> {
+        return this._DELETE(`/api/v1/wishlist/blog/${postId}`);
+    }
+
+    wishlistProduct(productId: string): Promise<void> {
+        const request = {
+            item_id: productId,
+            item_type: "product",
+        };
+
+        return this._PUT(`/api/v1/wishlist`, request);
+    }
+
+    unwishlistProduct(productId: string): Promise<void> {
+        const request = {
+            item_id: productId,
+            item_type: "product",
+        };
+
+        return this._DELETE(`/api/v1/wishlist/product/${productId}`);
+    }
+
     private _apiUrl: string;
     private _apiOptions: ApiOptions;
 

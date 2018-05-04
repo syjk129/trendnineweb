@@ -1,7 +1,7 @@
 @import "../../../styles/variables";
 
 .post-author-details {
-    display: flex;
+    display: inline-block;
     align-items: center;
     font-size: $font-size-1;
     line-height: $line-height-1;
