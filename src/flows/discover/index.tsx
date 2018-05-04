@@ -98,12 +98,14 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         }
 
         const queryString = location.search;
+        const keyword = new URLSearchParams(queryString);
+        const query = keyword.get("q") ? `keyword=${keyword.get("q")}` : "";
 
         const [
             newPosts,
         ] = await Promise.all([
             location.pathname === "/feed" ? this.context.api.getFeedPosts(this.state.postsNextToken)
-                                            : this.context.api.getLatestPosts(queryString, this.state.postsNextToken),
+                                            : this.context.api.getLatestPosts(query, this.state.postsNextToken),
         ]);
 
         let posts = this.state.posts.concat(newPosts.list);
@@ -170,7 +172,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     @autobind
     private _renderPosts(posts: Array<PostPreview>) {
-        const postCards =  posts.map((post, index) => (
+        const postCards = posts.map((post, index) => (
             <PostCard
                 post={post}
                 likePost={this._likePost}
@@ -226,7 +228,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         }
 
         const newPosts = await this.context.api.getLatestPosts(query);
-        this.setState({ posts: newPosts });
+        this.setState({ posts: newPosts.list });
     }
 }
 
