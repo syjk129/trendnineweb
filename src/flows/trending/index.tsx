@@ -1,4 +1,5 @@
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
 import * as React from "react";
 import { withRouter } from "react-router";
 
@@ -80,4 +81,7 @@ export default class Trending extends React.Component<TrendingProps, TrendingSta
     }
 }
 
-Trending.contextTypes = AppContextTypes;
+Trending.contextTypes = {
+    api: PropTypes.any,
+    setError: PropTypes.func,
+};

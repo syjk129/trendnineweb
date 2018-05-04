@@ -105,4 +105,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     }
 }
 
-Auth.contextTypes = AppContextTypes;
+Auth.contextTypes = {
+    api: PropTypes.any,
+    setError: PropTypes.func,
+};

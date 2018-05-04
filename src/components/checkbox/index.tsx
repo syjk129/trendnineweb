@@ -1,6 +1,6 @@
+import autobind from "autobind-decorator";
 import * as React from "react";
 import { ChangeEvent } from "react";
-import autobind from "autobind-decorator";
 
 import Input, { InputType } from "../input";
 

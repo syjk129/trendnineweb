@@ -40,6 +40,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
     async componentWillMount() {
         try {
+            console.log(this.context);
             const categories = await this.context.api.getCategories();
 
             this.setState({
@@ -226,4 +227,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     }
 }
 
-Filter.contextTypes = AppContextTypes;
+Filter.contextTypes = {
+    api: PropTypes.any,
+    setError: PropTypes.func,
+};

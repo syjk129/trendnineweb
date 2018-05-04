@@ -181,4 +181,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
     }
 }
 
-ProductView.contextTypes = AppContextTypes;
+ProductView.contextTypes = {
+    api: PropTypes.any,
+    setError: PropTypes.func,
+};
