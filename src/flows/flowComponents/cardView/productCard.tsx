@@ -26,7 +26,6 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
         const { product } = this.props;
 
         const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
-
         const footerItem = (
             <div>
                 <p>{product.brand.name}</p>
@@ -54,7 +53,6 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
 
     @autobind
     private _wishlistUnwishlistProduct() {
-        console.log("HI")
         if (this.state.wishlisted) {
             this.props.unwishlistProduct(this.props.product.id);
             this.setState({ wishlisted: false });
