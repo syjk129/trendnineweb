@@ -46,7 +46,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         recommendedTrendnines: [],
         keyword: "",
         isLoading: false,
-        windowWidth: 0,
+        numCardsPerRow: 2,
     };
 
     componentWillMount() {
@@ -141,7 +141,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         const CARD_WIDTH = 235;
         const numCardsPerRow = (window.innerWidth + GRID_GAP - 2 * CONTENT_MARGIN) / (CARD_WIDTH + GRID_GAP) - 1 | 0;
 
-        this.setState({numCardsPerRow: numCardsPerRow});
+        this.setState({numCardsPerRow: Math.max(numCardsPerRow, 2)});
     }
 
     render() {
