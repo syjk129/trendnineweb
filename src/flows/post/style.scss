@@ -24,6 +24,8 @@
         .post-subtitle {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2 * $base-spacing;
         }
 
         .post-details {
