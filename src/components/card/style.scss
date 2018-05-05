@@ -2,6 +2,7 @@
 
 .card {
     background-color: #fff;
+    min-width: $min-card-width;
 
     .card-hover-details {
         visibility: hidden;

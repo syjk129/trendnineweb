@@ -32,6 +32,7 @@ interface DiscoverState {
     recommendedTrendnines: Array<Person>;
     keyword: string;
     isLoading: boolean;
+    numCardsPerRow: number;
 }
 
 export default class Discover extends React.Component<DiscoverProps, DiscoverState> {
@@ -45,11 +46,13 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         recommendedTrendnines: [],
         keyword: "",
         isLoading: false,
+        windowWidth: 0,
     };
 
     componentWillMount() {
         this.setState({ isLoading: true });
         this.refreshContent(this.props);
+        this.updateWindowWidth();
     }
 
     componentWillReceiveProps(props: DiscoverProps) {
@@ -59,10 +62,12 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     componentDidMount() {
         window.addEventListener("scroll", this.onScroll, false);
+        window.addEventListener("resize", this.updateWindowWidth);
     }
 
     componentDidUnmount() {
         window.removeEventListener("scroll", this.onScroll, false);
+        window.removeEventListener("resize", this.updateWindowWidth);
     }
 
     async refreshContent(props: DiscoverProps) {
@@ -130,6 +135,15 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         }
     }
 
+    updateWindowWidth = () => {
+        const GRID_GAP = 22;
+        const CONTENT_MARGIN = 40;
+        const CARD_WIDTH = 235;
+        const numCardsPerRow = (window.innerWidth + GRID_GAP - 2 * CONTENT_MARGIN) / (CARD_WIDTH + GRID_GAP) - 1 | 0;
+
+        this.setState({numCardsPerRow: numCardsPerRow});
+    }
+
     render() {
         if (this.state.isLoading) {
             return "Loading...";
@@ -165,7 +179,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     )}
 
                     <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this._renderPosts(this.state.posts)}
+                        {this._renderPosts()}
                     </CardContainer>
                 </Content>
             </div>
@@ -173,13 +187,15 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     }
 
     @autobind
-    private _renderPosts(posts: Array<PostPreview>) {
+    private _renderPosts() {
+        const posts = this.state.posts;
         const postCards = posts.map((post, index) => (
             <PostCard
                 post={post}
             />));
 
-        postCards.splice(8, 0, this._renderRecommendedtrendsetters());
+        // update the logic to add recommended trendsetters whenever
+        postCards.splice(this.state.numCardsPerRow * 2, 0, this._renderRecommendedtrendsetters());
         return postCards;
     }
 
