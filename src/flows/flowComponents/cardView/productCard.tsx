@@ -4,13 +4,12 @@ import * as React from "react";
 import { LinkButton } from "../../../components/button";
 import Card from "../../../components/card";
 import { IconVariant } from "../../../components/icon";
+import ActionLinks, { ActionLinksVariant } from "../../flowComponents/actions";
 
 import "./style.scss";
 
 interface ProductCardProps {
     product: any;
-    wishlistProduct(productId: string): Promise<void>;
-    unwishlistProduct(productId: string): Promise<void>;
 }
 
 interface ProductCardState {
@@ -31,10 +30,10 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
                 <p>{product.brand.name}</p>
                 <div className="product-action-btns">
                     <p>${product.price}</p>
-                    <LinkButton
-                        icon={wishlistVariant}
-                        selected={this.state.wishlisted}
-                        onClick={this._wishlistUnwishlistProduct}
+                    <ActionLinks
+                        variant={ActionLinksVariant.PRODUCT}
+                        id={product.id}
+                        wishlisted={product.wishlisted}
                     />
                 </div>
             </div>
@@ -49,16 +48,5 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
                 footerItem={footerItem}
             />
         );
-    }
-
-    @autobind
-    private _wishlistUnwishlistProduct() {
-        if (this.state.wishlisted) {
-            this.props.unwishlistProduct(this.props.product.id);
-            this.setState({ wishlisted: false });
-        } else {
-            this.props.wishlistProduct(this.props.product.id);
-            this.setState({ wishlisted: true });
-        }
     }
 }

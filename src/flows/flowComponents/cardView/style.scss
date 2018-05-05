@@ -90,17 +90,3 @@
     display: flex;
     justify-content: space-between;
 }
-
-.action-btns {
-    width: 75px;
-
-    a {
-        vertical-align: middle;
-        float: right;
-    }
-
-    a:first-child {
-        padding-right: $base-spacing;
-        float: left;
-    }
-}

@@ -1,0 +1,21 @@
+@import "../../../styles/variables";
+
+.action-btns {
+    width: 75px;
+
+    a {
+        vertical-align: middle;
+        float: right;
+    }
+
+    a:first-child {
+        padding-right: $base-spacing;
+        float: left;
+    }
+
+    a:last-child {
+        text-align: right;
+        padding-right: $base-spacing;
+        float: right !important;
+    }
+}

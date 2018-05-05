@@ -228,46 +228,28 @@ export default class User extends React.Component<UserProps, UserState> {
     @autobind
     private _renderPostWishlist() {
         return this.state.wishlist.post_items.map(post => (
-            <PostCard
-                post={post}
-                likePost={this._likePost}
-                unlikePost={this._unlikePost}
-                wishlistPost={this._wishlistPost}
-                unwishlistPost={this._unwishlistPost}
-            />
+            <PostCard post={post} />
         ));
     }
 
     @autobind
     private _renderProductWishlist() {
         return this.state.wishlist.product_items.map(product => (
-            <ProductCard
-            product={product}
-            wishlistProduct={this._wishlistProduct}
-            unwishlistProduct={this._unwishlistProduct} />
+            <ProductCard product={product} />
         ));
     }
 
     @autobind
     private _renderPosts() {
         return this.state.posts.map(post => (
-            <PostCard
-                post={post}
-                likePost={this._likePost}
-                unlikePost={this._unlikePost}
-                wishlistPost={this._wishlistPost}
-                unwishlistPost={this._unwishlistPost}
-            />
+            <PostCard post={post} />
         ));
     }
 
     @autobind
     private _renderProducts() {
         return this.state.products.map(product => (
-            <ProductCard
-            product={product}
-            wishlistProduct={this._wishlistProduct}
-            unwishlistProduct={this._unwishlistProduct} />
+            <ProductCard product={product} />
         ));
     }
 
@@ -283,36 +265,6 @@ export default class User extends React.Component<UserProps, UserState> {
         return this.state.following.map(user => (
             <UserCard user={user} />
         ));
-    }
-
-    @autobind
-    private _likePost(postId: string) {
-        return this.context.api.likePost(postId);
-    }
-
-    @autobind
-    private _unlikePost(postId: string) {
-        return this.context.api.unlikePost(postId);
-    }
-
-    @autobind
-    private _wishlistPost(postId: string) {
-        return this.context.api.wishlistPost(postId);
-    }
-
-    @autobind
-    private _unwishlistPost(postId: string) {
-        return this.context.api.unwishlistPost(postId);
-    }
-
-    @autobind
-    private _wishlistProduct(productId: string) {
-        return this.context.api.wishlistProduct(productId);
-    }
-
-    @autobind
-    private _unwishlistProduct(productId: string) {
-        return this.context.api.unwishlistProduct(productId);
     }
 }
 

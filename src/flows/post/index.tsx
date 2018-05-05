@@ -12,6 +12,7 @@ import Content from "../../components/content";
 import Icon, { IconVariant} from "../../components/icon";
 import Image, { ImageRatioVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
+import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
 import { PostRank } from "../flowComponents/ranking";
@@ -38,9 +39,6 @@ interface PostState {
     relatedProducts: Array<any>;
     relatedPosts: Array<Post>;
     featuredTrendnines: Array<Person>;
-    likes: number;
-    liked: boolean;
-    wishlisted: boolean;
 }
 
 export default class PostView extends React.Component<PostProps, PostState> {
@@ -56,9 +54,6 @@ export default class PostView extends React.Component<PostProps, PostState> {
         relatedProducts: [],
         relatedPosts: [],
         featuredTrendnines: [],
-        likes: 0,
-        liked: false,
-        wishlisted: false,
     };
 
     async componentWillMount() {
@@ -81,11 +76,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 this.context.api.getFeaturedTrendnines(),
             ]);
 
-            const likes = currentPost.likes;
-            const liked = currentPost.liked;
-            const wishlisted = currentPost.wishlisted;
-
-            this.setState({ currentPost, comments, posts, relatedProducts, relatedPosts, featuredTrendnines, likes, liked, wishlisted });
+            this.setState({ currentPost, comments, posts, relatedProducts, relatedPosts, featuredTrendnines });
         } catch (err) {
             throw new Error(err);
         }
@@ -119,13 +110,8 @@ export default class PostView extends React.Component<PostProps, PostState> {
         const tagsInPost = currentPost && currentPost.tags.length > 0 && currentPost.tags;
         const recommendedPosts = relatedPosts && relatedPosts.length > 0 && relatedPosts.slice(0, 4);
 
-        let likeVariant = IconVariant.LIKE_FILLED;
-        let wishlistVariant = IconVariant.WISHLIST_FILLED;
-
         if (currentPost) {
             this.updateTags();
-            likeVariant =  this.state.liked ? IconVariant.LIKE_FILLED : IconVariant.LIKE;
-            wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
         }
 
         return (
@@ -185,18 +171,13 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                 author={this.state.currentPost.author}
                                 postDate={new Date(this.state.currentPost.created)}
                             />
-                            <div className="action-btns">
-                                <LinkButton
-                                    icon={likeVariant}
-                                    onClick={this._likeUnlikePost}
-                                >
-                                    {this.state.likes}
-                                </LinkButton>
-                                <LinkButton
-                                    icon={wishlistVariant}
-                                    onClick={this._wishlistUnwishlistPost}
-                                ></LinkButton>
-                            </div>
+                            <ActionLinks
+                                variant={ActionLinksVariant.POST}
+                                id={this._postId}
+                                wishlisted={currentPost.wishlisted}
+                                likes={currentPost.likes}
+                                liked={currentPost.liked}
+                            />
                             <div className="post-details">
                                 {/* TODO: Don't use dangerouslySetInnerHTML. Make this safer */}
                                 <div dangerouslySetInnerHTML={{ __html: this.state.currentPost.content }} />
@@ -278,28 +259,6 @@ export default class PostView extends React.Component<PostProps, PostState> {
     @autobind
     private _unlikeComment(commentId: string) {
         return this.context.api.unlikeComment(this._postId, commentId);
-    }
-
-    @autobind
-    private _wishlistUnwishlistPost() {
-        if (this.state.wishlisted) {
-            this.context.api.unwishlistPost(this.state.currentPost.id);
-            this.setState({ wishlisted: false });
-        } else {
-            this.context.api.wishlistPost(this.state.currentPost.id);
-            this.setState({ wishlisted: true });
-        }
-    }
-
-    @autobind
-    private _likeUnlikePost() {
-        if (this.state.liked) {
-            this.context.api.unlikePost(this.state.currentPost.id);
-            this.setState({ liked: false, likes: this.state.likes - 1 });
-        } else {
-            this.context.api.likePost(this.state.currentPost.id);
-            this.setState({ liked: true, likes: this.state.likes + 1 });
-        }
     }
 }
 

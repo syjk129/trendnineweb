@@ -9,29 +9,15 @@ import {ButtonVariant} from "../../../components/button/types";
 import Card from "../../../components/card";
 import Carousel, { CarouselItem } from "../../../components/carousel";
 import Icon, { IconVariant} from "../../../components/icon";
+import ActionLinks, {ActionLinksVariant} from "../../flowComponents/actions";
 
 import "./style.scss";
 
 interface PostCardProps {
     post: PostPreview;
-    likePost(postId: string): Promise<void>;
-    unlikePost(postId: string): Promise<void>;
-    wishlistPost(postId: string): Promise<void>;
-    unwishlistPost(postId: string): Promise<void>;
 }
 
-interface PostCardState {
-    likes: number;
-    liked: boolean;
-    wishlisted: boolean;
-}
-
-export default class PostCard extends React.Component<PostCardProps, PostCardState> {
-    state: PostCardState = {
-        likes: this.props.post.likes,
-        liked: this.props.post.liked,
-        wishlisted: this.props.post.wishlisted,
-    };
+export default class PostCard extends React.Component<PostCardProps> {
 
     render() {
         const { post } = this.props;
@@ -54,14 +40,15 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                                 </p>
                             </div>
                         </LinkButton>
+                        <ActionLinks
+                            variant={ActionLinksVariant.PRODUCT}
+                            id={product.id}
+                            wishlisted={product.wishlisted}
+                        />
                     </div>
                 ))}
             </div>
         );
-
-        const likeVariant =  this.state.liked ? IconVariant.LIKE_FILLED : IconVariant.LIKE;
-        const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
-        const likeText = this.state.liked ? "Likes" : "Like";
 
         const footerItem = (
             <div>
@@ -70,18 +57,13 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                     <div className="created">
                         <Icon variant={IconVariant.TIME}></Icon>&nbsp;<TimeAgo date={post.created} />
                     </div>
-                    <div className="action-btns">
-                        <LinkButton
-                            icon={likeVariant}
-                            onClick={this._likeUnlikePost}
-                        >
-                            {this.state.likes}
-                        </LinkButton>
-                        <LinkButton
-                            icon={wishlistVariant}
-                            onClick={this._wishlistUnwishlistPost}
-                        ></LinkButton>
-                    </div>
+                    <ActionLinks
+                        variant={ActionLinksVariant.POST}
+                        id={post.id}
+                        wishlisted={post.wishlisted}
+                        likes={post.likes}
+                        liked={post.liked}
+                    />
                 </div>
             </div>
         );
@@ -95,27 +77,5 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                 footerItem={footerItem}
             />
         );
-    }
-
-    @autobind
-    private _wishlistUnwishlistPost() {
-        if (this.state.wishlisted) {
-            this.props.unwishlistPost(this.props.post.id);
-            this.setState({ wishlisted: false });
-        } else {
-            this.props.wishlistPost(this.props.post.id);
-            this.setState({ wishlisted: true });
-        }
-    }
-
-    @autobind
-    private _likeUnlikePost() {
-        if (this.state.liked) {
-            this.props.unlikePost(this.props.post.id);
-            this.setState({ liked: false, likes: this.state.likes - 1 });
-        } else {
-            this.props.likePost(this.props.post.id);
-            this.setState({ liked: true, likes: this.state.likes + 1 });
-        }
     }
 }

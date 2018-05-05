@@ -203,35 +203,33 @@ export default class Api {
         return this._POST(`/api/v1/marketplace/products/${productId}/reviews`, request);
     }
 
-    wishlistPost(postId: string): Promise<void> {
+    wishlist(postId: string, itemType: string): Promise<void> {
         const request = {
             item_id: postId,
-            item_type: "blog",
+            item_type: itemType,
         };
 
         return this._PUT(`/api/v1/wishlist`, request);
     }
 
-    unwishlistPost(postId: string): Promise<void> {
-        return this._DELETE(`/api/v1/wishlist/blog/${postId}`);
+    unwishlist(postId: string, itemType: string): Promise<void> {
+        return this._DELETE(`/api/v1/wishlist/${itemType}/${postId}`);
+    }
+
+    wishlistPost(postId: string): Promise<void> {
+        return this.wishlist(postId, "blog");
+    }
+
+    unwishlistPpost(postId: string): Promise<void> {
+        return this.unwishlist(postId, "blog");
     }
 
     wishlistProduct(productId: string): Promise<void> {
-        const request = {
-            item_id: productId,
-            item_type: "product",
-        };
-
-        return this._PUT(`/api/v1/wishlist`, request);
+        return this.wishlist(productId, "product");
     }
 
     unwishlistProduct(productId: string): Promise<void> {
-        const request = {
-            item_id: productId,
-            item_type: "product",
-        };
-
-        return this._DELETE(`/api/v1/wishlist/product/${productId}`);
+        return this.unwishlist(productId, "product");
     }
 
     private _apiUrl: string;

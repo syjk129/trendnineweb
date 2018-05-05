@@ -6,6 +6,7 @@ import { match, withRouter } from "react-router-dom";
 
 import { FeaturedInfleuncer, Person, PostPreview } from "../../api/models";
 import { AppContext, AppContextTypes } from "../../app";
+import { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
@@ -17,7 +18,6 @@ import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 
 import "./style.scss";
-import { LinkButton } from "../../components/button";
 
 interface DiscoverProps {
     location: any;
@@ -177,10 +177,6 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         const postCards = posts.map((post, index) => (
             <PostCard
                 post={post}
-                likePost={this._likePost}
-                unlikePost={this._unlikePost}
-                wishlistPost={this._wishlistPost}
-                unwishlistPost={this._unwishlistPost}
             />));
 
         postCards.splice(8, 0, this._renderRecommendedtrendsetters());
@@ -202,26 +198,6 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                 </div>
             </div>
         );
-    }
-
-    @autobind
-    private _wishlistPost(postId: string) {
-        return this.context.api.wishlistPost(postId);
-    }
-
-    @autobind
-    private _unwishlistPost(postId: string) {
-        return this.context.api.unwishlistPost(postId);
-    }
-
-    @autobind
-    private _likePost(postId: string) {
-        return this.context.api.likePost(postId);
-    }
-
-    @autobind
-    private _unlikePost(postId: string) {
-        return this.context.api.unlikePost(postId);
     }
 
     @autobind
