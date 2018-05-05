@@ -167,17 +167,19 @@ export default class PostView extends React.Component<PostProps, PostState> {
                             <p className="post-title">
                                 {this.state.currentPost.title}
                             </p>
-                            <PostAuthorDetails
-                                author={this.state.currentPost.author}
-                                postDate={new Date(this.state.currentPost.created)}
-                            />
-                            <ActionLinks
-                                variant={ActionLinksVariant.POST}
-                                id={this._postId}
-                                wishlisted={currentPost.wishlisted}
-                                likes={currentPost.likes}
-                                liked={currentPost.liked}
-                            />
+                            <div className="post-subtitle">
+                                <PostAuthorDetails
+                                    author={this.state.currentPost.author}
+                                    postDate={new Date(this.state.currentPost.created)}
+                                />
+                                <ActionLinks
+                                    variant={ActionLinksVariant.POST}
+                                    id={this._postId}
+                                    wishlisted={currentPost.wishlisted}
+                                    likes={currentPost.likes}
+                                    liked={currentPost.liked}
+                                />
+                            </div>
                             <div className="post-details">
                                 {/* TODO: Don't use dangerouslySetInnerHTML. Make this safer */}
                                 <div dangerouslySetInnerHTML={{ __html: this.state.currentPost.content }} />
