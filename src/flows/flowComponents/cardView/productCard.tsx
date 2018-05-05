@@ -9,7 +9,8 @@ import "./style.scss";
 
 interface ProductCardProps {
     product: any;
-    toggleWishlist(postId: string, type: string): Promise<void>;
+    wishlistProduct(productId: string): Promise<void>;
+    unwishlistProduct(productId: string): Promise<void>;
 }
 
 interface ProductCardState {
@@ -24,15 +25,17 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
     render() {
         const { product } = this.props;
 
+        const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
+
         const footerItem = (
             <div>
                 <p>{product.brand.name}</p>
                 <div className="product-action-btns">
                     <p>${product.price}</p>
                     <LinkButton
-                        icon={IconVariant.WISHLIST}
+                        icon={wishlistVariant}
                         selected={this.state.wishlisted}
-                        onClick={this._toggleWishlist}
+                        onClick={this._wishlistUnwishlistProduct}
                     />
                 </div>
             </div>
@@ -42,7 +45,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
             <Card
                 scaleImage
                 imageUrl={product.image.small_image_url}
-                redirectUrl={product.id}
+                redirectUrl={`/product/${product.id}`}
                 title={product.title}
                 footerItem={footerItem}
             />
@@ -50,8 +53,14 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
     }
 
     @autobind
-    private _toggleWishlist() {
-        this.props.toggleWishlist(this.props.product.id, "product");
-        this.setState({ wishlisted: !this.state.wishlisted });
+    private _wishlistUnwishlistProduct() {
+        console.log("HI")
+        if (this.state.wishlisted) {
+            this.props.unwishlistProduct(this.props.product.id);
+            this.setState({ wishlisted: false });
+        } else {
+            this.props.wishlistProduct(this.props.product.id);
+            this.setState({ wishlisted: true });
+        }
     }
 }

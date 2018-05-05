@@ -25,6 +25,7 @@ interface ProductState {
     relatedProducts: Array<any>;
     reviews: Array<any>;
     selectedImage: string;
+    wishlisted: boolean;
 }
 
 export default class ProductView extends React.Component<ProductProps, ProductState> {
@@ -35,6 +36,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
         relatedProducts: [],
         reviews: [],
         selectedImage: null,
+        wishlisted: false,
     };
 
     componentWillMount() {
@@ -58,11 +60,14 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
             this.context.api.getReviews(this._productId),
         ]);
 
+        const wishlisted = currentProduct.wishlisted;
+
         this.setState({
             currentProduct,
             relatedProducts,
             selectedImage: currentProduct.image.original_image_url,
             reviews,
+            wishlisted,
         });
     }
 
@@ -93,6 +98,8 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
             verticalSwiping: true,
             arrows: false,
         };
+
+        let wishlistBtnText = this.state.wishlisted ? "Remove from wishlist" : "Add to wishlist";
 
         return (
             <div className="product">
@@ -130,7 +137,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                             </p>
                             <div className="button-container">
                                 <Button variant={ButtonVariant.PRIMARY} onClick={() => location = this.state.currentProduct.url}>Buy Now</Button>
-                                <Button variant={ButtonVariant.OUTLINE} onClick={this._toggleWishlist}>Add to wishlist</Button>
+                                <Button variant={ButtonVariant.OUTLINE} onClick={this._wishlistUnwishlistProduct}>{wishlistBtnText}</Button>
                             </div>
                         </div>
                     </div>
@@ -176,8 +183,14 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
     }
 
     @autobind
-    private _toggleWishlist() {
-        this.context.api.toggleWishlist(this._productId, "product");
+    private _wishlistUnwishlistProduct() {
+        if (this.state.wishlisted) {
+            this.context.api.unwishlistProduct(this._productId);
+            this.setState({ wishlisted: false });
+        } else {
+            this.context.api.wishlistProduct(this._productId);
+            this.setState({ wishlisted: true });
+        }
     }
 }
 

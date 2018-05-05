@@ -232,7 +232,8 @@ export default class User extends React.Component<UserProps, UserState> {
                 post={post}
                 likePost={this._likePost}
                 unlikePost={this._unlikePost}
-                toggleWishlist={this._toggleWishlist}
+                wishlistPost={this._wishlistPost}
+                unwishlistPost={this._unwishlistPost}
             />
         ));
     }
@@ -240,7 +241,10 @@ export default class User extends React.Component<UserProps, UserState> {
     @autobind
     private _renderProductWishlist() {
         return this.state.wishlist.product_items.map(product => (
-            <ProductCard product={product} toggleWishlist={this._toggleWishlist} />
+            <ProductCard
+            product={product}
+            wishlistProduct={this._wishlistProduct}
+            unwishlistProduct={this._unwishlistProduct} />
         ));
     }
 
@@ -251,7 +255,8 @@ export default class User extends React.Component<UserProps, UserState> {
                 post={post}
                 likePost={this._likePost}
                 unlikePost={this._unlikePost}
-                toggleWishlist={this._toggleWishlist}
+                wishlistPost={this._wishlistPost}
+                unwishlistPost={this._unwishlistPost}
             />
         ));
     }
@@ -259,7 +264,10 @@ export default class User extends React.Component<UserProps, UserState> {
     @autobind
     private _renderProducts() {
         return this.state.products.map(product => (
-            <ProductCard product={product} toggleWishlist={this._toggleWishlist} />
+            <ProductCard
+            product={product}
+            wishlistProduct={this._wishlistProduct}
+            unwishlistProduct={this._unwishlistProduct} />
         ));
     }
 
@@ -288,8 +296,23 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 
     @autobind
-    private _toggleWishlist(postId: string, type: string) {
-        return this.context.api.toggleWishlist(postId, type);
+    private _wishlistPost(postId: string) {
+        return this.context.api.wishlistPost(postId);
+    }
+
+    @autobind
+    private _unwishlistPost(postId: string) {
+        return this.context.api.unwishlistPost(postId);
+    }
+
+    @autobind
+    private _wishlistProduct(productId: string) {
+        return this.context.api.wishlistProduct(productId);
+    }
+
+    @autobind
+    private _unwishlistProduct(productId: string) {
+        return this.context.api.unwishlistProduct(productId);
     }
 }
 

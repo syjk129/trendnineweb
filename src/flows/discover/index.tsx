@@ -179,7 +179,8 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                 post={post}
                 likePost={this._likePost}
                 unlikePost={this._unlikePost}
-                toggleWishlist={this._toggleWishlist}
+                wishlistPost={this._wishlistPost}
+                unwishlistPost={this._unwishlistPost}
             />));
 
         postCards.splice(8, 0, this._renderRecommendedtrendsetters());
@@ -204,9 +205,13 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
     }
 
     @autobind
-    private _toggleWishlist(postId: string, type: string) {
-        this.context.setError(new Error("toggle"));
-        return this.context.api.toggleWishlist(postId, type);
+    private _wishlistPost(postId: string) {
+        return this.context.api.wishlistPost(postId);
+    }
+
+    @autobind
+    private _unwishlistPost(postId: string) {
+        return this.context.api.unwishlistPost(postId);
     }
 
     @autobind

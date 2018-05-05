@@ -16,7 +16,8 @@ interface PostCardProps {
     post: PostPreview;
     likePost(postId: string): Promise<void>;
     unlikePost(postId: string): Promise<void>;
-    toggleWishlist(postId: string, type: string): Promise<void>;
+    wishlistPost(postId: string): Promise<void>;
+    unwishlistPost(postId: string): Promise<void>;
 }
 
 interface PostCardState {
@@ -78,7 +79,7 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                         </LinkButton>
                         <LinkButton
                             icon={wishlistVariant}
-                            onClick={this._toggleWishlist}
+                            onClick={this._wishlistUnwishlistPost}
                         ></LinkButton>
                     </div>
                 </div>
@@ -97,13 +98,14 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
     }
 
     @autobind
-    private _toggleWishlist() {
-        try {
-            this.props.toggleWishlist(this.props.post.id, "blog");
-        } catch (err) {
-            throw new Error(err);
+    private _wishlistUnwishlistPost() {
+        if (this.state.wishlisted) {
+            this.props.unwishlistPost(this.props.post.id);
+            this.setState({ wishlisted: false });
+        } else {
+            this.props.wishlistPost(this.props.post.id);
+            this.setState({ wishlisted: true });
         }
-        this.setState({ wishlisted: !this.state.wishlisted });
     }
 
     @autobind

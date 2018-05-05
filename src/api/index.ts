@@ -203,15 +203,6 @@ export default class Api {
         return this._POST(`/api/v1/marketplace/products/${productId}/reviews`, request);
     }
 
-    toggleWishlist(id: string, type: string): Promise<void> {
-        const request = {
-            item_id: id,
-            item_type: type,
-        };
-
-        return this._PUT(`/api/v1/wishlist`, request);
-    }
-
     wishlistPost(postId: string): Promise<void> {
         const request = {
             item_id: postId,
