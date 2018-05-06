@@ -16,6 +16,7 @@ export enum ImageFitVariant {
 interface ImageProps {
     src: string;
     className?: string;
+    inline?: boolean;
     ratio?: ImageRatioVariant;
     fit?: ImageFitVariant;
     square?: boolean;
@@ -25,12 +26,16 @@ interface ImageProps {
 
 export default class Image extends React.Component<ImageProps> {
     render() {
-        const { className, square, circle, fit, ratio, onClick, src } = this.props;
+        const { className, inline, square, circle, fit, ratio, onClick, src } = this.props;
 
         let classes = "image-container";
 
         if (className) {
             classes += ` ${className}`;
+        }
+
+        if (inline) {
+            classes += " inline";
         }
 
         if (square) {

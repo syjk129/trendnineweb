@@ -23,7 +23,7 @@ function TextContent<T extends keyof JSX.IntrinsicElements>(props: TextContentPr
         });
     }
 
-    return React.createElement(htmlTag, {
+    return React.createElement(htmlTag || "span", {
         className: classes,
         onClick,
         style,

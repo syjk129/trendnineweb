@@ -1,0 +1,28 @@
+@import "../../../styles/variables";
+
+.author {
+    $image-size: 24px;
+
+    display: flex;
+
+    .link-button {
+        display: flex;
+        margin-right: $base-spacing * 2;
+    }
+
+    .author-image img {
+        display: inline-block;
+        width: $image-size;
+        height: $image-size;
+        margin-right: $base-spacing;
+    }
+
+    .author-name {
+        line-height: $image-size;
+        font-size: $font-size-2;
+    }
+
+    time {
+        line-height: $image-size;
+    }
+}

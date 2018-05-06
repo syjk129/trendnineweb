@@ -49,6 +49,10 @@
     background-image: url("/img/icons/arrow_zero.png");
 }
 
+.icon-comment::before {
+    background-image: url("/img/icons/comments.png");
+}
+
 .icon-like::before {
     background-image: url("/img/icons/like.png");
 }

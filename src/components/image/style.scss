@@ -21,6 +21,11 @@
         }
     }
 
+    &.inline {
+        display: inline-block;
+        width: auto;
+    }
+
     &.square-image,
     &.post-cover-ratio {
         &::before {

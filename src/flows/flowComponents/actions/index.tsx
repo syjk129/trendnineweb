@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 
 import { AppContext, AppContextTypes } from "../../../app";
 import { LinkButton } from "../../../components/button";
-import { IconVariant } from "../../../components/icon";
+import Icon, { IconVariant } from "../../../components/icon";
 
 import "./style.scss";
 
@@ -50,20 +50,15 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
 
         return (
             <div className="action-btns">
-                {this.props.variant === ActionLinksVariant.POST ?
-                    <LinkButton
-                        icon={likeVariant}
-                        onClick={this._likeUnlikePost}
-                    >
+                {this.props.variant === ActionLinksVariant.POST &&
+                    <LinkButton onClick={this._likeUnlikePost}>
+                        <Icon variant={likeVariant} />
                         {this.state.likes}
                     </LinkButton>
-                    : null
                 }
-
-                <LinkButton
-                    icon={wishlistVariant}
-                    onClick={this._wishlistUnwishlist}
-                ></LinkButton>
+                <LinkButton onClick={this._wishlistUnwishlist}>
+                    <Icon variant={wishlistVariant} />
+                </LinkButton>
             </div>
         );
     }

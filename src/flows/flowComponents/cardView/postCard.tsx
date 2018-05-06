@@ -3,13 +3,13 @@ import * as React from "react";
 import TimeAgo from "react-timeago";
 
 import { PostPreview } from "../../../api/models";
-import Author from "../../../components/author";
 import { LinkButton } from "../../../components/button";
 import {ButtonVariant} from "../../../components/button/types";
 import Card from "../../../components/card";
 import Carousel, { CarouselItem } from "../../../components/carousel";
 import Icon, { IconVariant} from "../../../components/icon";
 import ActionLinks, {ActionLinksVariant} from "../../flowComponents/actions";
+import Author from "../../flowComponents/author";
 
 import "./style.scss";
 

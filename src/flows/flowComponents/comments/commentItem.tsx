@@ -1,11 +1,13 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
+import TimeAgo from "react-timeago";
 
 import { Comment } from "../../../api/models";
-import Author from "../../../components/author";
-import { LinkButton } from "../../../components/button";
-
+import { IconButton, LinkButton } from "../../../components/button";
+import { IconVariant } from "../../../components/icon";
+import Author from "../author";
 import CommentInput from "./commentInput";
+
 import "./style.scss";
 
 interface CommentItemProps {
@@ -31,21 +33,25 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
     render() {
         return (
             <div className="comment-item">
-                <Author author={this.props.comment.author} />
-                <p>{this.props.comment.content}</p>
+                <Author author={this.props.comment.author} date={this.props.comment.created}/>
+                <p className="comment-content">{this.props.comment.content}</p>
                 <div className="comment-item-actions">
                     {this.props.likeComment &&
-                        <LinkButton
+                        <IconButton
+                            inline
+                            text={this.state.liked ? "Unlike" : `Like (${this.props.comment.likes})`}
+                            icon={IconVariant.LIKE}
                             selected={this.state.liked}
                             onClick={this._likeComment}
-                        >
-                            {this.state.liked ? "Unlike" : `Like (${this.props.comment.likes})`}
-                        </LinkButton>
+                        />
                     }
                     {this.props.submitReply && this.props.comment.threaded_comments &&
-                        <LinkButton onClick={this._toggleReply}>
-                            {this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
-                        </LinkButton>
+                        <IconButton
+                            inline
+                            text={this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
+                            icon={IconVariant.COMMENT}
+                            onClick={this._toggleReply}
+                        />
                     }
                 </div>
                 {this.props.submitReply && this.state.showReply && (

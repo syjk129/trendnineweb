@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import IconButton from "./iconButton";
 import LinkButton from "./linkButton";
 
 import { ButtonSize, ButtonVariant } from "./types";
@@ -66,5 +67,6 @@ export default function Button({
 export {
     ButtonSize,
     ButtonVariant,
+    IconButton,
     LinkButton,
 };

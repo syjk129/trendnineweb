@@ -11,7 +11,7 @@
             width: 80px;
             height: 80px;
             border-radius: 100%;
-            margin-right: $base-spacing;
+            margin-right: $base-spacing * 2;
         }
 
         .comment-input {
@@ -30,6 +30,10 @@
 
     .author {
         margin-bottom: $base-spacing;
+    }
+
+    .comment-content {
+        font-size: $font-size-2;
     }
 
     .comment-item-actions {
