@@ -20,6 +20,7 @@ import FollowButton from "./followButton";
 import "./style.scss";
 
 interface UserProps {
+    user: Person;
     match: match<any>;
     location: any;
     followUser(userId: string): void;
@@ -79,30 +80,33 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 
     render() {
-        const user = this.state.profile ? this.state.profile.user : null;
+        const user = JSON.parse(localStorage.getItem("user"));
+        const influencer = this.state.profile ? this.state.profile.user : null;
         const pathname = this.props.location.pathname;
 
         return (
             <div className="user">
                 <Sidebar>
-                    {user && (
+                    {influencer && (
                         <div>
-                            <SidebarSection title={user.username}>
+                            <SidebarSection title={influencer.username}>
                                 <div className="user-image">
                                     <Image
-                                        src={user.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
+                                        src={influencer.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
                                         circle
                                         square
                                     />
                                 </div>
                                 <div className="introduction">
-                                    {user.introduction}
+                                    {influencer.introduction}
                                 </div>
-                                <div className="follow-container">
-                                    <FollowButton
-                                        user={ user }
-                                    />
-                                </div>
+                                {user.id !== influencer.id && (
+                                    <div className="follow-container">
+                                        <FollowButton
+                                            user={ influencer }
+                                        />
+                                    </div>
+                                )}
                                 <div className="activity-container">
                                     <div>
                                         <span className="identifier">TODAY</span>
@@ -117,10 +121,10 @@ export default class User extends React.Component<UserProps, UserState> {
                                     TODO: SOCIAL links
                                 </div>
                             </SidebarSection>
-                            <SidebarSection title={`${user.first_name}'s Top Posts`}>
+                            <SidebarSection title={`${influencer.first_name}'s Top Posts`}>
                                 <PostRank posts={this.state.profile.top_posts} hideRanks hideName />
                             </SidebarSection>
-                            <SidebarSection title={`${user.first_name}'s Top Tags`}>
+                            <SidebarSection title={`${influencer.first_name}'s Top Tags`}>
                                 <div className="tag-container">
                                     {this.state.profile.top_post_tags.map(tag => (
                                         <Tag tag={tag} />
@@ -255,15 +259,15 @@ export default class User extends React.Component<UserProps, UserState> {
 
     @autobind
     private _renderFollowers() {
-        return this.state.followers.map(user => (
-            <UserCard user={user} />
+        return this.state.followers.map(person => (
+            <UserCard user={person} following={person.followed } />
         ));
     }
 
     @autobind
     private _renderFollowing() {
-        return this.state.following.map(user => (
-            <UserCard user={user} />
+        return this.state.following.map(person => (
+            <UserCard user={person} following={person.followed } />
         ));
     }
 }

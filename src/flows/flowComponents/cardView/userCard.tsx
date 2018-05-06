@@ -5,12 +5,11 @@ import Card from "../../../components/card";
 import FollowButton from "../../user/followButton";
 
 interface UserCardProps {
-    user: any;
+    user: Person;
     following: boolean;
-    toggleFollowing(): void;
 }
 
-export default function UserCard({ user, following, toggleFollowing }: UserCardProps) {
+export default function UserCard({ user, following }: UserCardProps) {
     const footerItem = (
         <div>
             <div className="post-card-content">
