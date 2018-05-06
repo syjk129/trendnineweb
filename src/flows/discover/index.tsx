@@ -13,7 +13,7 @@ import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import { PostCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
-import Filter from "../flowComponents/filter";
+import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 
@@ -169,6 +169,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                         )}
                         <Filter
                         onApply={this._filterPosts}
+                        filterTarget={FilterTarget.POST}
                         className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
                     </div>
 

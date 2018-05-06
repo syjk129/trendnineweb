@@ -13,8 +13,14 @@ import { FilterConstants } from "./filterComponents/types";
 
 import "./style.scss";
 
+export enum FilterTarget {
+    POST = "post",
+    PRODUCT = "product",
+}
+
 interface FilterProps {
     className?: string;
+    filterTarget: FilterTarget;
     onApply(queryString: string): void;
 }
 
@@ -60,6 +66,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     }
 
     render() {
+        const filterList = this._getFilterList();
         return (
             <div ref={this._setFilterRef}>
                 <div className={`filter-anchor ${this.props.className}`}>
@@ -70,7 +77,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                 </div>
                 <div className={`filter-content ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>
                     <ul className="filter-list" >
-                        {FilterConstants.FILTER_LIST
+                        {filterList
                         .map(filter => (
                             <li>
                                 <LinkButton
@@ -83,25 +90,31 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                             </li>
                         ))}
                     </ul>
-                    <CategoryTreeFilter
-                        categoryList={this.state.categories}
-                        active={this.state.activeFilter === FilterConstants.CATEGORY}
-                        onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
-                        onCancel={this._cancel} />
-                    <SearchFilter
-                        placeholder="Search for Brands"
-                        active={this.state.activeFilter === FilterConstants.BRAND}
-                        onApply={(v) => this._applyFilter(FilterConstants.BRAND_PARAM_STRING, v)}
-                        onSearch={this._onSearchBrands}
-                        searchResult={this.state.searchResult}
-                        onCancel={this._cancel} />
-                    <RangeFilter
-                        min={0}
-                        max={Filter.MAX_PRICE}
-                        step={10}
-                        active={this.state.activeFilter === FilterConstants.PRICE_RANGE}
-                        onApply={this._applyPriceRange}
-                        onCancel={this._cancel} />
+                    {filterList.indexOf(FilterConstants.CATEGORY) > -1 &&
+                        <CategoryTreeFilter
+                            categoryList={this.state.categories}
+                            active={this.state.activeFilter === FilterConstants.CATEGORY}
+                            onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
+                            onCancel={this._cancel} />
+                    }
+                    {filterList.indexOf(FilterConstants.BRAND) > -1 &&
+                        <SearchFilter
+                            placeholder="Search for Brands"
+                            active={this.state.activeFilter === FilterConstants.BRAND}
+                            onApply={(v) => this._applyFilter(FilterConstants.BRAND_PARAM_STRING, v)}
+                            onSearch={this._onSearchBrands}
+                            searchResult={this.state.searchResult}
+                            onCancel={this._cancel} />
+                    }
+                    {filterList.indexOf(FilterConstants.PRICE_RANGE) > -1 &&
+                        <RangeFilter
+                            min={0}
+                            max={Filter.MAX_PRICE}
+                            step={10}
+                            active={this.state.activeFilter === FilterConstants.PRICE_RANGE}
+                            onApply={this._applyPriceRange}
+                            onCancel={this._cancel} />
+                    }
                     {/* <CategoryTreeFilter
                         categoryList={this.state.categories}
                         active={this.state.activeFilter === FilterConstants.ON_SALE}
@@ -112,23 +125,52 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         active={this.state.activeFilter === FilterConstants.NEW_ARRIVALS}
                         onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
                         onCancel={this._cancel} /> */}
-                    <SearchFilter
-                        placeholder="Search for Retailer"
-                        active={this.state.activeFilter === FilterConstants.RETAILER}
-                        onApply={(v) => this._applyFilter(FilterConstants.RETAILER_PARAM_STRING, v)}
-                        onSearch={this._onSearchRetailers}
-                        searchResult={this.state.searchResult}
-                        onCancel={this._cancel} />
-                    <SearchFilter
-                        placeholder="Search for Tags"
-                        active={this.state.activeFilter === FilterConstants.TAG}
-                        onApply={(v) => this._applyFilter(FilterConstants.TAG_PARAM_STRING, v)}
-                        onSearch={this._onSearchTags}
-                        searchResult={this.state.searchResult}
-                        onCancel={this._cancel} />
+                    {filterList.indexOf(FilterConstants.RETAILER) > -1 &&
+                        <SearchFilter
+                            placeholder="Search for Retailer"
+                            active={this.state.activeFilter === FilterConstants.RETAILER}
+                            onApply={(v) => this._applyFilter(FilterConstants.RETAILER_PARAM_STRING, v)}
+                            onSearch={this._onSearchRetailers}
+                            searchResult={this.state.searchResult}
+                            onCancel={this._cancel} />
+                    }
+                    {filterList.indexOf(FilterConstants.TAG) > -1 &&
+                        <SearchFilter
+                            placeholder="Search for Tags"
+                            active={this.state.activeFilter === FilterConstants.TAG}
+                            onApply={(v) => this._applyFilter(FilterConstants.TAG_PARAM_STRING, v)}
+                            onSearch={this._onSearchTags}
+                            searchResult={this.state.searchResult}
+                            onCancel={this._cancel} />
+                    }
                 </div>
             </div>
         );
+    }
+
+    @autobind
+    private _getFilterList() {
+        let filterList = [];
+        switch (this.props.filterTarget) {
+            case FilterTarget.POST:
+                filterList = [
+                    FilterConstants.CATEGORY,
+                    FilterConstants.BRAND,
+                    FilterConstants.PRICE_RANGE,
+                    FilterConstants.RETAILER,
+                    FilterConstants.TAG,
+                ];
+                break;
+            case FilterTarget.PRODUCT:
+                filterList = [
+                    FilterConstants.CATEGORY,
+                    FilterConstants.BRAND,
+                    FilterConstants.PRICE_RANGE,
+                    FilterConstants.RETAILER,
+                ];
+                break;
+        }
+        return filterList;
     }
 
     @autobind

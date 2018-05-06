@@ -11,7 +11,7 @@ import Image from "../../components/image";
 import NavLink from "../../components/navLink";
 import Sidebar from "../../components/sidebar";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
-import Filter from "../flowComponents/filter";
+import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
@@ -193,8 +193,13 @@ export default class User extends React.Component<UserProps, UserState> {
                             </div>
                         )}
                         <Filter
-                            className={this.state.pageName === "followers" || this.state.pageName === "following"  ? "hidden" : ""}
-                            onApply={() => {}} />
+                            className={this.state.pageName === "posts"  ? "" : "hidden"}
+                            filterTarget={FilterTarget.POST}
+                            onApply={this._filterPost} />
+                        <Filter
+                            className={this.state.pageName === "products"  ? "" : "hidden"}
+                            filterTarget={FilterTarget.PRODUCT}
+                            onApply={this._filterProduct} />
                     </div>
                     <CardContainer>
                         {this._renderContent()}
@@ -269,6 +274,20 @@ export default class User extends React.Component<UserProps, UserState> {
         return this.state.following.map(person => (
             <UserCard user={person} following={person.followed } />
         ));
+    }
+
+    @autobind
+    private async _filterPost(queryString: string) {
+        let query = `${queryString}`;
+        const newPosts = await this.context.api.getPostsForUser(this._userId, query);
+        this.setState({ posts: newPosts });
+    }
+
+    @autobind
+    private async _filterProduct(queryString: string) {
+        let query = `${queryString}`;
+        const newProducts = await this.context.api.getProductsForUser(this._userId, query);
+        this.setState({ products: newProducts });
     }
 }
 
