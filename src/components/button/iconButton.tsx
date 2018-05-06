@@ -3,11 +3,12 @@ import * as React from "react";
 import { withRouter } from "react-router-dom";
 
 import { LinkButton } from "../button";
-import Icon, { IconMap, IconVariant } from "../icon";
+import Icon, { IconMap, IconSize, IconVariant } from "../icon";
 import TextContent from "../textContent";
 
 interface IconButtonProps {
     icon: IconVariant;
+    size?: IconSize;
     children?: React.ReactNode;
     selected?: boolean;
     url?: string;
@@ -28,6 +29,7 @@ export default class IconButton extends React.Component<IconButtonProps, IconBut
     render() {
         const {
             icon,
+            size,
             children,
             selected,
             url,
@@ -51,7 +53,12 @@ export default class IconButton extends React.Component<IconButtonProps, IconBut
                 onMouseLeave={this._onMouseLeave}
                 onClick={onClick}
             >
-                <Icon variant={this.state.icon} selected={selected} withHoverStyles />
+                <Icon
+                    variant={this.state.icon}
+                    selected={selected}
+                    size={size}
+                    withHoverStyles
+                />
                 {children}
             </LinkButton>
         );

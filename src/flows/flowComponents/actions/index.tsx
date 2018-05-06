@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 
 import { AppContext, AppContextTypes } from "../../../app";
 import { IconButton, LinkButton } from "../../../components/button";
-import { IconVariant } from "../../../components/icon";
+import { IconSize, IconVariant } from "../../../components/icon";
 
 import "./style.scss";
 
@@ -20,6 +20,7 @@ interface ActionLinksProps {
     wishlisted: boolean;
     likes?: number;
     liked?: boolean;
+    iconSize?: IconSize;
 }
 
 interface ActionLinksState {
@@ -53,6 +54,7 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
                 {this.props.variant === ActionLinksVariant.POST &&
                     <IconButton
                         icon={IconVariant.LIKE}
+                        size={this.props.iconSize}
                         selected={this.state.liked}
                         onClick={this._likeUnlikePost}
                     >
@@ -61,6 +63,7 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
                 }
                 <IconButton
                     icon={IconVariant.WISHLIST}
+                    size={this.props.iconSize}
                     selected={this.state.wishlisted}
                     onClick={this._wishlistUnwishlist}
                 />

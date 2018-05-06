@@ -5,7 +5,7 @@ import { match, withRouter } from "react-router-dom";
 import { Person } from "../../api/models";
 import WithUserSession from "../../app/withUserSession";
 import { LinkButton } from "../../components/button/index";
-import Icon, { IconVariant } from "../../components/icon";
+import Icon, { IconSize, IconVariant } from "../../components/icon";
 import Input, { InputType, InputVariant } from "../../components/input";
 import NavLink from "../../components/navLink";
 
@@ -42,7 +42,7 @@ class Header extends React.Component<HeaderProps> {
                             <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
                             <div className="user-logged-in-buttons">
                                 <LinkButton onClick={() => history.push(`/user/${user.username}`)}>
-                                    <Icon variant={IconVariant.GIRL} large />
+                                    <Icon variant={IconVariant.GIRL} size={IconSize.LARGE} />
                                 </LinkButton>
                             </div>
                         </div>
