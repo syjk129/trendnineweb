@@ -9,7 +9,7 @@ import { AppContext, AppContextTypes } from "../../app";
 import Button, { ButtonVariant, LinkButton } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
-import Icon, { IconVariant} from "../../components/icon";
+import Icon, { IconSizeVariant, IconVariant} from "../../components/icon";
 import Image, { ImageRatioVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
@@ -187,6 +187,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                     wishlisted={currentPost.wishlisted}
                                     likes={currentPost.likes}
                                     liked={currentPost.liked}
+                                    iconSize={IconSizeVariant.LARGE}
                                 />
                             </div>
                             <div className="post-details">

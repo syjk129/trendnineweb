@@ -15,6 +15,12 @@ export enum IconVariant {
     BAG = "bag",
 }
 
+export enum IconSize {
+    SMALL = "small",
+    MEDIUM = "medium",
+    LARGE = "large",
+}
+
 // Update this to be key-value pair that can be accessed both ways
 export const IconMap = {
     [IconVariant.ARROW_DOWN]: IconVariant.ARROW_DOWN_RED,

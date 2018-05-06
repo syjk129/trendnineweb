@@ -1,7 +1,7 @@
 @import "../../../styles/variables";
 
 .action-btns {
-    width: 75px;
+    display: inline-block;
 
     a {
         vertical-align: middle;
@@ -17,5 +17,6 @@
         text-align: right;
         padding-right: $base-spacing;
         float: right !important;
+        margin-right: $base-spacing;
     }
 }
