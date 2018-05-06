@@ -33,22 +33,12 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
     static contextTypes: AppContext;
 
     state: ActionLinksState = {
-        likes: 0,
-        liked: false,
-        wishlisted: false,
+        likes: this.props.likes,
+        liked: this.props.liked,
+        wishlisted: this.props.wishlisted,
     };
 
-    async componentWillMount() {
-        this.setState({
-            likes: this.props.likes,
-            liked: this.props.liked,
-            wishlisted: this.props.wishlisted });
-    }
-
     render() {
-        let likeVariant =  this.state.liked ? IconVariant.LIKE_FILLED : IconVariant.LIKE;
-        let wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
-
         return (
             <div className="action-btns">
                 {this.props.variant === ActionLinksVariant.POST &&
