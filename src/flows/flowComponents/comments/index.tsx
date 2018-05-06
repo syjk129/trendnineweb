@@ -55,8 +55,9 @@ export default class Comments extends React.Component<CommentsProps, CommentsSta
     }
 
     @autobind
-    private _submitComment() {
-        this.props.submitComment(this.state.comment);
+    private async _submitComment() {
+        await this.props.submitComment(this.state.comment);
+        this.setState({ comment: "" });
     }
 
     @autobind

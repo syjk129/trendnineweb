@@ -249,8 +249,10 @@ export default class PostView extends React.Component<PostProps, PostState> {
     }
 
     @autobind
-    private _submitComment(comment: string, parentCommentId: string) {
-        return this.context.api.submitComment(this._postId, comment, parentCommentId);
+    private async _submitComment(comment: string, parentCommentId: string) {
+        await this.context.api.submitComment(this._postId, comment, parentCommentId);
+        const newComments = await this.context.api.getComments(this._postId);
+        this.setState({ comments: newComments });
     }
 
     @autobind
