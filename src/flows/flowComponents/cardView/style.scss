@@ -2,11 +2,14 @@
 
 .card-hover {
     border: $standard-border-width solid $standard-border-color;
+    max-height: 350px;
+    overflow-y: scroll;
 }
 
 .post-card-hover-item {
     padding: $base-spacing;
     border-bottom: $standard-border-width solid $standard-border-color;
+    position: relative;
 
     &:last-child {
         border-bottom: 0;
@@ -48,6 +51,14 @@
                 margin-bottom: $base-spacing-sm;
             }
         }
+    }
+
+    .post-card-hover-footer {
+        display: inline-flex;
+        justify-content: space-between;
+        margin-left: $ranking-img-width + $base-spacing;
+        position: absolute;
+        bottom: 0;
     }
 }
 

@@ -195,7 +195,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             />));
 
         // update the logic to add recommended trendsetters whenever
-        postCards.splice(this.state.numCardsPerRow * 2, 0, this._renderRecommendedtrendsetters());
+        postCards.splice(this.state.numCardsPerRow * 4, 0, this._renderRecommendedtrendsetters());
         return postCards;
     }
 
