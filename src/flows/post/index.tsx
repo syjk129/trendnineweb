@@ -120,21 +120,30 @@ export default class PostView extends React.Component<PostProps, PostState> {
                     {productsInPost && (
                         <SidebarSection title="Products in this post">
                             {productsInPost.map(product => (
-                                <SidebarGrid>
-                                    <CarouselItem
-                                        imageUrl={product.image.small_image_url}
-                                        redirectUrl={`/product/${product.id}`}
-                                        title={product.brand.name}
-                                        detail={product.title}
-                                        subdetail={`$${product.price}`}
-                                    />
-                                </SidebarGrid>
+                                <div className="post-card-hover-item">
+                                    <LinkButton className="post-card-hover-btn" variant={ButtonVariant.SECONDARY}>
+                                        <img className="post-card-hover-image" src={product.image.small_image_url} />
+                                        <div className="post-card-hover-content">
+                                            <p className="post-card-hover-name">
+                                                {product.brand.name}
+                                            </p>
+                                            <p className="post-card-hover-title">
+                                                {product.title}
+                                            </p>
+                                        </div>
+                                    </LinkButton>
+                                    <div className="post-card-hover-footer">
+                                        <p className="post-card-hover-price">
+                                            {`$${product.price}`}
+                                        </p>
+                                        <ActionLinks
+                                            variant={ActionLinksVariant.PRODUCT}
+                                            id={product.id}
+                                            wishlisted={product.wishlisted}
+                                        />
+                                    </div>
+                                </div>
                             ))}
-                            {currentPost.products.length > 4 && (
-                                <Button variant={ButtonVariant.OUTLINE}>
-                                    View More
-                                </Button>
-                            )}
                         </SidebarSection>
                     )}
                     {tagsInPost && (
