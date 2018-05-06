@@ -3,12 +3,12 @@ import * as React from "react";
 import { withRouter } from "react-router-dom";
 
 import { LinkButton } from "../button";
-import Icon, { IconMap, IconSizeVariant, IconVariant } from "../icon";
+import Icon, { IconMap, IconSize, IconVariant } from "../icon";
 import TextContent from "../textContent";
 
 interface IconButtonProps {
     icon: IconVariant;
-    size?: IconSizeVariant;
+    size?: IconSize;
     children?: React.ReactNode;
     selected?: boolean;
     url?: string;

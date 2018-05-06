@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 
 import { AppContext, AppContextTypes } from "../../../app";
 import { IconButton, LinkButton } from "../../../components/button";
-import { IconSizeVariant, IconVariant } from "../../../components/icon";
+import { IconSize, IconVariant } from "../../../components/icon";
 
 import "./style.scss";
 
@@ -20,7 +20,7 @@ interface ActionLinksProps {
     wishlisted: boolean;
     likes?: number;
     liked?: boolean;
-    iconSize?: IconSizeVariant;
+    iconSize?: IconSize;
 }
 
 interface ActionLinksState {
