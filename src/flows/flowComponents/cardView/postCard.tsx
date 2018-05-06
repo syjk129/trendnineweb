@@ -26,7 +26,7 @@ export default class PostCard extends React.Component<PostCardProps> {
             <div className="card-hover">
                 {post.products.map(product => (
                     <div className="post-card-hover-item">
-                        <LinkButton className="post-card-hover-btn" url={`/product/${product.id}`} variant={ButtonVariant.SECONDARY}>
+                        <LinkButton className="post-card-hover-btn" variant={ButtonVariant.SECONDARY}>
                             <img className="post-card-hover-image" src={product.image.small_image_url} />
                             <div className="post-card-hover-content">
                                 <p className="post-card-hover-name">
@@ -35,16 +35,18 @@ export default class PostCard extends React.Component<PostCardProps> {
                                 <p className="post-card-hover-title">
                                     {product.title}
                                 </p>
-                                <p className="post-card-hover-price">
-                                    {`$${product.price}`}
-                                </p>
                             </div>
                         </LinkButton>
-                        <ActionLinks
-                            variant={ActionLinksVariant.PRODUCT}
-                            id={product.id}
-                            wishlisted={product.wishlisted}
-                        />
+                        <div className="post-card-hover-footer">
+                            <p className="post-card-hover-price">
+                                {`$${product.price}`}
+                            </p>
+                            <ActionLinks
+                                variant={ActionLinksVariant.PRODUCT}
+                                id={product.id}
+                                wishlisted={product.wishlisted}
+                            />
+                        </div>
                     </div>
                 ))}
             </div>
