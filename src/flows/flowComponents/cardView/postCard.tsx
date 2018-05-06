@@ -3,7 +3,7 @@ import * as React from "react";
 import TimeAgo from "react-timeago";
 
 import { PostPreview } from "../../../api/models";
-import { LinkButton } from "../../../components/button";
+import { IconButton, LinkButton } from "../../../components/button";
 import {ButtonVariant} from "../../../components/button/types";
 import Card from "../../../components/card";
 import Carousel, { CarouselItem } from "../../../components/carousel";
@@ -57,7 +57,9 @@ export default class PostCard extends React.Component<PostCardProps> {
                 <Author author={post.author} />
                 <div className="post-card-footer">
                     <div className="created">
-                        <Icon variant={IconVariant.TIME}></Icon>&nbsp;<TimeAgo date={post.created} />
+                        <IconButton icon={IconVariant.TIME}>
+                            <TimeAgo date={post.created} />
+                        </IconButton>
                     </div>
                     <ActionLinks
                         variant={ActionLinksVariant.POST}

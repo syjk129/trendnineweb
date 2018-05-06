@@ -39,19 +39,21 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
                     {this.props.likeComment &&
                         <IconButton
                             inline
-                            text={this.state.liked ? "Unlike" : `Like (${this.props.comment.likes})`}
                             icon={IconVariant.LIKE}
                             selected={this.state.liked}
                             onClick={this._likeComment}
-                        />
+                        >
+                            {this.state.liked ? "Unlike" : `Like (${this.props.comment.likes})`}
+                        </IconButton>
                     }
                     {this.props.submitReply && this.props.comment.threaded_comments &&
                         <IconButton
                             inline
-                            text={this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
                             icon={IconVariant.COMMENT}
                             onClick={this._toggleReply}
-                        />
+                        >
+                            {this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
+                        </IconButton>
                     }
                 </div>
                 {this.props.submitReply && this.state.showReply && (

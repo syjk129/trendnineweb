@@ -8,7 +8,7 @@ import TextContent from "../textContent";
 
 interface IconButtonProps {
     icon: IconVariant;
-    text?: string;
+    children?: React.ReactNode;
     selected?: boolean;
     url?: string;
     className?: string;
@@ -28,7 +28,7 @@ export default class IconButton extends React.Component<IconButtonProps, IconBut
     render() {
         const {
             icon,
-            text,
+            children,
             selected,
             url,
             className,
@@ -52,7 +52,7 @@ export default class IconButton extends React.Component<IconButtonProps, IconBut
                 onClick={onClick}
             >
                 <Icon variant={this.state.icon} selected={selected} withHoverStyles />
-                {text && <TextContent>{text}</TextContent>}
+                {children}
             </LinkButton>
         );
     }
