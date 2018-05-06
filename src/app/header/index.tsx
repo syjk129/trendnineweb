@@ -3,11 +3,11 @@ import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
 import { Person } from "../../api/models";
+import WithUserSession from "../../app/withUserSession";
 import { LinkButton } from "../../components/button/index";
 import Icon, { IconVariant } from "../../components/icon";
 import Input, { InputType, InputVariant } from "../../components/input";
 import NavLink from "../../components/navLink";
-// import logo from "./logo.png";
 
 import "./style.scss";
 
@@ -15,18 +15,18 @@ export interface HeaderProps {
     loggedIn: boolean;
     history: H.History;
     location: any;
+    user: Person;
 }
 
-export class Header extends React.Component<HeaderProps, never> {
+class Header extends React.Component<HeaderProps> {
     render() {
-        const { loggedIn, history } = this.props;
+        const { loggedIn, history, user } = this.props;
         const onSearch = (value) => history.push({
             pathname: "/discover",
             search: `?q=${value}`,
         });
 
         const pathname = location.pathname;
-        const user: Person = JSON.parse(localStorage.getItem("user"));
 
         return (
             <div className="main-header">
@@ -53,4 +53,4 @@ export class Header extends React.Component<HeaderProps, never> {
     }
 }
 
-export default withRouter(Header);
+export default withRouter(WithUserSession(Header));

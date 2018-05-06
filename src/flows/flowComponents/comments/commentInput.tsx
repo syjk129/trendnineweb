@@ -1,19 +1,22 @@
 import * as React from "react";
 
+import { Person } from "../../../api/models";
+import WithUserSession from "../../../app/withUserSession";
 import Button, { ButtonSize, ButtonVariant } from "../../../components/button";
 import TextArea from "../../../components/textArea";
 
 interface CommentInputProps {
     comment: string;
     placeholder?: string;
+    user: Person;
     onChange(comment: string): void;
     submitComment(): void;
 }
 
-export default function CommentInput({ comment, placeholder, onChange, submitComment }: CommentInputProps) {
+function CommentInput({ comment, placeholder, user, onChange, submitComment }: CommentInputProps) {
     return (
         <div className="comment-input-container">
-            <img src="https://trendnine-dev-bucket.s3.amazonaws.com/images/2017/11/304ed0c3c53646f29545176fdbc24b4b.jpg" />
+            <img src={user.profile_image_url} />
             <div className="comment-input">
                 <TextArea
                     rounded
@@ -36,3 +39,5 @@ export default function CommentInput({ comment, placeholder, onChange, submitCom
         </div>
     );
 }
+
+export default WithUserSession(CommentInput);
