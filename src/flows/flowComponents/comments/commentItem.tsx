@@ -82,7 +82,7 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
 
     @autobind
     private _submitReply() {
-        this.props.submitReply(this.props.comment.id, this.state.reply);
+        this.props.submitReply(this.state.reply, this.props.comment.id);
     }
 
     @autobind
