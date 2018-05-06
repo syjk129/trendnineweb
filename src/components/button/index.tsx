@@ -2,19 +2,29 @@ import * as React from "react";
 
 import LinkButton from "./linkButton";
 
-import { ButtonVariant } from "./types";
+import { ButtonSize, ButtonVariant } from "./types";
 
 import "./style.scss";
 
 interface ButtonProps {
     className?: string;
     inline?: boolean;
+    rounded?: boolean;
     variant?: ButtonVariant;
+    size?: ButtonSize;
     children?: React.ReactNode;
     onClick?(): void;
 }
 
-export default function Button({ className, inline, variant, children, onClick }: ButtonProps) {
+export default function Button({
+    className,
+    inline,
+    rounded,
+    variant,
+    size,
+    children,
+    onClick,
+}: ButtonProps) {
     let classes = "button";
     if (className) {
         classes += ` ${className}`;
@@ -22,6 +32,10 @@ export default function Button({ className, inline, variant, children, onClick }
 
     if (inline) {
         classes += " button-inline";
+    }
+
+    if (rounded) {
+        classes += " rounded";
     }
 
     switch (variant) {
@@ -36,6 +50,12 @@ export default function Button({ className, inline, variant, children, onClick }
             break;
     }
 
+    switch (size) {
+        case ButtonSize.WIDE:
+            classes += " button-wide";
+            break;
+    }
+
     return (
         <button className={classes} onClick={onClick}>
             {children}
@@ -44,6 +64,7 @@ export default function Button({ className, inline, variant, children, onClick }
 }
 
 export {
+    ButtonSize,
     ButtonVariant,
     LinkButton,
 };

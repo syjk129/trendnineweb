@@ -40,6 +40,14 @@
             border: none;
         }
     }
+
+    &.button-wide {
+        padding: 0 70px;
+    }
+
+    &.rounded {
+        border-radius: $rounded-border-radius;
+    }
 }
 
 .link-button {

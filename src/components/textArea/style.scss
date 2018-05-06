@@ -11,4 +11,8 @@ textarea {
     outline: none;
     height: auto;
     resize: none;
+
+    &.rounded {
+        border-radius: $rounded-border-radius;
+    }
 }

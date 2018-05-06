@@ -4,6 +4,11 @@ export enum ButtonVariant {
     OUTLINE = "outline",
 }
 
+export enum ButtonSize {
+    FIT = "fit",
+    WIDE = "wide",
+}
+
 export interface ButtonProps {
     className?: string;
     inline?: boolean;
