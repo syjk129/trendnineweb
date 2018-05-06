@@ -2,6 +2,8 @@
 
 .card-hover {
     border: $standard-border-width solid $standard-border-color;
+    max-height: 350px;
+    overflow-y: scroll;
 }
 
 .post-card-hover-item {
