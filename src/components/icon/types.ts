@@ -30,11 +30,11 @@ export const IconMap = {
     [IconVariant.ARROW_ZERO]: IconVariant.ARROW_ZERO,
     [IconVariant.COMMENT]: IconVariant.COMMENT,
     [IconVariant.LIKE]: IconVariant.LIKE_FILLED,
-    [IconVariant.LIKE_FILLED]: IconVariant.LIKE,
+    [IconVariant.LIKE_FILLED]: IconVariant.LIKE_FILLED,
     [IconVariant.SEARCH]: IconVariant.SEARCH,
     [IconVariant.TIME]: IconVariant.TIME,
     [IconVariant.WISHLIST]: IconVariant.WISHLIST_FILLED,
-    [IconVariant.WISHLIST_FILLED]: IconVariant.WISHLIST,
+    [IconVariant.WISHLIST_FILLED]: IconVariant.WISHLIST_FILLED,
     [IconVariant.GIRL]: IconVariant.GIRL,
     [IconVariant.BAG]: IconVariant.BAG,
 };

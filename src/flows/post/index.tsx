@@ -106,7 +106,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
             `Comments (${this.state.comments.length})`
         )  : "Comments";
 
-        const productsInPost = currentPost && currentPost.products.length > 0 && this.state.currentPost.products.slice(0, 4);
+        const productsInPost = currentPost && currentPost.products.length > 0 && this.state.currentPost.products;
         const tagsInPost = currentPost && currentPost.tags.length > 0 && currentPost.tags;
         const recommendedPosts = relatedPosts && relatedPosts.length > 0 && relatedPosts.slice(0, 4);
 
@@ -132,16 +132,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                             </p>
                                         </div>
                                     </LinkButton>
-                                    <div className="post-card-hover-footer">
-                                        <p className="post-card-hover-price">
-                                            {`$${product.price}`}
-                                        </p>
-                                        <ActionLinks
-                                            variant={ActionLinksVariant.PRODUCT}
-                                            id={product.id}
-                                            wishlisted={product.wishlisted}
-                                        />
-                                    </div>
+                                    { this._renderProductFooter(product) }
                                 </div>
                             ))}
                         </SidebarSection>
@@ -206,7 +197,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                             redirectUrl={`/product/${product.id}`}
                                             title={product.brand.name}
                                             detail={product.title}
-                                            subdetail={`$${product.price}`}
+                                            subdetail={ this._renderProductFooter(product) }
                                         />
                                     </div>
                                 ))}
@@ -230,7 +221,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                             redirectUrl={`/product/${product.id}`}
                                             title={product.brand.name}
                                             detail={product.title}
-                                            subdetail={`$${product.price}`}
+                                            subdetail={ this._renderProductFooter(product) }
                                         />
                                     </div>
                                 ))}
@@ -273,6 +264,21 @@ export default class PostView extends React.Component<PostProps, PostState> {
     @autobind
     private _unlikeComment(commentId: string) {
         return this.context.api.unlikeComment(this._postId, commentId);
+    }
+
+    @autobind
+    private _renderProductFooter(product) {
+        return (
+        <div className="post-card-hover-footer">
+            <p className="post-card-hover-price">
+                {`$${product.price}`}
+            </p>
+            <ActionLinks
+                variant={ActionLinksVariant.PRODUCT}
+                id={product.id}
+                wishlisted={product.wishlisted}
+            />
+        </div>);
     }
 }
 

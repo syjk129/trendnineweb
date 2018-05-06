@@ -6,6 +6,13 @@
     overflow-y: scroll;
 }
 
+.post-card-hover-footer {
+    display: inline-flex;
+    justify-content: space-between;
+    margin-left: $base-spacing;
+    width: calc(100% - 2 * #{$base-spacing});
+}
+
 .post-card-hover-item {
     padding: $base-spacing;
     border-bottom: $standard-border-width solid $standard-border-color;
@@ -54,9 +61,8 @@
     }
 
     .post-card-hover-footer {
-        display: inline-flex;
-        justify-content: space-between;
         margin-left: $ranking-img-width + $base-spacing;
+        width: calc(100% - (#{$ranking-img-width} + 2 * #{$base-spacing}));
         position: absolute;
         bottom: 0;
     }
