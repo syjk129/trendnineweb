@@ -51,6 +51,7 @@ export default class User extends React.Component<UserProps, UserState> {
 
     async componentWillMount() {
         this._userId = this.props.match.params.userId;
+        this._user = JSON.parse(localStorage.getItem("user"));
 
         const [
             profile,
@@ -65,7 +66,7 @@ export default class User extends React.Component<UserProps, UserState> {
             this.context.api.getProductsForUser(this._userId),
             this.context.api.getUserFollowers(this._userId),
             this.context.api.getUserFollowing(this._userId),
-            this.context.api.getWishlist(),
+            this._user.username === this._userId ? this.context.api.getWishlist() : null,
         ]);
 
         this.setState({
@@ -80,7 +81,6 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 
     render() {
-        const user = JSON.parse(localStorage.getItem("user"));
         const influencer = this.state.profile ? this.state.profile.user : null;
         const pathname = this.props.location.pathname;
 
@@ -100,7 +100,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                 <div className="introduction">
                                     {influencer.introduction}
                                 </div>
-                                {user.id !== influencer.id && (
+                                {this._user.id !== influencer.id && (
                                     <div className="follow-container">
                                         <FollowButton
                                             user={ influencer }
@@ -154,7 +154,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                     <p>PRODUCTS</p>
                                     <p>{this.state.profile.product_count}</p>
                                 </NavLink>
-                                {this.state.wishlist.post_items &&
+                                {this._user.username === this._userId &&
                                     <NavLink
                                         url={`/user/${this._userId}/post-wishlist`}
                                         pathname={pathname}
@@ -164,7 +164,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                         <p>&nbsp;</p>
                                     </NavLink>
                                 }
-                                {this.state.wishlist.product_items &&
+                                {this._user.username === this._userId &&
                                     <NavLink
                                         url={`/user/${this._userId}/product-wishlist`}
                                         pathname={pathname}
@@ -210,6 +210,8 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 
     private _userId: string;
+
+    private _user: Person;
 
     @autobind
     private _updatePageName(pageName: string) {
