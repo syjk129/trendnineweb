@@ -178,7 +178,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                     wishlisted={currentPost.wishlisted}
                                     likes={currentPost.likes}
                                     liked={currentPost.liked}
-                                    iconSize={IconSize.LARGE}
+                                    iconSize={IconSize.MEDIUM}
                                 />
                             </div>
                             <div className="post-details">
@@ -189,7 +189,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                     )}
                     {productsInPost && (
                         <ContentSection title="Products in this post">
-                            <Carousel slidesToShow={5}>
+                            <Carousel>
                                 {productsInPost.map(product => (
                                     <div>
                                         <CarouselItem
@@ -213,7 +213,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                     )}
                     {relatedProducts && (
                         <ContentSection title="You may also like">
-                            <Carousel slidesToShow={relatedProducts.length >= 3 ? 3 : relatedProducts.length}>
+                            <Carousel>
                                 {relatedProducts.map(product => (
                                     <div>
                                         <CarouselItem

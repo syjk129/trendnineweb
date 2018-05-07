@@ -9,6 +9,7 @@ import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Image from "../../components/image";
+import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
@@ -106,7 +107,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                 {this.state.currentProduct && (
                     <div className="product-view">
                         <div className="product-images">
-                            <Carousel slidesToShow={images && images.length >= 4 ? 4 : images.length} attributes={carouselSettings}>
+                            <Carousel attributes={carouselSettings}>
                                 {images.map(image => (
                                     <div>
                                         <CarouselItem
@@ -152,7 +153,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                                         redirectUrl={`/product/${product.id}`}
                                         title={product.brand.name}
                                         detail={product.title}
-                                        subdetail={`$${product.price}`}
+                                        subdetail={this._renderProductFooter(product)}
                                     />
                                 </div>
                             ))}
@@ -191,6 +192,21 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
             this.context.api.wishlistProduct(this._productId);
             this.setState({ wishlisted: true });
         }
+    }
+
+    @autobind
+    private _renderProductFooter(product) {
+        return (
+        <div className="post-card-hover-footer">
+            <p className="post-card-hover-price">
+                {`$${product.price}`}
+            </p>
+            <ActionLinks
+                variant={ActionLinksVariant.PRODUCT}
+                id={product.id}
+                wishlisted={product.wishlisted}
+            />
+        </div>);
     }
 }
 

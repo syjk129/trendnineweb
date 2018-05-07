@@ -1,6 +1,8 @@
 export enum IconVariant {
     ARROW_DOWN = "arrow-down",
     ARROW_DOWN_RED = "arrow-down-red",
+    ARROW_LEFT = "arrow-left",
+    ARROW_RIGHT = "arrow-right",
     ARROW_UP = "arrow-up",
     ARROW_UP_GREEN = "arrow-up-green",
     ARROW_ZERO = "arrow-zero",
@@ -25,6 +27,8 @@ export enum IconSize {
 export const IconMap = {
     [IconVariant.ARROW_DOWN]: IconVariant.ARROW_DOWN_RED,
     [IconVariant.ARROW_DOWN_RED]: IconVariant.ARROW_DOWN,
+    [IconVariant.ARROW_LEFT]: IconVariant.ARROW_LEFT,
+    [IconVariant.ARROW_RIGHT]: IconVariant.ARROW_RIGHT,
     [IconVariant.ARROW_UP]: IconVariant.ARROW_UP_GREEN,
     [IconVariant.ARROW_UP_GREEN]: IconVariant.ARROW_UP,
     [IconVariant.ARROW_ZERO]: IconVariant.ARROW_ZERO,
