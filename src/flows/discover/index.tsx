@@ -108,27 +108,13 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         });
     }
 
-    async paginateNextPosts(props: DiscoverProps) {
-        if (this.state.postsNextToken == null) {
-            return;
-        }
-
-        const newPosts = await this._getPosts();
-        this.setState({
-            postsNextToken: newPosts.nextToken,
-            posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
-                return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
-            }),
-        });
-    }
-
     onScroll = () => {
         let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
         let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
         let clientHeight = document.documentElement.clientHeight || window.innerHeight;
         let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
         if (scrolledToBottom) {
-            this.paginateNextPosts(this.props);
+            this._paginateNextPosts();
         }
     }
 
@@ -222,6 +208,21 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         }
 
         return location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(query, this.state.postsNextToken);
+    }
+
+    @autobind
+    private async _paginateNextPosts() {
+        if (this.state.postsNextToken == null) {
+            return;
+        }
+
+        const newPosts = await this._getPosts();
+        this.setState({
+            posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
+                return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
+            }),
+            postsNextToken: newPosts.nextToken,
+        });
     }
 
     @autobind
