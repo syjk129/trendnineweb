@@ -17,9 +17,9 @@ export default class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
 
     componentWillReceiveProps(nextProps: ErrorBoundaryProps) {
         nextProps.errors.forEach(error => {
-            if (error.isAuthError) {
-                console.log("auth");
-            }
+            // if (error.isAuthError) {
+            //     console.log("auth");
+            // }
         });
     }
 
