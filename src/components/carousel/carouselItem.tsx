@@ -47,11 +47,13 @@ class CarouselItem extends React.Component<CarouselItemProps> {
         const clickHandler = redirectUrl ? () => history.push(redirectUrl) : onClick;
 
         return (
-            <div className={classes} onClick={clickHandler}>
-                <Image className={imageClasses} src={imageUrl} fit={ImageFitVariant.SCALED} square />
-                <p className="carousel-item-title">{title}</p>
-                <p>{detail}</p>
-                <p>{subdetail}</p>
+            <div>
+                <div className={classes} onClick={clickHandler}>
+                    <Image className={imageClasses} src={imageUrl} fit={ImageFitVariant.SCALED} square />
+                    <p className="carousel-item-title">{title}</p>
+                    <p>{detail}</p>
+                </div>
+                <div>{subdetail}</div>
             </div>
         );
     }

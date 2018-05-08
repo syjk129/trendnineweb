@@ -11,7 +11,7 @@ import Image from "../../components/image";
 import NavLink from "../../components/navLink";
 import Sidebar from "../../components/sidebar";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
-import Filter from "../flowComponents/filter";
+import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
@@ -20,6 +20,7 @@ import FollowButton from "./followButton";
 import "./style.scss";
 
 interface UserProps {
+    user: Person;
     match: match<any>;
     location: any;
     followUser(userId: string): void;
@@ -50,6 +51,7 @@ export default class User extends React.Component<UserProps, UserState> {
 
     async componentWillMount() {
         this._userId = this.props.match.params.userId;
+        this._user = JSON.parse(localStorage.getItem("user"));
 
         const [
             profile,
@@ -64,7 +66,7 @@ export default class User extends React.Component<UserProps, UserState> {
             this.context.api.getProductsForUser(this._userId),
             this.context.api.getUserFollowers(this._userId),
             this.context.api.getUserFollowing(this._userId),
-            this.context.api.getWishlist(),
+            this._user.username === this._userId ? this.context.api.getWishlist() : null,
         ]);
 
         this.setState({
@@ -79,30 +81,32 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 
     render() {
-        const user = this.state.profile ? this.state.profile.user : null;
+        const influencer = this.state.profile ? this.state.profile.user : null;
         const pathname = this.props.location.pathname;
 
         return (
             <div className="user">
                 <Sidebar>
-                    {user && (
+                    {influencer && (
                         <div>
-                            <SidebarSection title={user.username}>
+                            <SidebarSection title={influencer.username}>
                                 <div className="user-image">
                                     <Image
-                                        src={user.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
+                                        src={influencer.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
                                         circle
                                         square
                                     />
                                 </div>
                                 <div className="introduction">
-                                    {user.introduction}
+                                    {influencer.introduction}
                                 </div>
-                                <div className="follow-container">
-                                    <FollowButton
-                                        user={ user }
-                                    />
-                                </div>
+                                {this._user.id !== influencer.id && (
+                                    <div className="follow-container">
+                                        <FollowButton
+                                            user={ influencer }
+                                        />
+                                    </div>
+                                )}
                                 <div className="activity-container">
                                     <div>
                                         <span className="identifier">TODAY</span>
@@ -117,10 +121,10 @@ export default class User extends React.Component<UserProps, UserState> {
                                     TODO: SOCIAL links
                                 </div>
                             </SidebarSection>
-                            <SidebarSection title={`${user.first_name}'s Top Posts`}>
+                            <SidebarSection title={`${influencer.first_name}'s Top Posts`}>
                                 <PostRank posts={this.state.profile.top_posts} hideRanks hideName />
                             </SidebarSection>
-                            <SidebarSection title={`${user.first_name}'s Top Tags`}>
+                            <SidebarSection title={`${influencer.first_name}'s Top Tags`}>
                                 <div className="tag-container">
                                     {this.state.profile.top_post_tags.map(tag => (
                                         <Tag tag={tag} />
@@ -150,7 +154,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                     <p>PRODUCTS</p>
                                     <p>{this.state.profile.product_count}</p>
                                 </NavLink>
-                                {this.state.wishlist.post_items &&
+                                {this._user.username === this._userId &&
                                     <NavLink
                                         url={`/user/${this._userId}/post-wishlist`}
                                         pathname={pathname}
@@ -160,7 +164,7 @@ export default class User extends React.Component<UserProps, UserState> {
                                         <p>&nbsp;</p>
                                     </NavLink>
                                 }
-                                {this.state.wishlist.product_items &&
+                                {this._user.username === this._userId &&
                                     <NavLink
                                         url={`/user/${this._userId}/product-wishlist`}
                                         pathname={pathname}
@@ -189,8 +193,13 @@ export default class User extends React.Component<UserProps, UserState> {
                             </div>
                         )}
                         <Filter
-                            className={this.state.pageName === "followers" || this.state.pageName === "following"  ? "hidden" : ""}
-                            onApply={() => {}} />
+                            className={this.state.pageName === "posts"  ? "" : "hidden"}
+                            filterTarget={FilterTarget.POST}
+                            onApply={this._filterPost} />
+                        <Filter
+                            className={this.state.pageName === "products"  ? "" : "hidden"}
+                            filterTarget={FilterTarget.PRODUCT}
+                            onApply={this._filterProduct} />
                     </div>
                     <CardContainer>
                         {this._renderContent()}
@@ -201,6 +210,8 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 
     private _userId: string;
+
+    private _user: Person;
 
     @autobind
     private _updatePageName(pageName: string) {
@@ -255,16 +266,30 @@ export default class User extends React.Component<UserProps, UserState> {
 
     @autobind
     private _renderFollowers() {
-        return this.state.followers.map(user => (
-            <UserCard user={user} />
+        return this.state.followers.map(person => (
+            <UserCard user={person} following={person.followed } />
         ));
     }
 
     @autobind
     private _renderFollowing() {
-        return this.state.following.map(user => (
-            <UserCard user={user} />
+        return this.state.following.map(person => (
+            <UserCard user={person} following={person.followed } />
         ));
+    }
+
+    @autobind
+    private async _filterPost(queryString: string) {
+        let query = `${queryString}`;
+        const newPosts = await this.context.api.getPostsForUser(this._userId, query);
+        this.setState({ posts: newPosts });
+    }
+
+    @autobind
+    private async _filterProduct(queryString: string) {
+        let query = `${queryString}`;
+        const newProducts = await this.context.api.getProductsForUser(this._userId, query);
+        this.setState({ products: newProducts });
     }
 }
 

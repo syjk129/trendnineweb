@@ -56,7 +56,7 @@ export default class Trending extends React.Component<TrendingProps, TrendingSta
             <div className="trending">
                 <Content>
                     <ContentSection title="Today's Trendnine">
-                        <Carousel slidesToShow={7}>
+                        <Carousel>
                             {this.state.featuredTrendnines.slice(0, 10).map(trendnine => (
                                 <div className="featured-trendnine">
                                     <CarouselItem

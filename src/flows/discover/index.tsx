@@ -13,9 +13,10 @@ import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import { PostCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
-import Filter from "../flowComponents/filter";
+import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
+import Sort from "../flowComponents/sort";
 
 import "./style.scss";
 
@@ -31,6 +32,9 @@ interface DiscoverState {
     featuredTrendnines: Array<FeaturedInfleuncer>;
     recommendedTrendnines: Array<Person>;
     keyword: string;
+    search: string;
+    filter: string;
+    sort: string;
     isLoading: boolean;
     numCardsPerRow: number;
 }
@@ -45,6 +49,9 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         featuredTrendnines: [],
         recommendedTrendnines: [],
         keyword: "",
+        search: "",
+        filter: "",
+        sort: "",
         isLoading: false,
         numCardsPerRow: 2,
     };
@@ -72,8 +79,8 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     async refreshContent(props: DiscoverProps) {
         const queryString = location.search;
-        const keyword = new URLSearchParams(queryString);
-        const query = keyword.get("q") ? `keyword=${keyword.get("q")}` : "";
+        const keyword = new URLSearchParams(queryString).get("q") || "";
+        const searchQuery = keyword ? `keyword=${keyword}` : "";
 
         const [
             trendingPosts,
@@ -84,7 +91,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             this.context.api.getTrendingPosts(),
             this.context.api.getTodaysTrendnines(),
             this.context.api.getFeaturedTrendnines(),
-            location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(query),
+            location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(searchQuery),
         ]);
 
         this.setState({
@@ -93,35 +100,11 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
             trendingPosts: trendingPosts,
             featuredTrendnines: featuredTrendnines,
             recommendedTrendnines: recommendedTrendnines,
-            keyword: keyword.get("q") || "",
+            keyword: keyword,
+            search: searchQuery,
+            filter: "",
+            sort: "",
             isLoading: false,
-        });
-    }
-
-    async paginateNextPosts(props: DiscoverProps) {
-        if (this.state.postsNextToken == null) {
-            return;
-        }
-
-        const queryString = location.search;
-        const keyword = new URLSearchParams(queryString);
-        const query = keyword.get("q") ? `keyword=${keyword.get("q")}` : "";
-
-        const [
-            newPosts,
-        ] = await Promise.all([
-            location.pathname === "/feed" ? this.context.api.getFeedPosts(this.state.postsNextToken)
-                                            : this.context.api.getLatestPosts(query, this.state.postsNextToken),
-        ]);
-
-        let posts = this.state.posts.concat(newPosts.list);
-        posts = posts.filter((post, index, arr) => {
-            return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
-        });
-
-        this.setState({
-            posts: posts,
-            postsNextToken: newPosts.nextToken,
         });
     }
 
@@ -131,7 +114,7 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         let clientHeight = document.documentElement.clientHeight || window.innerHeight;
         let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
         if (scrolledToBottom) {
-            this.paginateNextPosts(this.props);
+            this._paginateNextPosts();
         }
     }
 
@@ -140,7 +123,6 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
         const CONTENT_MARGIN = 40;
         const CARD_WIDTH = 235;
         const numCardsPerRow = (window.innerWidth + GRID_GAP - 2 * CONTENT_MARGIN) / (CARD_WIDTH + GRID_GAP) - 1 | 0;
-
         this.setState({numCardsPerRow: Math.max(numCardsPerRow, 2)});
     }
 
@@ -169,7 +151,14 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                         )}
                         <Filter
                         onApply={this._filterPosts}
+                        filterTarget={FilterTarget.POST}
                         className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
+
+                        <Sort
+                        name="Sort by"
+                        onSelect={this._sortPosts}
+                        />
+
                     </div>
 
                     {this.state.keyword !== "" && this.state.posts.length < 1 && (
@@ -184,6 +173,65 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                 </Content>
             </div>
         );
+    }
+
+    @autobind
+    private async _filterPosts(filterString: string) {
+        this.setState({
+            filter: filterString,
+            postsNextToken: "",
+        }, this._updatePosts);
+    }
+
+    @autobind
+    private async _sortPosts(sortString: string) {
+        this.setState({
+            sort: sortString,
+            postsNextToken: "",
+        }, this._updatePosts);
+    }
+
+    @autobind
+    private async _getPosts() {
+        let query = "";
+
+        if (this.state.sort) {
+            query = `${this.state.sort}`;
+        }
+
+        if (this.state.filter) {
+            query += `&${this.state.filter}`;
+        }
+
+        if (this.state.keyword) {
+            query += `&${this.state.search}`;
+        }
+
+        return location.pathname === "/feed" ? this.context.api.getFeedPosts() : this.context.api.getLatestPosts(query, this.state.postsNextToken);
+    }
+
+    @autobind
+    private async _paginateNextPosts() {
+        if (this.state.postsNextToken == null) {
+            return;
+        }
+
+        const newPosts = await this._getPosts();
+        this.setState({
+            posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
+                return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
+            }),
+            postsNextToken: newPosts.nextToken,
+        });
+    }
+
+    @autobind
+    private async _updatePosts() {
+        const newPosts = await this._getPosts();
+        this.setState({
+            posts: newPosts.list,
+            postsNextToken: newPosts.nextToken,
+        });
     }
 
     @autobind
@@ -214,18 +262,6 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                 </div>
             </div>
         );
-    }
-
-    @autobind
-    private async _filterPosts(queryString: string) {
-        let query = queryString;
-
-        if (this.state.keyword !== "") {
-            query = `keyword=${this.state.keyword}&${query}`;
-        }
-
-        const newPosts = await this.context.api.getLatestPosts(query);
-        this.setState({ posts: newPosts.list });
     }
 }
 

@@ -8,13 +8,23 @@
     vertical-align: middle;
     margin: auto;
 
-    &.large {
+    &.medium {
         width: $icon-size-2;
         height: $icon-size-2;
 
         &::before {
             width: $icon-size-2 - 1;
             height: $icon-size-2 - 1;
+        }
+    }
+
+    &.large {
+        width: $icon-size-3;
+        height: $icon-size-3;
+
+        &::before {
+            width: $icon-size-3 - 1;
+            height: $icon-size-3 - 1;
         }
     }
 
@@ -39,6 +49,14 @@
 
 .icon-arrow-up::before {
     background-image: url("/img/icons/arrow_up.png");
+}
+
+.icon-arrow-left::before {
+    background-image: url("/img/icons/arrow_left.png");
+}
+
+.icon-arrow-right::before {
+    background-image: url("/img/icons/arrow_right.png");
 }
 
 .icon-arrow-up-green::before {
