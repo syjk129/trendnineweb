@@ -33,6 +33,12 @@
             min-width: $min-card-width;
             width: calc(100% - #{$button-width-sm} * 2 - #{$base-spacing} * 2);
         }
+
+        .filter-value {
+            display: flex;
+            justify-content: space-between;
+            font-size: $font-size-2;
+        }
     }
 
     ::-webkit-scrollbar {
@@ -83,4 +89,12 @@
     height: $button-height-sm;
     display: flex;
     vertical-align: middle;
+}
+
+.rc-slider-track {
+    background-color: $color-accent !important;
+}
+
+.rc-slider-handle {
+    border-color: $color-accent !important;
 }

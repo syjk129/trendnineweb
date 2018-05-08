@@ -30,12 +30,25 @@ export default class RangeFilter extends React.Component<RangeFilterProps, Range
     render() {
         const { active, min, max, step } = this.props;
 
+        let classes = "filter-content-container";
+
+        if (!active) {
+            classes += " hidden";
+        }
+
         return (
-            <div className={`filter-content-container ${active ? "" : "hidden"}`}>
+            <div className={classes}>
                 <div className="filter-action-bar">
                     <div className="filter-action">
                         <div>
-                            {this.state.value[0]} {this.state.value[1]}
+                            <div className="filter-value">
+                                <span className="filter-value">
+                                    {this.state.value[0]}
+                                </span>
+                                <span className="filter-value">
+                                    {this.state.value[1]}
+                                </span>
+                            </div>
                             <Range min={min} max={max} step={step} allowCross={false} value={this.state.value} onChange={this._onSliderChange} />
                         </div>
                     </div>
