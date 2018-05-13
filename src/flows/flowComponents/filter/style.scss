@@ -1,13 +1,13 @@
 @import "../../../styles/variables";
 
 .filter-container {
-    position: fixed;
+    position: relative;
     z-index: 2;
-    width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2);
+    width: 100%; //calc(100% - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2);
     background-color: $color-grey-0;
 
     .filter-anchor {
-        padding-bottom: $filter-padding;
+        // padding-bottom: $filter-padding;
         height: $filter-height;
         margin-top: $content-spacing;
     }
@@ -30,6 +30,21 @@
             border-bottom: $standard-border-width * 3 solid $brand-color;
             padding-bottom: $card-spacing - $standard-border-width;
             margin-bottom: -1 * $standard-border-width * 2;
+        }
+    }
+}
+
+.sticky-filter-container {
+    position: fixed;
+    width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2);
+    background-color: $color-grey-0;
+    padding-bottom: $base-spacing * 2;
+    z-index: 2;
+    top: $navbar-height;
+
+    .filter-container {
+        .filter-anchor {
+            margin-top: $base-spacing * 2;
         }
     }
 }

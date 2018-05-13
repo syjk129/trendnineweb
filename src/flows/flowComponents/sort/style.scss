@@ -3,6 +3,6 @@
 .sort-select {
     height: $button-height-sm;
     right: 0;
-    top: $navbar-height - $button-height-sm * 1.5;
+    top: -1 * $base-spacing / 2;
     position: absolute;
 }

@@ -11,6 +11,7 @@ import Card, { CardContainer } from "../../components/card";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
+import { Sticky } from "../../components/sticky";
 import { PostCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
@@ -148,25 +149,26 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     </SidebarSection>
                 </Sidebar>
                 <Content>
-                    <div className="filter-container">
-                        {this.state.keyword !== "" && (
-                            <div className="search-text-container">
-                                <div className="search-help">You searched for</div>
-                                <div className="search-text">{this.state.keyword}</div>
-                            </div>
-                        )}
-                        <Filter
-                        onApply={this._filterPosts}
-                        filterTarget={FilterTarget.POST}
-                        className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
+                    <Sticky id="filter-container" stickyClassName="sticky-filter-container">
+                        <div className="filter-container">
+                            {this.state.keyword !== "" && (
+                                <div className="search-text-container">
+                                    <div className="search-help">You searched for</div>
+                                    <div className="search-text">{this.state.keyword}</div>
+                                </div>
+                            )}
+                            <Filter
+                            onApply={this._filterPosts}
+                            filterTarget={FilterTarget.POST}
+                            className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
 
-                        <Sort
-                        name="Sort by"
-                        onSelect={this._sortPosts}
-                        />
+                            <Sort
+                            name="Sort by"
+                            onSelect={this._sortPosts}
+                            />
 
-                    </div>
-
+                        </div>
+                    </Sticky>
                     {this.state.keyword !== "" && this.state.posts.length < 1 && (
                         <div className="no-search-result-text">
                             No results for "{ this.state.keyword }"

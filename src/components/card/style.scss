@@ -37,10 +37,11 @@
 }
 
 .card-container {
+    padding-top: $filter-padding;
     flex: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width}, 1fr));
-    padding-top: $filter-height + $filter-padding + $content-spacing;
+    //padding-top: $filter-height + $filter-padding + $content-spacing;
     grid-gap: 2 * $base-spacing;
 }
 

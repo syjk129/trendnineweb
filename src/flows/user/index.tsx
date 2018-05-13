@@ -10,6 +10,7 @@ import Content from "../../components/content";
 import Image from "../../components/image";
 import NavLink from "../../components/navLink";
 import Sidebar from "../../components/sidebar";
+import { Sticky } from "../../components/sticky";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
@@ -135,72 +136,76 @@ export default class User extends React.Component<UserProps, UserState> {
                     )}
                 </Sidebar>
                 <Content>
-                    <div className="filter-container">
-                        {this.state.profile && (
-                            <div className="user-nav">
+                    {this.state.profile && (
+                        <div className="user-nav">
+                            <NavLink
+                                url={`/user/${this._userId}`}
+                                pathname={pathname}
+                                onClick={() => this._updatePageName("posts")}
+                            >
+                                <p>POSTS</p>
+                                <p>{this.state.profile.blog_post_count}</p>
+                            </NavLink>
+                            <NavLink
+                                url={`/user/${this._userId}/products`}
+                                pathname={pathname}
+                                onClick={() => this._updatePageName("products")}
+                            >
+                                <p>PRODUCTS</p>
+                                <p>{this.state.profile.product_count}</p>
+                            </NavLink>
+                            {this._user.username === this._userId &&
                                 <NavLink
-                                    url={`/user/${this._userId}`}
+                                    url={`/user/${this._userId}/post-wishlist`}
                                     pathname={pathname}
-                                    onClick={() => this._updatePageName("posts")}
+                                    onClick={() => this._updatePageName("post-wishlist")}
                                 >
-                                    <p>POSTS</p>
-                                    <p>{this.state.profile.blog_post_count}</p>
+                                    <p>WISHLIST (Posts)</p>
+                                    <p>&nbsp;</p>
                                 </NavLink>
+                            }
+                            {this._user.username === this._userId &&
                                 <NavLink
-                                    url={`/user/${this._userId}/products`}
+                                    url={`/user/${this._userId}/product-wishlist`}
                                     pathname={pathname}
-                                    onClick={() => this._updatePageName("products")}
+                                    onClick={() => this._updatePageName("product-wishlist")}
                                 >
-                                    <p>PRODUCTS</p>
-                                    <p>{this.state.profile.product_count}</p>
+                                    <p>WISHLIST (Products)</p>
+                                    <p>&nbsp;</p>
                                 </NavLink>
-                                {this._user.username === this._userId &&
-                                    <NavLink
-                                        url={`/user/${this._userId}/post-wishlist`}
-                                        pathname={pathname}
-                                        onClick={() => this._updatePageName("post-wishlist")}
-                                    >
-                                        <p>WISHLIST (Posts)</p>
-                                        <p>&nbsp;</p>
-                                    </NavLink>
-                                }
-                                {this._user.username === this._userId &&
-                                    <NavLink
-                                        url={`/user/${this._userId}/product-wishlist`}
-                                        pathname={pathname}
-                                        onClick={() => this._updatePageName("product-wishlist")}
-                                    >
-                                        <p>WISHLIST (Products)</p>
-                                        <p>&nbsp;</p>
-                                    </NavLink>
-                                }
-                                <NavLink
-                                    url={`/user/${this._userId}/followers`}
-                                    pathname={pathname}
-                                    onClick={() => this._updatePageName("followers")}
-                                >
-                                    <p>FOLLOWERS</p>
-                                    <p>{this.state.profile.follower_count}</p>
-                                </NavLink>
-                                <NavLink
-                                    url={`/user/${this._userId}/following`}
-                                    pathname={pathname}
-                                    onClick={() => this._updatePageName("following")}
-                                >
-                                    <p>FOLLOWING</p>
-                                    <p>{this.state.profile.following_count}</p>
-                                </NavLink>
+                            }
+                            <NavLink
+                                url={`/user/${this._userId}/followers`}
+                                pathname={pathname}
+                                onClick={() => this._updatePageName("followers")}
+                            >
+                                <p>FOLLOWERS</p>
+                                <p>{this.state.profile.follower_count}</p>
+                            </NavLink>
+                            <NavLink
+                                url={`/user/${this._userId}/following`}
+                                pathname={pathname}
+                                onClick={() => this._updatePageName("following")}
+                            >
+                                <p>FOLLOWING</p>
+                                <p>{this.state.profile.following_count}</p>
+                            </NavLink>
+                        </div>
+                    )}
+                    {this.state.profile && (
+                        <Sticky id="filters" stickyClassName="sticky-filter-container">
+                            <div className="filter-container">
+                                <Filter
+                                    className={this.state.pageName === "posts"  ? "" : "hidden"}
+                                    filterTarget={FilterTarget.POST}
+                                    onApply={this._filterPost} />
+                                <Filter
+                                    className={this.state.pageName === "products"  ? "" : "hidden"}
+                                    filterTarget={FilterTarget.PRODUCT}
+                                    onApply={this._filterProduct} />
                             </div>
-                        )}
-                        <Filter
-                            className={this.state.pageName === "posts"  ? "" : "hidden"}
-                            filterTarget={FilterTarget.POST}
-                            onApply={this._filterPost} />
-                        <Filter
-                            className={this.state.pageName === "products"  ? "" : "hidden"}
-                            filterTarget={FilterTarget.PRODUCT}
-                            onApply={this._filterProduct} />
-                    </div>
+                        </Sticky>
+                    )}
                     <CardContainer>
                         {this._renderContent()}
                     </CardContainer>
