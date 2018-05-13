@@ -1,8 +1,9 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-
 import { SortConstants } from "./types";
+
+import "./style.scss";
 
 interface SortProps {
     name: string;

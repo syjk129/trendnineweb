@@ -1,0 +1,8 @@
+@import "../../../styles/variables";
+
+.sort-select {
+    height: $button-height-sm;
+    right: 0;
+    top: $navbar-height - $button-height-sm * 1.5;
+    position: absolute;
+}

@@ -28,8 +28,32 @@ class Header extends React.Component<HeaderProps> {
 
         const pathname = location.pathname;
 
+        console.log(user);
+
         return (
             <div className="main-header">
+                <div className="user-header">
+                    <div className="header-left-buttons">
+                        <NavLink url="/discover" pathname={pathname}>
+                            Discover
+                        </NavLink>
+                        <NavLink url="/shop" pathname={pathname}>
+                            Shop
+                        </NavLink>
+                    </div>
+                    <div className="header-right-buttons">
+                        {!loggedIn &&
+                            <NavLink url="/login" pathname={pathname}>Log In</NavLink>
+                        }
+                        {loggedIn &&
+                            <div className="user-logged-in-buttons">
+                                <LinkButton onClick={() => history.push(`/user/${user.username}`)}>
+                                    <Icon variant={IconVariant.GIRL} size={IconSize.MEDIUM} />
+                                </LinkButton>
+                            </div>
+                        }
+                    </div>
+                </div>
                 <div className="nav-header">
                     <div className="nav-logo" onClick={() => history.push("/discover")} />
                     <div className="nav-header-links">
@@ -38,13 +62,8 @@ class Header extends React.Component<HeaderProps> {
                             <NavLink url="/feed" pathname={pathname} large>Feed</NavLink>
                         </div>
                         <div className="search">
-                            <Icon variant={IconVariant.SEARCH}></Icon>
                             <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
-                            <div className="user-logged-in-buttons">
-                                <LinkButton onClick={() => history.push(`/user/${user.username}`)}>
-                                    <Icon variant={IconVariant.GIRL} size={IconSize.LARGE} />
-                                </LinkButton>
-                            </div>
+                            <Icon variant={IconVariant.SEARCH}></Icon>
                         </div>
                     </div>
                 </div>

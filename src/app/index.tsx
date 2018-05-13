@@ -120,7 +120,6 @@ export default class App extends React.Component<AppProps, AppState> {
                             <Route path="/post/:postId" component={PostView} />
                             <Route path="/product/:productId" component={ProductView} />
                             <Route path="/trending" component={Trending} />
-                            <Route path="/shop" component={null} />
                             <Route path="*" component={null} />
                         </div>
                         {/* <Footer /> */}

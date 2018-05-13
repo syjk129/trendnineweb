@@ -2,7 +2,7 @@
 @import "./color";
 
 // Colors
-$brand-color: $color-red-1;
+$brand-color: $color-grey-5;
 $text-primary: $color-grey-5;
 $color-accent: $brand-color;
 
@@ -19,7 +19,7 @@ $search-text-height: 93px;
 $filter-padding: 30px;
 
 // Navbar
-$navbar-height: 60px;
+$navbar-height: 100px;
 $navbar-menu-height: 59px;
 
 // Button
@@ -35,7 +35,7 @@ $standard-border-color: $color-grey-2;
 $rounded-border-radius: 5px;
 
 $sidebar-width: 235px;
-$sidebar-padding: $base-spacing * 2;
+$sidebar-padding: $base-spacing * 3;
 
 $ranking-img-height: 80px;
 $ranking-img-width: $ranking-img-height;
