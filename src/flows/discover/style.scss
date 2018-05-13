@@ -4,9 +4,11 @@
     display: flex;
     padding: 0 $page-spacing;
 
-    .search-text-container {
+    .filter-navbar-container {
         padding-top: $content-spacing;
+    }
 
+    .search-text-container {
         .search-text {
             padding-left: $base-spacing * 2;
             padding-bottom: $base-spacing;

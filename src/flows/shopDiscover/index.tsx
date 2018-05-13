@@ -18,8 +18,6 @@ import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
 
-import "./style.scss";
-
 interface ShopDiscoverProps {
     location: any;
     match: match<any>;

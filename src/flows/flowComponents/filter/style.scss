@@ -9,7 +9,7 @@
     .filter-anchor {
         // padding-bottom: $filter-padding;
         height: $filter-height;
-        margin-top: $content-spacing;
+        margin-top: $base-spacing * 2;
     }
 
     .filter-list {
