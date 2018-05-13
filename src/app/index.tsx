@@ -16,6 +16,8 @@ import Auth from "../flows/auth";
 import Discover from "../flows/discover";
 import PostView from "../flows/post";
 import ProductView from "../flows/product";
+import Shop from "../flows/shop";
+import ShopDiscover from "../flows/shopDiscover";
 import Trending from "../flows/trending";
 import User from "../flows/user";
 
@@ -116,7 +118,10 @@ export default class App extends React.Component<AppProps, AppState> {
                             <Route path="/discover/:pageName?" component={Discover} />
                             <Route path="/feed" component={Discover} />
                             <Route path="/user/:userId/:pageName?" component={User} />
-                            <Route path="/shop" component={null} />
+                            <Route path="/shop/home" component={Shop} />
+                            <Route path="/shop/discover" component={ShopDiscover} />
+                            <Route path="/shop/feed" component={ShopDiscover} />
+                            <Route path="/shop/product/:productId" component={ProductView} />
                             <Route path="/post/:postId" component={PostView} />
                             <Route path="/product/:productId" component={ProductView} />
                             <Route path="/trending" component={Trending} />

@@ -1,11 +1,13 @@
 import {
     Category,
     Comment,
+    Featured,
     Pagination,
     Person,
     Post,
     PostPreview,
     Posts,
+    Products,
     Retailer,
     Tag,
 } from "./models";
@@ -57,6 +59,10 @@ export default class Api {
         return this._GET(`/api/v1/posts/tags?keyword=${keyword}`);
     }
 
+    getFeatured(type: string): Promise<Array<Featured>> {
+        return this._GET(`/api/v1/featured${type}`);
+    }
+
     getRetailers(keyword?: string): Promise<Array<Retailer>> {
         let url = "/api/v1/marketplace/products/merchants";
 
@@ -85,6 +91,14 @@ export default class Api {
 
     getFeedPosts(nextToken?: string): Promise<Posts> {
         return this._GET_PAGINATION("/api/v1/posts?following_only=true", nextToken);
+    }
+
+    getLatestProducts(queryString?: string, nextToken?: string): Promise<Products> {
+        return this._GET_PAGINATION(`/api/v1/marketplace/products?${queryString}`, nextToken);
+    }
+
+    getFeedProducts(nextToken?: string): Promise<Products> {
+        return this._GET_PAGINATION("/api/v1/marketplace/products?following_only=true", nextToken);
     }
 
     searchPosts(queryString?: string): Promise<Array<PostPreview>> {

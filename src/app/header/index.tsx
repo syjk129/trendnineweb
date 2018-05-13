@@ -27,8 +27,7 @@ class Header extends React.Component<HeaderProps> {
         });
 
         const pathname = location.pathname;
-
-        console.log(user);
+        const isShop = pathname.indexOf("/shop") > -1;
 
         return (
             <div className="main-header">
@@ -37,7 +36,7 @@ class Header extends React.Component<HeaderProps> {
                         <NavLink url="/discover" pathname={pathname}>
                             Discover
                         </NavLink>
-                        <NavLink url="/shop" pathname={pathname}>
+                        <NavLink url="/shop/home" pathname={pathname}>
                             Shop
                         </NavLink>
                     </div>
@@ -55,11 +54,11 @@ class Header extends React.Component<HeaderProps> {
                     </div>
                 </div>
                 <div className="nav-header">
-                    <div className="nav-logo" onClick={() => history.push("/discover")} />
+                    <div className="nav-logo" onClick={() => history.push(isShop ? "/shop/home" : "/discover")} />
                     <div className="nav-header-links">
                         <div className="nav-pages">
-                            <NavLink url="/discover" pathname={pathname} large>Trending</NavLink>
-                            <NavLink url="/feed" pathname={pathname} large>Feed</NavLink>
+                            <NavLink url={isShop ? "/shop/discover" : "/discover"} pathname={pathname} large>Trending</NavLink>
+                            <NavLink url={isShop ? "/shop/feed" : "/feed"} pathname={pathname} large>Feed</NavLink>
                         </div>
                         <div className="search">
                             <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>

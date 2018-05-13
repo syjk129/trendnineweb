@@ -10,6 +10,7 @@ import "./style.scss";
 
 interface ProductCardProps {
     product: any;
+    isShop?: boolean;
 }
 
 interface ProductCardState {
@@ -22,7 +23,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
     };
 
     render() {
-        const { product } = this.props;
+        const { product, isShop } = this.props;
 
         const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
         const footerItem = (
@@ -43,7 +44,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
             <Card
                 scaleImage
                 imageUrl={product.image.small_image_url}
-                redirectUrl={`/product/${product.id}`}
+                redirectUrl={isShop ? `/shop/product/${product.id}` : `/product/${product.id}`}
                 title={product.title}
                 footerItem={footerItem}
             />

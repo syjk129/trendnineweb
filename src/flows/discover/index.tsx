@@ -128,7 +128,13 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
 
     render() {
         if (this.state.isLoading) {
-            return "Loading...";
+            return (
+                <div className="discover">
+                    <Content>
+                        <br /><br /><br />Loading...
+                    </Content>
+                </div>
+            );
         }
 
         return (
