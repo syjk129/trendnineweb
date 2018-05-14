@@ -9,7 +9,6 @@
     padding: 0 $page-spacing;
 
     .user-nav {
-        padding-top: $content-spacing;
         border-bottom: $standard-border-width solid $standard-border-color;
     }
 
@@ -53,20 +52,5 @@
 
     .social-container {
         padding: $base-spacing;
-    }
-
-    .content {
-        .filter-container {
-            // padding-top: $content-spacing;
-
-            .filter-anchor {
-                padding-top: $base-spacing * 2;
-                margin-top: 0;
-            }
-        }
-
-        .card-container {
-            // padding-top: $filter-height + $filter-padding + $content-spacing + $base-spacing * 2 + 75px;
-        }
     }
 }

@@ -192,7 +192,7 @@ export default class User extends React.Component<UserProps, UserState> {
                             </NavLink>
                         </div>
                     )}
-                    {this.state.profile && (
+                    {this.state.profile && (this.state.pageName === "posts" || this.state.pageName === "products") && (
                         <Sticky id="filters" stickyClassName="sticky-filter-container">
                             <div className="filter-container">
                                 <Filter

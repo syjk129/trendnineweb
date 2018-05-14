@@ -3,13 +3,12 @@
 .filter-container {
     position: relative;
     z-index: 2;
-    width: 100%; //calc(100% - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2);
+    width: 100%;
     background-color: $color-grey-0;
+    padding-top: 22px;
 
     .filter-anchor {
-        // padding-bottom: $filter-padding;
         height: $filter-height;
-        margin-top: $base-spacing * 2;
     }
 
     .filter-list {
@@ -41,10 +40,4 @@
     padding-bottom: $base-spacing * 2;
     z-index: 2;
     top: $navbar-height;
-
-    .filter-container {
-        .filter-anchor {
-            margin-top: $base-spacing * 2;
-        }
-    }
 }
