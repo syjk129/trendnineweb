@@ -89,8 +89,8 @@ export default class Api {
         return this._GET("/api/v1/posts/trending");
     }
 
-    getFeedPosts(nextToken?: string): Promise<Posts> {
-        return this._GET_PAGINATION("/api/v1/posts?following_only=true", nextToken);
+    getFeedPosts(queryString?: string, nextToken?: string): Promise<Posts> {
+        return this._GET_PAGINATION(`/api/v1/posts?following_only=true&${queryString}`, nextToken);
     }
 
     getLatestProducts(queryString?: string, nextToken?: string): Promise<Products> {
@@ -275,7 +275,6 @@ export default class Api {
 
     private async _GET_PAGINATION(path: string, nextToken: string): Promise<any> {
         let url = `${this._apiUrl}${path}`;
-
         if (nextToken != null) {
             url += `&next_token=${nextToken}`;
         }

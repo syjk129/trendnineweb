@@ -12,6 +12,7 @@ import "./style.scss";
 interface CategoryTreeFilterProps {
     active: boolean;
     categoryList: Array<Category>;
+    selectedCategoryIds?: Array<string>;
     onApply(values: Set<string>): void;
     onCancel(): void;
  }
@@ -24,7 +25,7 @@ interface CategoryTreeFilterState {
 
 export default class CategoryTreeFilter extends React.Component<CategoryTreeFilterProps, CategoryTreeFilterState> {
     state: CategoryTreeFilterState = {
-        selectedValues: new Set(),
+        selectedValues: this.props.selectedCategoryIds ? new Set(this.props.selectedCategoryIds) : new Set(),
         previousValues: new Set(),
         childToParentMap: new Map(),
     };

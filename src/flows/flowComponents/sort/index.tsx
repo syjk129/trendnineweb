@@ -7,17 +7,16 @@ import "./style.scss";
 
 interface SortProps {
     name: string;
+    default?: string;
     onSelect(queryString: string): void;
 }
 
-interface SortState {
-
-}
+interface SortState {}
 
 export default class Sort extends React.Component<SortProps, SortState> {
     render() {
         return (
-            <select className="sort-select" onChange={this._select} >
+            <select className="sort-select" onChange={this._select} value={this._default()} >
                 {this._getSortList().map((option, i) => (
                     <option value={option}>{option}</option>
                 ))}
@@ -31,25 +30,43 @@ export default class Sort extends React.Component<SortProps, SortState> {
     }
 
     @autobind
+    private _default() {
+        switch (this.props.default) {
+            case SortConstants.RELEVANCE_ID:
+                return SortConstants.RELEVANCE;
+            case SortConstants.LATEST_ID:
+                return SortConstants.LATEST;
+            case SortConstants.POPULARITY_ID:
+                return SortConstants.POPULARITY;
+            case SortConstants.PRICE_HIGH_TO_LOW_ID:
+                return SortConstants.PRICE_HIGH_TO_LOW;
+            case SortConstants.PRICE_LOW_TO_HIGH_ID:
+                return SortConstants.PRICE_LOW_TO_HIGH;
+            default:
+                return SortConstants.RELEVANCE;
+        }
+    }
+
+    @autobind
     private _select(event) {
         let sort;
         switch (event.target.value) {
             case SortConstants.RELEVANCE:
-                sort = "relevance";
+                sort = SortConstants.RELEVANCE_ID;
                 break;
             case SortConstants.LATEST:
-                sort = "latest";
+                sort = SortConstants.LATEST_ID;
                 break;
             case SortConstants.POPULARITY:
-                sort = "popularity";
+                sort = SortConstants.POPULARITY_ID;
                 break;
             case SortConstants.PRICE_LOW_TO_HIGH:
-                sort = "price_low_to_high";
+                sort = SortConstants.PRICE_LOW_TO_HIGH_ID;
                 break;
             case SortConstants.PRICE_HIGH_TO_LOW:
-                sort = "price_high_to_low";
+                sort = SortConstants.PRICE_HIGH_TO_LOW_ID;
                 break;
         }
-        this.props.onSelect(`order_by=${sort}`);
+        this.props.onSelect(sort);
     }
 }

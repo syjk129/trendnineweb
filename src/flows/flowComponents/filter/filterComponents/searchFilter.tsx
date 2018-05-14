@@ -12,6 +12,7 @@ interface SearchFilterProps {
     placeholder: string;
     active: boolean;
     searchResult: Set<SearchCheckbox>;
+    selectedValues?: Array<string>;
     onSearch(value: string): void;
     onApply(values: Set<string>): void;
     onCancel(): void;
@@ -37,7 +38,7 @@ interface SearchFilterState {
 
 export default class SearchFilter extends React.Component<SearchFilterProps, SearchFilterState> {
     state: SearchFilterState = {
-        selectedValues: new Set(),
+        selectedValues: this.props.selectedValues ? new Set(this.props.selectedValues) : new Set(),
         previousValues: new Set(),
         hasSearched: false,
         selectedCheckboxes: [],

@@ -12,6 +12,8 @@ interface RangeFilterProps {
     min: number;
     max: number;
     step: number;
+    selectedMin?: number;
+    selectedMax?: number;
     onApply(min: number, max: number): void;
     onCancel(): void;
 }
@@ -23,7 +25,7 @@ interface RangeFilterState {
 
 export default class RangeFilter extends React.Component<RangeFilterProps, RangeFilterState> {
     state: RangeFilterState = {
-        value: [this.props.min, this.props.max],
+        value: [this.props.selectedMin || this.props.min, this.props.selectedMax || this.props.max],
         previousValue: [this.props.min, this.props.max],
     };
 

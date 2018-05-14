@@ -6,6 +6,7 @@ import { Category, Person } from "../../../api/models";
 import { AppContext, AppContextTypes } from "../../../app";
 import Button, { ButtonVariant, LinkButton } from "../../../components/button";
 import Icon, { IconVariant } from "../../../components/icon";
+import { Filters} from "../../model/filters";
 import CategoryTreeFilter from "./filterComponents/categoryTreeFilter";
 import RangeFilter from "./filterComponents/rangeFilter";
 import SearchFilter, { SearchCheckbox } from "./filterComponents/searchFilter";
@@ -20,15 +21,16 @@ export enum FilterTarget {
 
 interface FilterProps {
     className?: string;
+    default?: Filters;
     filterTarget: FilterTarget;
-    onApply(queryString: string): void;
+    onApply(filters: Filters): void;
 }
 
 interface FilterState {
     isFilterActive: boolean;
     activeFilter: string;
     searchResult: Set<SearchCheckbox>;
-    filterMap: Map<string, string>;
+    filters: Filters;
     categories: Array<Category>;
     filterRef: any;
 }
@@ -42,7 +44,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
         activeFilter: FilterConstants.CATEGORY,
         searchResult: new Set(),
         categories: [],
-        filterMap: new Map(),
+        filters: this.props.default || new Filters(),
         filterRef: null,
     };
 
@@ -52,11 +54,8 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
     async componentWillMount() {
         document.removeEventListener("mousedown", this._handleClickOutside);
-
         try {
-            console.log(this.context);
             const categories = await this.context.api.getCategories();
-
             this.setState({
                 categories: categories,
             });
@@ -93,6 +92,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                     {filterList.indexOf(FilterConstants.CATEGORY) > -1 &&
                         <CategoryTreeFilter
                             categoryList={this.state.categories}
+                            selectedCategoryIds={this.state.filters.categoryIds}
                             active={this.state.activeFilter === FilterConstants.CATEGORY}
                             onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)}
                             onCancel={this._cancel} />
@@ -101,6 +101,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         <SearchFilter
                             placeholder="Search for Brands"
                             active={this.state.activeFilter === FilterConstants.BRAND}
+                            selectedValues={this.state.filters.brandIds}
                             onApply={(v) => this._applyFilter(FilterConstants.BRAND_PARAM_STRING, v)}
                             onSearch={this._onSearchBrands}
                             searchResult={this.state.searchResult}
@@ -111,6 +112,8 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                             min={0}
                             max={Filter.MAX_PRICE}
                             step={10}
+                            selectedMin={Number(this.state.filters.minPrice)}
+                            selectedMax={Number(this.state.filters.maxPrice)}
                             active={this.state.activeFilter === FilterConstants.PRICE_RANGE}
                             onApply={this._applyPriceRange}
                             onCancel={this._cancel} />
@@ -129,6 +132,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         <SearchFilter
                             placeholder="Search for Retailer"
                             active={this.state.activeFilter === FilterConstants.RETAILER}
+                            selectedValues={this.state.filters.retailerIds}
                             onApply={(v) => this._applyFilter(FilterConstants.RETAILER_PARAM_STRING, v)}
                             onSearch={this._onSearchRetailers}
                             searchResult={this.state.searchResult}
@@ -138,6 +142,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         <SearchFilter
                             placeholder="Search for Tags"
                             active={this.state.activeFilter === FilterConstants.TAG}
+                            selectedValues={this.state.filters.tagIds}
                             onApply={(v) => this._applyFilter(FilterConstants.TAG_PARAM_STRING, v)}
                             onSearch={this._onSearchTags}
                             searchResult={this.state.searchResult}
@@ -247,40 +252,38 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
     @autobind
     private _applyFilter(filter: string, values: Set<string>) {
-        let filters = this.state.filterMap;
-
-        if (values.size > 0) {
-            filters.set(filter, Array.from(values).join(","));
-        } else {
-            filters.delete(filter);
+        const currentFilters = this.state.filters;
+        const newValues = Array.from(values);
+        switch (filter) {
+            case FilterConstants.CATEGORY_PARAM_STRING:
+                currentFilters.categoryIds = newValues;
+                break;
+            case FilterConstants.BRAND_PARAM_STRING:
+                currentFilters.brandIds = newValues;
+                break;
+            case FilterConstants.RETAILER_PARAM_STRING:
+                currentFilters.retailerIds = newValues;
+                break;
+            case FilterConstants.TAG_PARAM_STRING:
+                currentFilters.tagIds = newValues;
+                break;
         }
 
-        this._apply(filters);
+        this._apply(currentFilters);
     }
 
     @autobind
     private _applyPriceRange(min: number, max: number) {
-        let filters = this.state.filterMap;
-
-        if (min === 0) {
-            filters.delete(FilterConstants.MIN_PRICE_PARAM_STRING);
-        } else {
-            filters.set(FilterConstants.MIN_PRICE_PARAM_STRING, min.toString());
-        }
-        if (max === Filter.MAX_PRICE) {
-            filters.delete(FilterConstants.MAX_PRICE_PARAM_STRING);
-        } else {
-            filters.set(FilterConstants.MAX_PRICE_PARAM_STRING, max.toString());
-        }
-
-        this._apply(filters);
+        const currentFilters = this.state.filters;
+        currentFilters.maxPrice = max.toString();
+        currentFilters.minPrice = min.toString();
+        this._apply(currentFilters);
     }
 
     @autobind
-    private _apply(filters: Map<string, string>) {
-        this.setState({ filterMap: filters, isFilterActive: false });
-        const queryString = Array.from(filters.keys()).map(key => key + "=" + filters.get(key)).join("&");
-        this.props.onApply(queryString);
+    private _apply(filters: Filters) {
+        this.setState({ filters: filters, isFilterActive: false });
+        this.props.onApply(filters);
     }
 
     @autobind
