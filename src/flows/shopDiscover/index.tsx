@@ -11,6 +11,7 @@ import Card, { CardContainer } from "../../components/card";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
+import { Sticky } from "../../components/sticky";
 import { PostCard, ProductCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
@@ -124,6 +125,20 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
                     </div>
                 </Sidebar>
                 <Content>
+                    <Sticky id="filter-container" stickyClassName="sticky-filter-container">
+                        <div className="filter-container">
+                            <Filter
+                            onApply={this._filterProducts}
+                            filterTarget={FilterTarget.POST}
+                            className={this.state.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} />
+
+                            <Sort
+                            name="Sort by"
+                            onSelect={this._sortProduct}
+                            />
+
+                        </div>
+                    </Sticky>
                     {this.state.keyword !== "" && this.state.products.length < 1 && (
                         <div className="no-search-result-text">
                             No results for "{ this.state.keyword }"
@@ -139,7 +154,7 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
     }
 
     @autobind
-    private async _filterPosts(filterString: string) {
+    private async _filterProducts(filterString: string) {
         this.setState({
             filter: filterString,
             productsNextToken: "",
@@ -147,7 +162,7 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
     }
 
     @autobind
-    private async _sortPosts(sortString: string) {
+    private async _sortProduct(sortString: string) {
         this.setState({
             sort: sortString,
             productsNextToken: "",
