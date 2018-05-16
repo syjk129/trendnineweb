@@ -170,7 +170,7 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
     }
 
     @autobind
-    private async _paginateNextPosts() {
+    private async _paginateNextProducts() {
         if (this.state.productsNextToken == null) {
             return;
         }
