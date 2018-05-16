@@ -154,10 +154,10 @@ export default class Discover extends React.Component<DiscoverProps, DiscoverSta
                     <Sticky id="filter-container" stickyClassName="sticky-filter-container">
                         <div className="filter-container">
                             <Filter
-                            onApply={this._filterPosts}
-                            filterTarget={FilterTarget.POST}
-                            default={this.state.postParam.filters}
-                            className={this.state.postParam.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
+                                onApply={this._filterPosts}
+                                filterTarget={FilterTarget.POST}
+                                default={this.state.postParam.filters}
+                                className={this.state.postParam.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
 
                             <Sort
                             name="Sort by"

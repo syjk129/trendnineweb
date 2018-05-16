@@ -1,5 +1,6 @@
 
 import autobind from "autobind-decorator";
+import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
@@ -18,8 +19,11 @@ import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
+import { Filters } from "../model/filters";
+import { PostParam } from "../model/post-param";
 
 interface ShopDiscoverProps {
+    history: H.History;
     location: any;
     match: match<any>;
 }
@@ -27,12 +31,9 @@ interface ShopDiscoverProps {
 interface ShopDiscoverState {
     products: Array<Product>;
     productsNextToken: string;
-    keyword: string;
-    search: string;
-    filter: string;
-    sort: string;
     isLoading: boolean;
     numCardsPerRow: number;
+    productParam: PostParam;
 }
 
 export default class ShopDiscover extends React.Component<ShopDiscoverProps, ShopDiscoverState> {
@@ -41,12 +42,9 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
     state: ShopDiscoverState = {
         products: [],
         productsNextToken: "",
-        keyword: "",
-        search: "",
-        filter: "",
-        sort: "",
         isLoading: false,
         numCardsPerRow: 2,
+        productParam: null,
     };
 
     componentWillMount() {
@@ -68,23 +66,20 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
     }
 
     async refreshContent(props: ShopDiscoverProps) {
-        const queryString = location.search;
-        const keyword = new URLSearchParams(queryString).get("q") || "";
-        const searchQuery = keyword ? `keyword=${keyword}` : "";
+        const params = new URLSearchParams(location.search);
+        const productParam = new PostParam(params);
+        const queryString = productParam.convertUrlParamToQueryString();
 
         const [
             products,
         ] = await Promise.all([
-            location.pathname === "/shop/feed" ? this.context.api.getFeedProducts() : this.context.api.getLatestProducts(searchQuery),
+            location.pathname === "/shop/feed" ? this.context.api.getFeedProducts() : this.context.api.getLatestProducts(queryString),
         ]);
 
         this.setState({
             products: products.list,
             productsNextToken: products.nextToken,
-            keyword: keyword,
-            search: searchQuery,
-            filter: "",
-            sort: "",
+            productParam: productParam,
             isLoading: false,
         });
     }
@@ -95,7 +90,7 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
         let clientHeight = document.documentElement.clientHeight || window.innerHeight;
         let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
         if (scrolledToBottom) {
-            this._paginateNextPosts();
+            this._paginateNextProducts();
         }
     }
 
@@ -117,7 +112,7 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
                         {/* <Filter
                             onApply={this._filterPosts}
                             filterTarget={FilterTarget.POST}
-                            className={this.state.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} /> */}
+                            className={this.state.productParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} /> */}
                         {/* <Sort
                         name="Sort by"
                         onSelect={this._sortPosts}
@@ -128,9 +123,10 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
                     <Sticky id="filter-container" stickyClassName="sticky-filter-container">
                         <div className="filter-container">
                             <Filter
-                            onApply={this._filterProducts}
-                            filterTarget={FilterTarget.POST}
-                            className={this.state.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} />
+                                onApply={this._filterProducts}
+                                filterTarget={FilterTarget.POST}
+                                default={this.state.productParam.filters}
+                                className={this.state.productParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} />
 
                             <Sort
                             name="Sort by"
@@ -139,13 +135,13 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
 
                         </div>
                     </Sticky>
-                    {this.state.keyword !== "" && this.state.products.length < 1 && (
+                    {this.state.productParam.keyword !== "" && this.state.products.length < 1 && (
                         <div className="no-search-result-text">
-                            No results for "{ this.state.keyword }"
+                            No results for "{ this.state.productParam.keyword }"
                         </div>
                     )}
 
-                    <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
+                    <CardContainer className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
                         {this._renderProducts()}
                     </CardContainer>
                 </Content>
@@ -154,38 +150,23 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
     }
 
     @autobind
-    private async _filterProducts(filterString: string) {
-        this.setState({
-            filter: filterString,
-            productsNextToken: "",
-        }, this._updateProducts);
+    private async _filterProducts(filters: Filters) {
+        this.state.productParam.filters = filters;
+        this._push(this.state.productParam);
     }
 
     @autobind
     private async _sortProduct(sortString: string) {
-        this.setState({
-            sort: sortString,
-            productsNextToken: "",
-        }, this._updateProducts);
+        this.state.productParam.sort = sortString;
+        this._push(this.state.productParam);
     }
 
     @autobind
-    private async _getProducts() {
-        let query = "";
-
-        if (this.state.sort) {
-            query = `${this.state.sort}`;
-        }
-
-        if (this.state.filter) {
-            query += `&${this.state.filter}`;
-        }
-
-        if (this.state.keyword) {
-            query += `&${this.state.search}`;
-        }
-
-        return location.pathname === "/shop/feed" ? this.context.api.getFeedProducts() : this.context.api.getLatestProducts(query, this.state.productsNextToken);
+    private async _push(postParams: PostParam) {
+        this.props.history.push({
+            pathname: location.pathname,
+            search: `?${postParams.convertToUrlParamString()}`,
+        });
     }
 
     @autobind
@@ -194,21 +175,15 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
             return;
         }
 
-        const newProducts = await this._getProducts();
+        const queryString = this.state.productParam.convertUrlParamToQueryString();
+        const newProducts = await Promise.resolve(
+            location.pathname === "/feed" ?
+                this.context.api.getFeedProducts(queryString, this.state.productsNextToken)
+                : this.context.api.getLatestProducts(queryString, this.state.productsNextToken));
         this.setState({
-            products: this.state.products.concat(newProducts.list).filter((product, index, arr) => {
-                return arr.map(mapProduct => mapProduct["id"]).indexOf(product["id"]) === index;
+            products: this.state.products.concat(newProducts.list).filter((post, index, arr) => {
+                return arr.map(mapProduct => mapProduct["id"]).indexOf(post["id"]) === index;
             }),
-            productsNextToken: newProducts.nextToken,
-        });
-    }
-
-    @autobind
-    private async _updateProducts() {
-        const newProducts = await this._getProducts();
-
-        this.setState({
-            products: newProducts.list,
             productsNextToken: newProducts.nextToken,
         });
     }

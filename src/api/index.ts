@@ -97,8 +97,8 @@ export default class Api {
         return this._GET_PAGINATION(`/api/v1/marketplace/products?${queryString}`, nextToken);
     }
 
-    getFeedProducts(nextToken?: string): Promise<Products> {
-        return this._GET_PAGINATION("/api/v1/marketplace/products?following_only=true", nextToken);
+    getFeedProducts(queryString?: string, nextToken?: string): Promise<Products> {
+        return this._GET_PAGINATION(`/api/v1/marketplace/products?following_only=true&${queryString}`, nextToken);
     }
 
     searchPosts(queryString?: string): Promise<Array<PostPreview>> {

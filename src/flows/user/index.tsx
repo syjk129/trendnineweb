@@ -1,4 +1,5 @@
 import autobind from "autobind-decorator";
+import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match } from "react-router";
@@ -16,11 +17,14 @@ import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
+import { Filters } from "../model/filters";
+import { PostParam } from "../model/post-param";
 
 import FollowButton from "./followButton";
 import "./style.scss";
 
 interface UserProps {
+    history: H.History;
     user: Person;
     match: match<any>;
     location: any;
@@ -29,12 +33,17 @@ interface UserProps {
 
 interface UserState {
     pageName: string;
+    postsNextToken: string;
+    productsNextToken: string;
+    followersNextToken: string;
+    followingsNextToken: string;
     profile: any;
     posts: Array<PostPreview>;
     products: Array<any>;
     followers: Array<Person>;
     following: Array<Person>;
     wishlist: any;
+    postParam: PostParam;
 }
 
 export default class User extends React.Component<UserProps, UserState> {
@@ -42,15 +51,39 @@ export default class User extends React.Component<UserProps, UserState> {
 
     state: UserState = {
         pageName: "posts",
+        postsNextToken: "",
+        productsNextToken: "",
+        followersNextToken: "",
+        followingsNextToken: "",
         profile: null,
         posts: [],
         products: [],
         followers: [],
         following: [],
         wishlist: null,
+        postParam: null,
     };
 
-    async componentWillMount() {
+    componentWillMount() {
+        this.refreshContent(this.props);
+    }
+
+    componentWillReceiveProps(props: UserProps) {
+        this.refreshContent(props);
+    }
+
+    componentDidMount() {
+        window.addEventListener("scroll", this.onScroll, false);
+    }
+
+    componentDidUnmount() {
+        window.removeEventListener("scroll", this.onScroll, false);
+    }
+
+    async refreshContent(props: UserProps) {
+        const params = new URLSearchParams(location.search);
+        const postParam = new PostParam(params);
+        const queryString = postParam.convertUrlParamToQueryString();
         this._userId = this.props.match.params.userId;
         this._user = JSON.parse(localStorage.getItem("user"));
 
@@ -74,12 +107,31 @@ export default class User extends React.Component<UserProps, UserState> {
             pageName: this.props.match.params.pageName || "posts",
             profile,
             posts,
+            postsNextToken: posts.nextToken,
             products,
+            productsNextToken: products.nextToken,
             followers,
+            followersNextToken: followers.nextToken,
             following,
+            followingsNextToken: following.nextToken,
             wishlist,
+            postParam: postParam,
         });
     }
+
+    onScroll = () => {
+        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+        let clientHeight = document.documentElement.clientHeight || window.innerHeight;
+        let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+        if (scrolledToBottom) {
+            this._paginateNextPosts();
+            this._paginateNextProducts();
+            this._paginateNextFollowers();
+            this._paginateNextFollowings();
+        }
+    }
+
 
     render() {
         const influencer = this.state.profile ? this.state.profile.user : null;
@@ -195,14 +247,22 @@ export default class User extends React.Component<UserProps, UserState> {
                     {this.state.profile && (this.state.pageName === "posts" || this.state.pageName === "products") && (
                         <Sticky id="filters" stickyClassName="sticky-filter-container">
                             <div className="filter-container">
+                            {
+                                this.state.pageName === "posts" &&
                                 <Filter
-                                    className={this.state.pageName === "posts"  ? "" : "hidden"}
+                                    onApply={this._filterPosts}
                                     filterTarget={FilterTarget.POST}
-                                    onApply={this._filterPost} />
-                                <Filter
-                                    className={this.state.pageName === "products"  ? "" : "hidden"}
-                                    filterTarget={FilterTarget.PRODUCT}
-                                    onApply={this._filterProduct} />
+                                    default={this.state.postParam.filters}
+                                    className={this.state.postParam.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
+                            }
+                            {
+                                this.state.pageName === "products" &&
+                               <Filter
+                                    onApply={this._filterPosts}
+                                    filterTarget={FilterTarget.POST}
+                                    default={this.state.postParam.filters}
+                                    className={this.state.postParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} />
+                            }
                             </div>
                         </Sticky>
                     )}
@@ -220,7 +280,10 @@ export default class User extends React.Component<UserProps, UserState> {
 
     @autobind
     private _updatePageName(pageName: string) {
-        this.setState({ pageName });
+        this.setState({
+            pageName,
+            postParam: new PostParam(new URLSearchParams()),
+         });
     }
 
     @autobind
@@ -284,17 +347,89 @@ export default class User extends React.Component<UserProps, UserState> {
     }
 
     @autobind
-    private async _filterPost(queryString: string) {
-        let query = `${queryString}`;
-        const newPosts = await this.context.api.getPostsForUser(this._userId, query);
-        this.setState({ posts: newPosts });
+    private async _filterPosts(filters: Filters) {
+        this.state.postParam.filters = filters;
+        this._push(this.state.postParam);
     }
 
     @autobind
-    private async _filterProduct(queryString: string) {
-        let query = `${queryString}`;
-        const newProducts = await this.context.api.getProductsForUser(this._userId, query);
-        this.setState({ products: newProducts });
+    private async _sortPosts(sortString: string) {
+        this.state.postParam.sort = sortString;
+        this._push(this.state.postParam);
+    }
+
+    @autobind
+    private async _push(postParams: PostParam) {
+        this.props.history.push({
+            pathname: location.pathname,
+            search: `?${postParams.convertToUrlParamString()}`,
+        });
+    }
+
+    @autobind
+    private async _paginateNextPosts() {
+        if (this.state.postsNextToken == null || this.state.pageName !== "posts") {
+            return;
+        }
+
+        const queryString = this.state.postParam.convertUrlParamToQueryString();
+        const newPosts = await Promise.resolve(
+            this.context.api.getPostsForUser(this._userId, queryString, this.state.postsNextToken));
+        this.setState({
+            posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
+                return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
+            }),
+            postsNextToken: newPosts.nextToken,
+        });
+    }
+
+    @autobind
+    private async _paginateNextProducts() {
+        if (this.state.productsNextToken == null || this.state.pageName !== "products") {
+            return;
+        }
+
+        const queryString = this.state.postParam.convertUrlParamToQueryString();
+        const newProducts = await Promise.resolve(
+            this.context.api.getProductsForUser(this._userId, queryString, this.state.productsNextToken));
+        this.setState({
+            products: this.state.products.concat(newProducts.list).filter((product, index, arr) => {
+                return arr.map(mapProduct => mapProduct["id"]).indexOf(product["id"]) === index;
+            }),
+            productsNextToken: newProducts.nextToken,
+        });
+    }
+
+    @autobind
+    private async _paginateNextFollowings() {
+        if (this.state.followingsNextToken == null || this.state.pageName !== "following") {
+            return;
+        }
+
+        const newFollowings = await Promise.resolve(
+            this.context.api.getUserFollowing(this._userId, this.state.productsNextToken));
+        this.setState({
+            following: this.state.following.concat(newFollowings.list).filter((person, index, arr) => {
+                return arr.map(mapPerson => mapPerson["id"]).indexOf(person["id"]) === index;
+            }),
+            followingsNextToken: newFollowings.nextToken,
+        });
+    }
+
+    @autobind
+    private async _paginateNextFollowers() {
+        if (this.state.followersNextToken == null || this.state.pageName !== "followers") {
+            return;
+        }
+
+        const newFollowers = await Promise.resolve(
+            this.context.api.getUserFollowers(this._userId, this.state.productsNextToken));
+        this.setState({
+            followers: this.state.followers.concat(newFollowers.list).filter((person, index, arr) => {
+                return arr.map(mapPerson => mapPerson["id"]).indexOf(person["id"]) === index;
+            }),
+            followersNextToken: newFollowers.nextToken,
+        });
     }
 }
 
