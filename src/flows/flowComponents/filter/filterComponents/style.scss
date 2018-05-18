@@ -1,5 +1,12 @@
 @import "../../../../styles/variables";
 
+.filter-content-box {
+    padding-top: $base-spacing * 2;
+    padding-bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+
 .filter-content-container {
     background-color: $color-white;
     border: $standard-border-width solid $standard-border-color;
@@ -57,6 +64,7 @@
     }
 
     .filter-content {
+        width: 100%;
         max-height: $filter-content-max-height - $base-spacing * 4 - $button-height-sm;
         overflow-y: auto;
 

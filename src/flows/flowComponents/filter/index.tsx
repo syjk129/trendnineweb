@@ -74,7 +74,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                         <Icon variant={this.state.isFilterActive ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
                     </LinkButton>
                 </div>
-                <div className={`filter-content ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>
+                <div className={`filter-content-box ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>
                     <ul className="filter-list" >
                         {filterList
                         .map(filter => (
