@@ -26,9 +26,12 @@
 
         .filter-menu {
             padding: $card-spacing 0;
-            border-bottom: $standard-border-width * 3 solid $brand-color;
             padding-bottom: $card-spacing - $standard-border-width;
             margin-bottom: -1 * $standard-border-width * 2;
+        }
+
+        .selected {
+            border-bottom: $standard-border-width * 3 solid $brand-color;
         }
     }
 }
