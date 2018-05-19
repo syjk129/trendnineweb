@@ -28,6 +28,17 @@
         }
     }
 
+    &.mobile {
+        margin: 0;
+        width: $mobile-icon-size;
+        height: $mobile-icon-size;
+
+        &::before {
+            width: $mobile-icon-size - 1;
+            height: $mobile-icon-size - 1;
+        }
+    }
+
     &::before {
         content: "";
         width: $icon-size-1 - 1;
@@ -101,4 +112,12 @@
 
 .icon-girl::before {
     background-image: url("/img/icons/girl.png");
+}
+
+.icon-menu::before {
+    background-image: url("/img/icons/menu.png");
+}
+
+.icon-close::before {
+    background-image: url("/img/icons/close.png");
 }

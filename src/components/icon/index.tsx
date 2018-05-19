@@ -1,5 +1,6 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import { IconMap, IconSize, IconVariant } from "./types";
 
@@ -27,6 +28,10 @@ export default function Icon({
     children,
 }: IconProps) {
     let classes = `icon icon-${selected ? IconMap[variant] : variant}`;
+
+    if (isMobile) {
+        classes += " mobile";
+    }
 
     switch (size) {
         case IconSize.LARGE:

@@ -3,6 +3,7 @@
 .discover {
     display: flex;
     padding: 0 $page-spacing;
+    margin-top: $navbar-height;
 
     .search-text-container {
         padding-top: $content-spacing;
@@ -63,4 +64,9 @@
     .hide {
         display: none;
     }
+}
+
+.mobile-discover {
+    padding: $mobile-page-spacing;
+    background-color: #fff;
 }

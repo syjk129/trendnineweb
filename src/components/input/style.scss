@@ -12,4 +12,15 @@ input {
         user-select: none;
         outline: none;
     }
+
+    &.underline {
+        background-color: transparent;
+        border: none;
+        border-bottom: $standard-border-width solid $standard-border-color;
+    }
+
+    &.light {
+        border-color: #fff;
+        color: #fff;
+    }
 }

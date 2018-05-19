@@ -13,6 +13,12 @@ export enum InputType {
 export enum InputVariant {
     BLANK,
     OUTLINE,
+    UNDERLINE,
+}
+
+export enum InputTheme {
+    LIGHT,
+    DARK,
 }
 
 interface InputProps {
@@ -20,6 +26,7 @@ interface InputProps {
     className?: string;
     type?: InputType;
     variant?: InputVariant;
+    theme?: InputTheme;
     placeholder?: string;
     disabled?: boolean;
     checked?: boolean;
@@ -33,12 +40,18 @@ export default class Input extends React.Component<InputProps, never> {
     };
 
     render() {
-        const { className, variant } = this.props;
+        const { className, variant, theme } = this.props;
 
         let classes = "";
 
         if (className) {
             classes += ` ${className}`;
+        }
+
+        switch (theme) {
+            case InputTheme.LIGHT:
+                classes += " light";
+                break;
         }
 
         switch (variant) {
@@ -47,6 +60,9 @@ export default class Input extends React.Component<InputProps, never> {
                 break;
             case InputVariant.OUTLINE:
                 classes += " outline";
+                break;
+            case InputVariant.UNDERLINE:
+                classes += " underline";
                 break;
         }
 

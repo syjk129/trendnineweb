@@ -58,7 +58,8 @@
     color: $color-grey-5;
     display: block;
 
-    &:hover {
+    &:hover,
+    &:focus {
         cursor: pointer;
         color: $color-accent;
     }

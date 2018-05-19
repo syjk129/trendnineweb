@@ -1,7 +1,7 @@
 import Category from "./category";
 import Comment from "./comment";
 import Featured from "./featured";
-import FeaturedInfleuncer from "./featured-influencer";
+import FeaturedInfluencer from "./featured-influencer";
 import Pagination from "./pagination";
 import Person from "./person";
 import Post from "./post";
@@ -16,7 +16,7 @@ export {
     Category,
     Comment,
     Featured,
-    FeaturedInfleuncer,
+    FeaturedInfluencer,
     Pagination,
     Person,
     Post,

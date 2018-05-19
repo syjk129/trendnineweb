@@ -81,7 +81,7 @@ export default class Api {
         return this._GET(url);
     }
 
-    getLatestPosts(queryString?: string, nextToken?: string): Promise<Posts> {
+    getLatestPosts(queryString?: string, nextToken?: string): Promise<Post> {
         return this._GET_PAGINATION(`/api/v1/posts?${queryString}`, nextToken);
     }
 

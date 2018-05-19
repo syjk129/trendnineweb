@@ -1,5 +1,28 @@
 @import "../../styles/variables.scss";
 
+.mobile-header {
+    padding: $mobile-page-spacing;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: $standard-border-width solid $standard-border-color;
+    background-color: #fff;
+
+    .nav-logo {
+        width: 150px;
+
+        &::before {
+            content: "";
+            width: 150px;
+            height: $mobile-icon-size;
+            position: absolute;
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-image: url("/img/logo.png");
+        }
+    }
+}
+
 .main-header {
     background-color: $color-grey-0;
     position: fixed;

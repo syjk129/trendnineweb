@@ -15,6 +15,8 @@ export enum IconVariant {
     WISHLIST_FILLED = "wishlist-filled",
     GIRL = "girl",
     BAG = "bag",
+    CLOSE = "close",
+    MENU = "menu",
 }
 
 export enum IconSize {
@@ -41,4 +43,6 @@ export const IconMap = {
     [IconVariant.WISHLIST_FILLED]: IconVariant.WISHLIST_FILLED,
     [IconVariant.GIRL]: IconVariant.GIRL,
     [IconVariant.BAG]: IconVariant.BAG,
+    [IconVariant.CLOSE]: IconVariant.MENU,
+    [IconVariant.MENU]: IconVariant.CLOSE,
 };
