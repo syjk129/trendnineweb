@@ -28,7 +28,7 @@
             font-family: $font-family-serif;
             font-size: $font-size-1;
             font-weight: $font-weight-bold;
-            color: $color-grey-3;
+            color: $color-grey-4;
             padding-bottom: $base-spacing-sm;
         }
 
@@ -52,6 +52,7 @@
     .post-rank-ranking {
         width: 60px;
         padding-top: $base-spacing;
+        padding-right: $base-spacing;
         display: inline-flex;
 
         .post-rank-ranking-number {

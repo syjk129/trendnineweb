@@ -15,8 +15,8 @@ class SearchFilterInput extends React.Component<SearchFilterInputProps, never> {
     render() {
         return (
             <div className="search-filter-input-container">
-                <Icon variant={IconVariant.SEARCH}></Icon>
                 <Input className="search-filter-input" placeholder={this.props.placeholder} type={InputType.TEXT} value={this.props.searchValue} onChange={this._onSearch} />
+                <Icon variant={IconVariant.SEARCH}></Icon>
             </div>
         );
     }

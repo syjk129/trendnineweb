@@ -65,7 +65,6 @@ export default class PostCard extends React.Component<PostCardProps> {
                         variant={ActionLinksVariant.POST}
                         id={post.id}
                         wishlisted={post.wishlisted}
-                        likes={post.likes}
                         liked={post.liked}
                     />
                 </div>

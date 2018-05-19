@@ -3,6 +3,7 @@
 .card {
     background-color: #fff;
     min-width: $min-card-width;
+    box-shadow: 0 2px 4px rgba(153, 153, 153, 0.5);
 
     .card-hover-details {
         visibility: hidden;
@@ -17,7 +18,7 @@
     .card-content {
         font-size: $font-size-1;
         line-height: $line-height-1;
-        padding: $card-spacing;
+        padding: $base-spacing;
 
         .title {
             font-size: $font-size-2;

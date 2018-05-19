@@ -1,8 +1,6 @@
 @import "../../../styles/variables";
 
 .author {
-    $image-size: 24px;
-
     display: flex;
 
     .link-button {
@@ -12,17 +10,17 @@
 
     .author-image img {
         display: inline-block;
-        width: $image-size;
-        height: $image-size;
+        width: $profile-image-size;
+        height: $profile-image-size;
         margin-right: $base-spacing;
     }
 
     .author-name {
-        line-height: $image-size;
+        line-height: $profile-image-size;
         font-size: $font-size-1;
     }
 
     time {
-        line-height: $image-size;
+        line-height: $profile-image-size;
     }
 }

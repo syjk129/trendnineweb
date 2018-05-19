@@ -372,7 +372,7 @@ export default class User extends React.Component<UserProps, UserState> {
             return;
         }
 
-        const queryString = this.state.postParam.convertUrlParamToQueryString();
+        const queryString = this.state.postParam ? this.state.postParam.convertUrlParamToQueryString() : "";
         const newPosts = await Promise.resolve(
             this.context.api.getPostsForUser(this._userId, queryString, this.state.postsNextToken));
         this.setState({
@@ -389,7 +389,7 @@ export default class User extends React.Component<UserProps, UserState> {
             return;
         }
 
-        const queryString = this.state.postParam.convertUrlParamToQueryString();
+        const queryString = this.state.postParam ? this.state.postParam.convertUrlParamToQueryString() : "";
         const newProducts = await Promise.resolve(
             this.context.api.getProductsForUser(this._userId, queryString, this.state.productsNextToken));
         this.setState({

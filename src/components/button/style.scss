@@ -32,7 +32,7 @@
 
     &.button-outline {
         background-color: transparent;
-        border: $standard-border-width solid $standard-border-color;
+        border: $brand-color solid $standard-border-width;
 
         &:hover {
             background-color: $color-accent;
@@ -55,7 +55,7 @@
     line-height: $line-height-1;
     letter-spacing: $letter-spacing-1 * 2;
     text-decoration: none;
-    color: $color-grey-5;
+    color: $color-grey-6;
     display: block;
 
     &:hover {

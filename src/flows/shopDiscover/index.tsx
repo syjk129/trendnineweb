@@ -5,7 +5,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
-import { Product } from "../../api/models";
+import { Category, Product } from "../../api/models";
 import { AppContext, AppContextTypes } from "../../app";
 import { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
@@ -16,6 +16,7 @@ import { Sticky } from "../../components/sticky";
 import { PostCard, ProductCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
+import CategoryTreeFilter from "../flowComponents/filter/filterComponents/categoryTreeFilter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
@@ -29,6 +30,7 @@ interface ShopDiscoverProps {
 }
 
 interface ShopDiscoverState {
+    categories: Array<Category>;
     products: Array<Product>;
     productsNextToken: string;
     isLoading: boolean;
@@ -40,6 +42,7 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
     static contextTypes: AppContext;
 
     state: ShopDiscoverState = {
+        categories: [],
         products: [],
         productsNextToken: "",
         isLoading: false,
@@ -47,7 +50,7 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
         productParam: null,
     };
 
-    componentWillMount() {
+    async componentWillMount() {
         this.setState({ isLoading: true });
         this.refreshContent(this.props);
     }
@@ -57,8 +60,17 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
         this.refreshContent(props);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         window.addEventListener("scroll", this.onScroll, false);
+
+        try {
+            const categories = await this.context.api.getCategories();
+            this.setState({
+                categories: categories,
+            });
+        } catch (err) {
+            console.warn(err);
+        }
     }
 
     componentDidUnmount() {
@@ -109,6 +121,11 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
             <div className="shop">
                 <Sidebar>
                     <div className="filter-container">
+                        <CategoryTreeFilter
+                            active={true}
+                            categoryList={this.state.categories} />
+                            {/* // selectedCategoryIds={this.state.filters.categoryIds} */}
+                            {/* // onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)} /> */}
                         {/* <Filter
                             onApply={this._filterPosts}
                             filterTarget={FilterTarget.POST}
@@ -124,7 +141,7 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
                         <div className="filter-container">
                             <Filter
                                 onApply={this._filterProducts}
-                                filterTarget={FilterTarget.POST}
+                                filterTarget={FilterTarget.SHOP}
                                 default={this.state.productParam.filters}
                                 className={this.state.productParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} />
 

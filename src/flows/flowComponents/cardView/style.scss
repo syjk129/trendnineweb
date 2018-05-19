@@ -49,7 +49,7 @@
             .post-card-hover-name,
             .post-card-hover-price {
                 font-family: $font-family-serif;
-                color: $color-grey-3;
+                color: $color-grey-4;
                 font-weight: $font-weight-bold;
                 font-size: $font-size-1;
             }
@@ -62,7 +62,7 @@
 
     .post-card-hover-footer {
         margin-left: $ranking-img-width + $base-spacing;
-        width: calc(100% - (#{$ranking-img-width} + 2 * #{$base-spacing}));
+        width: calc(100% - (#{$ranking-img-width} + 3 * #{$base-spacing}));
         position: absolute;
         bottom: 0;
     }

@@ -17,6 +17,7 @@ import "./style.scss";
 export enum FilterTarget {
     POST = "post",
     PRODUCT = "product",
+    SHOP = "shop",
 }
 
 interface FilterProps {
@@ -41,7 +42,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 
     state: FilterState = {
         isFilterActive: false,
-        activeFilter: FilterConstants.CATEGORY,
+        activeFilter: this._getFilterList()[0],
         searchResult: new Set(),
         categories: [],
         filters: this.props.default || new Filters(),
@@ -67,7 +68,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     render() {
         const filterList = this._getFilterList();
         return (
-            <div ref={this._setFilterRef}>
+            <div ref={this._setFilterRef} className="filter-dropdown">
                 <div className={`filter-anchor ${this.props.className}`}>
                     <LinkButton onClick={this._toggleFilter}>
                         Filter&nbsp;&nbsp;
@@ -172,6 +173,15 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                     FilterConstants.BRAND,
                     FilterConstants.PRICE_RANGE,
                     FilterConstants.RETAILER,
+                    FilterConstants.TAG,
+                ];
+                break;
+            case FilterTarget.SHOP:
+                filterList = [
+                    FilterConstants.BRAND,
+                    FilterConstants.PRICE_RANGE,
+                    FilterConstants.RETAILER,
+                    FilterConstants.TAG,
                 ];
                 break;
         }
