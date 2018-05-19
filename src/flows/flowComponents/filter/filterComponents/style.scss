@@ -17,11 +17,11 @@
         .filter-action-buttons {
             button {
                 margin: 0;
-                width: $button-width-sm;
+                width: $button-width-xs;
                 height: $button-height-sm;
 
                 &:first-child {
-                    border-right: 0;
+                    margin-right: $base-spacing;
                 }
             }
 
@@ -31,7 +31,7 @@
 
         .filter-action {
             min-width: $min-card-width;
-            width: calc(100% - #{$button-width-sm} * 2 - #{$base-spacing} * 2);
+            width: calc(100% - #{$button-width-xs} * 2 - #{$base-spacing} * 2);
         }
 
         .filter-value {
@@ -46,7 +46,7 @@
     }
 
     ::-webkit-scrollbar-track {
-        background: $color-grey-3;
+        background: $color-grey-4;
         border-left: $color-white solid ($scroll-width - $scroll-track-width - $scroll-track-thumb-width);
         border-right: $color-white solid $scroll-track-thumb-width;
     }
@@ -57,6 +57,7 @@
     }
 
     .filter-content {
+        width: 100%;
         max-height: $filter-content-max-height - $base-spacing * 4 - $button-height-sm;
         overflow-y: auto;
 
@@ -64,9 +65,13 @@
             padding: $base-spacing * 2;
             margin: 0;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax($min-card-width, 1fr));
             grid-gap: 20px;
             list-style: none;
+
+            &:first-child {
+                padding-top: 0;
+            }
         }
 
         .filter-no-result {
@@ -76,6 +81,10 @@
 }
 
 .search-filter-input-container {
+    width: 50%;
+    max-width: $min-card-width * 2;
+    min-width: $min-card-width - 5 * $base-spacing;
+
     .search-filter-input {
         background-color: transparent;
         outline: none;

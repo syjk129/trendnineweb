@@ -1,56 +1,55 @@
 
 import autobind from "autobind-decorator";
+import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
-import { Product } from "../../api/models";
+import { Category, Product } from "../../api/models";
 import { AppContext, AppContextTypes } from "../../app";
 import { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
+import Sticky from "../../components/sticky";
 import { PostCard, ProductCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
+import CategoryTreeFilter from "../flowComponents/filter/filterComponents/categoryTreeFilter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
-
-import "./style.scss";
+import { Filters, PostParam } from "../model";
 
 interface ShopDiscoverProps {
+    history: H.History;
     location: any;
     match: match<any>;
 }
 
 interface ShopDiscoverState {
+    categories: Array<Category>;
     products: Array<Product>;
     productsNextToken: string;
-    keyword: string;
-    search: string;
-    filter: string;
-    sort: string;
     isLoading: boolean;
     numCardsPerRow: number;
+    productParam: PostParam;
 }
 
 export default class ShopDiscover extends React.Component<ShopDiscoverProps, ShopDiscoverState> {
     static contextTypes: AppContext;
 
     state: ShopDiscoverState = {
+        categories: [],
         products: [],
         productsNextToken: "",
-        keyword: "",
-        search: "",
-        filter: "",
-        sort: "",
         isLoading: false,
         numCardsPerRow: 2,
+        productParam: null,
     };
 
-    componentWillMount() {
+    async componentWillMount() {
         this.setState({ isLoading: true });
         this.refreshContent(this.props);
     }
@@ -60,8 +59,17 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
         this.refreshContent(props);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         window.addEventListener("scroll", this.onScroll, false);
+
+        try {
+            const categories = await this.context.api.getCategories();
+            this.setState({
+                categories: categories,
+            });
+        } catch (err) {
+            console.warn(err);
+        }
     }
 
     componentDidUnmount() {
@@ -69,23 +77,20 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
     }
 
     async refreshContent(props: ShopDiscoverProps) {
-        const queryString = location.search;
-        const keyword = new URLSearchParams(queryString).get("q") || "";
-        const searchQuery = keyword ? `keyword=${keyword}` : "";
+        const params = new URLSearchParams(location.search);
+        const productParam = new PostParam(params);
+        const queryString = productParam.convertUrlParamToQueryString();
 
         const [
             products,
         ] = await Promise.all([
-            location.pathname === "/shop/feed" ? this.context.api.getFeedProducts() : this.context.api.getLatestProducts(searchQuery),
+            location.pathname === "/shop/feed" ? this.context.api.getFeedProducts() : this.context.api.getLatestProducts(queryString),
         ]);
 
         this.setState({
             products: products.list,
             productsNextToken: products.nextToken,
-            keyword: keyword,
-            search: searchQuery,
-            filter: "",
-            sort: "",
+            productParam: productParam,
             isLoading: false,
         });
     }
@@ -96,7 +101,7 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
         let clientHeight = document.documentElement.clientHeight || window.innerHeight;
         let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
         if (scrolledToBottom) {
-            this._paginateNextPosts();
+            this._paginateNextProducts();
         }
     }
 
@@ -115,10 +120,15 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
             <div className="shop">
                 <Sidebar>
                     <div className="filter-container">
+                        <CategoryTreeFilter
+                            active={true}
+                            categoryList={this.state.categories} />
+                            {/* // selectedCategoryIds={this.state.filters.categoryIds} */}
+                            {/* // onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)} /> */}
                         {/* <Filter
                             onApply={this._filterPosts}
                             filterTarget={FilterTarget.POST}
-                            className={this.state.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} /> */}
+                            className={this.state.productParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} /> */}
                         {/* <Sort
                         name="Sort by"
                         onSelect={this._sortPosts}
@@ -126,13 +136,28 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
                     </div>
                 </Sidebar>
                 <Content>
-                    {this.state.keyword !== "" && this.state.products.length < 1 && (
+                    <Sticky id="filter-container" stickyClassName="sticky-filter-container">
+                        <div className="filter-container">
+                            <Filter
+                                onApply={this._filterProducts}
+                                filterTarget={FilterTarget.SHOP}
+                                default={this.state.productParam.filters}
+                                className={this.state.productParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} />
+
+                            <Sort
+                            name="Sort by"
+                            onSelect={this._sortProduct}
+                            />
+
+                        </div>
+                    </Sticky>
+                    {this.state.productParam.keyword !== "" && this.state.products.length < 1 && (
                         <div className="no-search-result-text">
-                            No results for "{ this.state.keyword }"
+                            No results for "{ this.state.productParam.keyword }"
                         </div>
                     )}
 
-                    <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
+                    <CardContainer className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
                         {this._renderProducts()}
                     </CardContainer>
                 </Content>
@@ -141,61 +166,40 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps, Sho
     }
 
     @autobind
-    private async _filterPosts(filterString: string) {
-        this.setState({
-            filter: filterString,
-            productsNextToken: "",
-        }, this._updateProducts);
+    private async _filterProducts(filters: Filters) {
+        this.state.productParam.filters = filters;
+        this._push(this.state.productParam);
     }
 
     @autobind
-    private async _sortPosts(sortString: string) {
-        this.setState({
-            sort: sortString,
-            productsNextToken: "",
-        }, this._updateProducts);
+    private async _sortProduct(sortString: string) {
+        this.state.productParam.sort = sortString;
+        this._push(this.state.productParam);
     }
 
     @autobind
-    private async _getProducts() {
-        let query = "";
-
-        if (this.state.sort) {
-            query = `${this.state.sort}`;
-        }
-
-        if (this.state.filter) {
-            query += `&${this.state.filter}`;
-        }
-
-        if (this.state.keyword) {
-            query += `&${this.state.search}`;
-        }
-
-        return location.pathname === "/shop/feed" ? this.context.api.getFeedProducts() : this.context.api.getLatestProducts(query, this.state.productsNextToken);
-    }
-
-    @autobind
-    private async _paginateNextPosts() {
-        if (this.state.productsNextToken == null) {
-            return;
-        }
-
-        const newProducts = await this._getProducts();
-        this.setState({
-            products: this.state.products.concat(newProducts.list).filter((product, index, arr) => {
-                return arr.map(mapProduct => mapProduct["id"]).indexOf(product["id"]) === index;
-            }),
-            productsNextToken: newProducts.nextToken,
+    private async _push(postParams: PostParam) {
+        this.props.history.push({
+            pathname: location.pathname,
+            search: `?${postParams.convertToUrlParamString()}`,
         });
     }
 
     @autobind
-    private async _updateProducts() {
-        const newProducts = await this._getProducts();
+    private async _paginateNextProducts() {
+        if (this.state.productsNextToken == null) {
+            return;
+        }
 
+        const queryString = this.state.productParam.convertUrlParamToQueryString();
+        const newProducts = await Promise.resolve(
+            location.pathname === "/feed" ?
+                this.context.api.getFeedProducts(queryString, this.state.productsNextToken)
+                : this.context.api.getLatestProducts(queryString, this.state.productsNextToken));
         this.setState({
-            products: newProducts.list,
+            products: this.state.products.concat(newProducts.list).filter((post, index, arr) => {
+                return arr.map(mapProduct => mapProduct["id"]).indexOf(post["id"]) === index;
+            }),
             productsNextToken: newProducts.nextToken,
         });
     }

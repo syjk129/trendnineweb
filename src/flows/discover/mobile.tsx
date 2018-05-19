@@ -11,34 +11,38 @@ import Card, { CardContainer } from "../../components/card";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
+import Sticky from "../../components/sticky";
 import { PostCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
+import MobileFilter from "../flowComponents/filter/mobileFilter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
+import { Filters, PostParam } from "../model";
 
 import "./style.scss";
 import { DiscoverProps, DiscoverState } from "./types";
 
-export default class MobileDiscover extends React.Component<DiscoverProps, DiscoverState> {
-    state: DiscoverState = {
+interface MobileDiscoverState extends DiscoverState {
+    gridSize: number;
+}
+
+export default class MobileDiscover extends React.Component<DiscoverProps, MobileDiscoverState> {
+    state: MobileDiscoverState = {
         posts: [],
         postsNextToken: "",
         trendingPosts: [],
         featuredTrendnines: [],
         recommendedTrendnines: [],
-        keyword: "",
-        search: "",
-        filter: "",
-        sort: "",
+        postParam: null,
         isLoading: false,
+        gridSize: 1,
     };
 
     componentWillMount() {
         this.setState({ isLoading: true });
         this.refreshContent(this.props);
-        this.updateWindowWidth();
     }
 
     componentWillReceiveProps(props: DiscoverProps) {
@@ -47,9 +51,9 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Disco
     }
 
     async refreshContent(props: DiscoverProps) {
-        const queryString = location.search;
-        const keyword = new URLSearchParams(queryString).get("q") || "";
-        const searchQuery = keyword ? `keyword=${keyword}` : "";
+        const params = new URLSearchParams(location.search);
+        const postParam = new PostParam(params);
+        const queryString = postParam.convertUrlParamToQueryString();
 
         const [
             trendingPosts,
@@ -60,7 +64,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Disco
             this.props.getTrendingPosts(),
             this.props.getTodaysTrendnines(),
             this.props.getFeaturedTrendnines(),
-            location.pathname === "/feed" ? this.props.getFeedPosts() : this.props.getLatestPosts(searchQuery),
+            location.pathname === "/feed" ? this.props.getFeedPosts(queryString) : this.props.getLatestPosts(queryString),
         ]);
 
         this.setState({
@@ -69,10 +73,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Disco
             trendingPosts: trendingPosts,
             featuredTrendnines: featuredTrendnines,
             recommendedTrendnines: recommendedTrendnines,
-            keyword: keyword,
-            search: searchQuery,
-            filter: "",
-            sort: "",
+            postParam: postParam,
             isLoading: false,
         });
     }
@@ -87,14 +88,6 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Disco
         }
     }
 
-    updateWindowWidth = () => {
-        const GRID_GAP = 22;
-        const CONTENT_MARGIN = 40;
-        const CARD_WIDTH = 235;
-        const numCardsPerRow = (window.innerWidth + GRID_GAP - 2 * CONTENT_MARGIN) / (CARD_WIDTH + GRID_GAP) - 1 | 0;
-        this.setState({numCardsPerRow: Math.max(numCardsPerRow, 2)});
-    }
-
     render() {
         if (this.state.isLoading) {
             return (
@@ -106,60 +99,50 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Disco
             );
         }
 
+        const carouselAttributes = {
+            infinite: false,
+            arrows: false,
+            slidesToShow: 1,
+            variableWidth: false,
+            centerMode: true,
+        };
+
         return (
             <div className="mobile-discover">
-                {this.state.featuredTrendnines && this.state.featuredTrendnines.length > 0 &&
-                    <Featured featuredTrendnines={this.state.featuredTrendnines} />
-                }
-                <SidebarSection title="Trending Posts">
-                    <PostRank posts={this.state.trendingPosts} />
-                </SidebarSection>
-                {this.state.keyword !== "" && this.state.posts.length < 1 && (
+                <Carousel attributes={carouselAttributes}>
+                    <div>
+                        {this.state.featuredTrendnines && this.state.featuredTrendnines.length > 0 &&
+                            <Featured featuredTrendnines={this.state.featuredTrendnines} />
+                        }
+                    </div>
+                    <div>
+                        <SidebarSection title="Trending Posts">
+                            <PostRank posts={this.state.trendingPosts} />
+                        </SidebarSection>
+                    </div>
+                </Carousel>
+                {this.state.postParam.keyword !== "" && this.state.posts.length < 1 && (
                     <div className="no-search-result-text">
-                        No results for "{ this.state.keyword }"
+                        No results for "{ this.state.postParam.keyword }"
                     </div>
                 )}
-
-                <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
+                <MobileFilter setGridSize={this._setGridSize} />
+                <CardContainer gridSize={this.state.gridSize} className={this.state.postParam.keyword === "" ? "" : "card-container-extra-space"}>
                     {this._renderPosts()}
                 </CardContainer>
             </div>
         );
     }
 
-    @autobind
-    private async _filterPosts(filterString: string) {
-        this.setState({
-            filter: filterString,
-            postsNextToken: "",
-        }, this._updatePosts);
-    }
+    private _renderPosts() {
+        const posts = this.state.posts;
+        const postCards = posts.map(post => (
+            <PostCard
+                gridSize={this.state.gridSize}
+                post={post}
+            />));
 
-    @autobind
-    private async _sortPosts(sortString: string) {
-        this.setState({
-            sort: sortString,
-            postsNextToken: "",
-        }, this._updatePosts);
-    }
-
-    @autobind
-    private async _getPosts() {
-        let query = "";
-
-        if (this.state.sort) {
-            query = `${this.state.sort}`;
-        }
-
-        if (this.state.filter) {
-            query += `&${this.state.filter}`;
-        }
-
-        if (this.state.keyword) {
-            query += `&${this.state.search}`;
-        }
-
-        return location.pathname === "/feed" ? this.props.getFeedPosts() : this.props.getLatestPosts(query, this.state.postsNextToken);
+        return postCards;
     }
 
     @autobind
@@ -168,7 +151,11 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Disco
             return;
         }
 
-        const newPosts = await this._getPosts();
+        const queryString = this.state.postParam.convertUrlParamToQueryString();
+        const newPosts = await Promise.resolve(
+            location.pathname === "/feed" ?
+                this.context.api.getFeedPosts(queryString, this.state.postsNextToken)
+                : this.context.api.getLatestPosts(queryString, this.state.postsNextToken));
         this.setState({
             posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
                 return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
@@ -178,41 +165,27 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Disco
     }
 
     @autobind
-    private async _updatePosts() {
-        const newPosts = await this._getPosts();
-        this.setState({
-            posts: newPosts.list,
-            postsNextToken: newPosts.nextToken,
+    private async _filterPosts(filters: Filters) {
+        this.state.postParam.filters = filters;
+        this._push(this.state.postParam);
+    }
+
+    @autobind
+    private async _sortPosts(sortString: string) {
+        this.state.postParam.sort = sortString;
+        this._push(this.state.postParam);
+    }
+
+    @autobind
+    private async _push(postParams: PostParam) {
+        this.props.history.push({
+            pathname: location.pathname,
+            search: `?${postParams.convertToUrlParamString()}`,
         });
     }
 
     @autobind
-    private _renderPosts() {
-        const posts = this.state.posts;
-        const postCards = posts.map((post, index) => (
-            <PostCard
-                post={post}
-            />));
-
-        // update the logic to add recommended trendsetters whenever
-        postCards.splice(this.state.numCardsPerRow * 4, 0, this._renderRecommendedtrendsetters());
-        return postCards;
-    }
-
-    private _renderRecommendedtrendsetters() {
-        return (
-            <div className="recommended-trendsetters-container">
-                <p className="title">Trendsetters you might like</p>
-
-                <div className="recommended-trendsetters">
-                    {this.state.recommendedTrendnines.slice(0, 6).map(trendsetter => (
-                        <LinkButton className="trendsetter" url={`/user/${trendsetter.id}`}>
-                            <img src={trendsetter.profile_image_url} />
-                            <div>{trendsetter.first_name} {trendsetter.last_name}</div>
-                        </LinkButton>
-                    ))}
-                </div>
-            </div>
-        );
+    private _setGridSize(gridSize: number) {
+        this.setState({ gridSize });
     }
 }

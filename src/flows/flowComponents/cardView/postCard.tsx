@@ -15,12 +15,13 @@ import "./style.scss";
 
 interface PostCardProps {
     post: PostPreview;
+    gridSize?: number;
 }
 
 export default class PostCard extends React.Component<PostCardProps> {
 
     render() {
-        const { post } = this.props;
+        const { post, gridSize } = this.props;
 
         const hoverItem = (
             <div className="card-hover">
@@ -65,7 +66,6 @@ export default class PostCard extends React.Component<PostCardProps> {
                         variant={ActionLinksVariant.POST}
                         id={post.id}
                         wishlisted={post.wishlisted}
-                        likes={post.likes}
                         liked={post.liked}
                     />
                 </div>
@@ -74,6 +74,7 @@ export default class PostCard extends React.Component<PostCardProps> {
 
         return (
             <Card
+                gridSize={gridSize}
                 imageUrl={post.cover_image.small_image_url}
                 redirectUrl={`/post/${post.id}`}
                 title={post.title}

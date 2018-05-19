@@ -1,6 +1,11 @@
 @import "../../styles/variables.scss";
 
 .mobile-header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+    box-sizing: border-box;
     padding: $mobile-page-spacing;
     display: flex;
     justify-content: space-between;

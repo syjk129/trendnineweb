@@ -14,9 +14,7 @@
     }
 
     a:last-child {
-        text-align: right;
-        padding-right: $base-spacing;
+        padding-right: 0 !important;
         float: right !important;
-        margin-right: $base-spacing;
     }
 }

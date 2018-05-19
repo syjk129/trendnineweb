@@ -15,7 +15,6 @@ interface CarouselProps {
 }
 
 export default function Carousel({ className, attributes, children, slidesToShow }: CarouselProps) {
-    console.log(window.innerWidth);
     let settings = {
         adaptiveHeight: false,
         // dots: true,

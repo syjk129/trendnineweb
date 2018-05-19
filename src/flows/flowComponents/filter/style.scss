@@ -1,15 +1,15 @@
 @import "../../../styles/variables";
 
 .filter-container {
-    position: fixed;
+    position: relative;
     z-index: 2;
-    width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2);
+    width: 100%;
+    min-width: $min-card-width * 2 + $base-spacing * 2 + $standard-border-width;
     background-color: $color-grey-0;
+    padding-top: 22px;
 
     .filter-anchor {
-        padding-bottom: $filter-padding;
         height: $filter-height;
-        margin-top: $content-spacing;
     }
 
     .filter-list {
@@ -26,10 +26,68 @@
         }
 
         .filter-menu {
+            font-weight: $font-weight-bold;
             padding: $card-spacing 0;
-            border-bottom: $standard-border-width * 3 solid $brand-color;
             padding-bottom: $card-spacing - $standard-border-width;
             margin-bottom: -1 * $standard-border-width * 2;
         }
+
+        .selected {
+            border-bottom: $standard-border-width * 3 solid $brand-color;
+        }
     }
+
+    .filter-content-box {
+        padding-top: $base-spacing * 2;
+        padding-bottom: 0;
+        position: absolute;
+        width: 100%;
+    }
+}
+
+.sticky-filter-container {
+    position: fixed;
+    width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2 + 2 * #{$base-spacing});
+    min-width: $min-card-width * 2 + $base-spacing * 4 + $standard-border-width;
+    background-color: $color-grey-0;
+    padding-bottom: $base-spacing * 2;
+    margin-left: -1 * $base-spacing;
+    z-index: 2;
+    top: $navbar-height - $standard-border-width;
+
+    .filter-container {
+        margin-left: $base-spacing;
+
+        .sort-select {
+            right: $base-spacing * 2;
+        }
+    }
+
+    .filter-dropdown {
+        .filter-content-box {
+            width: calc(100% - #{$base-spacing} * 2);
+        }
+    }
+}
+
+.mobile-filter,
+.sticky-mobile-filter {
+    display: flex;
+    justify-content: space-between;
+
+    .grid-sizes {
+        align-items: center;
+        display: flex;
+
+        .icon {
+            padding-left: $base-spacing;
+        }
+    }
+}
+
+.sticky-mobile-filter {
+    width: 100%;
+    box-sizing: border-box;
+    // position: fixed;
+    // top: 60px
 }

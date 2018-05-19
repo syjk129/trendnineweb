@@ -37,6 +37,16 @@
             width: $mobile-icon-size - 1;
             height: $mobile-icon-size - 1;
         }
+
+        &.small {
+            width: $icon-size-1;
+            height: $icon-size-1;
+
+            &::before {
+                width: $icon-size-1 - 1;
+                height: $icon-size-1 - 1;
+            }
+        }
     }
 
     &::before {
@@ -120,4 +130,16 @@
 
 .icon-close::before {
     background-image: url("/img/icons/close.png");
+}
+
+.icon-grid-size-1::before {
+    background-image: url("/img/icons/preview1.png");
+}
+
+.icon-grid-size-2::before {
+    background-image: url("/img/icons/preview2.png");
+}
+
+.icon-grid-size-3::before {
+    background-image: url("/img/icons/preview3.png");
 }

@@ -25,6 +25,14 @@
 
         .product-main-image {
             width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: $base-spacing * 2;
+            display: grid;
+            margin: auto;
+
+            img {
+                margin: auto;
+            }
         }
     }
 
@@ -33,6 +41,7 @@
             font-family: $font-family-serif;
             font-weight: $font-weight-bold;
             font-size: $font-size-3;
+            line-height: $line-height-3;
             margin-bottom: $base-spacing * 2;
         }
 
@@ -51,6 +60,7 @@
             font-family: $font-family-serif;
             font-weight: $font-weight-bold;
             font-size: $font-size-3;
+            line-height: $line-height-3;
             margin-bottom: $base-spacing * 5;
         }
 

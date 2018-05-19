@@ -23,14 +23,16 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
         const isShop = pathname.indexOf("/shop") > -1;
 
        return (
-            <div className="mobile-header">
+            <div className="header">
                 <Menu open={this.state.showMenu} toggleMenu={this._toggleMenu} isShop={isShop} />
-                <IconButton icon={IconVariant.MENU} onClick={this._toggleMenu} selected={false} />
-                <div
-                    className="nav-logo"
-                    onClick={() => this.props.history.push(isShop ? "/shop/home" : "/discover")}
-                />
-                <Icon variant={IconVariant.GIRL} />
+                <div className="mobile-header">
+                    <IconButton icon={IconVariant.MENU} onClick={this._toggleMenu} selected={false} />
+                    <div
+                        className="nav-logo"
+                        onClick={() => this.props.history.push(isShop ? "/shop/home" : "/discover")}
+                    />
+                    <Icon variant={IconVariant.GIRL} />
+                </div>
             </div>
         );
     }

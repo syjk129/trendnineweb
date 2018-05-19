@@ -1,6 +1,7 @@
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 import {
     browserHistory,
     BrowserRouter as Router,
@@ -111,7 +112,7 @@ export default class App extends React.Component<AppProps, AppState> {
                 <Router history={browserHistory}>
                     <AppProvider setError={this._setError}>
                         <Header loggedIn={this.state.loggedIn} />
-                        <div className="main-content">
+                        <div className={`main-content ${isMobile && "mobile-view"}`}>
                             <Route exact path="/" render={() => <Redirect to="/discover" />} />
                             <Route path="/login" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />
                             <Route path="/register" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />

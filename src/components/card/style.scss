@@ -1,8 +1,21 @@
 @import "../../styles/variables";
 
+$min-card-width-1: 200px;
+$min-card-width-2: 150px;
+$min-card-width-3: 100px;
+
 .card {
     background-color: #fff;
     min-width: $min-card-width;
+    box-shadow: 0 2px 4px rgba(153, 153, 153, 0.5);
+
+    &.grid-size-2 {
+        min-width: $min-card-width-2;
+    }
+
+    &.grid-size-3 {
+        min-width: $min-card-width-3;
+    }
 
     .card-hover-details {
         visibility: hidden;
@@ -17,7 +30,7 @@
     .card-content {
         font-size: $font-size-1;
         line-height: $line-height-1;
-        padding: $card-spacing;
+        padding: $base-spacing;
 
         .title {
             font-size: $font-size-2;
@@ -37,11 +50,22 @@
 }
 
 .card-container {
+    padding-top: $filter-padding;
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width}, 1fr));
-    padding-top: $filter-height + $filter-padding + $content-spacing;
+    grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width-1}, 1fr));
+    //padding-top: $filter-height + $filter-padding + $content-spacing;
     grid-gap: 2 * $base-spacing;
+
+    &.grid-size-2 {
+        grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width-2}, 1fr));
+        grid-gap: 15px;
+    }
+
+    &.grid-size-3 {
+        grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width-3}, 1fr));
+        grid-gap: 10px;
+    }
 }
 
 .card-container-extra-space {

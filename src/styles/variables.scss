@@ -2,15 +2,15 @@
 @import "./color";
 
 // Colors
-$brand-color: $color-grey-5;
-$text-primary: $color-grey-5;
+$brand-color: $color-grey-6;
+$text-primary: $color-grey-6;
 $color-accent: $brand-color;
 
 // Styles
 $page-spacing: 40px;
 $content-spacing: 60px;
 $card-spacing: 15px;
-$base-spacing: 11px;
+$base-spacing: 10px;
 $base-spacing-sm: 7px;
 $large-spacing: 18px;
 $button-height: 40px;
@@ -25,19 +25,20 @@ $navbar-height: 100px;
 $navbar-menu-height: 59px;
 
 // Button
+$button-width-xs: 90px;
 $button-width-sm: 130px;
 $button-height-sm: 34px;
 
-$min-card-width: 235px;
+$min-card-width: 200px;
 
 $carousel-item-width: 180px;
 // Borders
 $standard-border-width: 1px;
-$standard-border-color: $color-grey-2;
+$standard-border-color: $color-grey-3;
 $rounded-border-radius: 5px;
 
-$sidebar-width: 235px;
-$sidebar-padding: $base-spacing * 3;
+$sidebar-width: 230px;
+$sidebar-padding: $base-spacing * 5;
 
 $ranking-img-height: 80px;
 $ranking-img-width: $ranking-img-height;
@@ -48,3 +49,5 @@ $filter-content-max-height: 360px;
 $scroll-width: 10px;
 $scroll-track-width: 1px;
 $scroll-track-thumb-width: 6px;
+
+$profile-image-size: 18px;

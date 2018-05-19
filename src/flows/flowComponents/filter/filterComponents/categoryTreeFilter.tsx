@@ -1,6 +1,6 @@
-import * as React from "react";
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
+import * as React from "react";
 
 import { Category } from "../../../../api/models";
 import Button, { ButtonVariant } from "../../../../components/button";
@@ -12,8 +12,9 @@ import "./style.scss";
 interface CategoryTreeFilterProps {
     active: boolean;
     categoryList: Array<Category>;
-    onApply(values: Set<string>): void;
-    onCancel(): void;
+    selectedCategoryIds?: Array<string>;
+    onApply?(values: Set<string>): void;
+    onCancel?(): void;
  }
 
 interface CategoryTreeFilterState {
@@ -24,7 +25,7 @@ interface CategoryTreeFilterState {
 
 export default class CategoryTreeFilter extends React.Component<CategoryTreeFilterProps, CategoryTreeFilterState> {
     state: CategoryTreeFilterState = {
-        selectedValues: new Set(),
+        selectedValues: this.props.selectedCategoryIds ? new Set(this.props.selectedCategoryIds) : new Set(),
         previousValues: new Set(),
         childToParentMap: new Map(),
     };

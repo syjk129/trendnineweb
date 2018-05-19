@@ -1,4 +1,5 @@
 import autobind from "autobind-decorator";
+import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
@@ -9,6 +10,7 @@ import DesktopDiscover from "./desktop";
 import MobileDiscover from "./mobile";
 
 interface DiscoverProps {
+    history: H.History;
     location: any;
     match: match<any>;
 }
@@ -55,7 +57,7 @@ export default class Discover extends React.Component<DiscoverProps> {
     }
 
     @autobind
-    private _getFeedPosts() {
+    private _getFeedPosts(queryString?: string, nextToken?: string) {
         return this.context.api.getFeedPosts();
     }
 

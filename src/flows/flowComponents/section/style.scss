@@ -7,6 +7,7 @@
 
 .sidebar-header {
     font-size: $font-size-3;
+    line-height: $line-height-3;
     font-family: $font-family-serif;
     font-weight: $font-weight-bold;
     padding: $base-spacing;
@@ -21,6 +22,7 @@
 .content-header {
     font-family: $font-family-serif;
     font-size: $font-size-3;
+    line-height: $line-height-3;
     padding-bottom: $base-spacing;
     border-bottom: $standard-border-width solid $standard-border-color;
     margin-bottom: $base-spacing;

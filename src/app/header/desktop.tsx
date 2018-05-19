@@ -17,7 +17,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
         const { loggedIn, history, user } = this.props;
         const onSearch = (value) => history.push({
             pathname: "/discover",
-            search: `?q=${value}`,
+            search: `?keyword=${value}`,
         });
 
         const pathname = location.pathname;

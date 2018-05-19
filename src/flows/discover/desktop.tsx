@@ -8,15 +8,16 @@ import { Person, PostPreview } from "../../api/models";
 import { AppContext, AppContextTypes } from "../../app";
 import { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
-import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
+import Sticky from "../../components/sticky";
 import { PostCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
+import { Filters, PostParam } from "../model";
 
 import "./style.scss";
 import { DiscoverProps, DiscoverState } from "./types";
@@ -32,10 +33,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         trendingPosts: [],
         featuredTrendnines: [],
         recommendedTrendnines: [],
-        keyword: "",
-        search: "",
-        filter: "",
-        sort: "",
+        postParam: null,
         isLoading: false,
         numCardsPerRow: 2,
     };
@@ -62,9 +60,9 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     }
 
     async refreshContent(props: DiscoverProps) {
-        const queryString = location.search;
-        const keyword = new URLSearchParams(queryString).get("q") || "";
-        const searchQuery = keyword ? `keyword=${keyword}` : "";
+        const params = new URLSearchParams(location.search);
+        const postParam = new PostParam(params);
+        const queryString = postParam.convertUrlParamToQueryString();
 
         const [
             trendingPosts,
@@ -75,7 +73,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
             this.props.getTrendingPosts(),
             this.props.getTodaysTrendnines(),
             this.props.getFeaturedTrendnines(),
-            location.pathname === "/feed" ? this.props.getFeedPosts() : this.props.getLatestPosts(searchQuery),
+            location.pathname === "/feed" ? this.props.getFeedPosts(queryString) : this.props.getLatestPosts(queryString),
         ]);
 
         this.setState({
@@ -84,10 +82,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
             trendingPosts: trendingPosts,
             featuredTrendnines: featuredTrendnines,
             recommendedTrendnines: recommendedTrendnines,
-            keyword: keyword,
-            search: searchQuery,
-            filter: "",
-            sort: "",
+            postParam: postParam,
             isLoading: false,
         });
     }
@@ -120,7 +115,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                 </div>
             );
         }
-
         return (
             <div className="discover">
                 <Sidebar>
@@ -132,32 +126,34 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                     </SidebarSection>
                 </Sidebar>
                 <Content>
-                    <div className="filter-container">
-                        {this.state.keyword !== "" && (
-                            <div className="search-text-container">
-                                <div className="search-help">You searched for</div>
-                                <div className="search-text">{this.state.keyword}</div>
-                            </div>
-                        )}
-                        <Filter
-                        onApply={this._filterPosts}
-                        filterTarget={FilterTarget.POST}
-                        className={this.state.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
-
-                        <Sort
-                        name="Sort by"
-                        onSelect={this._sortPosts}
-                        />
-
-                    </div>
-
-                    {this.state.keyword !== "" && this.state.posts.length < 1 && (
-                        <div className="no-search-result-text">
-                            No results for "{ this.state.keyword }"
+                    {this.state.postParam.keyword !== "" && (
+                        <div className="search-text-container">
+                            <div className="search-help">You searched for</div>
+                            <div className="search-text">{this.state.postParam.keyword}</div>
                         </div>
                     )}
+                    <Sticky id="filter-container" stickyClassName="sticky-filter-container">
+                        <div className="filter-container">
+                            <Filter
+                                onApply={this._filterPosts}
+                                filterTarget={FilterTarget.POST}
+                                default={this.state.postParam.filters}
+                                className={this.state.postParam.keyword !== "" && this.state.posts.length < 1  ? "hide" : ""} />
 
-                    <CardContainer className={this.state.keyword === "" ? "" : "card-container-extra-space"}>
+                            <Sort
+                                name="Sort by"
+                                default={this.state.postParam.sort}
+                                onSelect={this._sortPosts}
+                            />
+
+                        </div>
+                    </Sticky>
+                    {this.state.postParam.keyword !== "" && this.state.posts.length < 1 && (
+                        <div className="no-search-result-text">
+                            No results for "{ this.state.postParam.keyword }"
+                        </div>
+                    )}
+                    <CardContainer>
                         {this._renderPosts()}
                     </CardContainer>
                 </Content>
@@ -165,39 +161,16 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         );
     }
 
-    @autobind
-    private async _filterPosts(filterString: string) {
-        this.setState({
-            filter: filterString,
-            postsNextToken: "",
-        }, this._updatePosts);
-    }
+    private _renderPosts() {
+        const posts = this.state.posts;
+        const postCards = posts.map(post => (
+            <PostCard
+                post={post}
+            />));
 
-    @autobind
-    private async _sortPosts(sortString: string) {
-        this.setState({
-            sort: sortString,
-            postsNextToken: "",
-        }, this._updatePosts);
-    }
-
-    @autobind
-    private async _getPosts() {
-        let query = "";
-
-        if (this.state.sort) {
-            query = `${this.state.sort}`;
-        }
-
-        if (this.state.filter) {
-            query += `&${this.state.filter}`;
-        }
-
-        if (this.state.keyword) {
-            query += `&${this.state.search}`;
-        }
-
-        return location.pathname === "/feed" ? this.props.getFeedPosts() : this.props.getLatestPosts(query, this.state.postsNextToken);
+        // update the logic to add recommended trendsetters whenever
+        postCards.splice(this.state.numCardsPerRow * 4, 0, this._renderRecommendedtrendsetters());
+        return postCards;
     }
 
     @autobind
@@ -206,7 +179,11 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
             return;
         }
 
-        const newPosts = await this._getPosts();
+        const queryString = this.state.postParam.convertUrlParamToQueryString();
+        const newPosts = await Promise.resolve(
+            location.pathname === "/feed" ?
+                this.context.api.getFeedPosts(queryString, this.state.postsNextToken)
+                : this.context.api.getLatestPosts(queryString, this.state.postsNextToken));
         this.setState({
             posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
                 return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
@@ -216,25 +193,23 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     }
 
     @autobind
-    private async _updatePosts() {
-        const newPosts = await this._getPosts();
-        this.setState({
-            posts: newPosts.list,
-            postsNextToken: newPosts.nextToken,
-        });
+    private async _filterPosts(filters: Filters) {
+        this.state.postParam.filters = filters;
+        this._push(this.state.postParam);
     }
 
     @autobind
-    private _renderPosts() {
-        const posts = this.state.posts;
-        const postCards = posts.map((post, index) => (
-            <PostCard
-                post={post}
-            />));
+    private async _sortPosts(sortString: string) {
+        this.state.postParam.sort = sortString;
+        this._push(this.state.postParam);
+    }
 
-        // update the logic to add recommended trendsetters whenever
-        postCards.splice(this.state.numCardsPerRow * 4, 0, this._renderRecommendedtrendsetters());
-        return postCards;
+    @autobind
+    private async _push(postParams: PostParam) {
+        this.props.history.push({
+            pathname: location.pathname,
+            search: `?${postParams.convertToUrlParamString()}`,
+        });
     }
 
     private _renderRecommendedtrendsetters() {

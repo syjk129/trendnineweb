@@ -1,12 +1,13 @@
 import { match } from "react-router-dom";
 
 import { FeaturedInfluencer, Person, Post, PostPreview } from "../../api/models";
+import { PostParam } from "../model";
 
 export interface DiscoverProps {
     location: any;
     match: match<any>;
     getTrendingPosts(): Array<Post>;
-    getFeedPosts(): Array<Post>;
+    getFeedPosts(queryString?: string, nextToken?: string): Array<Post>;
     getLatestPosts(queryString?: string, nextToken?: string): Array<Post>;
     getTodaysTrendnines(): Array<FeaturedInfluencer>;
     getFeaturedTrendnines(): Array<FeaturedInfluencer>;
@@ -18,9 +19,6 @@ export interface DiscoverState {
     trendingPosts: Array<PostPreview>;
     featuredTrendnines: Array<FeaturedInfluencer>;
     recommendedTrendnines: Array<FeaturedInfluencer>;
-    keyword: string;
-    search: string;
-    filter: string;
-    sort: string;
+    postParam: PostParam;
     isLoading: boolean;
 }

@@ -15,6 +15,7 @@ import "./style.scss";
 
 interface CardProps {
     imageUrl: string;
+    gridSize: number;
     redirectUrl?: string;
     scaleImage?: boolean;
     title: string;
@@ -45,7 +46,7 @@ class Card extends React.Component<CardProps, CardState> {
     }
 
     render() {
-        const { imageUrl, scaleImage, redirectUrl, title, singleLineTitle, history, hoverItem, footerItem } = this.props;
+        const { imageUrl, scaleImage, redirectUrl, gridSize, title, singleLineTitle, history, hoverItem, footerItem } = this.props;
 
         const onClick = redirectUrl ? () => history.push(redirectUrl) : undefined;
 
@@ -53,8 +54,14 @@ class Card extends React.Component<CardProps, CardState> {
             marginLeft: this.state.hoverX,
         };
 
+        let classes = "card";
+
+        if (gridSize) {
+            classes += ` grid-size-${gridSize}`;
+        }
+
         return (
-            <div className="card" ref="card">
+            <div className={classes} ref="card">
                 {hoverItem && (
                     <div className="card-hover-details" ref="hover" style={hoverStyles}>
                         {hoverItem}
@@ -66,21 +73,23 @@ class Card extends React.Component<CardProps, CardState> {
                     fit={scaleImage ? ImageFitVariant.SCALED : ImageFitVariant.COVER}
                     square
                 />
-                <div className="card-content">
-                    <div className="card-title-container">
-                    <TextContent className="title" htmlTag="p" onClick={onClick} maxLines={singleLineTitle ? 1 : 2}>
-                        {title}
-                    </TextContent>
-                    </div>
-                    {/* <p className={titleClassName} onClick={onClick}>
-                        {title}
-                    </p> */}
-                    {footerItem && (
-                        <div className="card-footer">
-                            {footerItem}
+                {gridSize < 3 && (
+                    <div className="card-content">
+                        <div className="card-title-container">
+                        <TextContent className="title" htmlTag="p" onClick={onClick} maxLines={singleLineTitle ? 1 : 2}>
+                            {title}
+                        </TextContent>
                         </div>
-                    )}
-                </div>
+                        {/* <p className={titleClassName} onClick={onClick}>
+                            {title}
+                        </p> */}
+                        {footerItem && (
+                            <div className="card-footer">
+                                {footerItem}
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         );
     }
