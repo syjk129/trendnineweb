@@ -1,6 +1,6 @@
-import * as React from "react";
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
+import * as React from "react";
 
 import Button, { ButtonVariant } from "../../../../components/button";
 import Checkbox from "../../../../components/checkbox";

@@ -107,19 +107,10 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                 {this.state.currentProduct && (
                     <div className="product-view">
                         <div className="product-images">
-                            <Carousel attributes={carouselSettings}>
-                                {images.map(image => (
-                                    <div>
-                                        <CarouselItem
-                                            imageUrl={image}
-                                            selected={this.state.selectedImage === image}
-                                            onClick={() => this._selectImage(image)}
-                                        />
-                                    </div>
-                                ))}
-                            </Carousel>
                             <div className="product-main-image">
-                                <Image src={this.state.selectedImage} square/>
+                                {images.map(image => (
+                                    <Image src={image} square/>
+                                ))}
                             </div>
                         </div>
                         <div className="product-details">

@@ -25,6 +25,14 @@
 
         .product-main-image {
             width: 100%;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: $base-spacing * 2;
+            display: grid;
+            margin: auto;
+
+            img {
+                margin: auto;
+            }
         }
     }
 
