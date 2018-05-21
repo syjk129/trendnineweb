@@ -1,26 +1,13 @@
-
 import autobind from "autobind-decorator";
 import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 import { match, withRouter } from "react-router-dom";
 
-import { Category, Product } from "../../api/models";
-import { AppContext, AppContextTypes } from "../../app";
-import { LinkButton } from "../../components/button";
-import Card, { CardContainer } from "../../components/card";
-import Carousel, { CarouselItem } from "../../components/carousel";
-import Content from "../../components/content";
-import Sidebar from "../../components/sidebar";
-import Sticky from "../../components/sticky";
-import { PostCard, ProductCard } from "../flowComponents/cardView";
-import Featured from "../flowComponents/featured";
-import Filter, { FilterTarget } from "../flowComponents/filter";
-import CategoryTreeFilter from "../flowComponents/filter/filterComponents/categoryTreeFilter";
-import { PostRank } from "../flowComponents/ranking";
-import { SidebarSection } from "../flowComponents/section";
-import Sort from "../flowComponents/sort";
-import { Filters, PostParam } from "../model";
+import { AppContext } from "../../app";
+import DesktopShopDiscover from "./desktop";
+import MobileShopDiscover from "./mobile";
 
 interface ShopDiscoverProps {
     history: H.History;
@@ -28,192 +15,51 @@ interface ShopDiscoverProps {
     match: match<any>;
 }
 
-interface ShopDiscoverState {
-    categories: Array<Category>;
-    products: Array<Product>;
-    productsNextToken: string;
-    isLoading: boolean;
-    numCardsPerRow: number;
-    productParam: PostParam;
-}
-
-export default class ShopDiscover extends React.Component<ShopDiscoverProps, ShopDiscoverState> {
+export default class ShopDiscover extends React.Component<ShopDiscoverProps> {
     static contextTypes: AppContext;
 
-    state: ShopDiscoverState = {
-        categories: [],
-        products: [],
-        productsNextToken: "",
-        isLoading: false,
-        numCardsPerRow: 2,
-        productParam: null,
-    };
-
-    async componentWillMount() {
-        this.setState({ isLoading: true });
-        this.refreshContent(this.props);
-    }
-
-    componentWillReceiveProps(props: ShopDiscoverProps) {
-        this.setState({ isLoading: true });
-        this.refreshContent(props);
-    }
-
-    async componentDidMount() {
-        window.addEventListener("scroll", this.onScroll, false);
-
-        try {
-            const categories = await this.context.api.getCategories();
-            this.setState({
-                categories: categories,
-            });
-        } catch (err) {
-            console.warn(err);
-        }
-    }
-
-    componentDidUnmount() {
-        window.removeEventListener("scroll", this.onScroll, false);
-    }
-
-    async refreshContent(props: ShopDiscoverProps) {
-        const params = new URLSearchParams(location.search);
-        const productParam = new PostParam(params);
-        const queryString = productParam.convertUrlParamToQueryString();
-
-        const [
-            products,
-        ] = await Promise.all([
-            location.pathname === "/shop/feed" ? this.context.api.getFeedProducts() : this.context.api.getLatestProducts(queryString),
-        ]);
-
-        this.setState({
-            products: products.list,
-            productsNextToken: products.nextToken,
-            productParam: productParam,
-            isLoading: false,
-        });
-    }
-
-    onScroll = () => {
-        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-        let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-        let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-        if (scrolledToBottom) {
-            this._paginateNextProducts();
-        }
+    constructor(props: ShopDiscoverProps) {
+        super(props);
     }
 
     render() {
-        if (this.state.isLoading) {
-            return (
-                <div className="discover">
-                    <Content>
-                        <br /><br /><br />Loading...
-                    </Content>
-                </div>
-            );
-        }
+        const { ...routeProps } = this.props;
 
         return (
-            <div className="shop">
-                <Sidebar>
-                    <div className="filter-container">
-                        <CategoryTreeFilter
-                            active={true}
-                            categoryList={this.state.categories} />
-                            {/* // selectedCategoryIds={this.state.filters.categoryIds} */}
-                            {/* // onApply={(v) => this._applyFilter(FilterConstants.CATEGORY_PARAM_STRING, v)} /> */}
-                        {/* <Filter
-                            onApply={this._filterPosts}
-                            filterTarget={FilterTarget.POST}
-                            className={this.state.productParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} /> */}
-                        {/* <Sort
-                        name="Sort by"
-                        onSelect={this._sortPosts}
-                        /> */}
-                    </div>
-                </Sidebar>
-                <Content>
-                    <Sticky id="filter-container" stickyClassName="sticky-filter-container">
-                        <div className="filter-container">
-                            <Filter
-                                onApply={this._filterProducts}
-                                filterTarget={FilterTarget.SHOP}
-                                default={this.state.productParam.filters}
-                                className={this.state.productParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} />
-
-                            <Sort
-                            name="Sort by"
-                            onSelect={this._sortProduct}
-                            />
-
-                        </div>
-                    </Sticky>
-                    {this.state.productParam.keyword !== "" && this.state.products.length < 1 && (
-                        <div className="no-search-result-text">
-                            No results for "{ this.state.productParam.keyword }"
-                        </div>
-                    )}
-
-                    <CardContainer className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this._renderProducts()}
-                    </CardContainer>
-                </Content>
+            <div>
+                <BrowserView device={isBrowser}>
+                    <DesktopShopDiscover
+                        {...routeProps}
+                        getLatestProducts={this._getLatestProducts}
+                        getFeedProducts={this._getFeedProducts}
+                        getCategories={this._getCategories}
+                    />
+                </BrowserView>
+                <MobileView device={isMobile}>
+                    <MobileShopDiscover
+                        {...routeProps}
+                        getLatestProducts={this._getLatestProducts}
+                        getFeedProducts={this._getFeedProducts}
+                        getCategories={this._getCategories}
+                    />
+                </MobileView>
             </div>
         );
     }
 
     @autobind
-    private async _filterProducts(filters: Filters) {
-        this.state.productParam.filters = filters;
-        this._push(this.state.productParam);
+    private _getLatestProducts(queryString?: string, nextToken?: string) {
+        return this.context.api.getLatestProducts(queryString, nextToken);
     }
 
     @autobind
-    private async _sortProduct(sortString: string) {
-        this.state.productParam.sort = sortString;
-        this._push(this.state.productParam);
+    private _getFeedProducts(queryString?: string, nextToken?: string) {
+        return this.context.api.getFeedProducts(queryString, nextToken);
     }
 
     @autobind
-    private async _push(postParams: PostParam) {
-        this.props.history.push({
-            pathname: location.pathname,
-            search: `?${postParams.convertToUrlParamString()}`,
-        });
-    }
-
-    @autobind
-    private async _paginateNextProducts() {
-        if (this.state.productsNextToken == null) {
-            return;
-        }
-
-        const queryString = this.state.productParam.convertUrlParamToQueryString();
-        const newProducts = await Promise.resolve(
-            location.pathname === "/feed" ?
-                this.context.api.getFeedProducts(queryString, this.state.productsNextToken)
-                : this.context.api.getLatestProducts(queryString, this.state.productsNextToken));
-        this.setState({
-            products: this.state.products.concat(newProducts.list).filter((post, index, arr) => {
-                return arr.map(mapProduct => mapProduct["id"]).indexOf(post["id"]) === index;
-            }),
-            productsNextToken: newProducts.nextToken,
-        });
-    }
-
-    @autobind
-    private _renderProducts() {
-        const products = this.state.products;
-        const productCards = products.map((post, index) => (
-            <ProductCard
-                product={post}
-                isShop={true}
-            />));
-
-        return productCards;
+    private _getCategories() {
+        return this.context.api.getCategories();
     }
 }
 
