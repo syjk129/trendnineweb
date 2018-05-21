@@ -31,3 +31,17 @@
         }
     }
 }
+
+.tree-checkbox-container {
+    display: block;
+
+    .tree-checkbox {
+        display: flex;
+        position: relative;
+        padding-bottom: 2 * $base-spacing;
+    }
+
+    .tree-checkbox-children-container {
+        padding-left: 4 * $base-spacing;
+    }
+}

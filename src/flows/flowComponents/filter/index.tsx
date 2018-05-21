@@ -58,7 +58,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
         try {
             const categories = await this.context.api.getCategories();
             this.setState({
-                categories: categories,
+                categories: categories[0].subcategories,
             });
         } catch (err) {
             console.warn(err);

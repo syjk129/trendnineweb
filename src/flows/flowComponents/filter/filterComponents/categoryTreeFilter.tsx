@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { Category } from "../../../../api/models";
 import Button, { ButtonVariant } from "../../../../components/button";
-import Checkbox from "../../../../components/checkbox";
+import Checkbox, { TreeCheckbox } from "../../../../components/checkbox";
 import SearchFilterInput from "./searchFilterInput";
 
 import "./style.scss";
@@ -79,26 +79,23 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
     }
 
     @autobind
-    private _renderCategoryTree(categories: Array<Category>, parent: Category) {
+    private _renderCategoryTree(categories: Array<Category>, parentCategory: Category, parentTreeCheckbox?: TreeCheckbox) {
         if (!categories || categories.length < 1) {
             return;
         }
 
         const categoryNode = categories.map(c => (
-            <li>
-                <Checkbox
-                    value={c.id}
-                    label={c.display_name}
-                    onChange={(value) => this._updateValues(c)}
-                    checked={this.state.selectedValues.has(c.id)}
-                />
-                { this._renderCategoryTree(c.subcategories, c) }
-             </li>
+            <TreeCheckbox
+                value={c.id}
+                className="filter-result-list"
+                label={c.display_name}
+                onChange={(value) => this._updateValues(c)}
+                checked={this.state.selectedValues.has(c.id)}
+                children={ this._renderCategoryTree(c.subcategories, c) }
+            />
         ));
 
-        return  (<ul className={"filter-result-list"}>
-            { categoryNode }
-        </ul>);
+        return  categoryNode;
     }
 
     @autobind

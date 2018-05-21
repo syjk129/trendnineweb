@@ -62,7 +62,6 @@
         overflow-y: auto;
 
         .filter-result-list {
-            padding: $base-spacing * 2;
             margin: 0;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax($min-card-width, 1fr));

@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     border-bottom: $standard-border-width solid $standard-border-color;
-    background-color: #fff;
+    background-color: $color-grey-0;
 
     .nav-logo {
         width: 150px;
@@ -62,8 +62,8 @@
 
             &::before {
                 content: "";
-                width: 222px;
-                height: 60px;
+                width: 180px;
+                height: 40px;
                 position: absolute;
                 background-position: center;
                 background-size: contain;
