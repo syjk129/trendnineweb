@@ -1,5 +1,6 @@
 import * as H from "history";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 import * as ReactDOM from "react-dom";
 import { withRouter } from "react-router-dom";
 import TimeAgo from "react-timeago";
@@ -62,7 +63,7 @@ class Card extends React.Component<CardProps, CardState> {
 
         return (
             <div className={classes} ref="card">
-                {hoverItem && (
+                {hoverItem && !isMobile && (
                     <div className="card-hover-details" ref="hover" style={hoverStyles}>
                         {hoverItem}
                     </div>

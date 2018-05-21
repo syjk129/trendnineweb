@@ -1,5 +1,6 @@
 import * as H from "history";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 import { withRouter } from "react-router-dom";
 
 import { PostPreview } from "../../../api/models";
@@ -22,7 +23,7 @@ class PostRank extends React.Component<PostRankProps> {
         return (
             <div>
                 {posts.filter(post => post.cover_image != null).slice(0, 5).map(post => (
-                    <LinkButton className="post-rank" url={`/post/${post.id}`} variant={ButtonVariant.SECONDARY}>
+                    <LinkButton className={isMobile ? "mobile-post-rank" : "post-rank"} url={`/post/${post.id}`} variant={ButtonVariant.SECONDARY}>
                         <img src={post.cover_image.small_image_url} />
                         <div className="post-rank-detail">
                             {!hideName && (

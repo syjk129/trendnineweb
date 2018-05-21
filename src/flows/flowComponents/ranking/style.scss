@@ -1,6 +1,24 @@
 @import "../../../styles/variables";
 
+.mobile-post-rank {
+    height: 64px;
+    box-sizing: border-box;
+
+    img {
+        height: 64px;
+        width: 64px;
+    }
+}
+
 .post-rank {
+    img {
+        height: $ranking-img-height;
+        width: $ranking-img-width;
+    }
+}
+
+.post-rank,
+.mobile-post-rank {
     display: flex;
     border-bottom: $standard-border-width solid $standard-border-color;
 
@@ -11,8 +29,6 @@
     img {
         flex-shrink: 0;
         display: inline-block;
-        height: $ranking-img-height;
-        width: $ranking-img-width;
         object-fit: cover;
     }
 

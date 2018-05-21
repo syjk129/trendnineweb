@@ -1,7 +1,7 @@
 @import "../../../styles/variables";
 
 .menu {
-    position: absolute;
+    position: fixed;
     box-sizing: border-box;
     z-index: 5;
     top: 0;

@@ -5,10 +5,10 @@ import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
 import { Person, PostPreview } from "../../api/models";
-import { AppContext, AppContextTypes } from "../../app";
 import { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
-import Carousel, { CarouselItem } from "../../components/carousel";
+import Carousel from "../../components/carousel";
+import MobileCarouselItem from "../../components/carousel/mobileCarouselItem";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import Sticky from "../../components/sticky";
@@ -39,6 +39,14 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         isLoading: false,
         gridSize: 1,
     };
+
+    componentDidMount() {
+        window.addEventListener("scroll", this.onScroll, false);
+    }
+
+    componentDidUnmount() {
+        window.removeEventListener("scroll", this.onScroll, false);
+    }
 
     componentWillMount() {
         this.setState({ isLoading: true });
@@ -111,14 +119,18 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
             <div className="mobile-discover">
                 <Carousel attributes={carouselAttributes}>
                     <div>
-                        {this.state.featuredTrendnines && this.state.featuredTrendnines.length > 0 &&
-                            <Featured featuredTrendnines={this.state.featuredTrendnines} />
-                        }
+                        <MobileCarouselItem>
+                            {this.state.featuredTrendnines && this.state.featuredTrendnines.length > 0 &&
+                                <Featured featuredTrendnines={this.state.featuredTrendnines} />
+                            }
+                        </MobileCarouselItem>
                     </div>
                     <div>
-                        <SidebarSection title="Trending Posts">
-                            <PostRank posts={this.state.trendingPosts} />
-                        </SidebarSection>
+                        <MobileCarouselItem>
+                            <SidebarSection title="Trending Posts">
+                                <PostRank posts={this.state.trendingPosts} />
+                            </SidebarSection>
+                        </MobileCarouselItem>
                     </div>
                 </Carousel>
                 {this.state.postParam.keyword !== "" && this.state.posts.length < 1 && (
@@ -154,8 +166,8 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         const queryString = this.state.postParam.convertUrlParamToQueryString();
         const newPosts = await Promise.resolve(
             location.pathname === "/feed" ?
-                this.context.api.getFeedPosts(queryString, this.state.postsNextToken)
-                : this.context.api.getLatestPosts(queryString, this.state.postsNextToken));
+                this.props.getFeedPosts(queryString, this.state.postsNextToken)
+                : this.props.getLatestPosts(queryString, this.state.postsNextToken));
         this.setState({
             posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
                 return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;

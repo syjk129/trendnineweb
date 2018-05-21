@@ -74,7 +74,7 @@ export default class PostCard extends React.Component<PostCardProps> {
 
         return (
             <Card
-                gridSize={gridSize}
+                gridSize={gridSize || 1}
                 imageUrl={post.cover_image.small_image_url}
                 redirectUrl={`/post/${post.id}`}
                 title={post.title}

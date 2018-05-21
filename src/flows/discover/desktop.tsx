@@ -5,7 +5,6 @@ import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
 import { Person, PostPreview } from "../../api/models";
-import { AppContext, AppContextTypes } from "../../app";
 import { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
 import Content from "../../components/content";
@@ -182,8 +181,8 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         const queryString = this.state.postParam.convertUrlParamToQueryString();
         const newPosts = await Promise.resolve(
             location.pathname === "/feed" ?
-                this.context.api.getFeedPosts(queryString, this.state.postsNextToken)
-                : this.context.api.getLatestPosts(queryString, this.state.postsNextToken));
+                this.props.getFeedPosts(queryString, this.state.postsNextToken)
+                : this.props.getLatestPosts(queryString, this.state.postsNextToken));
         this.setState({
             posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
                 return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;

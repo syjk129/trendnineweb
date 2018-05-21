@@ -1,6 +1,38 @@
 @import "../../../styles/variables";
 
+.mobile-featured-trendnine {
+    box-sizing: border-box;
+    height: 160px;
+
+    .trendnine-name {
+        font-size: $font-size-3;
+        line-height: $line-height-2;
+    }
+
+    .trendnine-introduction {
+        font-size: $font-size-2;
+        line-height: $line-height-2;
+        max-height: 60px;
+    }
+}
+
 .featured-trendnine {
+    .trendnine-name {
+        font-size: $font-size-1;
+        line-height: $line-height-1;
+    }
+
+    .trendnine-introduction {
+        font-size: $font-size-1;
+        line-height: $line-height-1;
+        max-height: $line-height-1 * 3;
+        -webkit-line-clamp: 3;
+        display: -webkit-box;
+    }
+}
+
+.featured-trendnine,
+.mobile-featured-trendnine {
     display: flex;
     padding: $base-spacing;
     border-bottom: $standard-border-width solid $standard-border-color;
@@ -29,20 +61,17 @@
         }
 
         .trendnine-name {
-            font-size: $font-size-1;
-            line-height: $line-height-1;
             font-weight: $font-weight-bold;
         }
 
         .trendnine-introduction {
-            font-size: $font-size-1;
-            line-height: $line-height-1;
-            -webkit-line-clamp: 3;
-            // -webkit-box-orient: vertical;
-            display: -webkit-box;
-            max-height: $line-height-1 * 3;
             overflow: hidden;
             text-overflow: ellipsis;
         }
+    }
+
+    .trendnine-image {
+        display: flex;
+        align-items: center;
     }
 }

@@ -1,5 +1,6 @@
 import * as H from "history";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 import { withRouter } from "react-router-dom";
 
 import { FeaturedInfleuncer } from "../../../api/models";
@@ -21,14 +22,16 @@ class Featured extends React.Component<FeaturedProps> {
                 {this.props.featuredTrendnines.slice(0, 2)
                     .map(trendnine => (
                         <LinkButton
-                            className="featured-trendnine"
+                            className={isMobile ? "mobile-featured-trendnine" : "featured-trendnine"}
                             url={`/user/${trendnine.user.username}`}
                             variant={ButtonVariant.SECONDARY}
                         >
-                            <img src={trendnine.user.profile_image_url} />
+                            <div className="trendnine-image">
+                                <img src={trendnine.user.profile_image_url} />
+                            </div>
                             <div className="trendnine-details">
                                 <p className="trendnine-name">
-                                    {trendnine.user.username}
+                                    {trendnine.user.first_name} {trendnine.user.last_name}
                                 </p>
                                 <p className="trendnine-introduction">
                                     {trendnine.user.introduction || "Hello!"}
