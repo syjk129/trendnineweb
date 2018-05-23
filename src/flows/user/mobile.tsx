@@ -10,6 +10,7 @@ import Sidebar from "../../components/sidebar";
 import Sticky from "../../components/sticky";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
 import Filter, { FilterTarget } from "../flowComponents/filter";
+import MobileFilter from "../flowComponents/filter/mobileFilter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
@@ -63,25 +64,41 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
 
         return (
             <div className="mobile-user">
+                <div className="user-name">
+                    {influencer.username}
+                </div>
+                <div className="user-details">
+                    <div className="user-image">
+                        <Image
+                            src={influencer.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
+                            circle
+                            square
+                        />
+                    </div>
+                    <div className="introduction">
+                        {influencer.introduction}
+                    </div>
+                </div>
+                {user.id !== influencer.id && (
+                    <div className="follow-container">
+                        <FollowButton
+                            user={ influencer }
+                        />
+                    </div>
+                )}
+                <div className="activity-container">
+                    <div>
+                        <span className="identifier">TODAY</span>
+                        <span className="count">{profile.today_view_count}</span>
+                    </div>
+                    <div>
+                        <span className="identifier">TOTAL</span>
+                        <span className="count">{profile.total_view_count}</span>
+                    </div>
+                </div>
+
                 {(contentType === UserContentType.POST || contentType === UserContentType.PRODUCT) && (
-                    <Sticky id="filters" stickyClassName="sticky-filter-container">
-                        <div className="filter-container">
-                        {contentType === UserContentType.POST &&
-                            <Filter
-                                onApply={filterContent}
-                                filterTarget={FilterTarget.POST}
-                                default={postParam.filters}
-                                className={postParam.keyword !== "" && content.length < 1  ? "hide" : ""} />
-                        }
-                        {contentType === UserContentType.PRODUCT &&
-                            <Filter
-                                onApply={filterContent}
-                                filterTarget={FilterTarget.POST}
-                                default={postParam.filters}
-                                className={postParam.keyword !== "" && content.length < 1  ? "hide" : ""} />
-                        }
-                        </div>
-                    </Sticky>
+                    <MobileFilter setGridSize={this._setGridSize} />
                 )}
                 <CardContainer gridSize={this.state.gridSize}>
                     {this._renderContent()}
@@ -91,14 +108,19 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
     }
 
     @autobind
+    private _setGridSize(gridSize: number) {
+        this.setState({ gridSize });
+    }
+
+    @autobind
     private _renderContent() {
         switch (this.props.contentType) {
         case UserContentType.POST:
         case UserContentType.POST_WISHLIST:
-            return this.props.content.map(item => <PostCard post={item} />);
+            return this.props.content.map(item => <PostCard post={item} gridSize={this.state.gridSize} />);
         case UserContentType.PRODUCT:
         case UserContentType.PRODUCT_WISHLIST:
-            return this.props.content.map(item => <ProductCard product={item} />);
+            return this.props.content.map(item => <ProductCard product={item} gridSize={this.state.gridSize} />);
         case UserContentType.FOLLOWER:
         case UserContentType.FOLLOWING:
             return this.props.content.map(item => <UserCard user={item} following={item.followed} />);

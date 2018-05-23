@@ -54,3 +54,29 @@
         padding: $base-spacing;
     }
 }
+
+.mobile-user {
+    padding: $mobile-page-spacing;
+    background-color: $color-grey-0;
+
+    .user-name {
+        font-size: $font-size-3;
+        font-family: $font-family-serif;
+        font-weight: $font-weight-bold;
+        margin-bottom: $mobile-page-spacing;
+    }
+
+    .user-details {
+        display: flex;
+        margin-bottom: $base-spacing;
+
+        .user-image {
+            margin-right: $base-spacing;
+
+            .image-container {
+                height: 100px;
+                width: 100px;
+            }
+        }
+    }
+}
