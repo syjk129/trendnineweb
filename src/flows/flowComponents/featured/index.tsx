@@ -3,14 +3,14 @@ import * as React from "react";
 import { isMobile } from "react-device-detect";
 import { withRouter } from "react-router-dom";
 
-import { FeaturedInfleuncer } from "../../../api/models";
+import { FeaturedInfluencer } from "../../../api/models";
 import Button, { ButtonVariant, LinkButton } from "../../../components/button";
 import { SidebarSection } from "../section";
 
 import "./style.scss";
 
 interface FeaturedProps {
-    featuredTrendnines: Array<FeaturedInfleuncer>;
+    featuredTrendnines: Array<FeaturedInfluencer>;
     history: H.History;
 }
 
