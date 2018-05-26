@@ -57,13 +57,15 @@
 
 .mobile-user {
     padding: $mobile-page-spacing;
+    padding-top: $mobile-page-spacing * 2;
     background-color: $color-grey-0;
 
     .user-name {
-        font-size: $font-size-3;
+        font-size: $font-size-4;
         font-family: $font-family-serif;
         font-weight: $font-weight-bold;
         margin-bottom: $mobile-page-spacing;
+        line-height: normal;
     }
 
     .user-details {
@@ -76,6 +78,29 @@
             .image-container {
                 height: 100px;
                 width: 100px;
+            }
+        }
+    }
+
+    .follow-container {
+        margin-bottom: $base-spacing * 2;
+    }
+
+    .activity-container {
+        border-top: $standard-border-width solid $standard-border-color;
+        border-bottom: $standard-border-width solid $standard-border-color;
+        margin: $base-spacing (-$mobile-page-spacing);
+        padding: $mobile-page-spacing;
+
+        .activity-item {
+            display: inline-block;
+            width: 50%;
+            font-size: $font-size-2;
+
+            .identifier {
+                font-weight: $font-weight-bold;
+                margin-left: $base-spacing;
+                margin-right: $base-spacing * 2;
             }
         }
     }

@@ -144,7 +144,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
         switch (this.props.contentType) {
         case UserContentType.POST:
         case UserContentType.POST_WISHLIST:
-            return this.props.content.map(item => <PostCard post={item} />);
+            return this.props.content.map(item => <PostCard post={item} gridSize={1}/>);
         case UserContentType.PRODUCT:
         case UserContentType.PRODUCT_WISHLIST:
             return this.props.content.map(item => <ProductCard product={item} />);

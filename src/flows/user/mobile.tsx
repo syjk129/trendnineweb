@@ -87,11 +87,11 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                     </div>
                 )}
                 <div className="activity-container">
-                    <div>
+                    <div className="activity-item">
                         <span className="identifier">TODAY</span>
                         <span className="count">{profile.today_view_count}</span>
                     </div>
-                    <div>
+                    <div className="activity-item">
                         <span className="identifier">TOTAL</span>
                         <span className="count">{profile.total_view_count}</span>
                     </div>
