@@ -42,7 +42,7 @@ class Card extends React.Component<CardProps, CardState> {
         if (rect.left + rect.width + 420 < window.innerWidth) {
             this.setState({ hoverX: rect.width });
         } else {
-            this.setState({ hoverX: -235 });
+            this.setState({ hoverX: - 235 });
         }
     }
 
