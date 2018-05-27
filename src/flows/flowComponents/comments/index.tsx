@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import { Comment } from "../../../api/models";
+import { Comment, Person } from "../../../api/models";
 import Button, { ButtonVariant } from "../../../components/button";
 import TextArea from "../../../components/textArea";
 

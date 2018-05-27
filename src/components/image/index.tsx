@@ -21,12 +21,13 @@ interface ImageProps {
     fit?: ImageFitVariant;
     square?: boolean;
     circle?: boolean;
+    refObj?: React.RefObject<HTMLDivElement>;
     onClick?(): void;
 }
 
 export default class Image extends React.Component<ImageProps> {
     render() {
-        const { className, inline, square, circle, fit, ratio, onClick, src } = this.props;
+        const { className, inline, square, circle, fit, ratio, refObj, onClick, src } = this.props;
 
         let classes = "image-container";
 
@@ -63,7 +64,7 @@ export default class Image extends React.Component<ImageProps> {
         }
 
         return (
-            <div className={classes} onClick={onClick}>
+            <div className={classes} onClick={onClick} ref={refObj}>
                 <img src={src} />
             </div>
         );

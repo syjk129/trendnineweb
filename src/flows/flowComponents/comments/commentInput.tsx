@@ -16,7 +16,7 @@ interface CommentInputProps {
 function CommentInput({ comment, placeholder, user, onChange, submitComment }: CommentInputProps) {
     return (
         <div className="comment-input-container">
-            <img src={user.profile_image_url} />
+            <img src={user ? user.profile_image_url : ""} />
             <div className="comment-input">
                 <TextArea
                     rounded
