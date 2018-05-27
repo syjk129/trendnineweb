@@ -55,7 +55,7 @@ export default class RangeFilter extends React.Component<RangeFilterProps, Range
                         </div>
                     </div>
                     <div className="filter-action-buttons">
-                        <Button variant={ButtonVariant.OUTLINE} onClick={this._apply}>APPLY</Button>
+                        <Button variant={ButtonVariant.PRIMARY} onClick={this._apply}>APPLY</Button>
                         <Button variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
                     </div>
                 </div>

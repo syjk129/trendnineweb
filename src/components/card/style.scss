@@ -1,8 +1,8 @@
 @import "../../styles/variables";
 
-$min-card-width-1: 200px;
-$min-card-width-2: 150px;
-$min-card-width-3: 100px;
+$min-card-width-1: 198px;
+$min-card-width-2: 148px;
+$min-card-width-3: 98px;
 
 .card {
     background-color: #fff;
@@ -21,7 +21,7 @@ $min-card-width-3: 100px;
         visibility: hidden;
         z-index: 1;
         position: absolute;
-        width: $min-card-width;
+        width: $card-hover-width;
         background-color: #fff;
         margin-left: 300px;
         box-shadow: 0 0 15px $color-grey-2;
@@ -36,6 +36,10 @@ $min-card-width-3: 100px;
             font-size: $font-size-2;
             line-height: $line-height-2;
             font-weight: bold;
+        }
+
+        .card-footer {
+            margin-top: $base-spacing * 3;
         }
     }
 

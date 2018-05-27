@@ -10,6 +10,7 @@
     letter-spacing: $letter-spacing-1;
     outline: none;
     border: $standard-border-width solid transparent;
+    border-radius: $button-height / 2;
 
     &:hover {
         cursor: pointer;

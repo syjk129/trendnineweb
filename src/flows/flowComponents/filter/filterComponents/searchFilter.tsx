@@ -55,7 +55,7 @@ export default class SearchFilter extends React.Component<SearchFilterProps, Sea
                     </div>
                     <div className="filter-action-buttons">
                         <Button
-                            variant={ButtonVariant.OUTLINE}
+                            variant={ButtonVariant.PRIMARY}
                             onClick={this._onApply}>APPLY</Button>
                         <Button variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
                     </div>

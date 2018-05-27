@@ -11,7 +11,7 @@ $page-spacing: 40px;
 $content-spacing: 60px;
 $card-spacing: 15px;
 $base-spacing: 10px;
-$base-spacing-sm: 7px;
+$base-spacing-sm: 6px;
 $large-spacing: 18px;
 $button-height: 40px;
 $filter-height: 15px;
@@ -29,7 +29,8 @@ $button-width-xs: 90px;
 $button-width-sm: 130px;
 $button-height-sm: 34px;
 
-$min-card-width: 200px;
+$min-card-width: 198px;
+$card-hover-width: 233px;
 
 $carousel-item-width: 180px;
 // Borders
@@ -37,11 +38,14 @@ $standard-border-width: 1px;
 $standard-border-color: $color-grey-3;
 $rounded-border-radius: 5px;
 
-$sidebar-width: 230px;
-$sidebar-padding: $base-spacing * 5;
+$sidebar-width: 235px;
+$sidebar-padding: 45px;
 
-$ranking-img-height: 80px;
+$ranking-img-height: 65px;
 $ranking-img-width: $ranking-img-height;
+
+$hover-img-height: 80px;
+$hover-img-width: $hover-img-height;
 
 $section-spacing: 50px;
 $filter-content-max-height: 360px;
