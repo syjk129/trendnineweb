@@ -95,17 +95,15 @@
         .link-button {
             color: $color-grey-4;
         }
+
+        .time {
+            vertical-align: middle;
+        }
     }
 
     button {
         max-width: $button-width-sm;
         height: $button-height-sm;
-    }
-}
-
-.created {
-    time {
-        vertical-align: middle;
     }
 }
 

@@ -4,5 +4,6 @@
     display: inline-block;
     flex: 1;
     max-width: calc(100% - #{$sidebar-width} - #{$sidebar-padding});
+    min-width: $min-card-width-with-border * $min-card-per-row + $card-spacing * ($min-card-per-row - 1);
     padding-top: $content-spacing;
 }

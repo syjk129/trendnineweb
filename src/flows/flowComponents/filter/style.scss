@@ -4,7 +4,7 @@
     position: relative;
     z-index: 2;
     width: 100%;
-    min-width: $min-card-width * 2 + $base-spacing * 2 + $standard-border-width;
+    min-width: $min-card-width-with-border * $min-card-per-row + $card-spacing * ($min-card-per-row - 1) + $standard-border-width;
     background-color: $color-grey-0;
     padding-top: 22px;
 
@@ -48,7 +48,7 @@
 .sticky-filter-container {
     position: fixed;
     width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2 + 2 * #{$base-spacing});
-    min-width: $min-card-width * 2 + $base-spacing * 4 + $standard-border-width;
+    min-width: $min-card-width-with-border * $min-card-per-row + $card-spacing * ($min-card-per-row - 1) + $standard-border-width + $base-spacing * 2;
     background-color: $color-grey-0;
     padding-bottom: $base-spacing * 2;
     margin-left: -1 * $base-spacing;

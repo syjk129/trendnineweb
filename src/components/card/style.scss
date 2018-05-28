@@ -59,7 +59,7 @@ $min-card-width-3: 98px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width-1}, 1fr));
     //padding-top: $filter-height + $filter-padding + $content-spacing;
-    grid-gap: 2 * $base-spacing;
+    grid-gap: $card-spacing;
 
     &.grid-size-2 {
         grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width-2}, 1fr));
