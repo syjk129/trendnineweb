@@ -2,6 +2,7 @@
 
 .discover {
     display: flex;
+    min-width: $min-card-width-with-border * $min-card-per-row + $card-spacing * ($min-card-per-row - 1) + $sidebar-width + $sidebar-padding;
     padding: 0 $page-spacing;
 
     .search-text-container {

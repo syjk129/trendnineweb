@@ -101,7 +101,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         const CONTENT_MARGIN = 40;
         const CARD_WIDTH = 200;
         const SIDE_BAR_WIDTH = 280;
-        const numCardsPerRow = (window.innerWidth + GRID_GAP - 2 * CONTENT_MARGIN - SIDE_BAR_WIDTH) / (CARD_WIDTH + GRID_GAP) | 0;
+        const numCardsPerRow = Math.max((window.innerWidth + GRID_GAP - 2 * CONTENT_MARGIN - SIDE_BAR_WIDTH) / (CARD_WIDTH + GRID_GAP) | 3, 3);
         this.setState({numCardsPerRow: Math.max(numCardsPerRow, 2)});
     }
 

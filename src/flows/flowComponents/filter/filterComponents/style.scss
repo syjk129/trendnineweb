@@ -65,7 +65,7 @@
             margin: 0;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax($min-card-width, 1fr));
-            grid-gap: 20px;
+            grid-gap: $base-spacing * 2;
             list-style: none;
 
             &:first-child {
@@ -76,6 +76,53 @@
         .filter-no-result {
             padding: $base-spacing * 2;
         }
+    }
+}
+
+.category-filter-container {
+    display: inline-flex;
+    width: 100%;
+    padding-bottom: 2 * $base-spacing;
+    // grid-template-columns: repeat(auto-fit, minmax($min-card-width-with-border, $min-card-width-with-border));
+    // grid-gap: $base-spacing;
+
+    .tree-checkbox-container {
+        width: 30%;
+        min-width: $min-card-width-with-border;
+        padding-left: $base-spacing * 2;
+        padding-right: $base-spacing * 2;
+        display: block;
+
+        &:first-child {
+            border-right: $standard-border-width solid $standard-border-color;
+        }
+
+        &:nth-child(2) {
+            border-right: $standard-border-width solid $standard-border-color;
+        }
+
+        &:last-child {
+            border-right: 0 !important;
+        }
+
+        .tree-checkbox {
+            display: flex;
+            position: relative;
+            padding-bottom: 2 * $base-spacing;
+
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+
+        .tree-checkbox-children-container {
+            padding-left: 4 * $base-spacing;
+        }
+    }
+
+    .link-button {
+        right: 0;
+        position: absolute;
     }
 }
 
