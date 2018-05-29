@@ -72,6 +72,12 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
         this.state.selectedCategories.forEach(c => {
             selectedValues.add(c.display_name);
         });
+
+        this.state.selectedCategories.forEach(c => {
+            c.subcategories.map(s => {
+                selectedValues.delete(s.display_name);
+            });
+        });
         this.setState({previousCategories: new Set(this.state.selectedCategories)});
         this.props.onApply(selectedValues);
     }
