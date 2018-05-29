@@ -87,6 +87,12 @@
     padding-bottom: $base-spacing * 2;
 }
 
+.created {
+    time {
+        vertical-align: middle;
+    }
+}
+
 .post-card-footer {
     display: flex;
     justify-content: space-between;
@@ -100,12 +106,6 @@
     button {
         max-width: $button-width-sm;
         height: $button-height-sm;
-    }
-}
-
-.created {
-    time {
-        vertical-align: middle;
     }
 }
 

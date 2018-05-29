@@ -1,5 +1,6 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 
 import { Comment, Person, Post, Product } from "../../api/models";
 import { ButtonVariant, LinkButton } from "../../components/button";
@@ -29,25 +30,6 @@ interface DesktopPostProps {
 }
 
 export default class DesktopPost extends React.Component<DesktopPostProps> {
-    constructor(props: DesktopPostProps) {
-        super(props);
-
-        this._coverImageRef = React.createRef();
-    }
-
-    componentDidMount() {
-        const rect = this._coverImageRef.current.getBoundingClientRect();
-
-        this._productTags = this.props.post.product_tags.map(tag => ({
-            product_id: tag.product_id,
-            name: this.props.post.products.find(product => product.id === tag.product_id).title,
-            style: {
-                left: rect.left + rect.width * tag.x_axis,
-                top: rect.top + rect.height * tag.y_axis,
-            },
-        }));
-    }
-
     render() {
         const {
             post,
@@ -109,9 +91,9 @@ export default class DesktopPost extends React.Component<DesktopPostProps> {
                                 className="post-cover"
                                 src={post.cover_image.original_image_url}
                                 ratio={ImageRatioVariant.POST_COVER}
-                                refObj={this._coverImageRef}
+                                ref={this._setImageRef}
                             />
-                            {this._productTags.map(tag => (
+                            {this._productTags && this._productTags.map(tag => (
                                 <ProductTag tag={tag} />
                             ))}
                             <p className="post-title">
@@ -191,8 +173,22 @@ export default class DesktopPost extends React.Component<DesktopPostProps> {
         );
     }
 
-    private _coverImageRef: React.RefObject<HTMLDivElement>;
+    // private _coverImageRef: React.RefObject<HTMLDivElement>;
     private _productTags: Array<any>;
+
+    @autobind
+    private _setImageRef(element: any) {
+        const rect = ReactDOM.findDOMNode(element).getBoundingClientRect();
+
+        this._productTags = this.props.post.product_tags.map(tag => ({
+            product_id: tag.product_id,
+            name: this.props.post.products.find(product => product.id === tag.product_id).title,
+            style: {
+                left: rect.left + rect.width * tag.x_axis,
+                top: rect.top + rect.height * tag.y_axis,
+            },
+        }));
+    }
 
     @autobind
     private _renderProductFooter(product) {

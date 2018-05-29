@@ -21,6 +21,7 @@ import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
 import Tag from "../flowComponents/tag";
 import DesktopPost from "./desktop";
+import MobilePost from "./mobile";
 import PostAuthorDetails from "./postAuthorDetails";
 import ProductTag from "./productTag";
 
@@ -76,6 +77,10 @@ export default class PostView extends React.Component<PostProps, PostState> {
     render() {
         const { post, comments, relatedProducts, relatedPosts } = this.state;
 
+        if (!post || !comments || !relatedPosts || !relatedProducts) {
+            return "Loading";
+        }
+
         return (
             <div>
                 <BrowserView device={isBrowser}>
@@ -87,6 +92,12 @@ export default class PostView extends React.Component<PostProps, PostState> {
                     />
                 </BrowserView>
                 <MobileView device={isMobile}>
+                    <MobilePost
+                        {...this.state}
+                        likeComment={this._likeComment}
+                        unlikeComment={this._unlikeComment}
+                        submitComment={this._submitComment}
+                    />
                 </MobileView>
             </div>
         );
