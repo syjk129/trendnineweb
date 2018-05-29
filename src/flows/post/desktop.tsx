@@ -177,17 +177,20 @@ export default class DesktopPost extends React.Component<DesktopPostProps> {
     private _productTags: Array<any>;
 
     @autobind
-    private _setImageRef(element: any) {
-        const rect = ReactDOM.findDOMNode(element).getBoundingClientRect();
+    private _setImageRef(element: Element) {
+        const image = ReactDOM.findDOMNode(element);
+        if (image instanceof Element) {
+            const rect = image.getBoundingClientRect();
 
-        this._productTags = this.props.post.product_tags.map(tag => ({
-            product_id: tag.product_id,
-            name: this.props.post.products.find(product => product.id === tag.product_id).title,
-            style: {
-                left: rect.left + rect.width * tag.x_axis,
-                top: rect.top + rect.height * tag.y_axis,
-            },
-        }));
+            this._productTags = this.props.post.product_tags.map(tag => ({
+                product_id: tag.product_id,
+                name: this.props.post.products.find(product => product.id === tag.product_id).title,
+                style: {
+                    left: rect.left + rect.width * tag.x_axis,
+                    top: rect.top + rect.height * tag.y_axis,
+                },
+            }));
+        }
     }
 
     @autobind
