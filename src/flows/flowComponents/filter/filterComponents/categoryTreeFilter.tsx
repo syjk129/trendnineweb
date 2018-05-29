@@ -3,8 +3,9 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 
 import { Category } from "../../../../api/models";
-import Button, { ButtonVariant } from "../../../../components/button";
-import Checkbox, { TreeCheckbox } from "../../../../components/checkbox";
+import Button, { ButtonVariant, IconButton } from "../../../../components/button";
+import Checkbox from "../../../../components/checkbox";
+import Icon, { IconVariant } from "../../../../components/icon";
 import SearchFilterInput from "./searchFilterInput";
 
 import "./style.scss";
@@ -18,22 +19,31 @@ interface CategoryTreeFilterProps {
  }
 
 interface CategoryTreeFilterState {
-    selectedValues: Set<string>;
-    previousValues: Set<string>;
-    childToParentMap: Map<string, Category>;
+    selectedCategories: Set<Category>;
+    previousCategories: Set<Category>;
+    expandedParents: Map<number, Category>;
+    childToParentMap: Map<Category, Category>;
 }
 
 export default class CategoryTreeFilter extends React.Component<CategoryTreeFilterProps, CategoryTreeFilterState> {
     state: CategoryTreeFilterState = {
-        selectedValues: this.props.selectedCategoryIds ? new Set(this.props.selectedCategoryIds) : new Set(),
-        previousValues: new Set(),
+        selectedCategories: new Set(),
+        previousCategories: new Set(),
+        expandedParents: new Map(),
         childToParentMap: new Map(),
     };
 
     async componentWillReceiveProps() {
-        let childToParentMap = new Map<string, Category>();
+        const childToParentMap = new Map<Category, Category>();
         this.props.categoryList.map(c => this._populateChildToParent(childToParentMap, c));
-        this.setState({childToParentMap: childToParentMap});
+        const expandedParents = new Map<number, Category>();
+        expandedParents[0] = null;
+        expandedParents[1] = null;
+
+        const selectedCategories = new Set<Category>();
+        this._mapCategoriesFromId(selectedCategories, this.props.selectedCategoryIds, this.props.categoryList);
+
+        this.setState({childToParentMap: childToParentMap, expandedParents: expandedParents, selectedCategories: selectedCategories});
     }
 
     render() {
@@ -50,7 +60,7 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
                     </div>
                 </div>
                 <div className="filter-content">
-                    { this._renderCategoryTree(this.props.categoryList, null) }
+                    { this._renderCategoryTree(this.props.categoryList) }
                 </div>
             </div>
         );
@@ -58,90 +68,165 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
 
     @autobind
     private _onApply() {
-        this.setState({previousValues: new Set(this.state.selectedValues)});
-        this.props.onApply(this.state.selectedValues);
+        let selectedValues = new Set();
+        this.state.selectedCategories.forEach(c => {
+            selectedValues.add(c.display_name);
+        });
+        this.setState({previousCategories: new Set(this.state.selectedCategories)});
+        this.props.onApply(selectedValues);
     }
 
     @autobind
-    private _updateValues(category: Category) {
-        let v = this.state.selectedValues;
-        if (v.has(category.id)) {
-            this._toggleSubCategories(v, category, true);
-            this._toggleParentCategories(v, category, true);
-        } else {
-            this._toggleSubCategories(v, category, false);
-            const parent = this.state.childToParentMap.get(category.id);
-            if (parent && parent.subcategories.every(s => v.has(s.id))) {
-                this._toggleParentCategories(v, category, false);
-            }
-        }
-        this.setState({selectedValues: v});
-    }
-
-    @autobind
-    private _renderCategoryTree(categories: Array<Category>, parentCategory: Category, parentTreeCheckbox?: TreeCheckbox) {
+    private _renderCategoryTree(categories: Array<Category>) {
         if (!categories || categories.length < 1) {
             return;
         }
 
-        const categoryNode = categories.map(c => (
-            <TreeCheckbox
-                value={c.id}
-                className="filter-result-list"
-                label={c.display_name}
-                onChange={(value) => this._updateValues(c)}
-                checked={this.state.selectedValues.has(c.id)}
-                children={ this._renderCategoryTree(c.subcategories, c) }
-            />
-        ));
+        let categoryNode = [];
+        return (
+            <div className="category-filter-container">
+                <div className="tree-checkbox-container">
+                    {this._renderCategories(categories, 0)}
+                </div>
+                {this.state.expandedParents[0] &&
+                    <div className="tree-checkbox-container">
+                        {this._renderCategories(this.state.expandedParents[0].subcategories, 1)}
+                    </div>
+                }
+                {this.state.expandedParents[1] &&
+                    <div className="tree-checkbox-container">
+                        {this._renderCategories(this.state.expandedParents[1].subcategories, 2)}
+                    </div>
+                }
+            </div>
+        );
+    }
 
-        return  categoryNode;
+    @autobind
+    private _inSelectedCategory(c: Category) {
+        if (this.state.selectedCategories.has(c)) {
+            return true;
+        }
+
+        if (!this.state.childToParentMap.has(c)) {
+            return false;
+        }
+
+        return this._inSelectedCategory(this.state.childToParentMap.get(c));
+    }
+
+    @autobind
+    private _renderCategories(categories: Array<Category>, level: number) {
+        return categories.map(c =>
+            <div className="tree-checkbox">
+                <Checkbox
+                    value={c.display_name}
+                    label={c.display_name}
+                    checked={this._inSelectedCategory(c)}
+                    onChange={() => this._toggleSelectedCategories(c)} />
+                {this._renderCollapseButton(level, c, c.subcategories && c.subcategories.length > 0)}
+            </div>);
+    }
+
+    @autobind
+    private _toggleSelectedCategories(c: Category) {
+        let selectedCategories = this.state.selectedCategories;
+        if (this._inSelectedCategory(c)) {
+            this._toggleCheckboxTree(c, selectedCategories, false);
+        } else {
+            this._toggleCheckboxTree(c, selectedCategories, true);
+        }
+
+        this.setState({selectedCategories});
+    }
+
+    private _toggleCheckboxTree(c: Category, selectedCategories: Set<Category>, checked: boolean) {
+        let parent = this.state.childToParentMap.get(c);
+
+        if (checked) {
+            if (!selectedCategories.has(c)) {
+                selectedCategories.add(c);
+            }
+
+            while (parent) {
+                let hasAll = true;
+                parent.subcategories.forEach(sub => {
+                    hasAll = hasAll && selectedCategories.has(sub);
+                });
+                if (hasAll) {
+                    selectedCategories.add(parent);
+                    parent = this.state.childToParentMap.get(parent);
+                } else {
+                    break;
+                }
+            }
+
+        } else {
+            selectedCategories.delete(c);
+
+
+            while (parent) {
+                selectedCategories.delete(parent);
+                parent = this.state.childToParentMap.get(parent);
+            }
+        }
+
+        if (c.subcategories && c.subcategories.length > 0) {
+            c.subcategories.map(sub => this._toggleCheckboxTree(sub, selectedCategories, checked));
+        }
+    }
+
+    @autobind
+    private _renderCollapseButton(level: number, category: Category, hasSubCategory: boolean) {
+        if (!hasSubCategory) {
+            return null;
+        }
+
+        let iconVariant = IconVariant.ARROW_RIGHT;
+        if (this.state.expandedParents[level] === category) {
+            iconVariant = IconVariant.ARROW_LEFT;
+        }
+        return <IconButton icon={iconVariant} onClick={() => this._onExpand(level, category)}/>;
+    }
+
+    @autobind
+    private _onExpand(level: number, category: Category) {
+        let expandedParents = this.state.expandedParents;
+        if (expandedParents[level] === category) {
+            expandedParents[level] = null;
+            expandedParents[level + 1] = null;
+        } else {
+            expandedParents[level] = category;
+            expandedParents[level + 1] = null;
+        }
+        this.setState({expandedParents: expandedParents});
     }
 
     @autobind
     private _cancel() {
-        this.setState({selectedValues: new Set(this.state.previousValues)});
+        this.setState({selectedCategories: new Set(this.state.previousCategories)});
         this.props.onCancel();
     }
 
-    private _toggleSubCategories(v: Set<string>, category: Category, remove: boolean) {
-        if (!category) {
+    private _mapCategoriesFromId(output: Set<Category>, ids: Array<string>, categories: Array<Category>) {
+        if (!categories || categories.length < 1) {
             return;
         }
-
-        if (category.subcategories && category.subcategories.length > 0) {
-            category.subcategories.map(c => this._toggleSubCategories(v, c, remove));
-        }
-
-        if (remove) {
-            v.delete(category.id);
-        } else {
-            v.add(category.id);
-        }
+        categories.map(c => {
+            if (ids.indexOf(c.display_name) > -1) {
+                output.add(c);
+            }
+            this._mapCategoriesFromId(output, ids, c.subcategories);
+        });
     }
 
-    private _toggleParentCategories(v: Set<string>, category: Category, remove: boolean) {
-        if (!category || !this.state.childToParentMap.has(category.id)) {
-            return;
-        }
-
-        let parent = this.state.childToParentMap.get(category.id);
-        this._toggleParentCategories(v, parent, remove);
-
-        if (remove) {
-            v.delete(parent.id);
-        } else {
-            v.add(parent.id);
-        }
-    }
-
-    private _populateChildToParent(c2p: Map<string, Category>, category: Category) {
+    private _populateChildToParent(c2p: Map<Category, Category>, category: Category) {
         if (!category || !category.subcategories || category.subcategories.length < 1) {
             return;
         }
 
         category.subcategories.map(c => {
-            c2p.set(c.id, category);
+            c2p.set(c, category);
             this._populateChildToParent(c2p, c);
         });
     }
