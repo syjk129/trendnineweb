@@ -15,11 +15,11 @@ import Sticky from "../../components/sticky";
 import { PostCard, ProductCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
-import CategoryTreeFilter from "../flowComponents/filter/filterComponents/categoryTreeFilter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
 import { Filters, PostParam } from "../model";
+import ShopCategoryTreeSidebar from "./shopCategorySidebar";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
 interface DesktopShopDiscoverState extends ShopDiscoverState {
@@ -54,7 +54,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         try {
             const categories = await this.props.getCategories();
             this.setState({
-                categories: categories,
+                categories: categories[0].subcategories,
             });
         } catch (err) {
             console.warn(err);
@@ -108,9 +108,8 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         return (
             <div className="shop">
                 <Sidebar>
-                    <div className="filter-container">
-                        <CategoryTreeFilter
-                            active={true}
+                    <div>
+                        <ShopCategoryTreeSidebar
                             categoryList={this.state.categories} />
                     </div>
                 </Sidebar>

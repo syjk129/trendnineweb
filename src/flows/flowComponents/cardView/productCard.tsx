@@ -10,7 +10,7 @@ import "./style.scss";
 
 interface ProductCardProps {
     product: any;
-    gridSize: number;
+    gridSize?: number;
     isShop?: boolean;
 }
 
