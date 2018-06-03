@@ -2,6 +2,8 @@ import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { ChangeEvent } from "react";
+import FacebookLogin from "react-facebook-login";
+import { GoogleLogin } from "react-google-login";
 import { match } from "react-router";
 
 import { AppContext, AppContextTypes } from "../../app";
@@ -10,6 +12,7 @@ import Input, { InputType } from "../../components/input";
 import LoginForm from "./loginForm";
 import RegisterForm from "./registerForm";
 import { AuthData, RegisterData, RegisterDataProps } from "./types";
+
 
 interface AuthProps {
     match: match<string>;
@@ -40,6 +43,8 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         return (
             <div>
                 {this._isNewUser() ? this._renderRegisterForm() : this._renderLoginForm()}
+                {this._renderGoogleLoginForm()}
+                {this._renderFacebookLoginForm()}
             </div>
         );
     }
@@ -79,11 +84,44 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     }
 
     @autobind
+    private _renderGoogleLoginForm() {
+        const onSuccess = (response) => {
+            this.context.api.authenticate_google(response.code);
+        };
+        const onFailure = (response) => {
+            // TODO - prompt message
+        };
+        return (
+            <GoogleLogin
+            clientId="578583821342-677f0196i8h98lta6b9rissmphfk8g95.apps.googleusercontent.com"
+            responseType="code"
+            onSuccess={onSuccess}
+            onFailure={onFailure}
+            />
+        );
+    }
+
+    @autobind
+    private _renderFacebookLoginForm() {
+        const responseFacebook = (response) => {
+            this.context.api.authenticate_facebook(response.accessToken);
+        };
+        return (
+            <FacebookLogin
+            appId="216692075781854"
+            responseType="code"
+            autoLoad={true}
+            fields="name,email,picture"
+            callback={responseFacebook}
+            />
+        );
+    }
+
+    @autobind
     private async _login(event: any) {
         event.preventDefault();
         this.context.api.authenticate(this.state.username, this.state.password);
         const user = await this.context.api.getUser();
-        console.log(user);
         localStorage.setItem("user", JSON.stringify(user));
         this.props.setLoggedState(true);
     }

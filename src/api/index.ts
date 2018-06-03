@@ -47,6 +47,17 @@ export default class Api {
         }
     }
 
+    async authenticate_google(code: string) {
+        const res = await this._POST("/api/v1/users/google", { code });
+        localStorage.setItem(tokenName, res.token);
+    }
+
+    // TODO - Change it to pass token instead of access token
+    async authenticate_facebook(accessToken: string) {
+        const res = await this._POST("/api/v1/users/facebook", { access_token: accessToken });
+        localStorage.setItem(tokenName, res.token);
+    }
+
     verifyToken(token: string): Promise<void> {
         return this._POST("/api/v1/users/token_verify", { token });
     }

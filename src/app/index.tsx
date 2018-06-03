@@ -55,7 +55,7 @@ class AppProviderComponent extends React.Component<AppProviderProps, never> {
         const api = new Api({
             // apiUrl: "http://54.175.34.30:8000",
             // apiUrl: "http://54.84.23.234:8000",
-            apiUrl: "http://52.91.113.226:8000",
+            apiUrl: "http://52.205.187.74:8000",
             setError: props.setError,
         });
 
