@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import "./style.scss";
 
@@ -9,7 +10,7 @@ interface ContentSectionProps {
 
 export default function ContentSection({ title, children }: ContentSectionProps) {
     return (
-        <div className="content-section">
+        <div className={isMobile ? "mobile-content-section" : "content-section"}>
             <div className="content-header">
                 {title}
             </div>

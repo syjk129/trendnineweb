@@ -13,11 +13,11 @@ interface CommentInputProps {
     submitComment(): void;
 }
 
-function CommentInput({ comment, placeholder, user, onChange, submitComment }: CommentInputProps) {
+function MobileCommentInput({ comment, placeholder, user, onChange, submitComment }: CommentInputProps) {
     return (
-        <div className="comment-input-container">
-            <img src={user ? user.profile_image_url : ""} />
-            <div className="comment-input">
+        <div className="mobile-comment-input-container">
+            <div className="comment-user">
+                <img src={user ? user.profile_image_url : ""} />
                 <TextArea
                     rounded
                     value={comment}
@@ -26,18 +26,18 @@ function CommentInput({ comment, placeholder, user, onChange, submitComment }: C
                 >
                     asd
                 </TextArea>
-                <Button
-                    inline
-                    rounded
-                    variant={ButtonVariant.OUTLINE}
-                    size={ButtonSize.WIDE}
-                    onClick={submitComment}
-                >
-                    Post
-                </Button>
             </div>
+            <Button
+                inline
+                rounded
+                variant={ButtonVariant.OUTLINE}
+                size={ButtonSize.WIDE}
+                onClick={submitComment}
+            >
+                Post
+            </Button>
         </div>
     );
 }
 
-export default WithUserSession(CommentInput);
+export default WithUserSession(MobileCommentInput);

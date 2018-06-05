@@ -1,30 +1,5 @@
 @import "../../../styles/variables";
 
-.comments {
-    .comment-input-container {
-        display: flex;
-        margin-bottom: $base-spacing * 3;
-
-        img {
-            display: inline-block;
-            object-fit: cover;
-            width: 80px;
-            height: 80px;
-            border-radius: 100%;
-            margin-right: $base-spacing * 2;
-        }
-
-        .comment-input {
-            display: flex;
-            flex: 1;
-
-            textarea {
-                margin-right: $base-spacing;
-            }
-        }
-    }
-}
-
 .comment-item {
     margin-bottom: $base-spacing * 2;
 

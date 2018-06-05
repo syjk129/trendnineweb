@@ -1,12 +1,52 @@
 @import "../../styles/variables";
 
+.post,
+.mobile-post {
+    .post-content {
+        margin-bottom: $base-spacing * 4;
+    }
+
+    .post-subtitle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2 * $base-spacing;
+    }
+
+    .post-details {
+        font-size: $font-size-1;
+        line-height: $line-height-2;
+
+        img {
+            padding: $base-spacing 0;
+            max-width: 100%;
+        }
+    }
+}
+
+.mobile-post {
+    padding: $mobile-page-spacing;
+    padding-top: $mobile-page-spacing * 2;
+
+    .post-cover {
+        margin-bottom: $base-spacing * 2;
+    }
+
+    .post-title {
+        font-size: $mobile-header-font-size-1;
+        line-height: $mobile-header-line-height-1;
+        font-weight: $font-weight-bold;
+        font-family: $font-family-serif;
+        color: black;
+    }
+}
+
 .post {
     display: flex;
     padding: 0 $page-spacing;
     margin-top: $navbar-height;
 
     .post-content {
-        margin-bottom: $base-spacing * 2;
         margin-top: $content-spacing;
 
         .post-cover {
@@ -19,22 +59,6 @@
             line-height: $header-line-height-1;
             font-family: $font-family-serif;
             color: black;
-        }
-
-        .post-subtitle {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2 * $base-spacing;
-        }
-
-        .post-details {
-            font-size: $font-size-1;
-            line-height: $line-height-2;
-
-            img {
-                padding: $base-spacing 0;
-            }
         }
     }
 }

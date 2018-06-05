@@ -1,0 +1,34 @@
+@import "../../../../styles/variables";
+
+.comment-input-container {
+    display: flex;
+
+    .comment-input {
+        display: flex;
+        flex: 1;
+
+        textarea {
+            margin-right: $base-spacing;
+        }
+    }
+}
+
+.comment-user {
+    display: flex;
+    margin-bottom: $base-spacing;
+}
+
+.comment-input-container,
+.mobile-comment-input-container {
+    margin-bottom: $base-spacing * 3;
+
+    img {
+        display: inline-block;
+        object-fit: cover;
+        flex-shrink: 0;
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+        margin-right: $base-spacing * 2;
+    }
+}
