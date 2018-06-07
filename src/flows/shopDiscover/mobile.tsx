@@ -16,6 +16,7 @@ import { PostCard, ProductCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import CategoryTreeFilter from "../flowComponents/filter/filterComponents/categoryTreeFilter";
+import MobileFilter from "../flowComponents/filter/mobileFilter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
@@ -23,19 +24,19 @@ import { Filters, PostParam } from "../model";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
 interface MobileShopDiscoverState extends ShopDiscoverState {
-    numCardsPerRow: number;
+    gridSize: number;
 }
 
 export default class MobileShopDiscover extends React.Component<ShopDiscoverProps, MobileShopDiscoverState> {
     static contextTypes: AppContext;
 
-    state: ShopDiscoverState = {
+    state: MobileShopDiscoverState = {
         categories: [],
         products: [],
         productsNextToken: "",
         isLoading: false,
-        numCardsPerRow: 2,
         productParam: null,
+        gridSize: 1,
     };
 
     async componentWillMount() {
@@ -106,16 +107,15 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
         }
 
         return (
-            <div className="shop">
-                <Sidebar>
+            <div className="mobile-discover">
+                {/* <Sidebar>
                     <div className="filter-container">
                         <CategoryTreeFilter
                             active={true}
                             categoryList={this.state.categories} />
                     </div>
-                </Sidebar>
-                <Content>
-                    <Sticky id="filter-container" stickyClassName="sticky-filter-container">
+                </Sidebar> */}
+                    {/* <Sticky id="filter-container" stickyClassName="sticky-filter-container">
                         <div className="filter-container">
                             <Filter
                                 onApply={this._filterProducts}
@@ -129,17 +129,17 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
                             />
 
                         </div>
-                    </Sticky>
-                    {this.state.productParam.keyword !== "" && this.state.products.length < 1 && (
-                        <div className="no-search-result-text">
-                            No results for "{ this.state.productParam.keyword }"
-                        </div>
-                    )}
+                    </Sticky> */}
+                {this.state.productParam.keyword !== "" && this.state.products.length < 1 && (
+                    <div className="no-search-result-text">
+                        No results for "{ this.state.productParam.keyword }"
+                    </div>
+                )}
 
-                    <CardContainer className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
-                        {this._renderProducts()}
-                    </CardContainer>
-                </Content>
+                <MobileFilter setGridSize={this._setGridSize} />
+                <CardContainer gridSize={this.state.gridSize} className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
+                    {this._renderProducts()}
+                </CardContainer>
             </div>
         );
     }
@@ -186,12 +186,18 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
     @autobind
     private _renderProducts() {
         const products = this.state.products;
-        const productCards = products.map((post, index) => (
+        const productCards = products.map((product, index) => (
             <ProductCard
-                product={post}
+                product={product}
+                gridSize={this.state.gridSize}
                 isShop={true}
             />));
 
         return productCards;
+    }
+
+    @autobind
+    private _setGridSize(gridSize: number) {
+        this.setState({ gridSize });
     }
 }

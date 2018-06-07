@@ -18,6 +18,5 @@ export interface ShopDiscoverState {
     products: Array<Product>;
     productsNextToken: string;
     isLoading: boolean;
-    numCardsPerRow: number;
     productParam: PostParam;
 }

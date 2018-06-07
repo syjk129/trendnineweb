@@ -23,18 +23,16 @@ import ShopCategoryTreeSidebar from "./shopCategorySidebar";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
 interface DesktopShopDiscoverState extends ShopDiscoverState {
-    numCardsPerRow: number;
 }
 
 export default class DesktopShopDiscover extends React.Component<ShopDiscoverProps, DesktopShopDiscoverState> {
     static contextTypes: AppContext;
 
-    state: ShopDiscoverState = {
+    state: DesktopShopDiscoverState = {
         categories: [],
         products: [],
         productsNextToken: "",
         isLoading: false,
-        numCardsPerRow: 2,
         productParam: null,
     };
 
@@ -54,7 +52,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         try {
             const categories = await this.props.getCategories();
             this.setState({
-                categories: categories[1].subcategories,
+                categories: categories,
             });
         } catch (err) {
             console.warn(err);
