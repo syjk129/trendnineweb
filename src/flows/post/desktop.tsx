@@ -29,7 +29,15 @@ interface DesktopPostProps {
     submitComment(comment: string, parentCommentId: string): Promise<void>;
 }
 
-export default class DesktopPost extends React.Component<DesktopPostProps> {
+interface DesktopPostState {
+    productTags: Array<any>;
+}
+
+export default class DesktopPost extends React.Component<DesktopPostProps, DesktopPostState> {
+    state: DesktopPostState = {
+        productTags: [],
+    };
+
     render() {
         const {
             post,
@@ -90,10 +98,9 @@ export default class DesktopPost extends React.Component<DesktopPostProps> {
                             <Image
                                 className="post-cover"
                                 src={post.cover_image.original_image_url}
-                                ratio={ImageRatioVariant.POST_COVER}
                                 ref={this._setImageRef}
                             />
-                            {this._productTags && this._productTags.map(tag => (
+                            {this.state.productTags.length > 0 && this.state.productTags.map(tag => (
                                 <ProductTag tag={tag} />
                             ))}
                             <p className="post-title">
@@ -173,23 +180,25 @@ export default class DesktopPost extends React.Component<DesktopPostProps> {
         );
     }
 
-    // private _coverImageRef: React.RefObject<HTMLDivElement>;
-    private _productTags: Array<any>;
+    private _coverImageRef: React.RefObject<HTMLDivElement>;
 
     @autobind
     private _setImageRef(element: Element) {
         const image = ReactDOM.findDOMNode(element);
         if (image instanceof Element) {
+            console.log(element);
+            console.log(image);
             const rect = image.getBoundingClientRect();
+            console.log(rect);
 
-            this._productTags = this.props.post.product_tags.map(tag => ({
+            this.setState({ productTags: this.props.post.product_tags.map(tag => ({
                 product_id: tag.product_id,
                 name: this.props.post.products.find(product => product.id === tag.product_id).title,
                 style: {
                     left: rect.left + rect.width * tag.x_axis,
                     top: rect.top + rect.height * tag.y_axis,
                 },
-            }));
+            }))});
         }
     }
 

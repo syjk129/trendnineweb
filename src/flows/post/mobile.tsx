@@ -36,7 +36,6 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                     <Image
                         className="post-cover"
                         src={post.cover_image.original_image_url}
-                        ratio={ImageRatioVariant.POST_COVER}
                     />
                     <p className="post-title">
                         {post.title}
