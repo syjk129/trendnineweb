@@ -49,6 +49,10 @@
     // display:
 }
 
+.mobile-carousel-container {
+    margin-bottom: calc(22px + #{$base-spacing}); // Compensate for dots
+}
+
 .slick-prev,
 .slick-next {
     width: $icon-size-3;

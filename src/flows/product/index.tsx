@@ -16,6 +16,7 @@ import Featured from "../flowComponents/featured";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
 import DesktopProduct from "./desktop";
+import MobileProduct from "./mobile";
 
 import "./style.scss";
 
@@ -75,6 +76,10 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
     }
 
     render() {
+        if (!this.state.currentProduct) {
+            return "Loading";
+        }
+
         return (
             <div>
                 <BrowserView device={isBrowser}>
@@ -87,6 +92,13 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
                     />
                 </BrowserView>
                 <MobileView device={isMobile}>
+                    <MobileProduct
+                        product={this.state.currentProduct}
+                        relatedProducts={this.state.relatedProducts}
+                        reviews={this.state.reviews}
+                        wishlisted={this.state.wishlisted}
+                        toggleWishlist={this._toggleWishlist}
+                    />
                 </MobileView>
             </div>
         );

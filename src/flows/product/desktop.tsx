@@ -14,16 +14,9 @@ import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
+import { ProductProps } from "./types";
 
 import "./style.scss";
-
-interface ProductProps {
-    product: any;
-    relatedProducts: Array<any>;
-    reviews: Array<any>;
-    wishlisted: boolean;
-    toggleWishlist(): void;
-}
 
 interface ProductState {
     selectedImage: string;

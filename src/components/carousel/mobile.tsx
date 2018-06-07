@@ -15,7 +15,7 @@ export default function MobileCarousel({
         arrows: false,
         dots: true,
         infinite: true,
-        slidesToShow: 2,
+        slidesToShow: slidesToShow || 2,
         slidesToScroll: 1,
     };
 
@@ -23,7 +23,7 @@ export default function MobileCarousel({
         settings = Object.assign(settings, attributes);
     }
 
-    let classes = "carousel-container";
+    let classes = "mobile-carousel-container";
 
     if (className) {
         classes += ` ${className}`;

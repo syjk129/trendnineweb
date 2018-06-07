@@ -132,6 +132,14 @@
     background-image: url("/img/icons/close.png");
 }
 
+.icon-plus_open::before {
+    background-image: url("/img/icons/plus_open.png");
+}
+
+.icon-minus_close::before {
+    background-image: url("/img/icons/minus_close.png");
+}
+
 .icon-grid-size-1::before {
     background-image: url("/img/icons/preview1.png");
 }

@@ -20,6 +20,8 @@ export enum IconVariant {
     GRID_SIZE_1 = "grid-size-1",
     GRID_SIZE_2 = "grid-size-2",
     GRID_SIZE_3 = "grid-size-3",
+    MINUS_CLOSE = "minus_close",
+    PLUS_OPEN = "plus_open",
 }
 
 export enum IconSize {
@@ -51,4 +53,6 @@ export const IconMap = {
     [IconVariant.GRID_SIZE_1]: IconVariant.GRID_SIZE_1,
     [IconVariant.GRID_SIZE_2]: IconVariant.GRID_SIZE_2,
     [IconVariant.GRID_SIZE_3]: IconVariant.GRID_SIZE_3,
+    [IconVariant.MINUS_CLOSE]: IconVariant.PLUS_OPEN,
+    [IconVariant.PLUS_OPEN]: IconVariant.MINUS_CLOSE,
 };
