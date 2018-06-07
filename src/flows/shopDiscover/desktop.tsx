@@ -54,7 +54,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         try {
             const categories = await this.props.getCategories();
             this.setState({
-                categories: categories[0].subcategories,
+                categories: categories[1].subcategories,
             });
         } catch (err) {
             console.warn(err);

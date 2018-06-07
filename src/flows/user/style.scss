@@ -14,11 +14,18 @@
 
     .user-image {
         padding: $base-spacing;
+        display: flex;
+
+        .image-container {
+            height: 90px;
+            width: 90px;
+        }
     }
 
     .introduction {
         font-size: $font-size-small;
         padding: $base-spacing;
+        padding-top: $base-spacing * 2;
     }
 
     .follow-container {
@@ -32,10 +39,8 @@
 
     .activity-container {
         padding: $base-spacing;
-        border-top: $standard-border-width solid $standard-border-color;
-        border-bottom: $standard-border-width solid $standard-border-color;
-        display: flex;
-        justify-content: space-between;
+        padding-left: $base-spacing * 2;
+        line-height: $line-height-3;
 
         .identifier {
             display: inline-block;
@@ -52,13 +57,15 @@
 
     .social-container {
         padding: $base-spacing;
+        margin-top: $base-spacing * 3;
+        border-top: $standard-border-width solid $standard-border-color;
     }
 }
 
 .mobile-user {
     padding: $mobile-page-spacing;
     padding-top: $mobile-page-spacing * 2;
-    background-color: $color-grey-0;
+    background-color: $base-background-color;
 
     .user-name {
         font-size: $font-size-4;

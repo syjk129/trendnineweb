@@ -1,6 +1,7 @@
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 import { match } from "react-router-dom";
 
 import { Post } from "../../api/models";
@@ -14,6 +15,7 @@ import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
+import DesktopProduct from "./desktop";
 
 import "./style.scss";
 
@@ -73,91 +75,19 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
     }
 
     render() {
-        const reviewsTitle = this.state.reviews && this.state.reviews.length > 0 ? (
-            `Reviews (${this.state.reviews.length})`
-        )  : "Reviews";
-
-        const productSizes = new Set<string>();
-        const images = [];
-        if (this.state.currentProduct) {
-            this.state.currentProduct.alt_images.forEach(image => {
-                images.push(image.url);
-            });
-            images.push(this.state.currentProduct.image.original_image_url);
-        }
-        // const images = this.state.currentProduct.alt_images.map(image => image.id).concat();
-
-        if (this.state.currentProduct && this.state.currentProduct.productItems) {
-            this.state.currentProduct.productItems.forEach(productItem => productSizes.add(productItem.size));
-        }
-
-        // const currentImage = this.state.currentProduct.alt_images.find(image => image.id === this.state.selectedImage);
-
-        const carouselSettings = {
-            vertical: true,
-            focusOnSelect: true,
-            verticalSwiping: true,
-            arrows: false,
-        };
-
-        let wishlistBtnText = this.state.wishlisted ? "Remove from wishlist" : "Add to wishlist";
-
         return (
-            <div className="product">
-                {this.state.currentProduct && (
-                    <div className="product-view">
-                        <div className="product-images">
-                            <div className="product-main-image">
-                                {images.map(image => (
-                                    <Image src={image} square/>
-                                ))}
-                            </div>
-                        </div>
-                        <div className="product-details">
-                            <p className="product-brand">{this.state.currentProduct.brand.name}</p>
-                            <p className="product-name">{this.state.currentProduct.title}</p>
-                            <p className="product-seller">Sold by {this.state.currentProduct.merchant.name}</p>
-                            <p className="product-price">${this.state.currentProduct.price}</p>
-                            {/* <p className="product-color">Color</p>
-                            <select>
-                                {this.state.currentProduct.colors.map(color => (
-                                    <option value={color.id}>{color.name}</option>
-                                ))}
-                            </select> */}
-                            <p className="product-information">
-                                <div dangerouslySetInnerHTML={{ __html: this.state.currentProduct.description }} />
-                            </p>
-                            <div className="button-container">
-                                <Button variant={ButtonVariant.PRIMARY} onClick={() => location = this.state.currentProduct.url}>Buy Now</Button>
-                                <Button variant={ButtonVariant.OUTLINE} onClick={this._wishlistUnwishlistProduct}>{wishlistBtnText}</Button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-                {this.state.relatedProducts && (
-                    <ContentSection title="You may also like">
-                        <Carousel slidesToShow={this.state.relatedProducts.length >= 5 ? 5 : this.state.relatedProducts.length}>
-                            {this.state.relatedProducts.map(product => (
-                                <div>
-                                    <CarouselItem
-                                        imageUrl={product.image.small_image_url}
-                                        redirectUrl={`/product/${product.id}`}
-                                        title={product.brand.name}
-                                        detail={product.title}
-                                        subdetail={this._renderProductFooter(product)}
-                                    />
-                                </div>
-                            ))}
-                        </Carousel>
-                    </ContentSection>
-                )}
-                {/* <ContentSection title={reviewsTitle}>
-                    <Comments
-                        placeholder="Write a review"
-                        comments={this.state.reviews}
-                        submitComment={this._submitReview}
+            <div>
+                <BrowserView device={isBrowser}>
+                    <DesktopProduct
+                        product={this.state.currentProduct}
+                        relatedProducts={this.state.relatedProducts}
+                        reviews={this.state.reviews}
+                        wishlisted={this.state.wishlisted}
+                        toggleWishlist={this._toggleWishlist}
                     />
-                </ContentSection> */}
+                </BrowserView>
+                <MobileView device={isMobile}>
+                </MobileView>
             </div>
         );
     }
@@ -175,7 +105,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
     }
 
     @autobind
-    private _wishlistUnwishlistProduct() {
+    private _toggleWishlist() {
         if (this.state.wishlisted) {
             this.context.api.unwishlistProduct(this._productId);
             this.setState({ wishlisted: false });

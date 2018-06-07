@@ -2,6 +2,7 @@ import * as React from "react";
 
 import Button, { ButtonSize, ButtonVariant } from "../../../../components/button";
 import TextArea from "../../../../components/textArea";
+import { CommentInputProps } from "./types";
 
 export default function DesktopCommentInput({ comment, placeholder, user, onChange, submitComment }: CommentInputProps) {
     return (
