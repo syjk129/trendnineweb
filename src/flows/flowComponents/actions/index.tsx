@@ -48,7 +48,7 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
                         selected={this.state.liked}
                         onClick={this._likeUnlikePost}
                     >
-                        {this.state.likes}
+                        {/* {this.state.likes} */}
                     </IconButton>
                 }
                 <IconButton

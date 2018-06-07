@@ -12,8 +12,10 @@ interface UserTabsProps {
 }
 
 export default function UserTabs({ userId, isSelf, profile, pathname, setContent }: UserTabsProps) {
+    console.log(profile);
     return (
         <div className="user-nav">
+            {profile.blog_post_count > 0 &&
             <NavLink
                 url={`/user/${userId}`}
                 pathname={pathname}
@@ -22,6 +24,8 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                 <p>POSTS</p>
                 <p>{profile.blog_post_count}</p>
             </NavLink>
+            }
+            {profile.product_count > 0 &&
             <NavLink
                 url={`/user/${userId}/products`}
                 pathname={pathname}
@@ -30,6 +34,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                 <p>PRODUCTS</p>
                 <p>{profile.product_count}</p>
             </NavLink>
+            }
             {isSelf &&
                 <NavLink
                     url={`/user/${userId}/post-wishlist`}
@@ -58,6 +63,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                 <p>FOLLOWERS</p>
                 <p>{profile.follower_count}</p>
             </NavLink>
+            {isSelf &&
             <NavLink
                 url={`/user/${userId}/following`}
                 pathname={pathname}
@@ -66,6 +72,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                 <p>FOLLOWING</p>
                 <p>{profile.following_count}</p>
             </NavLink>
+            }
         </div>
     );
 }

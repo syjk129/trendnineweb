@@ -143,7 +143,7 @@ export default class User extends React.Component<Props, UserState> {
         case UserContentType.FOLLOWER:
             return this.context.api.getUserFollowers(this._userId, queryString, nextToken);
         case UserContentType.FOLLOWING:
-            return this.context.api.getUserFollowing(this._userId, queryString, nextToken);
+            return this._user.username === this._userId ? this.context.api.getUserFollowing(this._userId, queryString, nextToken) : null;
         case UserContentType.POST_WISHLIST:
         case UserContentType.PRODUCT_WISHLIST:
             return this._user.username === this._userId ? this.context.api.getWishlist() : null;
