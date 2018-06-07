@@ -1,7 +1,7 @@
 @import "../../../styles/variables";
 
 .sidebar-section {
-    margin-bottom: $base-spacing * 2;
+    margin-bottom: $base-spacing * 5;
     border-bottom: solid $standard-border-width $standard-border-color;
 }
 
@@ -11,6 +11,7 @@
     font-family: $font-family-serif;
     font-weight: $font-weight-bold;
     padding: $base-spacing;
+    padding-left: 0;
     background: transparent;
     border-bottom: solid $standard-border-width $standard-border-color;
 }

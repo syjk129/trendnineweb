@@ -65,6 +65,17 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                                         circle
                                         square
                                     />
+
+                                    <div className="activity-container">
+                                        <div>
+                                            <span className="identifier">TODAY</span>
+                                            <span className="count">{profile.today_view_count}</span>
+                                        </div>
+                                        <div>
+                                            <span className="identifier">TOTAL</span>
+                                            <span className="count">{profile.total_view_count}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="introduction">
                                     {influencer.introduction}
@@ -76,16 +87,6 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                                         />
                                     </div>
                                 )}
-                                <div className="activity-container">
-                                    <div>
-                                        <span className="identifier">TODAY</span>
-                                        <span className="count">{profile.today_view_count}</span>
-                                    </div>
-                                    <div>
-                                        <span className="identifier">TOTAL</span>
-                                        <span className="count">{profile.total_view_count}</span>
-                                    </div>
-                                </div>
                                 <div className="social-container">
                                     TODO: SOCIAL links
                                 </div>
