@@ -8,6 +8,7 @@ import { LinkButton } from "../../components/button/index";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
 import Input, { InputType, InputVariant } from "../../components/input";
 import NavLink from "../../components/navLink";
+import * as Logo from "./logo.png";
 
 import "./style.scss";
 import { HeaderProps } from "./types";
@@ -48,7 +49,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                     </div>
                 </div>
                 <div className="nav-header">
-                    <div className="nav-logo" onClick={() => history.push(isShop ? "/shop/home" : "/discover")} />
+                    <img className="nav-logo" src={Logo} onClick={() => history.push(isShop ? "/shop/home" : "/discover")} />
                     <div className="nav-header-links">
                         <div className="nav-pages">
                             <NavLink url={isShop ? "/shop/discover" : "/discover"} pathname={pathname} large>Trending</NavLink>

@@ -22,27 +22,18 @@
     .menu-header {
         border-bottom: $standard-border-width solid #fff;
         padding: $mobile-page-spacing;
+        text-align: center;
 
         .link-button {
+            position: absolute;
             float: left;
         }
     }
 
     .nav-logo {
         width: 150px;
+        object-fit: contain;
         height: $mobile-icon-size;
-        text-align: center;
-
-        &::before {
-            content: "";
-            width: 150px;
-            height: $mobile-icon-size;
-            position: absolute;
-            background-position: center;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-image: url("/img/logo_white.png");
-        }
     }
 
     .menu-content {

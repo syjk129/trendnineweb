@@ -4,8 +4,8 @@ import * as React from "react";
 
 import { IconButton } from "../../components/button";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
+import * as Logo from "./logo.png";
 import Menu from "./menu";
-
 import "./style.scss";
 import { HeaderProps } from "./types";
 
@@ -27,8 +27,9 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                 <Menu open={this.state.showMenu} toggleMenu={this._toggleMenu} isShop={isShop} />
                 <div className="mobile-header">
                     <IconButton icon={IconVariant.MENU} onClick={this._toggleMenu} selected={false} />
-                    <div
+                    <img
                         className="nav-logo"
+                        src={Logo}
                         onClick={() => this.props.history.push(isShop ? "/shop/home" : "/discover")}
                     />
                     <Icon variant={IconVariant.GIRL} />

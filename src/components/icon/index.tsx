@@ -43,7 +43,6 @@ export default function Icon({
             classes += " medium";
             break;
         case IconSize.SMALL:
-        default:
             classes += " small";
             break;
  }

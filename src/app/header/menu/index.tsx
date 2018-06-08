@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { IconButton, LinkButton } from "../../../components/button";
 import Icon, { IconVariant } from "../../../components/icon";
 import Input, { InputTheme, InputVariant } from "../../../components/input";
+import * as LogoWhite from "../logo_white.png";
 
 import "./style.scss";
 
@@ -31,8 +32,9 @@ class Menu extends React.Component<MenuProps, MenuState> {
             <div className={`menu ${this.props.open && "open"}`}>
                 <div className="menu-header">
                     <IconButton className="close" icon={IconVariant.MENU} onClick={this.props.toggleMenu} selected />
-                    <div
+                    <img
                         className="nav-logo"
+                        src={LogoWhite}
                         onClick={() => this.props.history.push(this.props.isShop ? "/shop/home" : "/discover")}
                     />
                 </div>
