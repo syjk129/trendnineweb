@@ -2,6 +2,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
+import getIconForVariant from "./getIconForVariant";
 import { IconMap, IconSize, IconVariant } from "./types";
 
 import "./style.scss";
@@ -27,7 +28,8 @@ export default function Icon({
     variant,
     children,
 }: IconProps) {
-    let classes = `icon icon-${selected ? IconMap[variant] : variant}`;
+    const icon = getIconForVariant(selected ? IconMap[variant] : variant);
+    let classes = "icon";
 
     if (isMobile) {
         classes += " mobile";
@@ -41,12 +43,13 @@ export default function Icon({
             classes += " medium";
             break;
         case IconSize.SMALL:
+        default:
             classes += " small";
             break;
-    }
+ }
 
     return (
-        <span className={classes} />
+        <img src={icon} className={classes} />
     );
 }
 

@@ -24,7 +24,7 @@ class PostRank extends React.Component<PostRankProps> {
             <div>
                 {posts.filter(post => post.cover_image != null).slice(0, 5).map(post => (
                     <LinkButton className={isMobile ? "mobile-post-rank" : "post-rank"} url={`/post/${post.id}`} variant={ButtonVariant.SECONDARY}>
-                        <img src={post.cover_image.small_image_url} />
+                        <img className="post-rank-img" src={post.cover_image.small_image_url} />
                         <div className="post-rank-detail">
                             {!hideName && (
                                 <p className="post-rank-name">

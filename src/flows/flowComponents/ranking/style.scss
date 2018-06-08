@@ -10,13 +10,11 @@
     }
 }
 
-.post-rank {
-    img {
-        height: $ranking-img-height;
-        width: $ranking-img-width;
-        padding-top: $base-spacing;
-        padding-bottom: $base-spacing;
-    }
+.post-rank-img {
+    height: $ranking-img-height;
+    width: $ranking-img-width;
+    padding-top: $base-spacing;
+    padding-bottom: $base-spacing;
 }
 
 .post-rank,
@@ -28,7 +26,7 @@
         border-bottom: 0;
     }
 
-    img {
+    .post-rank-img {
         flex-shrink: 0;
         display: inline-block;
         object-fit: cover;
