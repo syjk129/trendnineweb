@@ -40,7 +40,6 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
 
     @autobind
     private _toggleMenu() {
-        console.log("toggle");
         this.setState({ showMenu: !this.state.showMenu });
     }
 }

@@ -12,7 +12,6 @@ interface UserTabsProps {
 }
 
 export default function UserTabs({ userId, isSelf, profile, pathname, setContent }: UserTabsProps) {
-    console.log(profile);
     return (
         <div className="user-nav">
             {profile.blog_post_count > 0 &&

@@ -98,7 +98,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                             <Image
                                 className="post-cover"
                                 src={post.cover_image.original_image_url}
-                                ref={this._setImageRef}
+                                setRef={this._setImageRef}
                             />
                             {this.state.productTags.length > 0 && this.state.productTags.map(tag => (
                                 <ProductTag tag={tag} />
@@ -186,10 +186,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
     private _setImageRef(element: Element) {
         const image = ReactDOM.findDOMNode(element);
         if (image instanceof Element) {
-            console.log(element);
-            console.log(image);
             const rect = image.getBoundingClientRect();
-            console.log(rect);
 
             this.setState({ productTags: this.props.post.product_tags.map(tag => ({
                 product_id: tag.product_id,

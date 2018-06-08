@@ -38,11 +38,14 @@ class Card extends React.Component<CardProps, CardState> {
     };
 
     componentDidMount() {
-        const rect = ReactDOM.findDOMNode(this.refs.card).getBoundingClientRect();
-        if (rect.left + rect.width + 420 < window.innerWidth) {
-            this.setState({ hoverX: rect.width });
-        } else {
-            this.setState({ hoverX: - 235 });
+        const cardElement = ReactDOM.findDOMNode(this.refs.card);
+        if (cardElement instanceof Element) {
+            const rect = cardElement.getBoundingClientRect();
+            if (rect.left + rect.width + 420 < window.innerWidth) {
+                this.setState({ hoverX: rect.width });
+            } else {
+                this.setState({ hoverX: - 235 });
+            }
         }
     }
 

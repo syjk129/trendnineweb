@@ -14,7 +14,6 @@ export default class Sticky extends React.Component<StickyProps, never>  {
     componentDidMount() {
         this.sticky = document.getElementById(this.props.id);
         this.stickOffset = this.sticky.offsetTop;
-        console.log(this.stickOffset);
 
         window.addEventListener("scroll", this.onScroll, false);
     }
