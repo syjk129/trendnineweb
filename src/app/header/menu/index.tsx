@@ -35,7 +35,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     <img
                         className="nav-logo"
                         src={LogoWhite}
-                        onClick={() => this.props.history.push(this.props.isShop ? "/shop/home" : "/discover")}
+                        onClick={this._onMenuClick()}
                     />
                 </div>
                 <div className="menu-content">
@@ -65,13 +65,13 @@ class Menu extends React.Component<MenuProps, MenuState> {
     }
 
     @autobind
-    private _onMenuClick(url: string) {
+    private _onMenuClick(url?: string) {
         return () => {
             this.props.toggleMenu();
             if (this.props.isShop) {
-                this.props.history.push(`/shop/${url}`);
+                this.props.history.push(`/shop/${url || "home"}`);
             } else {
-                this.props.history.push(`/${url}`);
+                this.props.history.push(`/${url || ""}`);
             }
         };
    }
@@ -79,7 +79,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
    @autobind
    private _onSearch() {
        this.props.toggleMenu();
-       this.props.history.push(this.state.searchString);
+       this.props.history.push(`${this.props.location.pathname}?keyword=${this.state.searchString}`);
    }
 }
 
