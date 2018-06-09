@@ -26,13 +26,13 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
             <div className="header">
                 <Menu open={this.state.showMenu} toggleMenu={this._toggleMenu} isShop={isShop} />
                 <div className="mobile-header">
-                    <IconButton icon={IconVariant.MENU} onClick={this._toggleMenu} selected={false} />
+                    <IconButton icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this._toggleMenu} selected={false} />
                     <img
                         className="nav-logo"
                         src={Logo}
                         onClick={() => this.props.history.push(isShop ? "/shop/home" : "/discover")}
                     />
-                    <Icon variant={IconVariant.GIRL} />
+                    <Icon variant={IconVariant.GIRL} size={IconSize.MEDIUM} />
                 </div>
             </div>
         );

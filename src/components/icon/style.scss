@@ -29,7 +29,7 @@
         }
     }
 
-    &.mobile {
+    &.mobile.medium {
         margin: 0;
         width: $mobile-icon-size;
         height: $mobile-icon-size;
@@ -37,16 +37,6 @@
         &::before {
             width: $mobile-icon-size - 1;
             height: $mobile-icon-size - 1;
-        }
-
-        &.small {
-            width: $icon-size-1;
-            height: $icon-size-1;
-
-            &::before {
-                width: $icon-size-1 - 1;
-                height: $icon-size-1 - 1;
-            }
         }
     }
 

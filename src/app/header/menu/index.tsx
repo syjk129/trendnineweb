@@ -4,7 +4,7 @@ import * as React from "react";
 import { withRouter } from "react-router-dom";
 
 import { IconButton, LinkButton } from "../../../components/button";
-import Icon, { IconVariant } from "../../../components/icon";
+import Icon, { IconSize, IconVariant } from "../../../components/icon";
 import Input, { InputTheme, InputVariant } from "../../../components/input";
 import * as LogoWhite from "../logo_white.png";
 
@@ -31,7 +31,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
         return (
             <div className={`menu ${this.props.open && "open"}`}>
                 <div className="menu-header">
-                    <IconButton className="close" icon={IconVariant.MENU} onClick={this.props.toggleMenu} selected />
+                    <IconButton className="close" icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this.props.toggleMenu} selected />
                     <img
                         className="nav-logo"
                         src={LogoWhite}

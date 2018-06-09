@@ -51,7 +51,6 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                             wishlisted={post.wishlisted}
                             likes={post.likes}
                             liked={post.liked}
-                            iconSize={IconSize.MEDIUM}
                         />
                     </div>
                     <div className="post-details">
