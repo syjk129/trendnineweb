@@ -9,7 +9,7 @@ import { match } from "react-router";
 import { AppContext, AppContextTypes } from "../../app";
 import Input, { InputType } from "../../components/input";
 
-import FacebookLogin, { FacebookLoginResponse } from "./FacebookLogin";
+import FacebookLogin, { FacebookLoginResponse } from "./facebookLogin";
 import LoginForm from "./loginForm";
 import RegisterForm from "./registerForm";
 import { AuthData, RegisterData, RegisterDataProps } from "./types";
