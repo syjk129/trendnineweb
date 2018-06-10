@@ -16,7 +16,7 @@ const WithUserSession = <T extends WithUserSessionProvides>(
     constructor(props) {
         super(props);
         const user = localStorage.getItem("user");
-        if (!user && user !== "undefined") {
+        if (user && user !== "undefined") {
             this._user = JSON.parse(user);
         }
     }

@@ -36,12 +36,12 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                         </NavLink>
                     </div>
                     <div className="header-right-buttons">
-                        {!loggedIn &&
+                        {(!loggedIn || !user) &&
                             <NavLink url="/login" pathname={pathname}>Log In</NavLink>
                         }
-                        {loggedIn &&
+                        {loggedIn && user &&
                             <div className="user-logged-in-buttons">
-                                <LinkButton onClick={() => history.push(`/user/${user.username}`)}>
+                                <LinkButton url={`/user/${user.username}`}>
                                     <Icon variant={IconVariant.GIRL} size={IconSize.MEDIUM} />
                                 </LinkButton>
                             </div>
