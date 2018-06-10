@@ -1,9 +1,10 @@
 @import "../../styles/variables";
 
 .carousel-item {
-    margin: 0 $base-spacing;
+    margin: 0 $base-spacing * 2;
     display: flex;
     flex-direction: column;
+    height: 290px;
 
     &:first-child {
         margin-left: 0;
@@ -24,8 +25,8 @@
     }
 
     p {
-        font-size: $font-size-1;
-        line-height: $line-height-1;
+        font-size: $font-size-2;
+        line-height: $line-height-2;
 
         &.large {
             font-size: $font-size-2;
@@ -38,8 +39,10 @@
     }
 
     .carousel-item-title {
+        color: $color-grey-4;
         font-family: $font-family-serif;
         font-weight: $font-weight-bold;
+        margin-bottom: 0;
     }
 }
 
@@ -55,8 +58,8 @@
 
 .slick-prev,
 .slick-next {
-    width: $icon-size-3;
-    height: $icon-size-3;
+    width: $icon-size-2;
+    height: $icon-size-2;
     text-decoration: none;
     vertical-align: middle;
     margin: auto;

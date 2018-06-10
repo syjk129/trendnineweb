@@ -1,4 +1,5 @@
 import autobind from "autobind-decorator";
+import * as H from "history";
 import * as React from "react";
 import TimeAgo from "react-timeago";
 
@@ -16,18 +17,23 @@ import "./style.scss";
 interface PostCardProps {
     post: PostPreview;
     gridSize?: number;
+    history: H.History;
 }
 
 export default class PostCard extends React.Component<PostCardProps> {
 
     render() {
-        const { post, gridSize } = this.props;
+        const { post, gridSize, history } = this.props;
 
         const hoverItem = (
             <div className="card-hover">
                 {post.products.map(product => (
                     <div className="post-card-hover-item">
-                        <LinkButton className="post-card-hover-btn" variant={ButtonVariant.SECONDARY}>
+                        <LinkButton
+                            className="post-card-hover-btn"
+                            variant={ButtonVariant.SECONDARY}
+                            url={`/product/${product.id}`}
+                        >
                             <img className="post-card-hover-image" src={product.image.small_image_url} />
                             <div className="post-card-hover-content">
                                 <p className="post-card-hover-name">

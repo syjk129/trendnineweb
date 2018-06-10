@@ -16,13 +16,11 @@ interface ShopCategoryTreeSidebarProps {
  }
 
 interface ShopCategoryTreeSidebarState {
-    selectedCategory: Category;
     expandedParents: Map<number, Category>;
 }
 
 export default class ShopCategoryTreeSidebar extends React.Component<ShopCategoryTreeSidebarProps, ShopCategoryTreeSidebarState> {
     state: ShopCategoryTreeSidebarState = {
-        selectedCategory: null,
         expandedParents: new Map(),
     };
 
@@ -43,8 +41,8 @@ export default class ShopCategoryTreeSidebar extends React.Component<ShopCategor
     }
 
     @autobind
-    private _onApply() {
-        this.props.onApply(this.state.selectedCategory.display_name);
+    private _onApply(category: string) {
+        this.props.onApply(category);
     }
 
     @autobind
@@ -67,7 +65,7 @@ export default class ShopCategoryTreeSidebar extends React.Component<ShopCategor
             <ul className="tree-item">
                 {categories.map(c =>
                     <li>
-                        <LinkButton onClick={this._onApply}>{c.display_name} {this._renderCollapseButton(level, c, c.subcategories && c.subcategories.length > 0)}</LinkButton>
+                        <LinkButton onClick={() => this._onApply(c.display_name)}>{c.display_name} {this._renderCollapseButton(level, c, c.subcategories && c.subcategories.length > 0)}</LinkButton>
                         {this.state.expandedParents[level] === c && <div className="subcategories">
                             {this._renderCategories(c.subcategories, level + 1)}
                         </div>}

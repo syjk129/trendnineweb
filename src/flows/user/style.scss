@@ -2,6 +2,12 @@
 
 .tag-container {
     padding: $base-spacing;
+    display: flex;
+    flex-wrap: wrap;
+
+    .tag {
+        font-size: $font-size-0;
+    }
 }
 
 .user {
@@ -45,8 +51,8 @@
         .identifier {
             display: inline-block;
             margin-right: $base-spacing;
-            font-size: $font-size-1;
-            line-height: $line-height-1;
+            font-size: $font-size-0;
+            line-height: $line-height-0;
         }
 
         .count {

@@ -39,7 +39,8 @@ export default class User extends React.Component<Props, UserState> {
 
     componentWillMount() {
         this._user = JSON.parse(localStorage.getItem("user")) || {};
-        this._updateContent(this.props);
+        let contentType = this.props.match.params.pageName ? this.props.match.params.pageName : UserContentType.POST;
+        this._updateContent(this.props, contentType);
     }
 
     componentDidMount() {
@@ -48,6 +49,13 @@ export default class User extends React.Component<Props, UserState> {
 
     componentDidUnmount() {
         window.removeEventListener("scroll", this._onScroll, false);
+    }
+
+    async getDerivedStateFromProps() {
+        console.log("hihi");
+        this._user = JSON.parse(localStorage.getItem("user")) || {};
+        let contentType = this.props.match.params.pageName ? this.props.match.params.pageName : UserContentType.POST;
+        this._updateContent(this.props, contentType);
     }
 
     render() {
@@ -120,6 +128,14 @@ export default class User extends React.Component<Props, UserState> {
 
     @autobind
     private async _updateContent(props: Props, contentType?: UserContentType) {
+        this.setState({
+            profile: null,
+            content: [],
+            contentType: UserContentType.POST,
+            nextToken: "",
+            postParam: null,
+        });
+
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);
         const queryString = postParam.convertUrlParamToQueryString();

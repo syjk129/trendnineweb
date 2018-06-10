@@ -15,8 +15,8 @@ export default function DesktopCarousel({
         adaptiveHeight: false,
         // dots: true,
         infinite: true,
-        prevArrow: <IconButton icon={IconVariant.ARROW_LEFT} size={IconSize.LARGE} />,
-        nextArrow: <IconButton icon={IconVariant.ARROW_RIGHT} size={IconSize.LARGE} />,
+        prevArrow: <IconButton icon={IconVariant.ARROW_LEFT} />,
+        nextArrow: <IconButton icon={IconVariant.ARROW_RIGHT} />,
         slidesToScroll: 1,
         variableWidth: true,
         responsive: [{

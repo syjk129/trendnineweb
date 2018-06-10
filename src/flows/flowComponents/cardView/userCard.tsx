@@ -30,6 +30,7 @@ export default function UserCard({ user, following }: UserCardProps) {
             </div>
         </div>
     );
+
     return (
         <Card
             imageUrl={user.profile_image_url}
@@ -37,6 +38,7 @@ export default function UserCard({ user, following }: UserCardProps) {
             title={user.username}
             footerItem={footerItem}
             singleLineTitle={true}
+            gridSize={1}
         />
     );
 }

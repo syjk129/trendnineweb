@@ -61,7 +61,11 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                         <SidebarSection title="Products in this post">
                             {post.products.map(product => (
                                 <div className="post-card-hover-item">
-                                    <LinkButton className="post-card-hover-btn" variant={ButtonVariant.SECONDARY}>
+                                    <LinkButton
+                                        className="post-card-hover-btn"
+                                        variant={ButtonVariant.SECONDARY}
+                                        url={`/product/${product.id}`}
+                                    >
                                         <img className="post-card-hover-image" src={product.image.small_image_url} />
                                         <div className="post-card-hover-content">
                                             <p className="post-card-hover-name">

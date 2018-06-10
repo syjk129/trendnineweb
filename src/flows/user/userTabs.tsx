@@ -26,7 +26,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
             }
             {profile.product_count > 0 &&
             <NavLink
-                url={`/user/${userId}/products`}
+                url={`/user/${userId}/${UserContentType.PRODUCT}`}
                 pathname={pathname}
                 onClick={() => setContent(UserContentType.PRODUCT)}
             >
@@ -36,7 +36,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
             }
             {isSelf &&
                 <NavLink
-                    url={`/user/${userId}/post-wishlist`}
+                    url={`/user/${userId}/${UserContentType.POST_WISHLIST}`}
                     pathname={pathname}
                     onClick={() => setContent(UserContentType.POST_WISHLIST)}
                 >
@@ -46,7 +46,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
             }
             {isSelf &&
                 <NavLink
-                    url={`/user/${userId}/product-wishlist`}
+                    url={`/user/${userId}/${UserContentType.PRODUCT_WISHLIST}`}
                     pathname={pathname}
                     onClick={() => setContent(UserContentType.PRODUCT_WISHLIST)}
                 >
@@ -55,7 +55,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                 </NavLink>
             }
             <NavLink
-                url={`/user/${userId}/followers`}
+                url={`/user/${userId}/${UserContentType.FOLLOWER}`}
                 pathname={pathname}
                 onClick={() => setContent(UserContentType.FOLLOWER)}
             >
@@ -64,7 +64,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
             </NavLink>
             {isSelf &&
             <NavLink
-                url={`/user/${userId}/following`}
+                url={`/user/${userId}/${UserContentType.FOLLOWING}`}
                 pathname={pathname}
                 onClick={() => setContent(UserContentType.FOLLOWING)}
             >

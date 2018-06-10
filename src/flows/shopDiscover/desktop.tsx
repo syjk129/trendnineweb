@@ -108,7 +108,8 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                 <Sidebar>
                     <div>
                         <ShopCategoryTreeSidebar
-                            categoryList={this.state.categories} />
+                            categoryList={this.state.categories}
+                            onApply={this._filterCategory} />
                     </div>
                 </Sidebar>
                 <Content>
@@ -144,6 +145,12 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
     @autobind
     private async _filterProducts(filters: Filters) {
         this.state.productParam.filters = filters;
+        this._push(this.state.productParam);
+    }
+
+    @autobind
+    private async _filterCategory(category: string) {
+        this.state.productParam.filters.categoryIds = new Array(category);
         this._push(this.state.productParam);
     }
 

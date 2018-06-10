@@ -36,7 +36,6 @@
         }
 
         .post-rank-name {
-            font-size: $font-size-1;
             color: $color-red-1;
             padding-bottom: $base-spacing-sm;
         }
@@ -45,7 +44,7 @@
             -webkit-line-clamp: 2;
             // -webkit-box-orient: vertical;
             display: -webkit-box;
-            max-height: $line-height-1 * 2;
+            max-height: $line-height-0 * 2;
             overflow: hidden;
             text-overflow: ellipsis;
         }

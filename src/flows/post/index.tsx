@@ -51,27 +51,11 @@ export default class PostView extends React.Component<PostProps, PostState> {
     };
 
     async componentWillMount() {
-        this._postId = this.props.match.params.postId;
+        this._fetchData();
+    }
 
-        try {
-            const [
-                post,
-                comments,
-                relatedProducts,
-                relatedPosts,
-                featuredTrendnines,
-            ] = await Promise.all([
-                this.context.api.getPost(this._postId),
-                this.context.api.getComments(this._postId),
-                this.context.api.getRelatedProducts(),
-                this.context.api.getRelatedPosts(this._postId),
-                this.context.api.getFeaturedTrendnines(),
-            ]);
-
-            this.setState({ post, comments, relatedProducts, relatedPosts, featuredTrendnines });
-        } catch (err) {
-            throw new Error(err);
-        }
+    async componentWillReceiveProps() {
+        this._fetchData();
     }
 
     render() {
@@ -121,6 +105,38 @@ export default class PostView extends React.Component<PostProps, PostState> {
     @autobind
     private _unlikeComment(commentId: string) {
         return this.context.api.unlikeComment(this._postId, commentId);
+    }
+
+    @autobind
+    private async _fetchData() {
+        this._postId = this.props.match.params.postId;
+        this.setState({
+            post: null,
+            comments: [],
+            relatedProducts: [],
+            relatedPosts: [],
+            featuredTrendnines: [],
+        });
+
+        try {
+            const [
+                post,
+                comments,
+                relatedProducts,
+                relatedPosts,
+                featuredTrendnines,
+            ] = await Promise.all([
+                this.context.api.getPost(this._postId),
+                this.context.api.getComments(this._postId),
+                this.context.api.getRelatedProducts(),
+                this.context.api.getRelatedPosts(this._postId),
+                this.context.api.getFeaturedTrendnines(),
+            ]);
+
+            this.setState({ post, comments, relatedProducts, relatedPosts, featuredTrendnines });
+        } catch (err) {
+            throw new Error(err);
+        }
     }
 }
 
