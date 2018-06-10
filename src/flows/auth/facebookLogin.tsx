@@ -5,7 +5,7 @@ import { ChangeEvent } from "react";
 import { IconButton } from "../../components/button/index";
 import Input, { InputType } from "../../components/input";
 
-import { AuthData, AuthFormProps, SocialLoginResponse } from "./types";
+import { AuthData, AuthFormProps } from "./types";
 
 const CALLBACK_URL_PATH = "/facebook/callback";
 
