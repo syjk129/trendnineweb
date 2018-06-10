@@ -2,6 +2,7 @@ import Category from "./category";
 import Comment from "./comment";
 import Featured from "./featured";
 import FeaturedInfluencer from "./featured-influencer";
+import FilterSearchResult from "./filter-search-result";
 import Pagination from "./pagination";
 import Person from "./person";
 import Post from "./post";
@@ -17,6 +18,7 @@ export {
     Comment,
     Featured,
     FeaturedInfluencer,
+    FilterSearchResult,
     Pagination,
     Person,
     Post,

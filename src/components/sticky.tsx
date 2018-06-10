@@ -30,8 +30,9 @@ export default class Sticky extends React.Component<StickyProps, never>  {
     render() {
         const { id, children } = this.props;
         return (
-        <div id={id}>
-        {children}
-        </div>);
+            <div id={id}>
+                {children}
+            </div>
+        );
     }
 }

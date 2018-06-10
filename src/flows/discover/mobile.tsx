@@ -13,13 +13,13 @@ import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import Sticky from "../../components/sticky";
 import { PostCard } from "../flowComponents/cardView";
+import ContentToolbar from "../flowComponents/contentToolbar";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
-import MobileFilter from "../flowComponents/filter/mobileFilter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
-import { Filters, PostParam } from "../model";
+import { ContentType, Filters, PostParam } from "../model";
 
 import "./style.scss";
 import { DiscoverProps, DiscoverState } from "./types";
@@ -138,7 +138,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                         No results for "{ this.state.postParam.keyword }"
                     </div>
                 )}
-                <MobileFilter setGridSize={this._setGridSize} />
+                <ContentToolbar contentType={ContentType.POST} selectedFilters={new Map()} setGridSize={this._setGridSize} />
                 <CardContainer gridSize={this.state.gridSize} className={this.state.postParam.keyword === "" ? "" : "card-container-extra-space"}>
                     {this._renderPosts()}
                 </CardContainer>

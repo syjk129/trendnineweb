@@ -70,33 +70,33 @@
     }
 }
 
-.mobile-filter,
-.sticky-mobile-filter {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+// .mobile-filter,
+// .sticky-mobile-filter {
+//     width: 100%;
+//     display: flex;
+//     justify-content: space-between;
 
-    .grid-sizes {
-        align-items: center;
-        display: flex;
+//     .grid-sizes {
+//         align-items: center;
+//         display: flex;
 
-        .icon {
-            padding-left: $base-spacing;
-        }
-    }
-}
+//         .icon {
+//             padding-left: $base-spacing;
+//         }
+//     }
+// }
 
-.sticky-mobile-filter {
-    width: 100%;
-    box-sizing: border-box;
-    position: fixed;
-    z-index: 3;
-    top: 59px;
-    left: 0;
-    padding: $mobile-page-spacing;
-    background-color: $base-background-color;
+// .sticky-mobile-filter {
+//     width: 100%;
+//     box-sizing: border-box;
+//     position: fixed;
+//     z-index: 3;
+//     top: 59px;
+//     left: 0;
+//     padding: $mobile-page-spacing;
+//     background-color: $base-background-color;
 
-    .mobile-filter {
-        width: 100%;
-    }
-}
+//     .mobile-filter {
+//         width: 100%;
+//     }
+// }
