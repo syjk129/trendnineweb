@@ -86,13 +86,13 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                     onFormChange={this._handleFormChange}
                 />
                 <GoogleLogin
-                    clientId="643057986212-ejqn53gp3u8u088hrba62cie5t3tif60.apps.googleusercontent.com"
+                    clientId="174930742509-kvp3mkdgdb5c8staoesefgltj377tgsq.apps.googleusercontent.com"
                     responseType="code"
                     onSuccess={this._googleBtnSuccessCallback}
                     onFailure={this._googleBtnFailureCallback}
                 />
                 <FacebookLogin
-                    appId="216692075781854"
+                    appId="201224070695370"
                     sdkVersion="v3.0"
                     fields="name,email,picture"
                     responseType="code"
