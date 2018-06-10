@@ -15,8 +15,10 @@ const WithUserSession = <T extends WithUserSessionProvides>(
 ) => class extends React.Component<Omit<T, keyof WithUserSessionProvides>> {
     constructor(props) {
         super(props);
-
-        this._user = JSON.parse(localStorage.getItem("user"));
+        const user = localStorage.getItem("user");
+        if (!user && user !== "undefined") {
+            this._user = JSON.parse(user);
+        }
     }
 
     render() {

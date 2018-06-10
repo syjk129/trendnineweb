@@ -115,6 +115,7 @@ export default class App extends React.Component<AppProps, AppState> {
                         <div className={`main-content ${isMobile && "mobile-view"}`}>
                             <Route exact path="/" render={() => <Redirect to="/discover" />} />
                             <Route path="/login" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />
+                            <Route path="/logout" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />
                             <Route path="/register" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />
                             <Route path="/discover/:pageName?" component={Discover} />
                             <Route path="/feed" component={Discover} />

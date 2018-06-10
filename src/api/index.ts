@@ -53,8 +53,8 @@ export default class Api {
     }
 
     // TODO - Change it to pass token instead of access token
-    async authenticate_facebook(accessToken: string) {
-        const res = await this._POST("/api/v1/users/facebook", { access_token: accessToken });
+    async authenticate_facebook(code: string) {
+        const res = await this._POST("/api/v1/users/facebook", { code });
         localStorage.setItem(tokenName, res.token);
     }
 

@@ -1,20 +1,23 @@
 import autobind from "autobind-decorator";
+import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { ChangeEvent } from "react";
-import FacebookLogin from "react-facebook-login";
-import { GoogleLogin } from "react-google-login";
+import { GoogleLogin, GoogleLoginResponseOffline } from "react-google-login";
 import { match } from "react-router";
 
 import { AppContext, AppContextTypes } from "../../app";
 import Input, { InputType } from "../../components/input";
 
+import FacebookLogin, { FacebookLoginResponse } from "./FacebookLogin";
 import LoginForm from "./loginForm";
 import RegisterForm from "./registerForm";
 import { AuthData, RegisterData, RegisterDataProps } from "./types";
 
 
 interface AuthProps {
+    history: H.History;
+    location: any;
     match: match<string>;
     apiUrl: string;
     setLoggedState(loggedIn: boolean): void;
@@ -39,12 +42,22 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         lastName: "",
     };
 
+    constructor(props) {
+        super(props);
+        if (props.match.path === "/logout") {
+            this._logout();
+        } else {
+            const user = localStorage.getItem("user");
+            if (user !== null && user !== "undefined") {
+                this.props.history.push("/");
+            }
+        }
+    }
+
     render() {
         return (
             <div>
                 {this._isNewUser() ? this._renderRegisterForm() : this._renderLoginForm()}
-                {this._renderGoogleLoginForm()}
-                {this._renderFacebookLoginForm()}
             </div>
         );
     }
@@ -58,14 +71,34 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     }
 
     @autobind
+    private _isFacebookLoginCallback(): boolean {
+        return this.props.location.pathname === "/login/facebook/callback";
+    }
+
+    @autobind
     private _renderLoginForm() {
         return (
-            <LoginForm
-                username={this.state.username}
-                password={this.state.password}
-                onSubmit={this._login}
-                onFormChange={this._handleFormChange}
-            />
+            <div className="loginForm">
+                <LoginForm
+                    username={this.state.username}
+                    password={this.state.password}
+                    onSubmit={this._login}
+                    onFormChange={this._handleFormChange}
+                />
+                <GoogleLogin
+                    clientId="578583821342-677f0196i8h98lta6b9rissmphfk8g95.apps.googleusercontent.com"
+                    responseType="code"
+                    onSuccess={this._googleBtnSuccessCallback}
+                    onFailure={this._googleBtnFailureCallback}
+                />
+                <FacebookLogin
+                    appId="216692075781854"
+                    sdkVersion="v3.0"
+                    fields="name,email,picture"
+                    responseType="code"
+                    onCallback={this._facebookBtnCallback}
+                />
+            </div>
         );
     }
 
@@ -83,47 +116,46 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         );
     }
 
+
     @autobind
-    private _renderGoogleLoginForm() {
-        const onSuccess = (response) => {
-            this.context.api.authenticate_google(response.code);
-        };
-        const onFailure = (response) => {
-            // TODO - prompt message
-        };
-        return (
-            <GoogleLogin
-            clientId="578583821342-677f0196i8h98lta6b9rissmphfk8g95.apps.googleusercontent.com"
-            responseType="code"
-            onSuccess={onSuccess}
-            onFailure={onFailure}
-            />
-        );
+    private async _googleBtnSuccessCallback(response: GoogleLoginResponseOffline) {
+        this.context.api.authenticate_google(response.code);
+        this._setLoggedInUser();
     }
 
     @autobind
-    private _renderFacebookLoginForm() {
-        const responseFacebook = (response) => {
-            this.context.api.authenticate_facebook(response.accessToken);
-        };
-        return (
-            <FacebookLogin
-            appId="216692075781854"
-            responseType="code"
-            autoLoad={true}
-            fields="name,email,picture"
-            callback={responseFacebook}
-            />
-        );
+    private async _googleBtnFailureCallback(response: GoogleLoginResponseOffline) {
+    }
+
+    @autobind
+    private async _facebookBtnCallback(response: FacebookLoginResponse) {
+        if (!response.error) {
+            this.context.api.authenticate_facebook(response.code);
+            this._setLoggedInUser();
+        }
     }
 
     @autobind
     private async _login(event: any) {
         event.preventDefault();
         this.context.api.authenticate(this.state.username, this.state.password);
+        this._setLoggedInUser();
+    }
+
+    @autobind
+    private _logout() {
+        this.props.setLoggedState(false);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        this.props.history.push("/");
+    }
+
+    @autobind
+    private async _setLoggedInUser() {
         const user = await this.context.api.getUser();
         localStorage.setItem("user", JSON.stringify(user));
         this.props.setLoggedState(true);
+        this.props.history.push("/");
     }
 
     @autobind
