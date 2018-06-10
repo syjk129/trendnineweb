@@ -4,18 +4,22 @@ import { render } from "react-dom";
 
 import { FilterSearchResult } from "../../../../api/models";
 import Checkbox from "../../../../components/checkbox";
-import { Filter, FilterType } from "../types";
+import Input from "../../../../components/input";
+import { Filter, FilterCategory, FilterOption, FilterType } from "../types";
 
 import "./style.scss";
 
 interface FilterViewProps {
     currentFilterType: FilterType | null;
     selectedFilters: Map<FilterType, Filter>;
-    filterTypes: Array<FilterType>;
+    filterOptions: Array<FilterOption>;
     filters: Map<FilterType, Array<FilterSearchResult>>;
+    searchString: string;
     selectFilterType(filterType: FilterType | null): void;
     toggleSelectFilterItem(filterId: string): void;
     toggleFilterActive(): void;
+    onSearchStringChange(searchString: string): void;
+    onSearch(): void;
 }
 
 interface ListItemProps {
@@ -38,7 +42,7 @@ export default class FilterView extends React.Component<FilterViewProps> {
         const {
             currentFilterType,
             selectedFilters,
-            filterTypes,
+            filterOptions,
             filters,
             selectFilterType,
             toggleSelectFilterItem,
@@ -47,12 +51,33 @@ export default class FilterView extends React.Component<FilterViewProps> {
 
         return (
             <div className="mobile-filter">
-                {!currentFilterType && filterTypes.map(filterType => (
-                    <ListItem label={filterType} onClick={() => selectFilterType(filterType)} />
+                {!currentFilterType && filterOptions.map(filterOption => (
+                    <ListItem label={filterOption.type} onClick={() => selectFilterType(filterOption.type)} />
                 ))}
-                {currentFilterType && (
+                {currentFilterType && this._renderFilterSearch()}
+            </div>
+        );
+    }
+
+    @autobind
+    private _renderFilterSearch() {
+        const {
+            currentFilterType,
+            selectedFilters,
+            filterOptions,
+            filters,
+            selectFilterType,
+            toggleSelectFilterItem,
+            toggleFilterActive,
+        } = this.props;
+
+        const filterOption = filterOptions.find(filterOption => filterOption.type === currentFilterType);
+        switch (filterOption.category) {
+            case FilterCategory.SEARCH:
+                return (
                     <div>
                         <ListItem label={currentFilterType} onClick={() => selectFilterType(null)} />
+                        <Input value={this.props.searchString} onChange={this.props.onSearchStringChange} onEnterPress={this.props.onSearch} />
                         {filters[currentFilterType].map(filterSearchResult => (
                             <Checkbox
                                 value={filterSearchResult.id}
@@ -62,9 +87,10 @@ export default class FilterView extends React.Component<FilterViewProps> {
                             />
                         ))}
                     </div>
-                )}
-            </div>
-        );
+                );
+            case FilterCategory.RANGE:
+                return null;
+        }
     }
 
     @autobind

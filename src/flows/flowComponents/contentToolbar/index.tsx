@@ -8,7 +8,7 @@ import { AppContext, AppContextTypes } from "../../../app";
 import { ContentType } from "../../model";
 import RouteProps from "../../routeProps";
 import MobileContentToolbar from "./mobile";
-import { Filter, FilterQueryParamMap, FilterType, RangeValueFilter, SelectFilter } from "./types";
+import { Filter, FilterCategory, FilterOption, FilterQueryParamMap, FilterType, RangeValueFilter, SelectFilter } from "./types";
 
 import "./style.scss";
 
@@ -23,7 +23,7 @@ interface ContentToolbarProps extends RouteProps {
 
 interface ContentToolbarState {
     isActive: boolean;
-    filterTypes: Array<FilterType>;
+    filterOptions: Array<FilterOption>;
     filters: Map<FilterType, Array<FilterSearchResult>>;
     selectedFilters: Map<FilterType, Filter>;
     currentFilterType: FilterType | null;
@@ -35,7 +35,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     state: ContentToolbarState = {
         isActive: false,
-        filterTypes: this._getFilterTypes(this.props.contentType),
+        filterOptions: this._getFilterTypes(this.props.contentType),
         filters: new Map(),
         selectedFilters: new Map(),
         currentFilterType: null,
@@ -63,6 +63,8 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                         selectFilterType={this._selectFilterType}
                         toggleSelectFilterItem={this._toggleSelectFilterItem}
                         toggleFilterActive={this._toggleFilterActive}
+                        onSearch={this._onSearch}
+                        onSearchStringChange={this._onSearchStringChange}
                         setGridSize={setGridSize}
                     />
                 </MobileView>
@@ -71,11 +73,23 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     }
 
     @autobind
+    private _onSearchStringChange(searchString: string) {
+        this.setState({ searchString });
+    }
+
+    @autobind
+    private async _onSearch() {
+        const filters = this.state.filters;
+        filters[this.state.currentFilterType] = await this._getFilterContent(this.state.currentFilterType, this.state.searchString);
+        this.setState({ filters });
+    }
+
+    @autobind
     private async _populateFilters() {
         const filters = this.state.filters;
-        this.state.filterTypes.forEach(async filterType => {
-            const filterContent = await this._getFilterContent(filterType, this.state.searchString);
-            filters[filterType] = filterContent;
+        this.state.filterOptions.forEach(async filterOption => {
+            const filterContent = await this._getFilterContent(filterOption.type, this.state.searchString);
+            filters[filterOption.type] = filterContent;
         });
 
         // Update selectedFilters
@@ -102,7 +116,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
             case FilterType.TAGS:
                 return this.context.api.getTags(query);
             default:
-                throw new Error(`Unsupported filter type ${this.state.currentFilterType}`);
+                throw new Error(`Unsupported filter type ${filterType}`);
         }
     }
 
@@ -143,22 +157,23 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     }
 
     private _getFilterTypes(contentType: ContentType) {
+        // The goal here is to make this service driven so that we don't need to make changes here if we want to add new filter categories
         switch (contentType) {
             case ContentType.POST:
             case ContentType.PRODUCT:
                 return [
-                    FilterType.CATEGORY,
-                    FilterType.BRANDS,
-                    FilterType.PRICE_RANGE,
-                    FilterType.RETAILER,
-                    FilterType.TAGS,
+                    { type: FilterType.CATEGORY, category: FilterCategory.SEARCH } as FilterOption,
+                    { type: FilterType.BRANDS, category: FilterCategory.SEARCH } as FilterOption,
+                    { type: FilterType.PRICE_RANGE, category: FilterCategory.RANGE} as FilterOption,
+                    { type: FilterType.RETAILER, category: FilterCategory.SEARCH } as FilterOption,
+                    { type: FilterType.TAGS, category: FilterCategory.SEARCH } as FilterOption,
                 ];
             case ContentType.SHOP:
                 return [
-                    FilterType.BRANDS,
-                    FilterType.PRICE_RANGE,
-                    FilterType.RETAILER,
-                    FilterType.TAGS,
+                    { type: FilterType.BRANDS, category: FilterCategory.SEARCH } as FilterOption,
+                    { type: FilterType.PRICE_RANGE, category: FilterCategory.RANGE} as FilterOption,
+                    { type: FilterType.RETAILER, category: FilterCategory.SEARCH } as FilterOption,
+                    { type: FilterType.TAGS, category: FilterCategory.SEARCH } as FilterOption,
                 ];
             default:
                 throw new Error(`Filter not supported for content type ${contentType}`);

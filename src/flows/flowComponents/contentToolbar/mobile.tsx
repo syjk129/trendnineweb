@@ -7,18 +7,21 @@ import { IconButton } from "../../../components/button";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
 import Sticky from "../../../components/sticky";
 import FilterView from "./filter";
-import { Filter, FilterType } from "./types";
+import { Filter, FilterOption, FilterType } from "./types";
 
 interface MobileContentToolbarProps {
     isActive: boolean;
     currentFilterType: FilterType | null;
     selectedFilters: Map<FilterType, Filter>;
-    filterTypes: Array<FilterType>;
+    filterOptions: Array<FilterOption>;
     filters: Map<FilterType, Array<FilterSearchResult>>;
+    searchString: string;
     setGridSize(size: number): void;
     selectFilterType(filterType: FilterType | null): void;
     toggleSelectFilterItem(filterId: string): void;
     toggleFilterActive(): void;
+    onSearchStringChange(searchString: string): void;
+    onSearch(): void;
 }
 
 export default class MobileContentToolbar extends React.Component<MobileContentToolbarProps> {
@@ -33,11 +36,14 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
             isActive,
             currentFilterType,
             selectedFilters,
-            filterTypes,
+            filterOptions,
             filters,
+            searchString,
             selectFilterType,
             toggleSelectFilterItem,
             toggleFilterActive,
+            onSearch,
+            onSearchStringChange,
         } = this.props;
 
         return (
@@ -68,11 +74,14 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                     <FilterView
                         currentFilterType={currentFilterType}
                         selectedFilters={selectedFilters}
-                        filterTypes={filterTypes}
+                        filterOptions={filterOptions}
                         filters={filters}
+                        searchString={searchString}
                         selectFilterType={selectFilterType}
                         toggleSelectFilterItem={toggleSelectFilterItem}
                         toggleFilterActive={toggleFilterActive}
+                        onSearch={onSearch}
+                        onSearchStringChange={onSearchStringChange}
                     />
                 }
             </div>

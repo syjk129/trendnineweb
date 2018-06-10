@@ -17,6 +17,17 @@ export const FilterQueryParamMap = {
     "tags": [FilterType.TAGS],
 };
 
+export enum FilterCategory {
+    SEARCH,
+    RANGE,
+    SELECT,
+}
+
+export class FilterOption {
+    type: FilterType;
+    category: FilterCategory;
+}
+
 export enum SortType {
 }
 
