@@ -6,6 +6,17 @@ export enum FilterType {
     TAGS = "Tags",
 }
 
+export const FilterQueryParamMap = {
+    [FilterType.CATEGORY]: "categories",
+    [FilterType.BRANDS]: "brand_ids",
+    [FilterType.RETAILER]: "merchant_ids",
+    [FilterType.TAGS]: "tags",
+    "categories": [FilterType.CATEGORY],
+    "brand_ids": [FilterType.BRANDS],
+    "merchant_ids": [FilterType.RETAILER],
+    "tags": [FilterType.TAGS],
+};
+
 export enum SortType {
 }
 

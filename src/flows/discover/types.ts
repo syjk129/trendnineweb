@@ -3,11 +3,9 @@ import { match } from "react-router-dom";
 
 import { FeaturedInfluencer, Person, Post, PostPreview, Posts } from "../../api/models";
 import { PostParam } from "../model";
+import RouteProps from "../routeProps";
 
-export interface DiscoverProps {
-    history: H.History;
-    location: any;
-    match: match<any>;
+export interface DiscoverProps extends RouteProps {
     getTrendingPosts(): Array<Post>;
     getFeedPosts(queryString?: string, nextToken?: string): Posts;
     getLatestPosts(queryString?: string, nextToken?: string): Posts;

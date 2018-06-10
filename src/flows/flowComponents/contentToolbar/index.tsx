@@ -6,20 +6,19 @@ import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detec
 import { FilterSearchResult } from "../../../api/models";
 import { AppContext, AppContextTypes } from "../../../app";
 import { ContentType } from "../../model";
+import RouteProps from "../../routeProps";
 import MobileContentToolbar from "./mobile";
-import { Filter, FilterType, RangeValueFilter, SelectFilter } from "./types";
+import { Filter, FilterQueryParamMap, FilterType, RangeValueFilter, SelectFilter } from "./types";
 
 import "./style.scss";
 
 
-interface ContentToolbarProps {
+interface ContentToolbarProps extends RouteProps {
     className?: string;
     // sortType: SortType;
-    selectedFilters: Map<FilterType, Filter>;
     contentType: ContentType;
     setGridSize?(size: number): void;
     // setSortType(sortType: SortType): void;
-    // setFilters(filters: Map<FilterType, Filter>): void;
 }
 
 interface ContentToolbarState {
@@ -38,7 +37,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         isActive: false,
         filterTypes: this._getFilterTypes(this.props.contentType),
         filters: new Map(),
-        selectedFilters: this.props.selectedFilters,
+        selectedFilters: new Map(),
         currentFilterType: null,
         searchString: "",
     };
@@ -50,7 +49,6 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     render() {
         const {
             className,
-            selectedFilters,
             contentType,
             setGridSize,
         } = this.props;
@@ -79,7 +77,16 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
             const filterContent = await this._getFilterContent(filterType, this.state.searchString);
             filters[filterType] = filterContent;
         });
-        this.setState({ filters });
+
+        // Update selectedFilters
+        const queryParams = location.search.slice(1).split("&");
+        const selectedFilters = this.state.selectedFilters;
+        queryParams.forEach(queryParam => {
+            const [filterType, values] = queryParam.split("=");
+            selectedFilters[FilterQueryParamMap[filterType]] = { selectedIds: values.split(",") } as SelectFilter;
+        });
+
+        this.setState({ filters, selectedFilters });
     }
 
     @autobind
@@ -101,13 +108,22 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     @autobind
     private _toggleFilterActive() {
+        if (this.state.isActive) {
+            const queryString = Object.keys(this.state.selectedFilters).reduce((result, filterType) => {
+                const temp = this.state.selectedFilters[filterType].selectedIds.join(",");
+                return `${result}${result.length !== 0 ? "&" : ""}${FilterQueryParamMap[filterType]}=${temp}`;
+            }, "");
+            this.props.history.push({
+                pathname: this.props.location.pathname,
+                search: `?${queryString}`,
+            });
+        }
         this.setState({ isActive: !this.state.isActive });
     }
 
     @autobind
     private _toggleSelectFilterItem(filterId: string) {
         const selectedFilters = this.state.selectedFilters;
-
         let selectFilter = selectedFilters[this.state.currentFilterType] || new SelectFilter;
 
         // Toggle
