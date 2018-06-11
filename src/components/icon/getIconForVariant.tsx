@@ -13,6 +13,7 @@ import * as Like from "./icons/like.png";
 import * as LikeFilled from "./icons/like_filled.png";
 import * as Menu from "./icons/menu.png";
 import * as MinusClose from "./icons/minus_close.png";
+import * as PlusOpen from "./icons/plus_open.png";
 import * as Preview1 from "./icons/preview1.png";
 import * as Preview2 from "./icons/preview2.png";
 import * as Preview3 from "./icons/preview3.png";
@@ -55,6 +56,8 @@ export default function getIconForVariant(variant: IconVariant) {
             return Menu;
         case IconVariant.MINUS_CLOSE:
             return MinusClose;
+        case IconVariant.PLUS_OPEN:
+            return PlusOpen;
         case IconVariant.GRID_SIZE_1:
             return Preview1;
         case IconVariant.GRID_SIZE_2:

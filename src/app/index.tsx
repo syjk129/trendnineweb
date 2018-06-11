@@ -112,7 +112,7 @@ export default class App extends React.Component<AppProps, AppState> {
                 <Router history={browserHistory}>
                     <AppProvider setError={this._setError}>
                         <Header loggedIn={this.state.loggedIn} />
-                        <div className={`main-content ${isMobile && "mobile-view"}`}>
+                        <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content">
                             <Route exact path="/" render={() => <Redirect to="/discover" />} />
                             <Route path="/login" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />
                             <Route path="/register" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />

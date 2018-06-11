@@ -116,7 +116,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         };
 
         return (
-            <div className="mobile-discover">
+            <div className="mobile-discover" id="mobile-discover">
                 <Carousel attributes={carouselAttributes}>
                     <div>
                         <MobileCarouselItem>

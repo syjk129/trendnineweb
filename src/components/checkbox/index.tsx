@@ -1,6 +1,6 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
-import { ChangeEvent } from "react";
+import { isMobile } from "react-device-detect";
 
 import { IconButton } from "../button";
 import Icon, { IconVariant } from "../icon";
@@ -18,7 +18,15 @@ interface CheckboxProps {
 
 export default class Checkbox extends React.Component<CheckboxProps, never> {
     render() {
-        const classes = `checkbox-container ${this.props.className}`;
+        let classes = "checkbox-container";
+        if (this.props.className) {
+            classes += ` ${this.props.className}`;
+        }
+
+        if (isMobile) {
+            classes += " mobile";
+        }
+
         return (
             <label className={classes}> {this.props.label}
                 <Input

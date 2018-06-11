@@ -1,25 +1,10 @@
 @import "../../../styles/variables";
 
-.mobile-content-toolbar {
-    visibility: hidden;
-    padding: $mobile-page-spacing;
-    background-color: $base-background-color;
-    box-sizing: border-box;
-
-    &.sticky {
-        visibility: visible;
-        position: fixed;
-        width: 100%;
-        top: 60px;
-        left: 0;
-        z-index: 3;
-    }
-}
-
 .toolbar {
-    width: 100%;
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
 
     .grid-sizes {
         align-items: center;
@@ -28,5 +13,36 @@
         .icon {
             padding-left: $base-spacing;
         }
+    }
+}
+
+.filter-toggle {
+    display: flex;
+    align-items: center;
+
+    .filter-toggle-label {
+        font-size: $font-size-2;
+        margin-right: $base-spacing;
+    }
+}
+
+.sticky-mobile-content-toolbar {
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 3;
+    top: 59px;
+    left: 0;
+    background-color: $base-background-color;
+
+    &.filter-open {
+        height: 100%;
+        overflow: scroll;
+        bottom: 0;
+    }
+
+    .toolbar {
+        padding: $mobile-page-spacing;
+        border-bottom: $standard-border-width solid $standard-border-color;
     }
 }

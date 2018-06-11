@@ -24,12 +24,14 @@ interface MobileContentToolbarProps {
     onSearch(): void;
 }
 
-export default class MobileContentToolbar extends React.Component<MobileContentToolbarProps> {
-    componentDidMount() {
-        this._toolbarElement = document.getElementById("mobile-content-toolbar");
-        this._offsetTop = document.getElementById("mobile-content-toolbar").offsetTop;
-        window.addEventListener("scroll", this._onScroll, false);
-    }
+interface MobileContentToolbarState {
+    stickyAdded: boolean;
+}
+
+export default class MobileContentToolbar extends React.Component<MobileContentToolbarProps, MobileContentToolbarState> {
+    state: MobileContentToolbarState = {
+        stickyAdded: false,
+    };
 
     render() {
         const {
@@ -47,10 +49,11 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
         } = this.props;
 
         return (
-            <div className="mobile-content-toolbar" id="mobile-content-toolbar">
+            <Sticky id="mobile-content-toolbar" stickyClassName="sticky-mobile-content-toolbar">
                 <div className="toolbar">
-                    <div onClick={toggleFilterActive}>
-                        Filter
+                    <div className="filter-toggle" onClick={this._toggleFilterActive}>
+                        <span className="filter-toggle-label">Filter</span>
+                        <Icon variant={IconVariant.PLUS_OPEN} selected={this.props.isActive} />
                     </div>
                     <div className="grid-sizes">
                         <IconButton
@@ -79,12 +82,12 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                         searchString={searchString}
                         selectFilterType={selectFilterType}
                         toggleSelectFilterItem={toggleSelectFilterItem}
-                        toggleFilterActive={toggleFilterActive}
+                        toggleFilterActive={this._toggleFilterActive}
                         onSearch={onSearch}
                         onSearchStringChange={onSearchStringChange}
                     />
                 }
-            </div>
+            </Sticky>
         );
     }
 
@@ -92,12 +95,31 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
     private _toolbarElement: HTMLElement;
 
     @autobind
-    private _onScroll() {
-        const navbarHeight = 60;
-        if (window.pageYOffset + navbarHeight > this._offsetTop) {
-            this._toolbarElement.classList.add("sticky");
+    private _toggleFilterActive() {
+        // Add sticky classname when filter opens and its not already sticky
+        const contentToolbar = document.getElementById("mobile-content-toolbar");
+
+        if (this.props.isActive) {
+            if (this.state.stickyAdded && contentToolbar.classList.contains("sticky-mobile-content-toolbar")) {
+                contentToolbar.classList.remove("sticky-mobile-content-toolbar");
+                this.setState({ stickyAdded: false });
+            }
+            contentToolbar.classList.remove("filter-open");
         } else {
-            this._toolbarElement.classList.remove("sticky");
+            if (!contentToolbar.classList.contains("sticky-mobile-content-toolbar")) {
+                contentToolbar.classList.add("sticky-mobile-content-toolbar");
+                this.setState({ stickyAdded: true });
+            }
+            contentToolbar.classList.add("filter-open");
         }
+
+        // Make html and body not scrollable while filter is open
+        if (!this.props.isActive) {
+            document.body.classList.add("noscroll");
+        } else {
+            document.body.classList.remove("noscroll");
+        }
+
+        return this.props.toggleFilterActive();
     }
 }

@@ -6,6 +6,7 @@
     padding-left: $checkbox-size + $base-spacing;
     cursor: pointer;
     user-select: none;
+    line-height: $checkbox-size;
 
     .checkbox-checkmark {
         position: absolute;
@@ -15,6 +16,18 @@
         width: $checkbox-size - 2 * $standard-border-width;
         background-color: transparent;
         border: $standard-border-width solid $standard-border-color;
+    }
+
+    &.mobile {
+        line-height: $mobile-checkbox-size;
+        font-size: $font-size-2;
+        margin: $base-spacing 0;
+        padding-left: $mobile-checkbox-size + $base-spacing;
+
+        .checkbox-checkmark {
+            height: $mobile-checkbox-size - 2 * $standard-border-width;
+            width: $mobile-checkbox-size - 2 * $standard-border-width;
+        }
     }
 
     input {
@@ -29,5 +42,10 @@
             width: $checkbox-size;
             border: 0;
         }
+    }
+
+    &.mobile input:checked ~ .checkbox-checkmark {
+        height: $mobile-checkbox-size;
+        width: $mobile-checkbox-size;
     }
 }

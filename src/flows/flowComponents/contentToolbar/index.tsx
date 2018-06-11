@@ -23,6 +23,7 @@ interface ContentToolbarProps extends RouteProps {
 
 interface ContentToolbarState {
     isActive: boolean;
+    hasChanged: boolean;
     filterOptions: Array<FilterOption>;
     filters: Map<FilterType, Array<FilterSearchResult>>;
     selectedFilters: Map<FilterType, Filter>;
@@ -35,6 +36,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     state: ContentToolbarState = {
         isActive: false,
+        hasChanged: false,
         filterOptions: this._getFilterTypes(this.props.contentType),
         filters: new Map(),
         selectedFilters: new Map(),
@@ -74,7 +76,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     @autobind
     private _onSearchStringChange(searchString: string) {
-        this.setState({ searchString });
+        this.setState({ searchString, hasChanged: true });
     }
 
     @autobind
@@ -122,9 +124,12 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     @autobind
     private _toggleFilterActive() {
-        if (this.state.isActive) {
+        if (this.state.isActive && this.state.hasChanged) {
             const queryString = Object.keys(this.state.selectedFilters).reduce((result, filterType) => {
                 const temp = this.state.selectedFilters[filterType].selectedIds.join(",");
+                if (temp.length === 0) {
+                    return result;
+                }
                 return `${result}${result.length !== 0 ? "&" : ""}${FilterQueryParamMap[filterType]}=${temp}`;
             }, "");
             this.props.history.push({
@@ -132,7 +137,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 search: `?${queryString}`,
             });
         }
-        this.setState({ isActive: !this.state.isActive });
+        this.setState({ isActive: !this.state.isActive, hasChanged: false });
     }
 
     @autobind
@@ -148,7 +153,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         }
         selectedFilters[this.state.currentFilterType] = selectFilter;
 
-        this.setState({ selectedFilters });
+        this.setState({ selectedFilters, hasChanged: true });
     }
 
     @autobind

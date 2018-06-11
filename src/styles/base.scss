@@ -26,3 +26,7 @@ p {
         margin-top: $content-spacing;
     }
 }
+
+.noscroll {
+    overflow: hidden;
+}
