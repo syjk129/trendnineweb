@@ -40,6 +40,12 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
 
     @autobind
     private _toggleMenu() {
+        if (!this.state.showMenu) {
+            document.body.classList.add("noscroll");
+        } else {
+            document.body.classList.remove("noscroll");
+        }
+
         this.setState({ showMenu: !this.state.showMenu });
     }
 }

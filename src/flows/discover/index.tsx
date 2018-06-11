@@ -6,21 +6,14 @@ import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detec
 import { match, withRouter } from "react-router-dom";
 
 import { AppContext } from "../../app";
+import RouteProps from "../routeProps";
 import DesktopDiscover from "./desktop";
 import MobileDiscover from "./mobile";
 
-interface DiscoverProps {
-    history: H.History;
-    location: any;
-    match: match<any>;
-}
+type Props = RouteProps;
 
-export default class Discover extends React.Component<DiscoverProps> {
+export default class Discover extends React.Component<Props> {
     static contextTypes: AppContext;
-
-    constructor(props: DiscoverProps) {
-        super(props);
-    }
 
     render() {
         const { ...routeProps } = this.props;
