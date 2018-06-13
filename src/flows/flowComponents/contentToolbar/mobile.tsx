@@ -21,7 +21,6 @@ interface MobileContentToolbarProps {
     toggleSelectFilterItem(filterId: string): void;
     toggleFilterActive(): void;
     onSearchStringChange(searchString: string): void;
-    onSearch(): void;
 }
 
 interface MobileContentToolbarState {
@@ -44,7 +43,6 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
             selectFilterType,
             toggleSelectFilterItem,
             toggleFilterActive,
-            onSearch,
             onSearchStringChange,
         } = this.props;
 
@@ -83,7 +81,6 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                         selectFilterType={selectFilterType}
                         toggleSelectFilterItem={toggleSelectFilterItem}
                         toggleFilterActive={this._toggleFilterActive}
-                        onSearch={onSearch}
                         onSearchStringChange={onSearchStringChange}
                     />
                 }

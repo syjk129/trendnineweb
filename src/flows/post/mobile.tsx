@@ -67,7 +67,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                     {this.state.tabbedContent.map(content => (
                         <div>
                             <CarouselItem
-                                imageUrl={content.image.small_image_url}
+                                imageUrl={content.image && content.image.small_image_url}
                                 redirectUrl={`/product/${content.id}`}
                                 title={"content"}
                                 detail={"content"}

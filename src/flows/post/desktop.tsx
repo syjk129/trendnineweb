@@ -66,7 +66,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                         variant={ButtonVariant.SECONDARY}
                                         url={`/product/${product.id}`}
                                     >
-                                        <img className="post-card-hover-image" src={product.image.small_image_url} />
+                                        <img className="post-card-hover-image" src={product.image && product.image.small_image_url} />
                                         <div className="post-card-hover-content">
                                             <p className="post-card-hover-name">
                                                 {product.brand.name}
@@ -136,7 +136,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                 {post.products.map(product => (
                                     <div>
                                         <CarouselItem
-                                            imageUrl={product.image.small_image_url}
+                                            imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/product/${product.id}`}
                                             title={product.brand.name}
                                             detail={product.title}
@@ -160,7 +160,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                 {relatedProducts.map(product => (
                                     <div>
                                         <CarouselItem
-                                            imageUrl={product.image.small_image_url}
+                                            imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/product/${product.id}`}
                                             title={product.brand.name}
                                             detail={product.title}

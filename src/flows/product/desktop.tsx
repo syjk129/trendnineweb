@@ -102,7 +102,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                             {relatedProducts.map(product => (
                                 <div>
                                     <CarouselItem
-                                        imageUrl={product.image.small_image_url}
+                                        imageUrl={product.image && product.image.small_image_url}
                                         redirectUrl={`/product/${product.id}`}
                                         title={product.brand.name}
                                         detail={product.title}

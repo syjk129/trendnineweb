@@ -48,6 +48,10 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         this._populateFilters();
     }
 
+    componentWillUnmount() {
+        clearTimeout(this._searchTimeout);
+    }
+
     render() {
         const {
             className,
@@ -65,7 +69,6 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                         selectFilterType={this._selectFilterType}
                         toggleSelectFilterItem={this._toggleSelectFilterItem}
                         toggleFilterActive={this._toggleFilterActive}
-                        onSearch={this._onSearch}
                         onSearchStringChange={this._onSearchStringChange}
                         setGridSize={setGridSize}
                     />
@@ -74,16 +77,16 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         );
     }
 
-    @autobind
-    private _onSearchStringChange(searchString: string) {
-        this.setState({ searchString, hasChanged: true });
-    }
+    private _searchTimeout: any;
 
     @autobind
-    private async _onSearch() {
-        const filters = this.state.filters;
-        filters[this.state.currentFilterType] = await this._getFilterContent(this.state.currentFilterType, this.state.searchString);
-        this.setState({ filters });
+    private async _onSearchStringChange(searchString: string) {
+        this._searchTimeout = setTimeout(async () => {
+            const filters = this.state.filters;
+            filters[this.state.currentFilterType] = await this._getFilterContent(this.state.currentFilterType, this.state.searchString);
+            this.setState({ filters });
+        }, 1000);
+        this.setState({ searchString, hasChanged: true });
     }
 
     @autobind
@@ -95,12 +98,14 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         });
 
         // Update selectedFilters
-        const queryParams = location.search.slice(1).split("&");
         const selectedFilters = this.state.selectedFilters;
-        queryParams.forEach(queryParam => {
-            const [filterType, values] = queryParam.split("=");
-            selectedFilters[FilterQueryParamMap[filterType]] = { selectedIds: values.split(",") } as SelectFilter;
-        });
+        if (location.search) {
+            const queryParams = location.search.slice(1).split("&");
+            queryParams.forEach(queryParam => {
+                const [filterType, values] = queryParam.split("=");
+                selectedFilters[FilterQueryParamMap[filterType]] = { selectedIds: values.split(",") } as SelectFilter;
+            });
+        }
 
         this.setState({ filters, selectedFilters });
     }

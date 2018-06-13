@@ -39,7 +39,7 @@ export default function MobileProduct({
                     {relatedProducts.map(content => (
                         <div>
                             <CarouselItem
-                                imageUrl={content.image.small_image_url}
+                                imageUrl={content.image && content.image.small_image_url}
                                 redirectUrl={`/product/${content.id}`}
                                 title={content.brand.name}
                                 detail={content.title}

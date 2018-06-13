@@ -17,7 +17,7 @@
     .filter-results {
         box-sizing: border-box;
         padding: $mobile-page-spacing;
-        height: calc(100% - 60px - 46px);
+        height: calc(100% - 67px - 46px);
         overflow: auto;
     }
 
@@ -26,6 +26,7 @@
 
         input {
             box-sizing: border-box;
+            font-size: $font-size-2;
         }
     }
 

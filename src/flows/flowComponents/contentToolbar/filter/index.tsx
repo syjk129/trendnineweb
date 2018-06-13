@@ -20,7 +20,6 @@ interface FilterViewProps {
     toggleSelectFilterItem(filterId: string): void;
     toggleFilterActive(): void;
     onSearchStringChange(searchString: string): void;
-    onSearch(): void;
 }
 
 interface ListItemProps {
@@ -82,9 +81,9 @@ export default class FilterView extends React.Component<FilterViewProps> {
                         <ListItem label={currentFilterType} open onClick={() => selectFilterType(null)} />
                         <div className="filter-search">
                             <Input
+                                placeholder={`Search for ${currentFilterType}`}
                                 value={this.props.searchString}
                                 onChange={this.props.onSearchStringChange}
-                                onEnterPress={this.props.onSearch}
                             />
                         </div>
                         <div className="filter-results">
