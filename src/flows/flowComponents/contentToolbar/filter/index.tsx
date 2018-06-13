@@ -6,6 +6,7 @@ import { FilterSearchResult } from "../../../../api/models";
 import Checkbox from "../../../../components/checkbox";
 import Icon, { IconVariant } from "../../../../components/icon";
 import Input from "../../../../components/input";
+import { ListContainer, ListItem } from "../list";
 import { Filter, FilterCategory, FilterOption, FilterType } from "../types";
 
 import "./style.scss";
@@ -22,23 +23,6 @@ interface FilterViewProps {
     onSearchStringChange(searchString: string): void;
 }
 
-interface ListItemProps {
-    label: string;
-    open?: boolean;
-    onClick?(): void;
-}
-
-class ListItem extends React.Component<ListItemProps> {
-    render() {
-        return (
-            <div className="list-item" onClick={this.props.onClick}>
-                <span className="label">{this.props.label}</span>
-                <div><Icon variant={this.props.open ? IconVariant.ARROW_LEFT : IconVariant.ARROW_RIGHT} /></div>
-            </div>
-        );
-    }
-}
-
 export default class FilterView extends React.Component<FilterViewProps> {
     render() {
         const {
@@ -52,12 +36,12 @@ export default class FilterView extends React.Component<FilterViewProps> {
         } = this.props;
 
         return (
-            <div className="mobile-filter">
+            <ListContainer>
                 {!currentFilterType && filterOptions.map(filterOption => (
                     <ListItem label={filterOption.type} onClick={() => selectFilterType(filterOption.type)} />
                 ))}
                 {currentFilterType && this._renderFilterSearch()}
-            </div>
+            </ListContainer>
         );
     }
 

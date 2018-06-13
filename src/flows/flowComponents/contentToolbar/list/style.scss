@@ -1,0 +1,16 @@
+@import "../../../../styles/variables";
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: $standard-border-width solid $standard-border-color;
+    padding: $mobile-page-spacing;
+    font-size: $font-size-2;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+}
+
+.list-container {
+    height: calc(100% - 60px - 46px);
+    overflow: hidden;
+}

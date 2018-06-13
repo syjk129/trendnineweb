@@ -8,10 +8,9 @@ import { AppContext, AppContextTypes } from "../../../app";
 import { ContentType } from "../../model";
 import RouteProps from "../../routeProps";
 import MobileContentToolbar from "./mobile";
-import { Filter, FilterCategory, FilterOption, FilterQueryParamMap, FilterType, RangeValueFilter, SelectFilter } from "./types";
+import { Filter, FilterCategory, FilterOption, FilterQueryParamMap, FilterType, RangeValueFilter, SelectFilter, SortFilter, SortQueryParamMap, SortType, ToolbarType } from "./types";
 
 import "./style.scss";
-
 
 interface ContentToolbarProps extends RouteProps {
     className?: string;
@@ -22,12 +21,14 @@ interface ContentToolbarProps extends RouteProps {
 }
 
 interface ContentToolbarState {
-    isActive: boolean;
+    activeToolbar: ToolbarType | null;
     hasChanged: boolean;
     filterOptions: Array<FilterOption>;
+    sortTypes: Array<SortType>;
     filters: Map<FilterType, Array<FilterSearchResult>>;
     selectedFilters: Map<FilterType, Filter>;
     currentFilterType: FilterType | null;
+    currentSortType: SortType;
     searchString: string;
 }
 
@@ -35,12 +36,14 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     static contextTypes: AppContext;
 
     state: ContentToolbarState = {
-        isActive: false,
+        activeToolbar: null,
         hasChanged: false,
         filterOptions: this._getFilterTypes(this.props.contentType),
+        sortTypes: this._getSortTypes(),
         filters: new Map(),
         selectedFilters: new Map(),
         currentFilterType: null,
+        currentSortType: SortType.RELEVANCE,
         searchString: "",
     };
 
@@ -67,8 +70,9 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                     <MobileContentToolbar
                         {...this.state}
                         selectFilterType={this._selectFilterType}
+                        selectSortType={this._selectSortType}
                         toggleSelectFilterItem={this._toggleSelectFilterItem}
-                        toggleFilterActive={this._toggleFilterActive}
+                        toggleActiveToolbar={this._toggleActiveToolbar}
                         onSearchStringChange={this._onSearchStringChange}
                         setGridSize={setGridSize}
                     />
@@ -99,15 +103,20 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
         // Update selectedFilters
         const selectedFilters = this.state.selectedFilters;
+        let sortType = this.state.currentSortType;
         if (location.search) {
             const queryParams = location.search.slice(1).split("&");
             queryParams.forEach(queryParam => {
                 const [filterType, values] = queryParam.split("=");
-                selectedFilters[FilterQueryParamMap[filterType]] = { selectedIds: values.split(",") } as SelectFilter;
+                if (filterType.toLowerCase() === "sort") {
+                    sortType = SortQueryParamMap[values.toLowerCase()];
+                } else {
+                    selectedFilters[FilterQueryParamMap[filterType]] = { selectedIds: values.split(",") } as SelectFilter;
+                }
             });
         }
 
-        this.setState({ filters, selectedFilters });
+        this.setState({ filters, selectedFilters, currentSortType: sortType });
     }
 
     @autobind
@@ -128,21 +137,14 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     }
 
     @autobind
-    private _toggleFilterActive() {
-        if (this.state.isActive && this.state.hasChanged) {
-            const queryString = Object.keys(this.state.selectedFilters).reduce((result, filterType) => {
-                const temp = this.state.selectedFilters[filterType].selectedIds.join(",");
-                if (temp.length === 0) {
-                    return result;
-                }
-                return `${result}${result.length !== 0 ? "&" : ""}${FilterQueryParamMap[filterType]}=${temp}`;
-            }, "");
-            this.props.history.push({
-                pathname: this.props.location.pathname,
-                search: `?${queryString}`,
-            });
+    private _toggleActiveToolbar(toolbarType: ToolbarType) {
+        if (this.state.activeToolbar && this.state.activeToolbar === toolbarType && this.state.hasChanged) {
+            this._applyFilters();
         }
-        this.setState({ isActive: !this.state.isActive, hasChanged: false });
+        this.setState({
+            activeToolbar: this.state.activeToolbar === toolbarType ? null : toolbarType,
+            hasChanged: false,
+        });
     }
 
     @autobind
@@ -162,8 +164,35 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     }
 
     @autobind
+    private _applyFilters() {
+        // Apply filter query param
+        let queryString = Object.keys(this.state.selectedFilters).reduce((result, filterType) => {
+            const temp = this.state.selectedFilters[filterType].selectedIds.join(",");
+            if (temp.length === 0) {
+                return result;
+            }
+            return `${result}${result.length !== 0 ? "&" : ""}${FilterQueryParamMap[filterType]}=${temp}`;
+        }, "");
+
+        // Apply sort query param
+        if (this.state.currentSortType !== SortType.RELEVANCE) {
+            queryString += `${queryString.length === 0 ? "" : "&"}sort=${SortQueryParamMap[this.state.currentSortType]}`;
+        }
+
+        this.props.history.push({
+            pathname: this.props.location.pathname,
+            search: `?${queryString}`,
+        });
+    }
+
+    @autobind
     private _selectFilterType(filterType: FilterType | null) {
         this.setState({ currentFilterType: filterType });
+    }
+
+    @autobind
+    private _selectSortType(sortType: SortType) {
+        this.setState({ currentSortType: sortType }, () => this._applyFilters());
     }
 
     private _getFilterTypes(contentType: ContentType) {
@@ -188,6 +217,17 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
             default:
                 throw new Error(`Filter not supported for content type ${contentType}`);
         }
+    }
+
+    private _getSortTypes() {
+        // Update once we have different sort types by context
+        return [
+            SortType.RELEVANCE,
+            SortType.LATEST,
+            SortType.POPULARITY,
+            SortType.PRICE_HIGH_TO_LOW,
+            SortType.PRICE_LOW_TO_HIGH,
+        ];
     }
 }
 
