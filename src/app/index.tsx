@@ -64,8 +64,10 @@ class AppProviderComponent extends React.Component<AppProviderProps, never> {
 
     static childContextTypes: AppContext;
 
-    componentWillReceiveProps() {
-        this.forceUpdate();
+    componentWillReceiveProps(nextProps: AppProviderProps) {
+        if (nextProps.location.pathname !== this.props.location.pathname) {
+            this.forceUpdate();
+        }
     }
 
     getChildContext(): AppContext {
@@ -108,8 +110,8 @@ export default class App extends React.Component<AppProps, AppState> {
 
     render() {
         return (
-            <ErrorBoundary setLoggedState={this._setLoggedState} errors={this.state.errors}>
-                <Router history={browserHistory}>
+            <Router history={browserHistory}>
+                <ErrorBoundary setLoggedState={this._setLoggedState} removeError={this._removeError} errors={this.state.errors}>
                     <AppProvider setError={this._setError}>
                         <Header loggedIn={this.state.loggedIn} />
                         <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content">
@@ -131,8 +133,8 @@ export default class App extends React.Component<AppProps, AppState> {
                         </div>
                         {/* <Footer /> */}
                     </AppProvider>
-                </Router>
-            </ErrorBoundary>
+                </ErrorBoundary>
+            </Router>
         );
     }
 
@@ -145,6 +147,14 @@ export default class App extends React.Component<AppProps, AppState> {
     private _setError(error: Error) {
         this.setState({
             errors: [...this.state.errors, error],
+        });
+    }
+
+    @autobind
+    private _removeError(error: Error) {
+        const errors = this.state.errors.filter(err => err == error);
+        this.setState({
+            errors,
         });
     }
 }

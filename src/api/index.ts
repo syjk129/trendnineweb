@@ -13,7 +13,7 @@ import {
 } from "./models";
 
 import {
-    createErrorFromResponse,
+    createErrorFromResponse, AuthError,
 } from "./errors";
 
 export interface ApiOptions {
@@ -271,7 +271,7 @@ export default class Api {
             });
 
             if (!response.ok) {
-                console.warn("not ok");
+                this._apiOptions.setError(createErrorFromResponse(response));
             }
 
             if (response.status === 204) {

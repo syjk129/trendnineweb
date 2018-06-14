@@ -11,17 +11,21 @@ export class NetworkError extends Error {
     }
 }
 
-export class AuthError extends NetworkError {
+export class AuthError extends Error {
     // readonly name = "AuthError";
     readonly isAuthError = true;
 
     readonly error: Error;
 
     constructor(err: Error) {
-        super(err);
+       super(`AuthError: ${err}`);
 
-        this.error = err;
+       this.error = err;
     }
+}
+
+export function isAuthError(error: any): error is AuthError {
+    return error.isAuthError;
 }
 
 export function createErrorFromResponse(response: Response) {
