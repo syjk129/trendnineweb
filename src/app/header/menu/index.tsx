@@ -50,10 +50,12 @@ class Menu extends React.Component<MenuProps, MenuState> {
                         />
                         <Icon variant={IconVariant.SEARCH} />
                     </div>
-                    <LinkButton onClick={this._onMenuClick("trending")}>Trending</LinkButton>
-                    <LinkButton onClick={this._onMenuClick("feed")}>Feed</LinkButton>
-                    <LinkButton onClick={this._onMenuClick("new")}>New Arrivals</LinkButton>
-                    <LinkButton onClick={this._onMenuClick("brands")}>Brands</LinkButton>
+                    <LinkButton className="menu-link" onClick={this._onMenuClick("trending")}>Trending</LinkButton>
+                    <LinkButton className="menu-link" onClick={this._onMenuClick("feed")}>Feed</LinkButton>
+                    <LinkButton className="menu-link" onClick={this._onMenuClick("new")}>New Arrivals</LinkButton>
+                    <LinkButton className="menu-link" onClick={this._onMenuClick("brands")}>Brands</LinkButton>
+                    <br/>
+                    <LinkButton onClick={this._logout}>Sign out</LinkButton>
                 </div>
             </div>
         );
@@ -62,6 +64,12 @@ class Menu extends React.Component<MenuProps, MenuState> {
     @autobind
     private _onInputChange(searchString: string) {
         this.setState({ searchString });
+    }
+
+    @autobind
+    private _logout() {
+        this.props.toggleMenu();
+        this.props.history.push("/logout");
     }
 
     @autobind

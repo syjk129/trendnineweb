@@ -2,10 +2,11 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import { ChangeEvent } from "react";
 
-import { IconButton } from "../../components/button/index";
+import Button, { IconButton } from "../../components/button";
 import Input, { InputType } from "../../components/input";
-
 import { AuthData, AuthFormProps } from "./types";
+
+import "./style.scss";
 
 const CALLBACK_URL_PATH = "/facebook/callback";
 
@@ -27,9 +28,7 @@ export class FacebookLoginResponse {
 export default class FacebookLogin extends React.Component<FacebookLoginProps, FacebookLoginState> {
     render() {
         return (
-            <div className="button">
-                <button onClick={this._openLoginWindow}>Login with Facebook</button>
-            </div>
+            <Button className="facebook-login" onClick={this._openLoginWindow}>Login with Facebook</Button>
         );
     }
 

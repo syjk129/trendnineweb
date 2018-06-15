@@ -42,7 +42,10 @@
         .link-button {
             font-size: $font-size-3;
             padding: $large-spacing 0;
-            border-bottom: $standard-border-width solid #fff;
+
+            &.menu-link {
+                border-bottom: $standard-border-width solid #fff;
+            }
         }
     }
 }

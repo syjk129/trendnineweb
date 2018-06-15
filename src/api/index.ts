@@ -13,7 +13,8 @@ import {
 } from "./models";
 
 import {
-    createErrorFromResponse, AuthError,
+    AuthError,
+    createErrorFromResponse,
 } from "./errors";
 
 export interface ApiOptions {

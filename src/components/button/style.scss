@@ -11,24 +11,17 @@
     outline: none;
     border: $standard-border-width solid transparent;
     border-radius: $button-height / 2;
+    background-color: $color-accent;
+    color: #fff;
 
     &:hover {
         cursor: pointer;
+        background-color: darken($color-accent, 20%);
     }
 
     &.button-inline {
         display: inline-block;
         width: auto;
-    }
-
-    &.button-primary {
-        background-color: $color-accent;
-        color: #fff;
-        $dark-background-color: darken($color-accent, 20%);
-
-        &:hover {
-            background-color: darken($color-accent, 20%);
-        }
     }
 
     &.button-outline {
