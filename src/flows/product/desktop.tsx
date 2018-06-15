@@ -8,7 +8,7 @@ import { AppContext, AppContextTypes } from "../../app";
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
-import Image from "../../components/image";
+import Image, { ImageFitVariant } from "../../components/image";
 import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
@@ -71,7 +71,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                         <div className="product-images">
                             <div className="product-main-image">
                                 {images.map(image => (
-                                    <Image src={image} square/>
+                                    <Image src={image} fit={ImageFitVariant.SCALED} square/>
                                 ))}
                             </div>
                         </div>
@@ -80,12 +80,6 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                             <p className="product-name">{product.title}</p>
                             <p className="product-seller">Sold by {product.merchant.name}</p>
                             <p className="product-price">${product.price}</p>
-                            {/* <p className="product-color">Color</p>
-                            <select>
-                                {product.colors.map(color => (
-                                    <option value={color.id}>{color.name}</option>
-                                ))}
-                            </select> */}
                             <p className="product-information">
                                 <div dangerouslySetInnerHTML={{ __html: product.description }} />
                             </p>

@@ -18,7 +18,7 @@ class Featured extends React.Component<FeaturedProps> {
     render() {
         const { featuredTrendnines, history } = this.props;
         return (
-            <SidebarSection title="Today's Trendnine">
+            <SidebarSection title="Today's TrendNine">
                 {this.props.featuredTrendnines.slice(0, 2)
                     .map(trendnine => (
                         <LinkButton

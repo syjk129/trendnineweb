@@ -215,7 +215,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     private _renderRecommendedtrendsetters() {
         return (
             <div className="recommended-trendsetters-container">
-                <p className="title">Trendsetters you might like</p>
+                <p className="title">Influencers you might like</p>
 
                 <div className="recommended-trendsetters">
                     {this.state.recommendedTrendnines.slice(0, 6).map(trendsetter => (

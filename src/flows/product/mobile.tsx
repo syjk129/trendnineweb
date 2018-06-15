@@ -34,7 +34,7 @@ export default function MobileProduct({
             </ExpandableSection>
             <ExpandableSection title="Size & Fit" />
             <ExpandableSection title="Shipping & Returns" />
-            <ContentSection title="How Our Trendsetters wear this Product">
+            <ContentSection title="How Our Influencers wear this Product">
                 <Carousel>
                     {relatedProducts.map(content => (
                         <div>
