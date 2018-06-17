@@ -101,10 +101,18 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
     componentWillMount() {
+        const user = localStorage.getItem("user");
         const token = localStorage.getItem("tn_auth_token");
 
-        if (token && token !== "undefined") {
-            this.setState({ loggedIn: true });
+        if (user !== null && user !== "undefined" && token && token !== "undefined") {
+            const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
+            const current = (new Date()).getTime() / 1000;
+
+            if (exp > current) {
+                this.setState({ loggedIn: true });
+            } else {
+                this.setState({ loggedIn: false });
+            }
         }
     }
 

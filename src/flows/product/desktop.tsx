@@ -81,6 +81,9 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                             <p className="product-seller">Sold by {product.merchant.name}</p>
                             <p className="product-price">${product.price}</p>
                             <p className="product-information">
+                                <div className="product-information-title">
+                                    Product Details
+                                </div>
                                 <div dangerouslySetInnerHTML={{ __html: product.description }} />
                             </p>
                             <div className="button-container">

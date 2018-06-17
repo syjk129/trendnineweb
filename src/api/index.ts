@@ -350,11 +350,21 @@ export default class Api {
     }
 
     private _getRequestHeader() {
+        const user = localStorage.getItem("user");
         const token = localStorage.getItem(tokenName);
+        let jwtToken = "";
+
+        if (user !== null && user !== "undefined" && token && token !== "undefined") {
+            const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
+            const current = (new Date()).getTime() / 1000;
+            if (exp > current) {
+                jwtToken = `JWT ${token}`;
+            }
+        }
 
         return {
             "Accept": "application/json",
-            "Authorization": (token && token !== "undefined") ? `JWT ${token}` : "",
+            "Authorization": jwtToken,
             "Content-Type": "application/json",
         };
     }

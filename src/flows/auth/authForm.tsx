@@ -132,7 +132,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
 
     @autobind
     private _login() {
-        this.props.login({
+        const loginResponse = this.props.login({
             username: this.state.username,
             password: this.state.password,
         });
@@ -154,8 +154,10 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     @autobind
     private async _setLoggedInUser() {
         const user = await this.props.getUser();
-        localStorage.setItem("user", JSON.stringify(user));
-        this.props.history.push("/");
+        if (user && user.username) {
+            localStorage.setItem("user", JSON.stringify(user));
+            this.props.history.push("/");
+        }
     }
 
     @autobind

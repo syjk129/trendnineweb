@@ -49,7 +49,7 @@ class CarouselItem extends React.Component<CarouselItemProps> {
         return (
             <div>
                 <div className={classes} onClick={clickHandler}>
-                    <Image className={imageClasses} src={imageUrl} fit={ImageFitVariant.SCALED} square />
+                    <Image className={imageClasses} src={imageUrl} fit={ImageFitVariant.COVER} square />
                     <p className="carousel-item-title">{title}</p>
                     <p>{detail}</p>
                 </div>

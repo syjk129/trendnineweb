@@ -35,8 +35,17 @@ export default class Auth extends React.Component<AuthProps> {
             this._logout();
         } else {
             const user = localStorage.getItem("user");
-            if (user !== null && user !== "undefined") {
-                this.props.history.push("/");
+            const token = localStorage.getItem("tn_auth_token");
+
+            if (user !== null && user !== "undefined" && token && token !== "undefined") {
+                const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
+                const current = (new Date()).getTime() / 1000;
+
+                if (exp > current) {
+                    this.props.history.push("/");
+                } else {
+                    localStorage.removeItem("tn_auth_token");
+                }
             }
         }
     }

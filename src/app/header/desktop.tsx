@@ -14,50 +14,62 @@ import "./style.scss";
 import { HeaderProps } from "./types";
 
 export default class DesktopHeader extends React.Component<HeaderProps> {
+    componentDidMount() {
+        window.addEventListener("scroll", this.onScroll, false);
+    }
+
+    onScroll = () => {
+        document.getElementById("mainHeader").style.top = window.pageYOffset + "px";
+    }
+
     render() {
-        const { loggedIn, history, user } = this.props;
+        const { loggedIn, history } = this.props;
         const onSearch = (value) => history.push({
             pathname: "/discover",
             search: `?keyword=${value}`,
         });
-
+        const user = JSON.parse(localStorage.getItem("user"));
         const pathname = location.pathname;
         const isShop = pathname.indexOf("/shop") > -1;
 
         return (
-            <div className="main-header">
+            <div className="main-header" id="mainHeader">
                 <div className="user-header">
-                    <div className="header-left-buttons">
-                        <NavLink url="/discover" pathname={pathname}>
-                            Discover
-                        </NavLink>
-                        <NavLink url="/shop/home" pathname={pathname}>
-                            Shop
-                        </NavLink>
-                    </div>
-                    <div className="header-right-buttons">
-                        {(!loggedIn || !user) &&
-                            <NavLink url="/login" pathname={pathname}>Log In</NavLink>
-                        }
-                        {loggedIn && user &&
-                            <div className="user-logged-in-buttons">
-                                <LinkButton url={`/user/${user.username}`}>
-                                    <Icon variant={IconVariant.GIRL} size={IconSize.MEDIUM} />
-                                </LinkButton>
-                            </div>
-                        }
+                    <div className="nav-content">
+                        <div className="header-left-buttons">
+                            <NavLink url="/discover" pathname={pathname} selected={!isShop}>
+                                Discover
+                            </NavLink>
+                            <NavLink url="/shop/home" pathname={pathname} selected={isShop}>
+                                Shop
+                            </NavLink>
+                        </div>
+                        <div className="header-right-buttons">
+                            {(!loggedIn || !user) &&
+                                <NavLink url="/login" pathname={pathname}>Log In</NavLink>
+                            }
+                            {loggedIn && user &&
+                                <div className="user-logged-in-buttons">
+                                    <LinkButton url={`/user/${user.username}`}>
+                                        <Icon variant={IconVariant.GIRL} size={IconSize.MEDIUM} />
+                                    </LinkButton>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
                 <div className="nav-header">
-                    <img className="nav-logo" src={Logo} onClick={() => history.push(isShop ? "/shop/home" : "/discover")} />
-                    <div className="nav-header-links">
-                        <div className="nav-pages">
-                            <NavLink url={isShop ? "/shop/discover" : "/discover"} pathname={pathname} large>Trending</NavLink>
-                            <NavLink url={isShop ? "/shop/feed" : "/feed"} pathname={pathname} large>Feed</NavLink>
-                        </div>
-                        <div className="search">
-                            <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
-                            <Icon variant={IconVariant.SEARCH}></Icon>
+                    <div className="nav-content">
+                        <img className="nav-logo" src={Logo} onClick={() => history.push(isShop ? "/shop/home" : "/discover")} />
+                        <div className="nav-header-links">
+                            <div className="nav-pages">
+                                <NavLink url={isShop ? "/shop/discover" : "/discover"} pathname={pathname} large>Trending</NavLink>
+                                {loggedIn && user && <NavLink url={isShop ? "/shop/feed" : "/feed"} pathname={pathname} large>Feed</NavLink>}
+                            </div>
+                            <div className="search">
+                                <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
+                                <Icon variant={IconVariant.SEARCH}></Icon>
+                            </div>
                         </div>
                     </div>
                 </div>

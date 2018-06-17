@@ -7,14 +7,15 @@ interface NavLinkProps {
     url: string;
     pathname: string;
     large?: boolean;
+    selected?: boolean;
     children?: React.ReactNode;
     onClick?(): void;
 }
 
-export default function NavLink({ url, pathname, large, children, onClick }: NavLinkProps) {
+export default function NavLink({ url, pathname, large, selected, children, onClick }: NavLinkProps) {
     let classes = "nav-link";
 
-    if (pathname === url) {
+    if (pathname === url || selected) {
         classes += " selected";
     }
 

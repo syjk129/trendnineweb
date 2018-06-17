@@ -10,7 +10,7 @@
     // Default to 3 lines
     max-height: $line-height-2 * 3;
     // fix problem when last visible word doesn't adjoin right side
-    text-align: justify;
+    // text-align: justify;
     // place for '...'
     margin-right: -1em;
     padding-right: 1em;
