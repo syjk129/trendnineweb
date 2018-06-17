@@ -42,9 +42,9 @@ class Card extends React.Component<CardProps, CardState> {
         if (cardElement instanceof Element) {
             const rect = cardElement.getBoundingClientRect();
             if (rect.left + rect.width + 420 < window.innerWidth) {
-                this.setState({ hoverX: rect.width });
+                this.setState({ hoverX: rect.width - 20, hoverY: 20 });
             } else {
-                this.setState({ hoverX: - 235 });
+                this.setState({ hoverX: - 215, hoverY: 20 });
             }
         }
     }
@@ -56,6 +56,7 @@ class Card extends React.Component<CardProps, CardState> {
 
         const hoverStyles = {
             marginLeft: this.state.hoverX,
+            marginTop: this.state.hoverY,
         };
 
         let classes = "card";

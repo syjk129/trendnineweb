@@ -31,10 +31,14 @@
             display: flex;
             padding: 0 $page-spacing;
             width: 100%;
-            max-width: $max-content-width - 2 * $page-spacing;
             min-width: $min-content-width - 2 * $page-spacing;
             margin: auto;
             height: $navbar-menu-height;
+
+            .header-right-buttons {
+                margin-top: auto;
+                margin-bottom: auto;
+            }
 
             .selected {
                 height: $line-height-3;

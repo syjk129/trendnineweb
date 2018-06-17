@@ -29,7 +29,8 @@
     }
 
     .introduction {
-        font-size: $font-size-small;
+        font-size: $font-size-1;
+        line-height: $line-height-1;
         padding: $base-spacing;
         padding-top: $base-spacing * 2;
     }
