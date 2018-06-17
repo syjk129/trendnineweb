@@ -18,7 +18,7 @@ import * as Preview1 from "./icons/preview1.png";
 import * as Preview2 from "./icons/preview2.png";
 import * as Preview3 from "./icons/preview3.png";
 import * as Search from "./icons/search.png";
-import * as Time from "./icons/search.png";
+import * as Time from "./icons/time.png";
 import * as Wishlist from "./icons/wishlist.png";
 import * as WishlistFilled from "./icons/wishlist_filled.png";
 
