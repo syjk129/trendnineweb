@@ -10,6 +10,10 @@
     width: $ranking-img-width;
 }
 
+.post-rank {
+    padding: 0;
+}
+
 .post-rank,
 .mobile-post-rank {
     display: flex;
@@ -27,9 +31,15 @@
         padding-bottom: $base-spacing;
     }
 
+    .post-rank-footer {
+        margin-left: $ranking-img-width + $base-spacing;
+        width: calc(100% - (#{$ranking-img-width} + 3 * #{$base-spacing}));
+    }
+
     .post-rank-detail {
         width: 125px;
         margin: $base-spacing 0 $base-spacing $base-spacing;
+        padding: 0 !important;
 
         p {
             margin-bottom: 0;

@@ -6,3 +6,9 @@
     padding-right: $sidebar-padding;
     margin-top: $content-spacing;
 }
+
+.sticky-sidebar-recently-viewed {
+    position: fixed;
+    width: $sidebar-width;
+    top: $navbar-height + $base-spacing;
+}

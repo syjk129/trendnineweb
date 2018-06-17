@@ -11,7 +11,7 @@ import Sticky from "../../components/sticky";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
-import { SidebarSection } from "../flowComponents/section";
+import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
 import { Filters, PostParam } from "../model";
 import FollowButton from "./followButton";
@@ -52,6 +52,8 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
         if (!profile || !content) {
             return "Loading...";
         }
+
+        const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
 
         return (
             <div className="user">
@@ -103,6 +105,11 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                             </SidebarSection>
                         </div>
                     )}
+                    {recentlyViewed &&
+                        <Sticky id="recently-viewed-section" stickyClassName="sticky-sidebar-recently-viewed">
+                            <SidebarPostProductListSection title="Recently Viewed" items={recentlyViewed} />
+                        </Sticky>
+                    }
                 </Sidebar>
                 <Content>
                     <UserTabs

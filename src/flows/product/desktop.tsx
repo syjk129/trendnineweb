@@ -9,10 +9,12 @@ import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Image, { ImageFitVariant } from "../../components/image";
+import Sidebar from "../../components/sidebar";
+import Sticky from "../../components/sticky";
 import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
-import { ContentSection, SidebarSection } from "../flowComponents/section";
+import { ContentSection, SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
 import { ProductProps } from "./types";
 
@@ -63,53 +65,63 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
         };
 
         let wishlistBtnText = wishlisted ? "Remove from wishlist" : "Add to wishlist";
+        const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
 
         return (
             <div className="product">
-                {product && (
-                    <div className="product-view">
-                        <div className="product-images">
-                            <div className="product-main-image">
-                                {images.map(image => (
-                                    <Image src={image} fit={ImageFitVariant.SCALED} square/>
+                    <Sidebar>
+                        {recentlyViewed &&
+                            <Sticky id="recently-viewed-section" stickyClassName="sticky-sidebar-recently-viewed">
+                                <SidebarPostProductListSection title="Recently Viewed" items={recentlyViewed} />
+                            </Sticky>
+                        }
+                    </Sidebar>
+                <Content>
+                    {product && (
+                        <div className="product-view">
+                            <div className="product-images">
+                                <div className="product-main-image">
+                                    {images.map(image => (
+                                        <Image src={image} fit={ImageFitVariant.SCALED} square/>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="product-details">
+                                <p className="product-brand">{product.brand.name}</p>
+                                <p className="product-name">{product.title}</p>
+                                <p className="product-seller">Sold by {product.merchant.name}</p>
+                                <p className="product-price">${product.price}</p>
+                                <p className="product-information">
+                                    <div className="product-information-title">
+                                        Product Details
+                                    </div>
+                                    <div dangerouslySetInnerHTML={{ __html: product.description }} />
+                                </p>
+                                <div className="button-container">
+                                    <Button variant={ButtonVariant.PRIMARY} onClick={() => location = product.url}>Buy Now</Button>
+                                    <Button variant={ButtonVariant.OUTLINE} onClick={toggleWishlist}>{wishlistBtnText}</Button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {relatedProducts && (
+                        <ContentSection title="You may also like">
+                            <Carousel slidesToShow={relatedProducts.length >= 5 ? 5 : relatedProducts.length}>
+                                {relatedProducts.map(product => (
+                                    <div>
+                                        <CarouselItem
+                                            imageUrl={product.image && product.image.small_image_url}
+                                            redirectUrl={`/product/${product.id}`}
+                                            title={product.brand.name}
+                                            detail={product.title}
+                                            subdetail={this._renderProductFooter(product)}
+                                        />
+                                    </div>
                                 ))}
-                            </div>
-                        </div>
-                        <div className="product-details">
-                            <p className="product-brand">{product.brand.name}</p>
-                            <p className="product-name">{product.title}</p>
-                            <p className="product-seller">Sold by {product.merchant.name}</p>
-                            <p className="product-price">${product.price}</p>
-                            <p className="product-information">
-                                <div className="product-information-title">
-                                    Product Details
-                                </div>
-                                <div dangerouslySetInnerHTML={{ __html: product.description }} />
-                            </p>
-                            <div className="button-container">
-                                <Button variant={ButtonVariant.PRIMARY} onClick={() => location = product.url}>Buy Now</Button>
-                                <Button variant={ButtonVariant.OUTLINE} onClick={toggleWishlist}>{wishlistBtnText}</Button>
-                            </div>
-                        </div>
-                    </div>
-                )}
-                {relatedProducts && (
-                    <ContentSection title="You may also like">
-                        <Carousel slidesToShow={relatedProducts.length >= 5 ? 5 : relatedProducts.length}>
-                            {relatedProducts.map(product => (
-                                <div>
-                                    <CarouselItem
-                                        imageUrl={product.image && product.image.small_image_url}
-                                        redirectUrl={`/product/${product.id}`}
-                                        title={product.brand.name}
-                                        detail={product.title}
-                                        subdetail={this._renderProductFooter(product)}
-                                    />
-                                </div>
-                            ))}
-                        </Carousel>
-                    </ContentSection>
-                )}
+                            </Carousel>
+                        </ContentSection>
+                    )}
+                </Content>
             </div>
         );
     }

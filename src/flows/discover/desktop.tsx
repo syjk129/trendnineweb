@@ -14,7 +14,7 @@ import { PostCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
-import { SidebarSection } from "../flowComponents/section";
+import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
 import { Filters, PostParam } from "../model";
 
@@ -115,6 +115,9 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                 </div>
             );
         }
+
+        const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
+
         return (
             <div className="discover">
                 <Sidebar>
@@ -124,6 +127,12 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                     <SidebarSection title="Trending Posts">
                         <PostRank posts={this.state.trendingPosts} />
                     </SidebarSection>
+
+                    {recentlyViewed &&
+                        <Sticky id="recently-viewed-section" stickyClassName="sticky-sidebar-recently-viewed">
+                            <SidebarPostProductListSection title="Recently Viewed" items={recentlyViewed} />
+                        </Sticky>
+                    }
                 </Sidebar>
                 <Content>
                     {this.state.postParam.keyword !== "" && (

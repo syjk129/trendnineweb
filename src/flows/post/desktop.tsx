@@ -9,11 +9,12 @@ import Content from "../../components/content";
 import Icon, { IconSize, IconVariant} from "../../components/icon";
 import Image, { ImageRatioVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
+import Sticky from "../../components/sticky";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
 import { PostRank } from "../flowComponents/ranking";
-import { ContentSection, SidebarSection } from "../flowComponents/section";
+import { ContentSection, SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
 import PostAuthorDetails from "./postAuthorDetails";
 import ProductTag from "./productTag";
@@ -54,32 +55,17 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
             `Comments (${comments.length})`
         )  : "Comments";
 
+        const postProducts = post.products.map(p => {
+            return ["Product", p];
+        });
+
+        const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
+
         return (
             <div className="post">
                 <Sidebar>
                     {post.products.length > 0 && (
-                        <SidebarSection title="Products in this post">
-                            {post.products.map(product => (
-                                <div className="post-card-hover-item">
-                                    <LinkButton
-                                        className="post-card-hover-btn"
-                                        variant={ButtonVariant.SECONDARY}
-                                        url={`/product/${product.id}`}
-                                    >
-                                        <img className="post-card-hover-image" src={product.image && product.image.small_image_url} />
-                                        <div className="post-card-hover-content">
-                                            <p className="post-card-hover-name">
-                                                {product.brand.name}
-                                            </p>
-                                            <p className="post-card-hover-title">
-                                                {product.title}
-                                            </p>
-                                        </div>
-                                    </LinkButton>
-                                    { this._renderProductFooter(product) }
-                                </div>
-                            ))}
-                        </SidebarSection>
+                        <SidebarPostProductListSection title="Products in this post" items={postProducts} noSticky={true}/>
                     )}
                     {post.tags.length > 0 && (
                         <SidebarSection title="Tags">
@@ -95,6 +81,11 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                             <PostRank posts={relatedPosts.slice(0, 4)} hideRanks />
                         </SidebarSection>
                     )}
+                    {recentlyViewed &&
+                        <Sticky id="recently-viewed-section" stickyClassName="sticky-sidebar-recently-viewed">
+                            <SidebarPostProductListSection title="Recently Viewed" items={recentlyViewed} />
+                        </Sticky>
+                    }
                 </Sidebar>
                 <Content>
                     {post && (

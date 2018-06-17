@@ -133,7 +133,29 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 this.context.api.getFeaturedTrendnines(),
             ]);
 
+            const recentlyViewed = localStorage.getItem("recentlyViewed");
+            let recentlyViewedArray = JSON.parse(recentlyViewed);
+
+            if (!recentlyViewedArray || recentlyViewedArray.length < 1) {
+                recentlyViewedArray = ["Post", post];
+            } else {
+                let indexOfPost = -1;
+                for (let i = 0; i < recentlyViewedArray.length; i++) {
+                    if (recentlyViewedArray[i][1].id === post.id) {
+                        indexOfPost = i;
+                        break;
+                    }
+                }
+
+                if (indexOfPost >= 0) {
+                    recentlyViewedArray.splice(indexOfPost, 1);
+                }
+
+                recentlyViewedArray.unshift(["Post", post]);
+            }
+
             this.setState({ post, comments, relatedProducts, relatedPosts, featuredTrendnines });
+            localStorage.setItem("recentlyViewed", JSON.stringify(recentlyViewedArray.slice(0, 5)));
         } catch (err) {
             throw new Error(err);
         }

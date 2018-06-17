@@ -53,7 +53,8 @@
 }
 
 .product {
-    padding: $page-spacing $content-spacing;
+    display: flex;
+    padding: 0 $page-spacing;
 
     .product-view {
         display: flex;
@@ -64,12 +65,13 @@
     .product-images,
     .product-details {
         display: inline-block;
-        width: 50%;
+        width: 40%;
     }
 
     .product-images {
         display: flex;
         margin-right: $base-spacing * 2;
+        width: 60%;
 
         .carousel-container {
             width: 100px;

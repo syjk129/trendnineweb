@@ -66,6 +66,27 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
 
         const wishlisted = currentProduct.wishlisted;
 
+        const recentlyViewed = localStorage.getItem("recentlyViewed");
+        let recentlyViewedArray = JSON.parse(recentlyViewed);
+
+        if (!recentlyViewedArray || recentlyViewedArray.length < 1) {
+            recentlyViewedArray = ["Product", currentProduct];
+        } else {
+            let indexOfProduct = -1;
+            for (let i = 0; i < recentlyViewedArray.length; i++) {
+                if (recentlyViewedArray[i][1].id === currentProduct.id) {
+                    indexOfProduct = i;
+                    break;
+                }
+            }
+
+            if (indexOfProduct >= 0) {
+                recentlyViewedArray.splice(indexOfProduct, 1);
+            }
+
+            recentlyViewedArray.unshift(["Product", currentProduct]);
+        }
+
         this.setState({
             currentProduct,
             relatedProducts,
@@ -73,6 +94,8 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
             reviews,
             wishlisted,
         });
+
+        localStorage.setItem("recentlyViewed", JSON.stringify(recentlyViewedArray.slice(0, 5)));
     }
 
     render() {
