@@ -14,14 +14,6 @@ import "./style.scss";
 import { HeaderProps } from "./types";
 
 export default class DesktopHeader extends React.Component<HeaderProps> {
-    componentDidMount() {
-        window.addEventListener("scroll", this.onScroll, false);
-    }
-
-    onScroll = () => {
-        document.getElementById("mainHeader").style.top = window.pageYOffset + "px";
-    }
-
     render() {
         const { loggedIn, history } = this.props;
         const pathname = location.pathname;
