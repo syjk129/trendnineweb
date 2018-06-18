@@ -98,7 +98,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                                     <div dangerouslySetInnerHTML={{ __html: product.description }} />
                                 </p>
                                 <div className="button-container">
-                                    <Button variant={ButtonVariant.PRIMARY} onClick={() => location = product.url}>Buy Now</Button>
+                                    <Button variant={ButtonVariant.PRIMARY} onClick={() => window.open(product.url)}>Buy Now</Button>
                                     <Button variant={ButtonVariant.OUTLINE} onClick={toggleWishlist}>{wishlistBtnText}</Button>
                                 </div>
                             </div>
