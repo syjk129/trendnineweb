@@ -13,24 +13,19 @@ interface WithUserSessionProvides {
 const WithUserSession = <T extends WithUserSessionProvides>(
     WrappedComponent: React.ComponentType<T>,
 ) => class extends React.Component<Omit<T, keyof WithUserSessionProvides>> {
-    constructor(props) {
-        super(props);
-        const user = localStorage.getItem("user");
-        if (user && user !== "undefined") {
-            this._user = JSON.parse(user);
-        }
-    }
-
     render() {
+        const rawUser = localStorage.getItem("user");
+        let user: Person;
+        if (rawUser && rawUser !== "undefined") {
+            user = JSON.parse(rawUser);
+        }
         return (
             <WrappedComponent
-                user={this._user}
+                user={user}
                 {...this.props}
             />
         );
     }
-
-    private _user: Person;
 };
 
 export default WithUserSession;

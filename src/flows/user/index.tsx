@@ -52,20 +52,16 @@ export default class User extends React.Component<Props, UserState> {
     }
 
     async getDerivedStateFromProps() {
-        console.log("hihi");
         this._user = JSON.parse(localStorage.getItem("user")) || {};
         let contentType = this.props.match.params.pageName ? this.props.match.params.pageName : UserContentType.POST;
         this._updateContent(this.props, contentType);
     }
 
     render() {
-        const { ...routeProps } = this.props;
-
         return (
             <div>
                 <BrowserView device={isBrowser}>
                     <DesktopUser
-                        {...routeProps}
                         user={this._user}
                         userId={this._userId}
                         profile={this.state.profile}
@@ -80,7 +76,6 @@ export default class User extends React.Component<Props, UserState> {
                 </BrowserView>
                 <MobileView device={isMobile}>
                     <MobileUser
-                        {...routeProps}
                         user={this._user}
                         userId={this._userId}
                         profile={this.state.profile}

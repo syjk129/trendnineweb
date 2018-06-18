@@ -172,10 +172,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
     private _renderPosts() {
         const posts = this.state.posts;
-        const postCards = posts.map(post => (
-            <PostCard
-                post={post}
-            />));
+        const postCards = posts.map(post => <PostCard post={post} />);
 
         // update the logic to add recommended trendsetters whenever
         postCards.splice(this.state.numCardsPerRow * 4, 0, this._renderRecommendedtrendsetters());

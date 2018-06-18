@@ -22,7 +22,7 @@ export default function MobileProduct({
                 {product.alt_images.map(image => <div><CarouselItem imageUrl={image.url} /></div>)}
             </Carousel>
             <div className="product-details">
-                <p className="product-brand">{product.brand.name}</p>
+                <p className="product-brand">{product.brand && product.brand.name}</p>
                 <p className="product-name">{product.title}</p>
                 <p className="product-seller">Sold by {product.merchant.name}</p>
                 <p className="product-price">${product.price}</p>
@@ -41,7 +41,7 @@ export default function MobileProduct({
                             <CarouselItem
                                 imageUrl={content.image && content.image.small_image_url}
                                 redirectUrl={`/product/${content.id}`}
-                                title={content.brand.name}
+                                title={content.brand && content.brand.name}
                                 detail={content.title}
                                 subdetail={
                                     <div>

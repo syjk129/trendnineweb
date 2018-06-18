@@ -63,7 +63,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
             <div className="post">
                 <Sidebar>
                     {post.products.length > 0 && (
-                        <SidebarPostProductListSection title="Products in this post" items={postProducts} noSticky={true}/>
+                        <SidebarPostProductListSection title="Products in this post" items={postProducts} />
                     )}
                     {post.tags.length > 0 && (
                         <SidebarSection title="Tags">
@@ -127,7 +127,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                         <CarouselItem
                                             imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/product/${product.id}`}
-                                            title={product.brand.name}
+                                            title={product && product.brand.name}
                                             detail={product.title}
                                             subdetail={ this._renderProductFooter(product) }
                                         />
@@ -151,7 +151,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                         <CarouselItem
                                             imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/product/${product.id}`}
-                                            title={product.brand.name}
+                                            title={product.brand && product.brand.name}
                                             detail={product.title}
                                             subdetail={ this._renderProductFooter(product) }
                                         />

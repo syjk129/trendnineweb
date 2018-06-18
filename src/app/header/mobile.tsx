@@ -20,7 +20,6 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
     };
 
     render() {
-        console.log(this.props.user);
         const pathname = this.props.location.pathname;
         const isShop = pathname.indexOf("/shop") > -1;
 
@@ -34,7 +33,7 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
                         src={Logo}
                         onClick={() => this.props.history.push(isShop ? "/shop/home" : "/discover")}
                     />
-                    <Icon variant={IconVariant.GIRL} size={IconSize.MEDIUM} />
+                    <IconButton icon={IconVariant.GIRL} size={IconSize.MEDIUM} onClick={this._goToUserProfile} />
                 </div>
             </div>
         );
@@ -49,6 +48,15 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
         }
 
         this.setState({ showMenu: !this.state.showMenu });
+    }
+
+    @autobind
+    private _goToUserProfile() {
+        if (this.props.user) {
+            this.props.history.push(`/user/${this.props.user.id}`);
+        } else {
+            this.props.history.push("/login");
+        }
     }
 }
 

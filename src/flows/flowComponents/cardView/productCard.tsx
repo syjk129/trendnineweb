@@ -29,7 +29,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
         const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
         const footerItem = (
             <div>
-                <p>{product.brand.name}</p>
+                <p>{product.brand && product.brand.name}</p>
                 <div className="product-action-btns">
                     <p>${product.price}</p>
                     <ActionLinks

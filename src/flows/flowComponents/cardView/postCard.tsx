@@ -17,13 +17,12 @@ import "./style.scss";
 interface PostCardProps {
     post: PostPreview;
     gridSize?: number;
-    history: H.History;
 }
 
 export default class PostCard extends React.Component<PostCardProps> {
 
     render() {
-        const { post, gridSize, history } = this.props;
+        const { post, gridSize } = this.props;
 
         const hoverItem = (
             <div className="card-hover">
@@ -37,7 +36,7 @@ export default class PostCard extends React.Component<PostCardProps> {
                             <img className="post-card-hover-image" src={product.image && product.image.small_image_url} />
                             <div className="post-card-hover-content">
                                 <p className="post-card-hover-name">
-                                    {product.brand.name}
+                                    {product.brand && product.brand.name}
                                 </p>
                                 <p className="post-card-hover-title">
                                     {product.title}

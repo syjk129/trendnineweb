@@ -112,7 +112,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                                         <CarouselItem
                                             imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/product/${product.id}`}
-                                            title={product.brand.name}
+                                            title={product.brand && product.brand.name}
                                             detail={product.title}
                                             subdetail={this._renderProductFooter(product)}
                                         />
