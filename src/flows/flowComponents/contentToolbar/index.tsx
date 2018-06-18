@@ -149,7 +149,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     @autobind
     private _removeFilterItem(filterId: string) {
-        let selectedFilters = new Map();
+        let selectedFilters = this.state.selectedFilters;
         Object.keys(selectedFilters).forEach(filterType => {
             if (selectedFilters[filterType].some(filter => filter.id === filterId)) {
                 selectedFilters[filterType] = selectedFilters[filterType].filter(filter => filter.id !== filterId);

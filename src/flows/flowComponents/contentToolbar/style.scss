@@ -16,6 +16,17 @@
     }
 }
 
+.active-filters {
+    .checkbox-container {
+        display: inline-block;
+        margin-right: $base-spacing;
+    }
+}
+
+.sticky-mobile-content-toolbar .active-filters {
+    padding: $mobile-page-spacing;
+}
+
 .filter-toggle {
     display: flex;
     align-items: center;
