@@ -16,3 +16,16 @@
         }
     }
 }
+
+.search-text-container {
+    .search-text {
+        padding-left: $base-spacing * 2;
+        padding-bottom: $base-spacing;
+        font-family: $font-family-serif;
+        font-size: $font-size-5;
+        line-height: $line-height-5;
+        font-weight: $font-weight-bold;
+        color: $color-grey-5;
+        border-bottom: solid $standard-border-width $standard-border-color;
+    }
+}

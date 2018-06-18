@@ -113,6 +113,12 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                     </div>
                 </Sidebar>
                 <Content>
+                    {this.state.productParam.keyword !== "" && (
+                        <div className="search-text-container">
+                            <div className="search-help">You searched for</div>
+                            <div className="search-text">{this.state.productParam.keyword}</div>
+                        </div>
+                    )}
                     <Sticky id="filter-container" stickyClassName="sticky-filter-container">
                         <div className="filter-container">
                             <Filter
@@ -134,7 +140,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                         </div>
                     )}
 
-                    <CardContainer className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
+                    <CardContainer>
                         {this._renderProducts()}
                     </CardContainer>
                 </Content>
