@@ -74,6 +74,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                         toggleSelectFilterItem={this._toggleSelectFilterItem}
                         toggleActiveToolbar={this._toggleActiveToolbar}
                         onSearchStringChange={this._onSearchStringChange}
+                        removeFilterItem={this._removeFilterItem}
                         setGridSize={setGridSize}
                     />
                 </MobileView>
@@ -96,10 +97,10 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     @autobind
     private async _populateFilters() {
         const filters = this.state.filters;
-        this.state.filterOptions.forEach(async filterOption => {
+        for (const filterOption of this.state.filterOptions) {
             const filterContent = await this._getFilterContent(filterOption.type, this.state.searchString);
             filters[filterOption.type] = filterContent;
-        });
+        }
 
         // Update selectedFilters
         const selectedFilters = this.state.selectedFilters;
@@ -115,7 +116,6 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 }
             });
         }
-
         this.setState({ filters, selectedFilters, currentSortType: sortType });
     }
 
@@ -145,6 +145,17 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
             activeToolbar: this.state.activeToolbar === toolbarType ? null : toolbarType,
             hasChanged: false,
         });
+    }
+
+    @autobind
+    private _removeFilterItem(filterId: string) {
+        let selectedFilters = new Map();
+        Object.keys(selectedFilters).forEach(filterType => {
+            if (selectedFilters[filterType].some(filter => filter.id === filterId)) {
+                selectedFilters[filterType] = selectedFilters[filterType].filter(filter => filter.id !== filterId);
+            }
+        });
+        this.setState({ selectedFilters }, this._applyFilters);
     }
 
     @autobind

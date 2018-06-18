@@ -68,3 +68,7 @@ export class SortFilter {
 }
 
 export type Filter = SelectFilter | RangeValueFilter | SortFilter;
+
+export function isSelectFilter(filter: any): filter is SelectFilter {
+    return filter.selectedIds;
+}

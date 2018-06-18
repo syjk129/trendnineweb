@@ -4,11 +4,13 @@ import * as ReactDOM from "react-dom";
 
 import { FilterSearchResult } from "../../../api/models";
 import { IconButton } from "../../../components/button";
+import Checkbox from "../../../components/checkbox";
+import Chip from "../../../components/chip";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
 import Sticky from "../../../components/sticky";
 import FilterView from "./filter";
 import SortView from "./sort";
-import { Filter, FilterOption, FilterType, SortType, ToolbarType } from "./types";
+import { Filter, FilterOption, FilterType, isSelectFilter, SortType, ToolbarType } from "./types";
 
 interface MobileContentToolbarProps {
     activeToolbar: ToolbarType | null;
@@ -24,6 +26,7 @@ interface MobileContentToolbarProps {
     selectSortType(sortType: SortType): void;
     toggleSelectFilterItem(filterId: string): void;
     toggleActiveToolbar(toolbarType: ToolbarType | null): void;
+    removeFilterItem(filterId: string): void;
     onSearchStringChange(searchString: string): void;
 }
 
@@ -102,12 +105,30 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                         onSearchStringChange={onSearchStringChange}
                     />
                 }
+                {filters && Object.keys(filters).length > 0 && (
+                    <div className="active-filters">
+                        {Object.keys(selectedFilters).map(filterType => this._renderFilterChips(filterType as FilterType))}
+                    </div>
+                )}
             </Sticky>
         );
     }
 
     private _offsetTop: number;
     private _toolbarElement: HTMLElement;
+
+    @autobind
+    private _renderFilterChips(filterType: FilterType) {
+        const filter = this.props.selectedFilters[filterType];
+        if (filter && isSelectFilter(filter)) {
+            return filter.selectedIds.map(selectedId => {
+                const filterItem = this.props.filters[filterType].find(filterItem => filterItem.id === selectedId);
+                if (filterItem) {
+                    return <Checkbox label={filterItem.name} checked value={filterItem.id} onChange={() => this.props.removeFilterItem(filterItem.id)} />;
+                }
+            });
+        }
+    }
 
     @autobind
     private _toggleFilterActive(toolbarType: ToolbarType) {
