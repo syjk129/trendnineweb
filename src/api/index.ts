@@ -41,8 +41,10 @@ export default class Api {
                 request = { email, password, firstName, lastName };
                 token = await this._POST("/api/v1/users/authenticate", request);
             }
-            localStorage.setItem(tokenName, token.token);
-            return token.token;
+            if (token) {
+                localStorage.setItem(tokenName, token.token);
+                return token.token;
+            }
         } catch (error) {
             throw error;
         }
@@ -296,6 +298,7 @@ export default class Api {
             const response = await fetch(url, {
                 method: "GET",
                 headers: this._getRequestHeader(),
+                mode: "cors",
             });
 
             if (!response.ok) {
@@ -334,9 +337,10 @@ export default class Api {
         try {
             const requestObject = request ? Object.assign(request, this._getRequestHeader()) : this._getRequestHeader();
             const response = await fetch(url, {
-                method: method,
+                method,
                 headers: this._getRequestHeader(),
                 body: JSON.stringify(requestObject),
+                mode: "cors",
             });
             if (!response.ok) {
                 this._apiOptions.setError(createErrorFromResponse(response));
@@ -354,7 +358,7 @@ export default class Api {
         const token = localStorage.getItem(tokenName);
         let jwtToken = "";
 
-        if (user !== null && user !== "undefined" && token && token !== "undefined") {
+        if (token && token !== "undefined") {
             const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
             const current = (new Date()).getTime() / 1000;
             if (exp > current) {

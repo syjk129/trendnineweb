@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { IconButton } from "../../components/button";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
+import WithUserSession from "../withUserSession";
 import * as Logo from "./logo.png";
 import Menu from "./menu";
 import "./style.scss";
@@ -13,12 +14,13 @@ interface MobileHeaderState {
     showMenu: boolean;
 }
 
-export default class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
+class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
     state: MobileHeaderState = {
         showMenu: false,
     };
 
     render() {
+        console.log(this.props.user);
         const pathname = this.props.location.pathname;
         const isShop = pathname.indexOf("/shop") > -1;
 
@@ -49,3 +51,5 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
         this.setState({ showMenu: !this.state.showMenu });
     }
 }
+
+export default WithUserSession(MobileHeader);

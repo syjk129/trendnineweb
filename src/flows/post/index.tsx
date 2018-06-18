@@ -137,21 +137,15 @@ export default class PostView extends React.Component<PostProps, PostState> {
             let recentlyViewedArray = JSON.parse(recentlyViewed);
 
             if (!recentlyViewedArray || recentlyViewedArray.length < 1) {
-                recentlyViewedArray = ["Post", post];
+                recentlyViewedArray = [{ type: "post", content: post }];
             } else {
-                let indexOfPost = -1;
-                for (let i = 0; i < recentlyViewedArray.length; i++) {
-                    if (recentlyViewedArray[i][1].id === post.id) {
-                        indexOfPost = i;
-                        break;
-                    }
-                }
+                const indexOfPost = recentlyViewedArray.findIndex(recent => recent.content.id === post.id);
 
-                if (indexOfPost >= 0) {
+                if (indexOfPost !== -1) {
                     recentlyViewedArray.splice(indexOfPost, 1);
                 }
 
-                recentlyViewedArray.unshift(["Post", post]);
+                recentlyViewedArray.unshift({ type: "Post", content: post});
             }
 
             this.setState({ post, comments, relatedProducts, relatedPosts, featuredTrendnines });

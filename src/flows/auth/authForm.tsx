@@ -73,7 +73,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
                             value={this.state.lastName}
                             onChange={(lastName) => this._handleFormChange({ lastName })}
                         />
-                        <Button onClick={this._login}>Login</Button>
+                        <Button onClick={this._register}>Register</Button>
                     </form>
                 ) : (
                     <form onSubmit={this._login}>
@@ -131,24 +131,25 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     }
 
     @autobind
-    private _login() {
-        const loginResponse = this.props.login({
+    private async _login() {
+        await this.props.login({
             username: this.state.username,
             password: this.state.password,
         });
-        this._setLoggedInUser();
+        await this._setLoggedInUser();
+        return false;
     }
 
     @autobind
-    private _register(event: any) {
-        event.preventDefault();
-        this.props.register({
+    private async _register() {
+        await this.props.register({
             username: this.state.username,
             password: this.state.password,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
         });
         this._setLoggedInUser();
+        return false;
     }
 
     @autobind

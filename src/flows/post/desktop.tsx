@@ -55,9 +55,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
             `Comments (${comments.length})`
         )  : "Comments";
 
-        const postProducts = post.products.map(p => {
-            return ["Product", p];
-        });
+        const postProducts = post.products.map(product => ({ type: "product", content: product }));
 
         const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
 

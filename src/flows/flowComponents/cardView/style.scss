@@ -41,7 +41,7 @@
             display: inline-block;
             height: $hover-img-height;
             width: $hover-img-width;
-            object-fit: cover;
+            object-fit: contain;
             margin: auto;
         }
 

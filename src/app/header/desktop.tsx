@@ -24,13 +24,13 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
 
     render() {
         const { loggedIn, history } = this.props;
+        const pathname = location.pathname;
+        const isShop = pathname.indexOf("/shop") > -1;
         const onSearch = (value) => history.push({
-            pathname: "/discover",
+            pathname: isShop ? "/shop/discover" : "/discover",
             search: `?keyword=${value}`,
         });
         const user = JSON.parse(localStorage.getItem("user"));
-        const pathname = location.pathname;
-        const isShop = pathname.indexOf("/shop") > -1;
 
         return (
             <div className="main-header" id="mainHeader">

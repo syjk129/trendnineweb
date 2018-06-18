@@ -70,21 +70,15 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
         let recentlyViewedArray = JSON.parse(recentlyViewed);
 
         if (!recentlyViewedArray || recentlyViewedArray.length < 1) {
-            recentlyViewedArray = ["Product", currentProduct];
+            recentlyViewedArray = [{ type: "product", content: currentProduct }];
         } else {
-            let indexOfProduct = -1;
-            for (let i = 0; i < recentlyViewedArray.length; i++) {
-                if (recentlyViewedArray[i][1].id === currentProduct.id) {
-                    indexOfProduct = i;
-                    break;
-                }
-            }
+            const indexOfProduct = recentlyViewedArray.findIndex(recent => recent.content.id === currentProduct.id);
 
-            if (indexOfProduct >= 0) {
+            if (indexOfProduct !== -1) {
                 recentlyViewedArray.splice(indexOfProduct, 1);
             }
 
-            recentlyViewedArray.unshift(["Product", currentProduct]);
+            recentlyViewedArray.unshift({ type: "Product", content: currentProduct });
         }
 
         this.setState({
