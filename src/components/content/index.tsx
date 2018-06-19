@@ -8,7 +8,7 @@ interface ContentProps {
 
 export default function Content({ children }: ContentProps) {
     return (
-        <div className="content">
+        <div className="content" id="content">
             {children}
         </div>
     );

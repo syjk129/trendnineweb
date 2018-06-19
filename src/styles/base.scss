@@ -26,11 +26,13 @@ a {
 
 .main-content {
     margin: auto;
+    padding: 0 $page-spacing;
     margin-top: $navbar-height;
     max-width: $max-content-width;
     min-width: $min-content-width;
 
     &.mobile-view {
+        padding: 0;
         margin-top: $content-spacing;
         min-width: 100%;
     }

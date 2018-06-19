@@ -25,6 +25,7 @@
 .main-header {
     background-color: $base-background-color;
     position: fixed;
+    width: 100%;
     z-index: 10;
     top: 0;
     height: 66px;
@@ -35,7 +36,7 @@
             display: flex;
             padding: 0 $page-spacing;
             width: 100%;
-            min-width: $min-content-width - 2 * $page-spacing;
+            max-width: $max-content-width;
             margin: auto;
             height: $navbar-menu-height;
 

@@ -21,8 +21,12 @@ export default class Sticky extends React.Component<StickyProps, never>  {
         const navbarHeight = isMobile ? 60 : 100;
         if (window.pageYOffset + navbarHeight >= this.stickOffset) {
             this.sticky.classList.add(this.props.stickyClassName);
+            if (this.props.id === "filter-container") {
+                this.sticky.style.width = `${document.getElementById("content").offsetWidth + 20}px`;
+            }
         } else {
             this.sticky.classList.remove(this.props.stickyClassName);
+            this.sticky.removeAttribute("style");
         }
     }
 

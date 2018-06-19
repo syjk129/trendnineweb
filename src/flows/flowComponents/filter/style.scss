@@ -47,7 +47,7 @@
 
 .sticky-filter-container {
     position: fixed;
-    width: calc(100% - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2 + 2 * #{$base-spacing});
+    width: calc(min(100%, 1440px) - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2 + 2 * #{$base-spacing});
     min-width: $min-card-width-with-border * $min-card-per-row + $card-spacing * ($min-card-per-row - 1) + $standard-border-width + $base-spacing * 2;
     background-color: $base-background-color;
     padding-bottom: $base-spacing * 2;
