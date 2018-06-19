@@ -1,6 +1,6 @@
 import * as H from "history";
 import * as React from "react";
-import { match, withRouter } from "react-router-dom";
+import { Link, match, withRouter } from "react-router-dom";
 
 import { Person } from "../../api/models";
 import WithUserSession from "../../app/withUserSession";
@@ -38,11 +38,11 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                         </div>
                         <div className="header-right-buttons">
                             {(!loggedIn || !user) &&
-                                <LinkButton url="/login" pathname={pathname}>Log In</LinkButton>
+                                <LinkButton to="/login">Log In</LinkButton>
                             }
                             {loggedIn && user &&
                                 <div className="user-logged-in-buttons">
-                                    <LinkButton url={`/user/${user.username}`}>
+                                    <LinkButton to={`/user/${user.username}`}>
                                         <Icon variant={IconVariant.GIRL} size={IconSize.MEDIUM} />
                                     </LinkButton>
                                 </div>
@@ -52,7 +52,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                 </div>
                 <div className="nav-header">
                     <div className="nav-content">
-                        <img className="nav-logo" src={Logo} onClick={() => history.push(isShop ? "/shop/home" : "/discover")} />
+                        <Link className="nav-logo-container" to={isShop ? "/shop/home" : "/discover"}><img className="nav-logo" src={Logo} /></Link>
                         <div className="nav-header-links">
                             <div className="nav-pages">
                                 <NavLink url={isShop ? "/shop/discover" : "/discover"} pathname={pathname} large>Trending</NavLink>

@@ -1,14 +1,16 @@
 import autobind from "autobind-decorator";
 import * as H from "history";
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import { IconButton } from "../../components/button";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
 import WithUserSession from "../withUserSession";
 import * as Logo from "./logo.png";
 import Menu from "./menu";
-import "./style.scss";
 import { HeaderProps } from "./types";
+
+import "./style.scss";
 
 interface MobileHeaderState {
     showMenu: boolean;
@@ -20,6 +22,7 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
     };
 
     render() {
+        const { user } = this.props;
         const pathname = this.props.location.pathname;
         const isShop = pathname.indexOf("/shop") > -1;
 
@@ -28,12 +31,13 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
                 <Menu open={this.state.showMenu} toggleMenu={this._toggleMenu} isShop={isShop} />
                 <div className="mobile-header">
                     <IconButton icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this._toggleMenu} selected={false} />
-                    <img
-                        className="nav-logo"
-                        src={Logo}
-                        onClick={() => this.props.history.push(isShop ? "/shop/home" : "/discover")}
-                    />
-                    <IconButton icon={IconVariant.GIRL} size={IconSize.MEDIUM} onClick={this._goToUserProfile} />
+                    <Link className="nav-logo-container" to={isShop ? "/shop/discover" : "/discover"}>
+                        <img
+                            className="nav-logo"
+                            src={Logo}
+                        />
+                    </Link>
+                    <IconButton icon={IconVariant.GIRL} size={IconSize.MEDIUM} url={user ? `/user/${user.id}` : "/login"}/>
                 </div>
             </div>
         );
@@ -48,15 +52,6 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
         }
 
         this.setState({ showMenu: !this.state.showMenu });
-    }
-
-    @autobind
-    private _goToUserProfile() {
-        if (this.props.user) {
-            this.props.history.push(`/user/${this.props.user.id}`);
-        } else {
-            this.props.history.push("/login");
-        }
     }
 }
 

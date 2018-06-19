@@ -30,8 +30,7 @@ export default class PostCard extends React.Component<PostCardProps> {
                     <div className="post-card-hover-item">
                         <LinkButton
                             className="post-card-hover-btn"
-                            variant={ButtonVariant.SECONDARY}
-                            url={`/product/${product.id}`}
+                            to={`/product/${product.id}`}
                         >
                             <img className="post-card-hover-image" src={product.image && product.image.small_image_url} />
                             <div className="post-card-hover-content">

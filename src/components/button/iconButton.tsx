@@ -47,7 +47,7 @@ export default class IconButton extends React.Component<IconButtonProps, IconBut
         return (
             <LinkButton
                 inline={inline}
-                url={url}
+                to={url}
                 className={classes}
                 onMouseEnter={this._onMouseEnter}
                 onMouseLeave={this._onMouseLeave}

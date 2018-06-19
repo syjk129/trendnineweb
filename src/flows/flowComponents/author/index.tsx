@@ -16,7 +16,7 @@ interface AuthorProps {
 export default function Author({ author, date }: AuthorProps) {
     return (
         <div className="author">
-            <LinkButton url={`/user/${author.username}`}>
+            <LinkButton to={`/user/${author.username}`}>
                 <Image className="author-image" inline circle src={author.profile_image_url} />
                 <TextContent className="author-name">
                     {author.username}

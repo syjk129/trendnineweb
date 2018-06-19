@@ -23,8 +23,7 @@ class Featured extends React.Component<FeaturedProps> {
                     .map(trendnine => (
                         <LinkButton
                             className={isMobile ? "mobile-featured-trendnine" : "featured-trendnine"}
-                            url={`/user/${trendnine.user.username}`}
-                            variant={ButtonVariant.SECONDARY}
+                            to={`/user/${trendnine.user.username}`}
                         >
                             <div className="trendnine-image">
                                 <img src={trendnine.user.profile_image_url} />

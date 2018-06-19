@@ -24,7 +24,7 @@ class PostAuthorDetails extends React.Component<PostAuthorDetailsProps> {
 
         return (
             <div className="post-author-details">
-                <LinkButton onClick={() => history.push(`/user/${author.id}`)}>
+                <LinkButton to={`/user/${author.id}`}>
                     <img src={author.profile_image_url} />
                     <span>{author.username}</span>
                 </LinkButton>

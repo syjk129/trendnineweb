@@ -18,6 +18,10 @@
     }
 }
 
+.nav-logo-container {
+    display: flex;
+}
+
 .main-header {
     background-color: $base-background-color;
     position: fixed;

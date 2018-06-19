@@ -1,13 +1,14 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { Link } from "react-router-dom";
 
 import { Comment, Person, Post, Product } from "../../api/models";
 import { ButtonVariant, LinkButton } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Icon, { IconSize, IconVariant} from "../../components/icon";
-import Image, { ImageRatioVariant } from "../../components/image";
+import Image, { ImageFitVariant, ImageRatioVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import Sticky from "../../components/sticky";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
@@ -125,6 +126,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                 {post.products.map(product => (
                                     <div>
                                         <CarouselItem
+                                            fit={ImageFitVariant.SCALED}
                                             imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/product/${product.id}`}
                                             title={product && product.brand.name}

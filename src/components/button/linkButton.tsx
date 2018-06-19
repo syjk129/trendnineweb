@@ -1,6 +1,5 @@
-import * as H from "history";
 import * as React from "react";
-import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { ButtonProps, ButtonVariant } from "./types";
 
@@ -11,20 +10,18 @@ interface InteractableProps {
 
 interface LinkButtonProps extends InteractableProps {
     selected?: boolean;
-    url?: string;
+    to?: string;
     className?: string;
     inline?: boolean;
     children: React.ReactNode;
-    history: H.History;
     onClick?(): void;
 }
 
-class LinkButton extends React.Component<LinkButtonProps> {
+export default class LinkButton extends React.Component<LinkButtonProps> {
     render() {
         const {
             selected,
-            url,
-            history,
+            to,
             className,
             inline,
             children,
@@ -46,17 +43,18 @@ class LinkButton extends React.Component<LinkButtonProps> {
             classes += " inline";
         }
 
+        const LinkEl = to ? Link : "a";
+
         return (
-            <a
+            <LinkEl
                 className={classes}
-                onClick={onClick || (() => history.push(url))}
+                to={to}
+                onClick={onClick}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
             >
                 {children}
-            </a>
+            </LinkEl>
         );
     }
 }
-
-export default withRouter(LinkButton);

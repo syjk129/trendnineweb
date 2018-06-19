@@ -10,6 +10,7 @@ interface CarouselItemProps {
     imageUrl: string;
     imageClass?: string;
     className?: string;
+    fit?: ImageFitVariant;
     redirectUrl?: string;
     large?: boolean;
     title?: string;
@@ -22,7 +23,7 @@ interface CarouselItemProps {
 
 class CarouselItem extends React.Component<CarouselItemProps> {
     render() {
-        const { imageUrl, className, imageClass, redirectUrl, large, title, detail, subdetail, selected, onClick, history } = this.props;
+        const { imageUrl, className, fit, imageClass, redirectUrl, large, title, detail, subdetail, selected, onClick, history } = this.props;
 
         let imageClasses = "carousel-item-cover";
 
@@ -49,7 +50,7 @@ class CarouselItem extends React.Component<CarouselItemProps> {
         return (
             <div>
                 <div className={classes} onClick={clickHandler}>
-                    <Image className={imageClasses} src={imageUrl} fit={ImageFitVariant.COVER} square />
+                    <Image className={imageClasses} src={imageUrl} fit={fit || ImageFitVariant.COVER} square />
                     <p className="carousel-item-title">{title}</p>
                     <p>{detail}</p>
                 </div>

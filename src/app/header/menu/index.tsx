@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import * as H from "history";
 import * as React from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import { IconButton, LinkButton } from "../../../components/button";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
@@ -28,15 +28,19 @@ class Menu extends React.Component<MenuProps, MenuState> {
     };
 
     render() {
+        const { isShop } = this.props;
+
         return (
             <div className={`menu ${this.props.open && "open"}`}>
                 <div className="menu-header">
                     <IconButton className="close" icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this.props.toggleMenu} selected />
-                    <img
-                        className="nav-logo"
-                        src={LogoWhite}
-                        onClick={this._onMenuClick()}
-                    />
+                    <Link to={isShop ? "/shop/discover" : "/discover"}>
+                        <img
+                            className="nav-logo"
+                            src={LogoWhite}
+                            onClick={this.props.toggleMenu}
+                        />
+                    </Link>
                 </div>
                 <div className="menu-content">
                     <div className="mobile-search">
@@ -50,10 +54,35 @@ class Menu extends React.Component<MenuProps, MenuState> {
                         />
                         <Icon variant={IconVariant.SEARCH} />
                     </div>
-                    <LinkButton className="menu-link" onClick={this._onMenuClick("trending")}>Trending</LinkButton>
-                    <LinkButton className="menu-link" onClick={this._onMenuClick("feed")}>Feed</LinkButton>
-                    <LinkButton className="menu-link" onClick={this._onMenuClick("new")}>New Arrivals</LinkButton>
-                    <LinkButton className="menu-link" onClick={this._onMenuClick("brands")}>Brands</LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/trending" : "/trending"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        Trending
+                    </LinkButton>
+
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/feed" : "/feed"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        Feed
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/new" : "/new"}
+                        onClick={this.props.toggleMenu}
+                    >
+                       New Arrivals
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/brands" : "/brands"}
+                        onClick={this.props.toggleMenu}
+                    >
+                       Brands
+                    </LinkButton>
                     <br/>
                     <LinkButton onClick={this._logout}>Sign out</LinkButton>
                 </div>
@@ -71,18 +100,6 @@ class Menu extends React.Component<MenuProps, MenuState> {
         this.props.toggleMenu();
         this.props.history.push("/logout");
     }
-
-    @autobind
-    private _onMenuClick(url?: string) {
-        return () => {
-            this.props.toggleMenu();
-            if (this.props.isShop) {
-                this.props.history.push(`/shop/${url || "home"}`);
-            } else {
-                this.props.history.push(`/${url || ""}`);
-            }
-        };
-   }
 
    @autobind
    private _onSearch() {

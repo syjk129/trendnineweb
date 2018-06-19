@@ -72,7 +72,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
             this.props.getTrendingPosts(),
             this.props.getTodaysTrendnines(),
             this.props.getFeaturedTrendnines(),
-            location.pathname === "/feed" ? this.props.getFeedPosts(queryString) : this.props.getLatestPosts(queryString),
+            this.props.location.pathname === "/feed" ? this.props.getFeedPosts(queryString) : this.props.getLatestPosts(queryString),
         ]);
 
         this.setState({
@@ -187,7 +187,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
         const queryString = this.state.postParam.convertUrlParamToQueryString();
         const newPosts = await Promise.resolve(
-            location.pathname === "/feed" ?
+            this.props.location.pathname === "/feed" ?
                 this.props.getFeedPosts(queryString, this.state.postsNextToken)
                 : this.props.getLatestPosts(queryString, this.state.postsNextToken));
         this.setState({
@@ -213,7 +213,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     @autobind
     private async _push(postParams: PostParam) {
         this.props.history.push({
-            pathname: location.pathname,
+            pathname: this.props.location.pathname,
             search: `?${postParams.convertToUrlParamString()}`,
         });
     }
@@ -225,7 +225,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
                 <div className="recommended-trendsetters">
                     {this.state.recommendedTrendnines.slice(0, 6).map(trendsetter => (
-                        <LinkButton className="trendsetter" url={`/user/${trendsetter.id}`}>
+                        <LinkButton className="trendsetter" to={`/user/${trendsetter.id}`}>
                             <img src={trendsetter.profile_image_url} />
                             <div>{trendsetter.first_name} {trendsetter.last_name}</div>
                         </LinkButton>

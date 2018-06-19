@@ -1,8 +1,7 @@
-import * as H from "history";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 import * as ReactDOM from "react-dom";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import TimeAgo from "react-timeago";
 
 import { Post } from "../../api/models";
@@ -21,7 +20,6 @@ interface CardProps {
     scaleImage?: boolean;
     title: string;
     singleLineTitle?: boolean;
-    history: H.History;
     hoverItem?: React.ReactNode;
     footerItem?: React.ReactNode;
 }
@@ -50,9 +48,7 @@ class Card extends React.Component<CardProps, CardState> {
     }
 
     render() {
-        const { imageUrl, scaleImage, redirectUrl, gridSize, title, singleLineTitle, history, hoverItem, footerItem } = this.props;
-
-        const onClick = redirectUrl ? () => history.push(redirectUrl) : undefined;
+        const { imageUrl, scaleImage, redirectUrl, gridSize, title, singleLineTitle, hoverItem, footerItem } = this.props;
 
         const hoverStyles = {
             marginLeft: this.state.hoverX,
@@ -72,22 +68,20 @@ class Card extends React.Component<CardProps, CardState> {
                         {hoverItem}
                     </div>
                 )}
-                <Image
-                    src={imageUrl}
-                    onClick={onClick}
-                    fit={scaleImage ? ImageFitVariant.SCALED : ImageFitVariant.COVER}
-                    square
-                />
+                <Link to={redirectUrl}>
+                    <Image
+                        src={imageUrl}
+                        fit={scaleImage ? ImageFitVariant.SCALED : ImageFitVariant.COVER}
+                        square
+                    />
+                </Link>
                 {gridSize < 3 && (
                     <div className="card-content">
                         <div className="card-title-container">
-                        <TextContent className="title" htmlTag="p" onClick={onClick} maxLines={singleLineTitle ? 1 : 2}>
-                            {title}
-                        </TextContent>
+                            <Link className="title" htmlTag="p" to={redirectUrl} maxLines={singleLineTitle ? 1 : 2}>
+                                {title}
+                            </Link>
                         </div>
-                        {/* <p className={titleClassName} onClick={onClick}>
-                            {title}
-                        </p> */}
                         {footerItem && (
                             <div className="card-footer">
                                 {footerItem}

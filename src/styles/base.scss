@@ -19,6 +19,11 @@ p {
     margin-bottom: $base-spacing;
 }
 
+a {
+    text-decoration: none;
+    color: $text-primary;
+}
+
 .main-content {
     margin: auto;
     margin-top: $navbar-height;
