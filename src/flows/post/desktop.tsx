@@ -151,6 +151,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                 {relatedProducts.map(product => (
                                     <div>
                                         <CarouselItem
+                                            fit={ImageFitVariant.SCALED}
                                             imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/product/${product.id}`}
                                             title={product.brand && product.brand.name}
