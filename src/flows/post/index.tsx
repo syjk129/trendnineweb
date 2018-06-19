@@ -13,6 +13,7 @@ import Content from "../../components/content";
 import Icon, { IconSize, IconVariant} from "../../components/icon";
 import Image, { ImageRatioVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
@@ -62,7 +63,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
         const { post, comments, relatedProducts, relatedPosts } = this.state;
 
         if (!post || !comments || !relatedPosts || !relatedProducts) {
-            return "Loading";
+            return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
         return (

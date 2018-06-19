@@ -9,6 +9,7 @@ import { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import { PostCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
@@ -108,11 +109,9 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     render() {
         if (this.state.isLoading) {
             return (
-                <div className="discover">
-                    <Content>
-                        <br /><br /><br />Loading...
-                    </Content>
-                </div>
+                <SpinnerContainer>
+                    <Spinner />
+                </SpinnerContainer>
             );
         }
 

@@ -11,6 +11,7 @@ import Card, { CardContainer } from "../../components/card";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import { PostCard, ProductCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
@@ -94,13 +95,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
     render() {
         if (this.state.isLoading) {
-            return (
-                <div className="discover">
-                    <Content>
-                        <br /><br /><br />Loading...
-                    </Content>
-                </div>
-            );
+            return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
         return (

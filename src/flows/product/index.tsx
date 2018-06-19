@@ -10,6 +10,7 @@ import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import Image from "../../components/image";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
@@ -94,7 +95,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
 
     render() {
         if (!this.state.currentProduct) {
-            return "Loading";
+            return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
         return (

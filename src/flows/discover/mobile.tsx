@@ -11,6 +11,7 @@ import Carousel from "../../components/carousel";
 import MobileCarouselItem from "../../components/carousel/mobileCarouselItem";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import { PostCard } from "../flowComponents/cardView";
 import ContentToolbar from "../flowComponents/contentToolbar";
@@ -100,13 +101,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
 
     render() {
         if (this.state.isLoading) {
-            return (
-                <div className="discover">
-                    <Content>
-                        <br /><br /><br />Loading...
-                    </Content>
-                </div>
-            );
+            return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
         const carouselAttributes = {

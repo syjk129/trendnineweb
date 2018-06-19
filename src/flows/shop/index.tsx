@@ -7,6 +7,7 @@ import { match, withRouter } from "react-router-dom";
 import { Featured } from "../../api/models";
 import { AppContext, AppContextTypes } from "../../app";
 import Content from "../../components/content";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 
 import "./style.scss";
 
@@ -53,13 +54,7 @@ export default class Shop extends React.Component<ShopProps, ShopState> {
 
     render() {
         if (this.state.isLoading) {
-            return (
-                <div className="shop">
-                    <Content>
-                        <br /><br /><br />Loading...
-                    </Content>
-                </div>
-            );
+            return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
         return (

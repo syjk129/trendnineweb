@@ -7,6 +7,7 @@ import Content from "../../components/content";
 import Image from "../../components/image";
 import NavLink from "../../components/navLink";
 import Sidebar from "../../components/sidebar";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
 import Filter, { FilterTarget } from "../flowComponents/filter";
@@ -59,7 +60,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
         const influencer = profile ? profile.user : null;
 
         if (!profile || !content) {
-            return "Loading...";
+            return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
         return (
