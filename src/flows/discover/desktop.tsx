@@ -123,7 +123,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                     {this.state.featuredTrendnines && this.state.featuredTrendnines.length > 0 &&
                         <Featured featuredTrendnines={this.state.featuredTrendnines} />
                     }
-                    <SidebarSection title="Trending Posts">
+                    <SidebarSection title="Trending Now">
                         <PostRank posts={this.state.trendingPosts} />
                     </SidebarSection>
 

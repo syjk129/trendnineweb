@@ -124,7 +124,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                     </div>
                     <div>
                         <MobileCarouselItem>
-                            <SidebarSection title="Trending Posts">
+                            <SidebarSection title="Trending Now">
                                 <PostRank posts={this.state.trendingPosts} />
                             </SidebarSection>
                         </MobileCarouselItem>
