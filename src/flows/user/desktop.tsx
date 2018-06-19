@@ -7,7 +7,7 @@ import Content from "../../components/content";
 import Image from "../../components/image";
 import NavLink from "../../components/navLink";
 import Sidebar from "../../components/sidebar";
-import Spinner from "../../components/spinner";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
 import Filter, { FilterTarget } from "../flowComponents/filter";
@@ -51,7 +51,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
         const influencer = profile ? profile.user : null;
 
         if (!profile || !content) {
-            return <Spinner />;
+            return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
         const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
@@ -121,7 +121,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                         setContent={setContentType}
                     />
                     {(contentType === UserContentType.POST || contentType === UserContentType.PRODUCT) && (
-                        <Sticky id="filters" stickyClassName="sticky-filter-container">
+                        <Sticky id="filter-container" stickyClassName="sticky-filter-container">
                             <div className="filter-container">
                             {contentType === UserContentType.POST &&
                                 <Filter
