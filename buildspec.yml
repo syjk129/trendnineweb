@@ -9,4 +9,4 @@ phases:
             - npm run build
     post_build:
         commands:
-            - aws s3 sync ./dist s3:://trendnineweb-1
+            - aws s3 sync ./dist s3://trendnineweb-1
