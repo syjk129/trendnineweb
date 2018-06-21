@@ -15,6 +15,7 @@ import MobileFilter from "../flowComponents/filter/mobileFilter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
+import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
 import FollowButton from "./followButton";
 import UserTabs from "./userTabs";
@@ -27,11 +28,14 @@ interface MobileUserProps {
    profile: any;
    content: Array<any>;
    contentType: UserContentType;
+   loadingNext: boolean;
+   nextToken: string | null;
    pathname: string;
    postParam: PostParam;
    filterContent(filters: Filters): void;
    sortContent(sortString: string): void;
    setContentType(contentType: UserContentType): void;
+   fetchNextContent(): void;
 }
 
 interface MobileUserState {
@@ -50,11 +54,14 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
             profile,
             content,
             contentType,
+            loadingNext,
+            nextToken,
             pathname,
             postParam,
             filterContent,
             sortContent,
             setContentType,
+            fetchNextContent,
         } = this.props;
 
         const influencer = profile ? profile.user : null;
@@ -104,6 +111,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                 <CardContainer gridSize={this.state.gridSize}>
                     {this._renderContent()}
                 </CardContainer>
+                {nextToken && <ViewMore isLoading={loadingNext} onClick={fetchNextContent} />}
             </div>
         );
     }

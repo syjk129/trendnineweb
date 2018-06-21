@@ -5,7 +5,7 @@ import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
 import { Person, PostPreview } from "../../api/models";
-import { LinkButton } from "../../components/button";
+import Button, { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
 import Carousel from "../../components/carousel";
 import MobileCarouselItem from "../../components/carousel/mobileCarouselItem";
@@ -20,6 +20,7 @@ import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
+import ViewMore from "../flowComponents/viewMore";
 import { ContentType, Filters, PostParam } from "../model";
 
 import "./style.scss";
@@ -32,25 +33,17 @@ interface MobileDiscoverState extends DiscoverState {
 export default class MobileDiscover extends React.Component<DiscoverProps, MobileDiscoverState> {
     state: MobileDiscoverState = {
         posts: [],
-        postsNextToken: "",
+        nextToken: null,
         trendingPosts: [],
         featuredTrendnines: [],
         recommendedTrendnines: [],
         postParam: null,
-        isLoading: false,
+        isLoading: true,
+        loadingNext: false,
         gridSize: 1,
     };
 
-    componentDidMount() {
-        window.addEventListener("scroll", this.onScroll, false);
-    }
-
-    componentDidUnmount() {
-        window.removeEventListener("scroll", this.onScroll, false);
-    }
-
     componentWillMount() {
-        this.setState({ isLoading: true });
         this.refreshContent(this.props);
     }
 
@@ -80,23 +73,13 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
 
         this.setState({
             posts: posts.list,
-            postsNextToken: posts.nextToken,
+            nextToken: posts.nextToken,
             trendingPosts: trendingPosts,
             featuredTrendnines: featuredTrendnines,
             recommendedTrendnines: recommendedTrendnines,
             postParam: postParam,
             isLoading: false,
         });
-    }
-
-    onScroll = () => {
-        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-        let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-        let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-        if (scrolledToBottom) {
-            this._paginateNextPosts();
-        }
     }
 
     render() {
@@ -145,6 +128,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                 <CardContainer gridSize={this.state.gridSize} className={this.state.postParam.keyword === "" ? "" : "card-container-extra-space"}>
                     {this._renderPosts()}
                 </CardContainer>
+                {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextPosts} />}
             </div>
         );
     }
@@ -163,20 +147,20 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
 
     @autobind
     private async _paginateNextPosts() {
-        if (this.state.postsNextToken == null) {
+        if (this.state.nextToken == null) {
             return;
         }
 
         const queryString = this.state.postParam.convertUrlParamToQueryString();
         const newPosts = await Promise.resolve(
             location.pathname === "/feed" ?
-                this.props.getFeedPosts(queryString, this.state.postsNextToken)
-                : this.props.getLatestPosts(queryString, this.state.postsNextToken));
+                this.props.getFeedPosts(queryString, this.state.nextToken)
+                : this.props.getLatestPosts(queryString, this.state.nextToken));
         this.setState({
             posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
                 return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
             }),
-            postsNextToken: newPosts.nextToken,
+            nextToken: newPosts.nextToken,
         });
     }
 

@@ -15,10 +15,11 @@ export interface DiscoverProps extends RouteProps {
 
 export interface DiscoverState {
     posts: Array<PostPreview>;
-    postsNextToken: string;
+    nextToken: string | null;
     trendingPosts: Array<PostPreview>;
     featuredTrendnines: Array<FeaturedInfluencer>;
     recommendedTrendnines: Array<Person>;
     postParam: PostParam;
     isLoading: boolean;
+    loadingNext: boolean;
 }

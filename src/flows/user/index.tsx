@@ -20,8 +20,9 @@ interface UserState {
     profile: any;
     content: Array<any>;
     contentType: UserContentType;
-    nextToken: string;
+    nextToken: string | null;
     postParam: PostParam;
+    loadingNext: boolean;
 }
 
 type Props = RouteProps;
@@ -33,8 +34,9 @@ export default class User extends React.Component<Props, UserState> {
         profile: null,
         content: [],
         contentType: UserContentType.POST,
-        nextToken: "",
+        nextToken: null,
         postParam: null,
+        loadingNext: false,
     };
 
     componentWillMount() {
@@ -62,30 +64,26 @@ export default class User extends React.Component<Props, UserState> {
             <div>
                 <BrowserView device={isBrowser}>
                     <DesktopUser
+                        {...this.state}
                         user={this._user}
                         userId={this._userId}
-                        profile={this.state.profile}
-                        content={this.state.content}
-                        contentType={this.state.contentType}
                         pathname={location.pathname}
-                        postParam={this.state.postParam}
                         filterContent={this._filterContent}
                         sortContent={this._sortContent}
                         setContentType={this._setContentType}
+                        fetchNextContent={this._fetchNextContent}
                     />
                 </BrowserView>
                 <MobileView device={isMobile}>
                     <MobileUser
+                        {...this.state}
                         user={this._user}
                         userId={this._userId}
-                        profile={this.state.profile}
-                        content={this.state.content}
-                        contentType={this.state.contentType}
                         pathname={location.pathname}
-                        postParam={this.state.postParam}
                         filterContent={this._filterContent}
                         sortContent={this._sortContent}
                         setContentType={this._setContentType}
+                        fetchNextContent={this._fetchNextContent}
                     />
                 </MobileView>
             </div>

@@ -1,0 +1,11 @@
+@import "../../../styles/variables";
+
+.view-more-container {
+    text-align: center;
+    width: 100%;
+
+    button {
+        margin: $large-spacing * 2 0;
+        padding: 0 $base-spacing * 5;
+    }
+}

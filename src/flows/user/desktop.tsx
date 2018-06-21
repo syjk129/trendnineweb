@@ -14,6 +14,7 @@ import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
+import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
 import FollowButton from "./followButton";
 import UserTabs from "./userTabs";
@@ -26,11 +27,14 @@ interface DesktopUserProps {
    profile: any;
    content: Array<any>;
    contentType: UserContentType;
+   loadingNext: boolean;
+   nextToken: string | null;
    pathname: string;
    postParam: PostParam;
    filterContent(filters: Filters): void;
    sortContent(sortString: string): void;
    setContentType(contentType: UserContentType): void;
+   fetchNextContent(): void;
 }
 
 export default class DesktopUser extends React.Component<DesktopUserProps> {
@@ -41,11 +45,14 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
             profile,
             content,
             contentType,
+            loadingNext,
+            nextToken,
             pathname,
             postParam,
             filterContent,
             sortContent,
             setContentType,
+            fetchNextContent,
         } = this.props;
 
         const influencer = profile ? profile.user : null;
@@ -143,6 +150,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                     <CardContainer>
                         {this._renderContent()}
                     </CardContainer>
+                    {nextToken && <ViewMore isLoading={loadingNext} onClick={fetchNextContent} />}
                 </Content>
             </div>
         );

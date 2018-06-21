@@ -5,7 +5,7 @@ import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
 import { Person, PostPreview } from "../../api/models";
-import { LinkButton } from "../../components/button";
+import Button, { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
@@ -17,6 +17,7 @@ import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
+import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
 
 import "./style.scss";
@@ -29,17 +30,17 @@ interface DesktopDiscoverState extends DiscoverState {
 export default class DesktopDiscover extends React.Component<DiscoverProps, DesktopDiscoverState> {
     state: DesktopDiscoverState = {
         posts: [],
-        postsNextToken: "",
+        nextToken: null,
         trendingPosts: [],
         featuredTrendnines: [],
         recommendedTrendnines: [],
         postParam: null,
-        isLoading: false,
+        isLoading: true,
+        loadingNext: false,
         numCardsPerRow: 2,
     };
 
     componentWillMount() {
-        this.setState({ isLoading: true });
         this.refreshContent(this.props);
         this.updateWindowWidth();
     }
@@ -49,16 +50,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
             this.setState({ isLoading: true });
             this.refreshContent(nextProps);
         }
-    }
-
-    componentDidMount() {
-        window.addEventListener("scroll", this.onScroll, false);
-        window.addEventListener("resize", this.updateWindowWidth);
-    }
-
-    componentDidUnmount() {
-        window.removeEventListener("scroll", this.onScroll, false);
-        window.removeEventListener("resize", this.updateWindowWidth);
     }
 
     async refreshContent(props: DiscoverProps) {
@@ -80,23 +71,13 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
         this.setState({
             posts: posts.list,
-            postsNextToken: posts.nextToken,
+            nextToken: posts.nextToken,
             trendingPosts: trendingPosts,
             featuredTrendnines: featuredTrendnines,
             recommendedTrendnines: recommendedTrendnines,
             postParam: postParam,
             isLoading: false,
         });
-    }
-
-    onScroll = () => {
-        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-        let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-        let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-        if (scrolledToBottom) {
-            this._paginateNextPosts();
-        }
     }
 
     updateWindowWidth = () => {
@@ -166,6 +147,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                     <CardContainer>
                         {this._renderPosts()}
                     </CardContainer>
+                    {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextPosts} />}
                 </Content>
             </div>
         );
@@ -182,20 +164,22 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
     @autobind
     private async _paginateNextPosts() {
-        if (this.state.postsNextToken == null) {
+        if (this.state.nextToken == null) {
             return;
         }
+        this.setState({ loadingNext: true });
 
         const queryString = this.state.postParam.convertUrlParamToQueryString();
         const newPosts = await Promise.resolve(
             this.props.location.pathname === "/feed" ?
-                this.props.getFeedPosts(queryString, this.state.postsNextToken)
-                : this.props.getLatestPosts(queryString, this.state.postsNextToken));
+                this.props.getFeedPosts(queryString, this.state.nextToken)
+                : this.props.getLatestPosts(queryString, this.state.nextToken));
         this.setState({
             posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
                 return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
             }),
-            postsNextToken: newPosts.nextToken,
+            nextToken: newPosts.nextToken,
+            loadingNext: false,
         });
     }
 
