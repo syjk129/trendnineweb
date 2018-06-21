@@ -11,7 +11,6 @@ module.exports = merge(commonConfig, {
     path: resolve(__dirname, '../../dist'),
     publicPath: '/',
   },
-  devtool: 'source-map',
   module: {
       rules: [
             {
