@@ -42,9 +42,11 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         this.refreshContent(this.props);
     }
 
-    componentWillReceiveProps(props: ShopDiscoverProps) {
-        this.setState({ isLoading: true });
-        this.refreshContent(props);
+    componentWillReceiveProps(nextProps: ShopDiscoverProps) {
+        if (nextProps.location !== this.props.location) {
+            this.setState({ isLoading: true });
+            this.refreshContent(nextProps);
+        }
     }
 
     async componentDidMount() {

@@ -44,9 +44,11 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         this.updateWindowWidth();
     }
 
-    componentWillReceiveProps(props: DiscoverProps) {
-        this.setState({ isLoading: true });
-        this.refreshContent(props);
+    componentWillReceiveProps(nextProps: DiscoverProps) {
+        if (nextProps.location !== this.props.location) {
+            this.setState({ isLoading: true });
+            this.refreshContent(nextProps);
+        }
     }
 
     componentDidMount() {

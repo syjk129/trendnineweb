@@ -54,10 +54,10 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         this.refreshContent(this.props);
     }
 
-    componentWillReceiveProps(props: DiscoverProps) {
-        if (!this.state.isLoading) {
+    componentWillReceiveProps(nextProps: DiscoverProps) {
+        if (!this.state.isLoading && nextProps.location !== this.props.location) {
             this.setState({ isLoading: true });
-            this.refreshContent(props);
+            this.refreshContent(nextProps);
         }
     }
 

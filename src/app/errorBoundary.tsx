@@ -1,3 +1,4 @@
+import autobind from "autobind-decorator";
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 
@@ -15,6 +16,7 @@ interface ErrorBoundaryProps extends RouteProps {
 class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     // React children will trickle their errors up and this will catch them
     componentDidCatch(error, info) {
+        console.log("catching");
         if (isAuthError(error)) {
             this.props.history.push("/login");
         }
@@ -22,17 +24,24 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
 
     componentWillReceiveProps(nextProps: ErrorBoundaryProps) {
         if (this.props.errors.length !== nextProps.errors.length) {
-            nextProps.errors.forEach(error => {
-                if (isAuthError(error)) {
-                    this.props.history.push("/login");
-                    this.props.removeError(error);
-                }
-            });
+            console.log("error boundary receiving props");
+            this._handleErrors(nextProps);
         }
     }
 
     render() {
         return this.props.children;
+    }
+
+    @autobind
+    private _handleErrors(props: ErrorBoundaryProps) {
+        props.errors.forEach(error => {
+            if (isAuthError(error)) {
+                this.props.history.push("/login");
+            }
+            // for now, remove all errors
+            this.props.removeError(error);
+        });
     }
 }
 

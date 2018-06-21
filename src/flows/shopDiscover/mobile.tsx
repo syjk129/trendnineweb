@@ -35,19 +35,20 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
         categories: [],
         products: [],
         productsNextToken: "",
-        isLoading: false,
+        isLoading: true,
         productParam: null,
         gridSize: 1,
     };
 
-    async componentWillMount() {
-        this.setState({ isLoading: true });
+    componentWillMount() {
         this.refreshContent(this.props);
     }
 
-    componentWillReceiveProps(props: ShopDiscoverProps) {
-        this.setState({ isLoading: true });
-        this.refreshContent(props);
+    componentWillReceiveProps(nextProps: ShopDiscoverProps) {
+        if (nextProps.location !== this.props.location) {
+            this.setState({ isLoading: true });
+            this.refreshContent(nextProps);
+        }
     }
 
     async componentDidMount() {

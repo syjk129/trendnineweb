@@ -3,11 +3,9 @@ import { match } from "react-router-dom";
 
 import { Category, Product, Products } from "../../api/models";
 import { PostParam } from "../model";
+import RouteProps from "../routeProps";
 
-export interface ShopDiscoverProps {
-    history: H.History;
-    location: any;
-    match: match<any>;
+export interface ShopDiscoverProps extends RouteProps {
     getLatestProducts(queryString?: string, nextToken?: string): Products;
     getFeedProducts(queryString?: string, nextToken?: string): Products;
     getCategories(categoryId?: string): Array<Category>;

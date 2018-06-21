@@ -16,14 +16,13 @@ import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
+import RouteProps from "../routeProps";
 import DesktopProduct from "./desktop";
 import MobileProduct from "./mobile";
 
 import "./style.scss";
 
-interface ProductProps {
-    match: match<any>;
-}
+type Props = RouteProps;
 
 interface ProductState {
     currentProduct: any;
@@ -33,7 +32,7 @@ interface ProductState {
     wishlisted: boolean;
 }
 
-export default class ProductView extends React.Component<ProductProps, ProductState> {
+export default class ProductView extends React.Component<Props, ProductState> {
     static contextTypes: AppContext;
 
     state: ProductState = {
@@ -48,11 +47,13 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
         this.refreshContent(this.props);
     }
 
-    componentWillReceiveProps(props: ProductProps) {
-        this.refreshContent(props);
+    componentWillReceiveProps(nextProps: Props) {
+        if (nextProps.location !== this.props.location) {
+            this.refreshContent(nextProps);
+        }
     }
 
-    async refreshContent(props: ProductProps) {
+    async refreshContent(props: Props) {
         this._productId = props.match.params.productId;
 
         const [

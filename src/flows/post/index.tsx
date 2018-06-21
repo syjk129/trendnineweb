@@ -21,6 +21,7 @@ import { PostRank } from "../flowComponents/ranking";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
 import Tag from "../flowComponents/tag";
+import RouteProps from "../routeProps";
 import DesktopPost from "./desktop";
 import MobilePost from "./mobile";
 import PostAuthorDetails from "./postAuthorDetails";
@@ -28,9 +29,7 @@ import ProductTag from "./productTag";
 
 import "./style.scss";
 
-interface PostProps {
-    match: match<any>;
-}
+type Props = RouteProps;
 
 interface PostState {
     post: Post;
@@ -40,7 +39,7 @@ interface PostState {
     featuredTrendnines: Array<Person>;
 }
 
-export default class PostView extends React.Component<PostProps, PostState> {
+export default class PostView extends React.Component<Props, PostState> {
     static contextTypes: AppContext;
 
     state: PostState = {
@@ -51,12 +50,14 @@ export default class PostView extends React.Component<PostProps, PostState> {
         featuredTrendnines: [],
     };
 
-    async componentWillMount() {
+    componentWillMount() {
         this._fetchData();
     }
 
-    async componentWillReceiveProps() {
-        this._fetchData();
+    componentWillReceiveProps(nextProps: Props) {
+        if (nextProps.location !== this.props.location) {
+            this._fetchData();
+        }
     }
 
     render() {

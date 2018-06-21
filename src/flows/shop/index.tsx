@@ -8,20 +8,18 @@ import { Featured } from "../../api/models";
 import { AppContext, AppContextTypes } from "../../app";
 import Content from "../../components/content";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
+import RouteProps from "../routeProps";
 
 import "./style.scss";
 
-interface ShopProps {
-    location: any;
-    match: match<any>;
-}
+type Props = RouteProps;
 
 interface ShopState {
     featured: Array<Featured>;
     isLoading: boolean;
 }
 
-export default class Shop extends React.Component<ShopProps, ShopState> {
+export default class Shop extends React.Component<Props, ShopState> {
     static contextTypes: AppContext;
 
     state: ShopState = {
@@ -34,12 +32,14 @@ export default class Shop extends React.Component<ShopProps, ShopState> {
         this.refreshContent(this.props);
     }
 
-    componentWillReceiveProps(props: ShopProps) {
-        this.setState({ isLoading: true });
-        this.refreshContent(props);
+    componentWillReceiveProps(nextProps: Props) {
+        if (nextProps.location !== this.props.location) {
+            this.setState({ isLoading: true });
+            this.refreshContent(nextProps);
+        }
     }
 
-    async refreshContent(props: ShopProps) {
+    async refreshContent(props: Props) {
         const [
             featured,
         ] = await Promise.all([
