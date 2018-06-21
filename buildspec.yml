@@ -9,4 +9,4 @@ phases:
             - npm run build
     post_build:
         commands:
-            - aws s3 sync ./dist s3://www.beta.trendnine.com --acl public-read
+            - aws s3 sync ./dist s3://beta.trendnine.com --acl public-read
