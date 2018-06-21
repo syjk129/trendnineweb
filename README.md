@@ -1,4 +1,4 @@
-# Trendnine
+# TrendNine
 
 ## Getting Started
 Install the following plugins for your editor. We have config files that will stylize our code to be consistent. We recommend using VSCode for development.
