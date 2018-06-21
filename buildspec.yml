@@ -9,5 +9,4 @@ artifacts:
     files:
         - './dist/*'
         - './dist/**/*'
-    discard-paths: yes
     base-directory: trendnineweb/dist
