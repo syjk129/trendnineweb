@@ -9,4 +9,4 @@ artifacts:
     files:
         - ./dist/*
         - ./dist/**/*
-    base-directory: trendnineweb
+    base-directory: /trendnineweb/dist
