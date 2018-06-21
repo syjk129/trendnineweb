@@ -10,4 +10,4 @@ artifacts:
         - './dist/*'
         - './dist/**/*'
     discard-paths: yes
-    base-directory: 'trendnineweb/dist'
+    base-directory: trendnineweb/dist
