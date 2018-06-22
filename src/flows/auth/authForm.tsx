@@ -21,6 +21,8 @@ interface AuthFormProps extends RouteProps {
     getUser(): Promise<Person>;
     login(data: AuthData): Promise<void>;
     register(data: RegisterData): Promise<void>;
+    authenticateFacebook(response: FacebookLoginResponse): Promise<void>;
+    authenticateGoogle(response: GoogleLoginResponseOffline): Promise<void>;
 }
 
 interface AuthFormState {
@@ -173,7 +175,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
 
     @autobind
     private async _googleBtnSuccessCallback(response: GoogleLoginResponseOffline) {
-        this.context.api.authenticate_google(response.code);
+        this.props.authenticateGoogle(response);
         this._setLoggedInUser();
     }
 
@@ -184,7 +186,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     @autobind
     private async _facebookBtnCallback(response: FacebookLoginResponse) {
         if (!response.error) {
-            this.context.api.authenticate_facebook(response.code);
+            this.props.authenticateFacebook(response);
             this._setLoggedInUser();
         }
     }

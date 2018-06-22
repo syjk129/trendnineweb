@@ -50,13 +50,13 @@ export default class Api {
         }
     }
 
-    async authenticate_google(code: string) {
+    async authenticateGoogle(code: string) {
         const res = await this._POST("/api/v1/users/google", { code });
         localStorage.setItem(tokenName, res.token);
     }
 
     // TODO - Change it to pass token instead of access token
-    async authenticate_facebook(code: string) {
+    async authenticateFacebook(code: string) {
         const res = await this._POST("/api/v1/users/facebook", { code });
         localStorage.setItem(tokenName, res.token);
     }

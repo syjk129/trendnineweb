@@ -57,6 +57,8 @@ export default class Auth extends React.Component<AuthProps> {
                 getUser={this._getUser}
                 login={this._login}
                 register={this._register}
+                authenticateFacebook={this._authenticateFacebook}
+                authenticateGoogle={this._authenticateGoogle}
                 history={this.props.history}
                 location={this.props.location}
                 match={this.props.match}
@@ -85,6 +87,16 @@ export default class Auth extends React.Component<AuthProps> {
     @autobind
     private _getUser() {
         return this.context.api.getUser();
+    }
+
+    @autobind
+    private _authenticateGoogle(response: GoogleLoginResponseOffline) {
+        return this.context.api.authenticateGoogle(response.code);
+    }
+
+    @autobind
+    private _authenticateFacebook(response: FacebookLoginResponse) {
+        return this.context.api.authenticateFacebook(response.code);
     }
 
     @autobind
