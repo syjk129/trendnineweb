@@ -91,6 +91,10 @@
 
         .nav-logo-container {
             width: $sidebar-width + $sidebar-padding;
+
+            .nav-logo {
+                width: 180px;
+            }
         }
 
         .nav-header-links {
