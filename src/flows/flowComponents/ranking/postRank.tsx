@@ -22,7 +22,7 @@ class PostRank extends React.Component<PostRankProps> {
         const { posts, hideRanks, hideName, hideViewMore, history } = this.props;
         return (
             <div>
-                {posts.filter(post => post.cover_image != null).slice(0, 5).map(post => (
+                {posts && posts.filter(post => post.cover_image != null).slice(0, 5).map(post => (
                     <LinkButton
                         className={isMobile ? "mobile-post-rank" : "post-rank"}
                         to={`/post/${post.id}`}
