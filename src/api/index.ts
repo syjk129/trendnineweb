@@ -100,8 +100,7 @@ export default class Api {
     }
 
     getTrendingPosts(): Promise<Array<PostPreview>> {
-        return Promise.resolve([]);
-        // return this._GET("/api/v1/posts/trending");
+        return this._GET("/api/v1/posts/trending");
     }
 
     getFeedPosts(queryString?: string, nextToken?: string): Promise<Posts> {

@@ -8,10 +8,18 @@
 .post-rank-img {
     height: $ranking-img-height;
     width: $ranking-img-width;
+    flex-shrink: 0;
+    display: inline-block;
+    object-fit: cover;
 }
 
 .post-rank {
     padding: 0;
+
+    .post-rank-img {
+        padding-top: $base-spacing;
+        padding-bottom: $base-spacing;
+    }
 }
 
 .post-rank,
@@ -21,14 +29,6 @@
 
     &:last-child {
         border-bottom: 0;
-    }
-
-    .post-rank-img {
-        flex-shrink: 0;
-        display: inline-block;
-        object-fit: cover;
-        padding-top: $base-spacing;
-        padding-bottom: $base-spacing;
     }
 
     .post-rank-footer {
