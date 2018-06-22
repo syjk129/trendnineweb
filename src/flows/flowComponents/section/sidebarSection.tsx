@@ -33,7 +33,7 @@ export class SidebarPostProductListSection extends React.Component<SidebarPostPr
             this.props.items.length > 0 && (
                 <SidebarSection title={this.props.title}>
                     {this.props.items.map(item => {
-                        return item.type === "product" ? this._renderProduct(item.content) : this._renderPost(item.content);
+                        return item.type === "Product" ? this._renderProduct(item.content) : this._renderPost(item.content);
                     })}
                 </SidebarSection>
             )
