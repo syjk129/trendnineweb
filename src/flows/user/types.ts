@@ -16,6 +16,6 @@ export enum UserContentType {
     PRODUCT = "product",
     FOLLOWER = "follower",
     FOLLOWING = "following",
-    POST_WISHLIST = "post-wishlist",
-    PRODUCT_WISHLIST = "product-wishlist",
+    POST_WISHLIST = "bookmarks",
+    PRODUCT_WISHLIST = "wishlist",
 }
