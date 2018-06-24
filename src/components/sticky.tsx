@@ -5,6 +5,7 @@ interface StickyProps {
     id: string;
     stickyClassName: string;
     children: React.ReactNode;
+    isSticked?(bool: boolean): void;
 }
 
 export default class Sticky extends React.Component<StickyProps, never>  {
@@ -24,9 +25,15 @@ export default class Sticky extends React.Component<StickyProps, never>  {
             if (this.props.id === "filter-container") {
                 this.sticky.style.width = `${document.getElementById("content").offsetWidth + 20}px`;
             }
+            if (this.props.isSticked) {
+                this.props.isSticked(true);
+            }
         } else {
             this.sticky.classList.remove(this.props.stickyClassName);
             this.sticky.removeAttribute("style");
+            if (this.props.isSticked) {
+                this.props.isSticked(false);
+            }
         }
     }
 

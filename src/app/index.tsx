@@ -14,6 +14,7 @@ import {
 
 import Api from "../api";
 import Auth from "../flows/auth";
+import BrandView from "../flows/brands";
 import Discover from "../flows/discover";
 import PostView from "../flows/post";
 import ProductView from "../flows/product";
@@ -129,10 +130,12 @@ export default class App extends React.Component<AppProps, AppState> {
                             <Route path="/register" render={(props) => <Auth {...props} setLoggedState={this._setLoggedState} />} />
                             <Route path="/discover/:pageName?" component={Discover} />
                             <Route path="/feed" component={Discover} />
+                            <Route path="/brands" component={BrandView} />
                             <Route path="/user/:userId/:pageName?" component={User} />
                             <Route path="/shop/home" component={Shop} />
                             <Route path="/shop/discover" component={ShopDiscover} />
                             <Route path="/shop/feed" component={ShopDiscover} />
+                            <Route path="/shop/brands" component={BrandView} />
                             <Route path="/shop/product/:productId" component={ProductView} />
                             <Route path="/post/:postId" component={PostView} />
                             <Route path="/product/:productId" component={ProductView} />
