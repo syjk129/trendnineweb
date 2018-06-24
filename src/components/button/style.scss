@@ -16,7 +16,9 @@
 
     &:hover {
         cursor: pointer;
-        background-color: darken($color-accent, 20%);
+        background-color: transparent;
+        border: $brand-color solid $standard-border-width;
+        color: $brand-color;
     }
 
     &.button-inline {
@@ -57,6 +59,7 @@
     &:focus {
         cursor: pointer;
         color: $color-accent;
+        opacity: 0.75;
     }
 
     &.selected {

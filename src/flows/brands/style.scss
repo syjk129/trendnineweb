@@ -1,0 +1,65 @@
+@import "../../styles/variables";
+
+.brands-content {
+    display: flex;
+    padding: 0 $page-spacing;
+
+    .sidebar-section {
+        border-bottom: 0;
+        margin-bottom: $base-spacing * 25;
+
+        .sidebar-brand-header {
+            font-family: $font-family-serif;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-5;
+            line-height: $line-height-5;
+        }
+    }
+
+    .sticky-alphabet-list {
+        position: fixed;
+        width: 100%;
+        background-color: $base-background-color;
+        z-index: 2;
+        top: $navbar-height - $standard-border-width;
+    }
+
+    .alphabet-list {
+        background-color: $base-background-color;
+        list-style: none;
+        padding: 0;
+        display: flex;
+        font-family: $font-family-serif;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-2;
+        line-height: $line-height-2;
+        padding-bottom: $base-spacing;
+        border-bottom: $standard-border-width solid $standard-border-color;
+
+        li {
+            padding-right: $base-spacing * 1.5;
+        }
+    }
+
+    .brand-section-container {
+        display: block;
+        column-count: 5;
+
+        .brand-section {
+            break-inside: avoid-column;
+            margin-top: $base-spacing * 4;
+
+            .brand-section-header {
+                font-family: $font-family-serif;
+                font-weight: $font-weight-bold;
+                font-size: $font-size-4;
+                line-height: $line-height-4;
+                padding-bottom: $base-spacing;
+            }
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+}
