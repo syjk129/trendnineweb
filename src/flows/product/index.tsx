@@ -66,6 +66,8 @@ export default class ProductView extends React.Component<Props, ProductState> {
             this.context.api.getReviews(this._productId),
         ]);
 
+        window.open(currentProduct.url, "_blank");
+
         const wishlisted = currentProduct.wishlisted;
 
         const recentlyViewed = localStorage.getItem("recentlyViewed");
