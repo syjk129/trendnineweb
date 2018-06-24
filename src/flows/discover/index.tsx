@@ -6,6 +6,7 @@ import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detec
 import { match, withRouter } from "react-router-dom";
 
 import { AppContext } from "../../app";
+import PageNavigation from "../flowComponents/pageNavigation";
 import RouteProps from "../routeProps";
 import DesktopDiscover from "./desktop";
 import MobileDiscover from "./mobile";
@@ -20,6 +21,7 @@ export default class Discover extends React.Component<Props> {
 
         return (
             <div>
+                <PageNavigation />
                 <BrowserView device={isBrowser}>
                     <DesktopDiscover
                         {...routeProps}

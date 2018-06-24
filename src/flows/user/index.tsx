@@ -7,6 +7,7 @@ import { match } from "react-router";
 
 import { Person } from "../../api/models";
 import { AppContext } from "../../app";
+import PageNavigation from "../flowComponents/pageNavigation";
 import { Filters, PostParam } from "../model";
 import RouteProps from "../routeProps";
 import DesktopUser from "./desktop";
@@ -62,6 +63,7 @@ export default class User extends React.Component<Props, UserState> {
     render() {
         return (
             <div>
+                <PageNavigation />
                 <BrowserView device={isBrowser}>
                     <DesktopUser
                         {...this.state}

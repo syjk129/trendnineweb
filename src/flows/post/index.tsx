@@ -17,6 +17,7 @@ import Spinner, { SpinnerContainer } from "../../components/spinner";
 import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import Featured from "../flowComponents/featured";
+import PageNavigation from "../flowComponents/pageNavigation";
 import { PostRank } from "../flowComponents/ranking";
 import { ContentSection, SidebarSection } from "../flowComponents/section";
 import SidebarGrid from "../flowComponents/sidebarGrid";
@@ -69,6 +70,7 @@ export default class PostView extends React.Component<Props, PostState> {
 
         return (
             <div>
+                <PageNavigation />
                 <BrowserView device={isBrowser}>
                     <DesktopPost
                         {...this.state}

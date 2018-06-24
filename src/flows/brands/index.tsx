@@ -12,6 +12,7 @@ import ScrollTo from "../../components/scrollTo";
 import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
+import PageNavigation from "../flowComponents/pageNavigation";
 import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import RouteProps from "../routeProps";
 
@@ -101,6 +102,7 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
                     }
                 </Sidebar>
                 <Content>
+                    <PageNavigation />
                     {this._renderAlphabet()}
                     {this._renderBrands()}
                 </Content>

@@ -1,0 +1,26 @@
+@import "../../../styles/variables";
+
+.page-navigation {
+    z-index: 3;
+    position: fixed;
+    bottom: $page-spacing;
+    right: $page-spacing;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    opacity: 0.4;
+
+    &:hover {
+        border: $standard-border-width solid transparent;
+        background-color: $color-accent;
+        color: $color-white;
+        opacity: 0.8;
+    }
+}
+
+.mobile-page-navigation {
+    .page-navigation {
+        bottom: $mobile-page-spacing;
+        right: $mobile-page-spacing;
+    }
+}

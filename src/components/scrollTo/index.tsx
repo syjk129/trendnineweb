@@ -1,7 +1,7 @@
 import * as React from "react";
 
 interface ScrollToProps {
-    id: string;
+    id?: string;
     offsetY?: number;
 }
 
@@ -17,13 +17,7 @@ export default function ScrollTo({ id, offsetY }: ScrollToProps) {
 
     let percentage;
     let startTime;
-    const node = document.getElementById(id);
-
-    if (!node) {
-        return;
-    }
-    const nodeTop = node.offsetTop;
-    const nodeHeight = node.offsetHeight;
+    const node = id ? document.getElementById(id) : null;
     const body = document.body;
     const html = document.documentElement;
     const height = Math.max(
@@ -33,6 +27,8 @@ export default function ScrollTo({ id, offsetY }: ScrollToProps) {
         html.scrollHeight,
         html.offsetHeight,
     );
+    const nodeTop = node ? node.offsetTop : height;
+    const nodeHeight = node ? node.offsetHeight : 0;
     const windowHeight = window.innerHeight;
     const offset = window.pageYOffset;
     const delta = nodeTop - offset - offsetY;
