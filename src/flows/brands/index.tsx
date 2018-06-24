@@ -1,4 +1,3 @@
-
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
@@ -33,7 +32,7 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
     state: BrandViewState = {
         brandList: [],
         breakIndex: [],
-        isLoading: false,
+        isLoading: true,
         sticked: false,
     };
 
@@ -42,7 +41,6 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
             this.props.history.push("/");
         }
 
-        this.setState({ isLoading: true });
         this.refreshContent(this.props);
     }
 
@@ -52,17 +50,12 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
         }
 
         if (nextProps.location !== this.props.location) {
-            this.setState({ isLoading: true });
             this.refreshContent(nextProps);
         }
     }
 
     async refreshContent(props: Props) {
-        const [
-            brandList,
-        ] = await Promise.all([
-            this.context.api.getBrands(""),
-        ]);
+        const brandList = await this.context.api.getBrands("");
 
         let asciiCode = 0;
         let breakIndex = [0];
@@ -79,8 +72,8 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
         });
 
         this.setState({
-            brandList: brandList,
-            breakIndex: breakIndex,
+            brandList,
+            breakIndex,
             isLoading: false,
         });
     }
@@ -129,23 +122,22 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
         const isShop = pathname.indexOf("/shop") > -1;
         let output = [];
 
-        breakIndex.forEach((index, i) => {
-            output.push(
-                <div id={`section_${i}`} className="brand-section">
-                    {brands[index] && brands[index].name && (
-                        <div className="brand-section-header">{this._getHeader(brands[index].name)}</div>
-                    )}
-                    {brands.slice(index, breakIndex[i + 1]).map(b => (
-                        <LinkButton to={isShop ? `/shop/discover?brands=${b.id}` : `/discover?brands=${b.id}`}>
-                            {b.name}
-                        </LinkButton>
-                    ))}
-                </div>);
-        });
-
         return (
             <div className="brand-section-container">
-                {output}
+            {
+                breakIndex.map((index, i) => (
+                    <div id={`section_${i}`} className="brand-section">
+                        {brands[index] && brands[index].name && (
+                            <div className="brand-section-header">{this._getHeader(brands[index].name)}</div>
+                        )}
+                        {brands.slice(index, breakIndex[i + 1]).map(b => (
+                            <LinkButton to={isShop ? `/shop/discover?brands=${b.id}` : `/discover?brands=${b.id}`}>
+                                {b.name}
+                            </LinkButton>
+                        ))}
+                    </div>
+                ))
+            }
             </div>
         );
     }
