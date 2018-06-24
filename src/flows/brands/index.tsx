@@ -8,6 +8,7 @@ import Brand from "../../api/models/brand";
 import { AppContext, AppContextTypes } from "../../app";
 import { LinkButton } from "../../components/button";
 import Content from "../../components/content";
+import ScrollTo from "../../components/scrollTo";
 import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
@@ -108,7 +109,7 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
     }
 
     @autobind
-    private _setSticked(sticked: boolean) {
+    private _isSticked(sticked: boolean) {
         this.setState({sticked: sticked});
     }
 
@@ -156,6 +157,10 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
         return "0 - 9";
     }
 
+    private _scrollTo(id: string) {
+        ScrollTo({id: id, offsetY: this.state.sticked ? 80 : 130});
+    }
+
     @autobind
     private _renderAlphabet() {
         const brands = this.state.brandList;
@@ -169,7 +174,7 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
             if (brand && brand.name) {
                 output.push((
                 <li>
-                    <LinkButton to={`#section_${i}`}>
+                    <LinkButton onClick={() => this._scrollTo(`section_${i}`)}>
                         {this._getHeader(brand.name)}
                     </LinkButton>
                 </li>));
@@ -177,7 +182,7 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
         });
 
         return (
-            <Sticky  id="alphabet-list" stickyClassName="sticky-alphabet-list" isSticked={this._setSticked}>
+            <Sticky  id="alphabet-list" stickyClassName="sticky-alphabet-list" isSticked={this._isSticked}>
                 <ul className="alphabet-list">
                     {output}
                 </ul>
