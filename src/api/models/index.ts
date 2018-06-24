@@ -1,3 +1,4 @@
+import Brand from "./brand";
 import Category from "./category";
 import Comment from "./comment";
 import Featured from "./featured";
@@ -14,6 +15,7 @@ import Retailer from "./retailer";
 import Tag from "./tag";
 
 export {
+    Brand,
     Category,
     Comment,
     Featured,

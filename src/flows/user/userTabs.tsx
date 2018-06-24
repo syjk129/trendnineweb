@@ -40,7 +40,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     pathname={pathname}
                     onClick={() => setContent(UserContentType.POST_WISHLIST)}
                 >
-                    <p>WISHLIST (Posts)</p>
+                    <p>BOOKMARKS</p>
                     <p>&nbsp;</p>
                 </NavLink>
             }
@@ -50,7 +50,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     pathname={pathname}
                     onClick={() => setContent(UserContentType.PRODUCT_WISHLIST)}
                 >
-                    <p>WISHLIST (Products)</p>
+                    <p>WISHLIST</p>
                     <p>&nbsp;</p>
                 </NavLink>
             }

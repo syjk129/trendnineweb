@@ -46,6 +46,9 @@
     margin-top: $navbar-height;
 
     .post-content {
+        max-width: 860px;
+        margin: auto;
+
         .post-cover {
             width: 100%;
             margin-bottom: $base-spacing * 4;

@@ -1,4 +1,5 @@
 import {
+    Brand,
     Category,
     Comment,
     Featured,
@@ -86,7 +87,7 @@ export default class Api {
         return this._GET(url);
     }
 
-    getBrands(keyword?: string): Promise<Array<Retailer>> {
+    getBrands(keyword?: string): Promise<Array<Brand>> {
         let url = "/api/v1/marketplace/products/brands";
 
         if (keyword) {
