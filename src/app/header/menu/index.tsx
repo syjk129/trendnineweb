@@ -76,13 +76,6 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     >
                        New Arrivals
                     </LinkButton>
-                    {/* <LinkButton
-                        className="menu-link"
-                        to={isShop ? "/shop/brands" : "/brands"}
-                        onClick={this.props.toggleMenu}
-                    >
-                       Brands
-                    </LinkButton> */}
                     <br/>
                     <LinkButton onClick={this._logout}>Sign out</LinkButton>
                 </div>

@@ -21,6 +21,7 @@ import MobileFilter from "../flowComponents/filter/mobileFilter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
+import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
@@ -34,8 +35,9 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
     state: MobileShopDiscoverState = {
         categories: [],
         products: [],
-        productsNextToken: "",
+        nextToken: null,
         isLoading: true,
+        loadingNext: false,
         productParam: null,
         gridSize: 1,
     };
@@ -52,20 +54,10 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
     }
 
     async componentDidMount() {
-        window.addEventListener("scroll", this.onScroll, false);
-
-        try {
-            const categories = await this.props.getCategories();
-            this.setState({
-                categories: categories,
-            });
-        } catch (err) {
-            console.warn(err);
-        }
-    }
-
-    componentDidUnmount() {
-        window.removeEventListener("scroll", this.onScroll, false);
+        const categories = await this.props.getCategories();
+        this.setState({
+            categories: categories,
+        });
     }
 
     async refreshContent(props: ShopDiscoverProps) {
@@ -81,20 +73,10 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
 
         this.setState({
             products: products.list,
-            productsNextToken: products.nextToken,
+            nextToken: products.nextToken,
             productParam: productParam,
             isLoading: false,
         });
-    }
-
-    onScroll = () => {
-        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-        let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-        let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-        if (scrolledToBottom) {
-            this._paginateNextProducts();
-        }
     }
 
     render() {
@@ -104,28 +86,6 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
 
         return (
             <div className="mobile-discover">
-                {/* <Sidebar>
-                    <div className="filter-container">
-                        <CategoryTreeFilter
-                            active={true}
-                            categoryList={this.state.categories} />
-                    </div>
-                </Sidebar> */}
-                    {/* <Sticky id="filter-container" stickyClassName="sticky-filter-container">
-                        <div className="filter-container">
-                            <Filter
-                                onApply={this._filterProducts}
-                                filterTarget={FilterTarget.SHOP}
-                                default={this.state.productParam.filters}
-                                className={this.state.productParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} />
-
-                            <Sort
-                            name="Sort by"
-                            onSelect={this._sortProduct}
-                            />
-
-                        </div>
-                    </Sticky> */}
                 {this.state.productParam.keyword !== "" && this.state.products.length < 1 && (
                     <div className="no-search-result-text">
                         No results for "{ this.state.productParam.keyword }"
@@ -136,6 +96,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
                 <CardContainer gridSize={this.state.gridSize} className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
                     {this._renderProducts()}
                 </CardContainer>
+                {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextPosts} />}
             </div>
         );
     }
@@ -162,20 +123,22 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
 
     @autobind
     private async _paginateNextProducts() {
-        if (this.state.productsNextToken == null) {
+        if (!this.state.nextToken) {
             return;
         }
+        this.setState({ loadingNext: true });
 
         const queryString = this.state.productParam.convertUrlParamToQueryString();
         const newProducts = await Promise.resolve(
             location.pathname === "/feed" ?
-                this.props.getFeedProducts(queryString, this.state.productsNextToken)
-                : this.props.getLatestProducts(queryString, this.state.productsNextToken));
+                this.props.getFeedProducts(queryString, this.state.nextToken)
+                : this.props.getLatestProducts(queryString, this.state.nextToken));
         this.setState({
             products: this.state.products.concat(newProducts.list).filter((post, index, arr) => {
                 return arr.map(mapProduct => mapProduct["id"]).indexOf(post["id"]) === index;
             }),
-            productsNextToken: newProducts.nextToken,
+            nextToken: newProducts.nextToken,
+            loadingNext: false,
         });
     }
 

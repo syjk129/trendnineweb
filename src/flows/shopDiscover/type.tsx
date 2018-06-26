@@ -14,7 +14,8 @@ export interface ShopDiscoverProps extends RouteProps {
 export interface ShopDiscoverState {
     categories: Array<Category>;
     products: Array<Product>;
-    productsNextToken: string;
+    nextToken: string | null;
     isLoading: boolean;
+    loadingNext: boolean;
     productParam: PostParam;
 }

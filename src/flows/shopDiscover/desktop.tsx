@@ -32,13 +32,13 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
     state: DesktopShopDiscoverState = {
         categories: [],
         products: [],
-        productsNextToken: "",
-        isLoading: false,
+        nextToken: null,
+        isLoading: true,
+        loadingNext: false,
         productParam: null,
     };
 
-    async componentWillMount() {
-        this.setState({ isLoading: true });
+    componentWillMount() {
         this.refreshContent(this.props);
     }
 
@@ -50,20 +50,8 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
     }
 
     async componentDidMount() {
-        window.addEventListener("scroll", this.onScroll, false);
-
-        try {
-            const categories = await this.props.getCategories();
-            this.setState({
-                categories: categories,
-            });
-        } catch (err) {
-            console.warn(err);
-        }
-    }
-
-    componentDidUnmount() {
-        window.removeEventListener("scroll", this.onScroll, false);
+        const categories = await this.props.getCategories();
+        this.setState({ categories });
     }
 
     async refreshContent(props: ShopDiscoverProps) {
@@ -71,28 +59,14 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         const productParam = new PostParam(params);
         const queryString = productParam.convertUrlParamToQueryString();
 
-        const [
-            products,
-        ] = await Promise.all([
-            location.pathname === "/shop/feed" ? this.props.getFeedProducts() : this.props.getLatestProducts(queryString),
-        ]);
+        const products = location.pathname === "/shop/feed" ? await this.props.getFeedProducts() : await this.props.getLatestProducts(queryString);
 
         this.setState({
             products: products.list,
-            productsNextToken: products.nextToken,
+            nextToken: products.nextToken,
             productParam: productParam,
             isLoading: false,
         });
-    }
-
-    onScroll = () => {
-        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-        let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-        let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-        if (scrolledToBottom) {
-            this._paginateNextProducts();
-        }
     }
 
     render() {
@@ -140,6 +114,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                     <CardContainer>
                         {this._renderProducts()}
                     </CardContainer>
+                    {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextPosts} />}
                 </Content>
             </div>
         );
@@ -173,20 +148,22 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
     @autobind
     private async _paginateNextProducts() {
-        if (this.state.productsNextToken == null) {
+        if (!this.state.nextToken) {
             return;
         }
+        this.setState({ loadingNext: true });
 
         const queryString = this.state.productParam.convertUrlParamToQueryString();
         const newProducts = await Promise.resolve(
             location.pathname === "/feed" ?
-                this.props.getFeedProducts(queryString, this.state.productsNextToken)
-                : this.props.getLatestProducts(queryString, this.state.productsNextToken));
+                this.props.getFeedProducts(queryString, this.state.nextToken)
+                : this.props.getLatestProducts(queryString, this.state.nextToken));
         this.setState({
             products: this.state.products.concat(newProducts.list).filter((post, index, arr) => {
                 return arr.map(mapProduct => mapProduct["id"]).indexOf(post["id"]) === index;
             }),
-            productsNextToken: newProducts.nextToken,
+            nextToken: newProducts.nextToken,
+            loadingNext: false,
         });
     }
 

@@ -23,6 +23,13 @@ export default class PageNavigation extends React.Component<PageNavigationProps,
         window.addEventListener("scroll", this.onScroll, false);
     }
 
+    shouldComponentUpdate(nextProps: PageNavigationProps, nextState: PageNavigationState) {
+        if (nextState.show !== this.state.show) {
+            return false;
+        }
+        return true;
+    }
+
     onScroll = () => {
         if (window.pageYOffset >= 200) {
             this.setState({ show: true });

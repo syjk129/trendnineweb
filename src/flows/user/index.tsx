@@ -46,14 +46,6 @@ export default class User extends React.Component<Props, UserState> {
         this._updateContent(this.props, contentType);
     }
 
-    componentDidMount() {
-        window.addEventListener("scroll", this._onScroll, false);
-    }
-
-    componentDidUnmount() {
-        window.removeEventListener("scroll", this._onScroll, false);
-    }
-
     async getDerivedStateFromProps() {
         this._user = JSON.parse(localStorage.getItem("user")) || {};
         let contentType = this.props.match.params.pageName ? this.props.match.params.pageName : UserContentType.POST;
@@ -169,28 +161,18 @@ export default class User extends React.Component<Props, UserState> {
 
     @autobind
     private async _fetchNextContent() {
-        if (this.state.nextToken == null) {
+        if (!this.state.nextToken) {
             return;
         }
+        this.setState({ loadingNext: true });
 
         const queryString = this.state.postParam ? this.state.postParam.convertUrlParamToQueryString() : "";
         const newContent = await this._fetchContent(this.state.contentType, queryString, this.state.nextToken);
         this.setState({
             content: newContent,
             nextToken: newContent.nextToken,
+            loadingNext: false,
         });
-    }
-
-    @autobind
-    private _onScroll() {
-        let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-        let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-        let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-
-        if (scrolledToBottom) {
-            this._fetchNextContent();
-        }
     }
 }
 
