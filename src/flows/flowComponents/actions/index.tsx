@@ -41,24 +41,41 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
     render() {
         return (
             <div className="action-btns">
-                {this.props.variant === ActionLinksVariant.POST &&
-                    <IconButton
-                        icon={IconVariant.LIKE}
-                        size={this.props.iconSize}
-                        selected={this.state.liked}
-                        onClick={this._likeUnlikePost}
-                    >
-                        {/* {this.state.likes} */}
-                    </IconButton>
-                }
+                <span className="left-icons">
+                    {this.props.variant === ActionLinksVariant.POST &&
+                        <span className="likes">
+                            <IconButton
+                                icon={IconVariant.LIKE}
+                                size={this.props.iconSize}
+                                selected={this.state.liked}
+                                onClick={this._likeUnlikePost}
+                            >
+                            </IconButton>
+                            {this.state.likes > 0 && this.state.likes}
+                        </span>
+                    }
+                    {this.props.variant === ActionLinksVariant.POST && (
+                        <IconButton
+                            icon={IconVariant.SHARE}
+                            size={this.props.iconSize}
+                            selected={this.state.wishlisted}
+                            onClick={this._share}
+                        />
+                    )}
+                </span>
                 <IconButton
-                    icon={IconVariant.WISHLIST}
+                    icon={this.props.variant === ActionLinksVariant.POST ? IconVariant.BOOKMARK : IconVariant.WISHLIST}
                     size={this.props.iconSize}
                     selected={this.state.wishlisted}
                     onClick={this._wishlistUnwishlist}
                 />
             </div>
         );
+    }
+
+    @autobind
+    private _share() {
+        console.log("share");
     }
 
     @autobind

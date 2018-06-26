@@ -9,6 +9,7 @@ import {ButtonVariant} from "../../../components/button/types";
 import Card from "../../../components/card";
 import Carousel, { CarouselItem } from "../../../components/carousel";
 import Icon, { IconVariant} from "../../../components/icon";
+import formatTime from "../../../util/formatTime";
 import ActionLinks, {ActionLinksVariant} from "../../flowComponents/actions";
 import Author from "../../flowComponents/author";
 
@@ -59,18 +60,17 @@ export default class PostCard extends React.Component<PostCardProps> {
 
         const footerItem = (
             <div>
-                <Author author={post.author} />
+                <div className="author-date">
+                    <Author author={post.author} />
+                    {formatTime(post.created)}
+                </div>
                 <div className="post-card-footer">
-                    <div className="created">
-                        <IconButton icon={IconVariant.TIME}>
-                            <TimeAgo date={post.created} />
-                        </IconButton>
-                    </div>
                     <ActionLinks
                         variant={ActionLinksVariant.POST}
                         id={post.id}
                         wishlisted={post.wishlisted}
                         liked={post.liked}
+                        likes={post.likes}
                     />
                 </div>
             </div>

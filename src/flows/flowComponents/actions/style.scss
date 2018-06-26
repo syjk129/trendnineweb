@@ -1,20 +1,17 @@
 @import "../../../styles/variables";
 
 .action-btns {
-    display: inline-block;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 
-    a {
-        vertical-align: middle;
-        float: right;
+    .left-icons {
+        display: flex;
     }
 
-    a:first-child {
-        padding-right: $base-spacing;
-        float: left;
-    }
-
-    a:last-child {
-        padding-right: 0 !important;
-        float: right !important;
+    .likes {
+        display: flex;
+        align-items: center;
+        margin-right: $base-spacing;
     }
 }

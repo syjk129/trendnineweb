@@ -84,7 +84,7 @@
         height: $line-height-2 * 2;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-bottom: $base-spacing;
+        margin-bottom: $large-spacing;
     }
 
     .author {
@@ -102,6 +102,12 @@
     time {
         vertical-align: middle;
     }
+}
+
+.author-date {
+    color: $color-grey-4;
+    display: flex;
+    justify-content: space-between;
 }
 
 .post-card-footer {

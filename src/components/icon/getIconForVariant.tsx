@@ -6,6 +6,8 @@ import * as ArrowUp from "./icons/arrow_up.png";
 import * as ArrowUpGreen from "./icons/arrow_up_green.png";
 import * as ArrowZero from "./icons/arrow_zero.png";
 import * as Bag from "./icons/bag.png";
+import * as Bookmark from "./icons/bookmark.png";
+import * as BookmarkFilled from "./icons/bookmark_filled.png";
 import * as Close from "./icons/close.png";
 import * as Comments from "./icons/comments.png";
 import * as Girl from "./icons/girl.png";
@@ -18,6 +20,7 @@ import * as Preview1 from "./icons/preview1.png";
 import * as Preview2 from "./icons/preview2.png";
 import * as Preview3 from "./icons/preview3.png";
 import * as Search from "./icons/search.png";
+import * as Share from "./icons/share.png";
 import * as Time from "./icons/time.png";
 import * as Wishlist from "./icons/wishlist.png";
 import * as WishlistFilled from "./icons/wishlist_filled.png";
@@ -42,6 +45,10 @@ export default function getIconForVariant(variant: IconVariant) {
             return ArrowZero;
         case IconVariant.BAG:
             return Bag;
+        case IconVariant.BOOKMARK:
+            return Bookmark;
+        case IconVariant.BOOKMARK_FILLED:
+            return BookmarkFilled;
         case IconVariant.CLOSE:
             return Close;
         case IconVariant.COMMENT:
@@ -66,6 +73,8 @@ export default function getIconForVariant(variant: IconVariant) {
             return Preview3;
         case IconVariant.SEARCH:
             return Search;
+        case IconVariant.SHARE:
+            return Share;
         case IconVariant.TIME:
             return Time;
         case IconVariant.WISHLIST:

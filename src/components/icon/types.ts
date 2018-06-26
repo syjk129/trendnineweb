@@ -6,6 +6,8 @@ export enum IconVariant {
     ARROW_UP = "arrow-up",
     ARROW_UP_GREEN = "arrow-up-green",
     ARROW_ZERO = "arrow-zero",
+    BOOKMARK = "bookmark",
+    BOOKMARK_FILLED = "bookmark-filled",
     COMMENT = "comment",
     LIKE = "like",
     LIKE_FILLED = "like-filled",
@@ -22,6 +24,7 @@ export enum IconVariant {
     GRID_SIZE_3 = "grid-size-3",
     MINUS_CLOSE = "minus_close",
     PLUS_OPEN = "plus_open",
+    SHARE = "share",
 }
 
 export enum IconSize {
@@ -39,6 +42,8 @@ export const IconMap = {
     [IconVariant.ARROW_UP]: IconVariant.ARROW_UP_GREEN,
     [IconVariant.ARROW_UP_GREEN]: IconVariant.ARROW_UP,
     [IconVariant.ARROW_ZERO]: IconVariant.ARROW_ZERO,
+    [IconVariant.BOOKMARK]: IconVariant.BOOKMARK_FILLED,
+    [IconVariant.BOOKMARK_FILLED]: IconVariant.BOOKMARK,
     [IconVariant.COMMENT]: IconVariant.COMMENT,
     [IconVariant.LIKE]: IconVariant.LIKE_FILLED,
     [IconVariant.LIKE_FILLED]: IconVariant.LIKE_FILLED,
@@ -55,4 +60,5 @@ export const IconMap = {
     [IconVariant.GRID_SIZE_3]: IconVariant.GRID_SIZE_3,
     [IconVariant.MINUS_CLOSE]: IconVariant.PLUS_OPEN,
     [IconVariant.PLUS_OPEN]: IconVariant.MINUS_CLOSE,
+    [IconVariant.SHARE]: IconVariant.SHARE,
 };
