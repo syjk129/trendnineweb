@@ -16,18 +16,20 @@ export enum ImageFitVariant {
 interface ImageProps {
     src: string;
     className?: string;
+    height?: number;
+    width?: number;
     inline?: boolean;
     ratio?: ImageRatioVariant;
     fit?: ImageFitVariant;
     square?: boolean;
     circle?: boolean;
-    setRef?: React.RefObject<HTMLImageElement>;
+    setRef?: React.RefObject<HTMLDivElement>;
     onClick?(): void;
 }
 
 export default class Image extends React.Component<ImageProps> {
     render() {
-        const { className, inline, square, circle, fit, ratio, setRef, onClick, src } = this.props;
+        const { className, inline, height, width, square, circle, fit, ratio, setRef, onClick, src } = this.props;
 
         let classes = "image-container";
 
@@ -47,6 +49,10 @@ export default class Image extends React.Component<ImageProps> {
             classes += " circle-image";
         }
 
+        if (width && height) {
+            classes += " nojump";
+        }
+
         switch (fit) {
             case ImageFitVariant.SCALED:
                 classes += " scaled";
@@ -62,10 +68,13 @@ export default class Image extends React.Component<ImageProps> {
                 classes += " post-cover-ratio";
                 break;
         }
+        const style = {
+            paddingBottom: `${height / width * 100}%`,
+        };
 
         return (
-            <div className={classes} onClick={onClick} ref={setRef}>
-                <img src={src} />
+            <div className={classes} onClick={onClick} style={style} ref={setRef}>
+                <img src={src}/>
             </div>
         );
     }

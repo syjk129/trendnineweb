@@ -110,6 +110,8 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                         <div className="post-content" ref="cover">
                             <Image
                                 className="post-cover"
+                                width={post.cover_image.original_image_width}
+                                height={post.cover_image.original_image_height}
                                 src={post.cover_image.original_image_url}
                                 setRef={this._coverImageRef}
                             />
@@ -195,7 +197,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
         );
     }
 
-    private _coverImageRef: React.RefObject<HTMLImageElement>;
+    private _coverImageRef: React.RefObject<HTMLDivElement>;
 
     @autobind
     private _setImageRef(element: Element) {
