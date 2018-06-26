@@ -40,6 +40,25 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
         productTags: [],
     };
 
+    constructor(props: DesktopPostProps) {
+        super(props);
+
+        this._coverImageRef = React.createRef();
+    }
+
+    componentDidMount() {
+        const rect = this._coverImageRef.current.getBoundingClientRect();
+
+        this.setState({ productTags: this.props.post.product_tags.map(tag => ({
+            product_id: tag.product_id,
+            name: this.props.post.products.find(product => product.id === tag.product_id).title,
+            style: {
+                left: rect.left + rect.width * tag.x_axis,
+                top: rect.top + rect.height * tag.y_axis,
+            },
+        }))});
+    }
+
     render() {
         const {
             post,
@@ -92,7 +111,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                             <Image
                                 className="post-cover"
                                 src={post.cover_image.original_image_url}
-                                setRef={this._setImageRef}
+                                setRef={this._coverImageRef}
                             />
                             {this.state.productTags.length > 0 && this.state.productTags.map(tag => (
                                 <ProductTag tag={tag} />
@@ -176,7 +195,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
         );
     }
 
-    private _coverImageRef: React.RefObject<HTMLDivElement>;
+    private _coverImageRef: React.RefObject<HTMLImageElement>;
 
     @autobind
     private _setImageRef(element: Element) {

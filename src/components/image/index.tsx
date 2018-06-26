@@ -21,7 +21,7 @@ interface ImageProps {
     fit?: ImageFitVariant;
     square?: boolean;
     circle?: boolean;
-    setRef?(element: Element): void;
+    setRef?: React.RefObject<HTMLImageElement>;
     onClick?(): void;
 }
 

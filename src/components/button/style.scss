@@ -6,7 +6,7 @@
     text-transform: uppercase;
     padding: $base-spacing;
     width: 100%;
-    height: $button-height;
+    min-height: $button-height;
     letter-spacing: $letter-spacing-1;
     outline: none;
     border: $standard-border-width solid transparent;
