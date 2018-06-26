@@ -19,6 +19,7 @@ import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
+import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
 import ShopCategoryTreeSidebar from "./shopCategorySidebar";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
@@ -114,7 +115,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                     <CardContainer>
                         {this._renderProducts()}
                     </CardContainer>
-                    {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextPosts} />}
+                    {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextProducts} />}
                 </Content>
             </div>
         );

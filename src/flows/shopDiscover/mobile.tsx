@@ -96,7 +96,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
                 <CardContainer gridSize={this.state.gridSize} className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
                     {this._renderProducts()}
                 </CardContainer>
-                {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextPosts} />}
+                {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextProducts} />}
             </div>
         );
     }

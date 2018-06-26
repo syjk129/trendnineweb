@@ -129,7 +129,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                             fit={ImageFitVariant.SCALED}
                                             imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/product/${product.id}`}
-                                            title={product && product.brand.name}
+                                            title={product.brand && product.brand.name}
                                             detail={product.title}
                                             subdetail={ this._renderProductFooter(product) }
                                         />

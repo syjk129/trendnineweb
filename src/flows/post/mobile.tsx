@@ -69,8 +69,8 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                             <CarouselItem
                                 imageUrl={content.image && content.image.small_image_url}
                                 redirectUrl={`/product/${content.id}`}
-                                title={"content"}
-                                detail={"content"}
+                                title={(content.brand && content.brand.name) || content.author.username}
+                                detail={content.title}
                                 subdetail={ this._renderProductFooter(content) }
                             />
                         </div>
