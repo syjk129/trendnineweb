@@ -125,7 +125,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                     contentType={ContentType.POST}
                     setGridSize={this._setGridSize}
                 />
-                <CardContainer gridSize={this.state.gridSize} className={this.state.postParam.keyword === "" ? "" : "card-container-extra-space"}>
+                <CardContainer gridSize={this.state.gridSize}>
                     {this._renderPosts()}
                 </CardContainer>
                 {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextPosts} />}

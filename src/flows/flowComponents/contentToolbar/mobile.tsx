@@ -120,7 +120,7 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
     @autobind
     private _renderFilterChips(filterType: FilterType) {
         const filter = this.props.selectedFilters[filterType];
-        if (filter && isSelectFilter(filter)) {
+        if (filter && isSelectFilter(filter) && this.props.filters[filterType]) {
             return filter.selectedIds.map(selectedId => {
                 const filterItem = this.props.filters[filterType].find(filterItem => filterItem.id === selectedId);
                 if (filterItem) {
