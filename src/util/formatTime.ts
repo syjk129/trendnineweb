@@ -14,13 +14,9 @@ export default function formatTime(date: string) {
         return `${Math.floor(timediff / MONTH)}month`;
     } else if (timediff / WEEK >= 1) {
         return `${Math.floor(timediff / WEEK)}w`;
-    } else if (timediff / DAY >= 1) {
+    } else if (timediff / DAY >= 2) {
         return `${Math.floor(timediff / DAY)}d`;
-    } else if (timediff / HOUR >= 1) {
-        return `${Math.floor(timediff / HOUR)}h`;
-    } else if (timediff / MINUTE >= 1) {
-        return `${Math.floor(timediff / MINUTE)}m`;
-    } else if (timediff / SECOND >= 1) {
-        return `${Math.floor(timediff / SECOND)}s`;
+    } else {
+        return "Today";
     }
 }
