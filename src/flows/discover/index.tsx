@@ -5,7 +5,7 @@ import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 import { match, withRouter } from "react-router-dom";
 
-import { AppContext } from "../../app";
+import { AppContext, AppContextTypes } from "../../app";
 import PageNavigation from "../flowComponents/pageNavigation";
 import RouteProps from "../routeProps";
 import DesktopDiscover from "./desktop";
@@ -75,4 +75,5 @@ export default class Discover extends React.Component<Props> {
 Discover.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

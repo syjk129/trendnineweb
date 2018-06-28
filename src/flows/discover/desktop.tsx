@@ -45,17 +45,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         this.updateWindowWidth();
     }
 
-    componentDidMount() {
-        // const grid = document.getElementById("card-container").rows[0].cells.length;
-    }
-
-    componentWillReceiveProps(nextProps: DiscoverProps) {
-        if (nextProps.location !== this.props.location) {
-            this.setState({ isLoading: true });
-            this.refreshContent(nextProps);
-        }
-    }
-
     async refreshContent(props: DiscoverProps) {
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);

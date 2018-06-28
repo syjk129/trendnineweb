@@ -167,4 +167,5 @@ export default class ProductView extends React.Component<Props, ProductState> {
 ProductView.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

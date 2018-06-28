@@ -47,4 +47,5 @@ export default class FollowButton extends React.Component<FollowButtonProps, Fol
 FollowButton.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

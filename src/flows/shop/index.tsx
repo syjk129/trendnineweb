@@ -24,19 +24,11 @@ export default class Shop extends React.Component<Props, ShopState> {
 
     state: ShopState = {
         featured: [],
-        isLoading: false,
+        isLoading: true,
     };
 
     componentWillMount() {
-        this.setState({ isLoading: true });
         this.refreshContent(this.props);
-    }
-
-    componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.location !== this.props.location) {
-            this.setState({ isLoading: true });
-            this.refreshContent(nextProps);
-        }
     }
 
     async refreshContent(props: Props) {
@@ -47,7 +39,7 @@ export default class Shop extends React.Component<Props, ShopState> {
         ]);
 
         this.setState({
-            featured: featured,
+            featured,
             isLoading: false,
         });
     }
@@ -80,4 +72,5 @@ export default class Shop extends React.Component<Props, ShopState> {
 Shop.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

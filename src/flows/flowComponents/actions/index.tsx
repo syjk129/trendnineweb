@@ -104,4 +104,5 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
 ActionLinks.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

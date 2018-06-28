@@ -163,5 +163,6 @@ export default class PostView extends React.Component<Props, PostState> {
 PostView.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };
 

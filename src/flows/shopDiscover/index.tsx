@@ -68,4 +68,5 @@ export default class ShopDiscover extends React.Component<ShopDiscoverProps> {
 ShopDiscover.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

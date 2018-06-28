@@ -49,10 +49,6 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
         if (isMobile) {
             this.props.history.push("/");
         }
-
-        if (nextProps.location !== this.props.location) {
-            this.refreshContent(nextProps);
-        }
     }
 
     async refreshContent(props: Props) {
@@ -196,4 +192,5 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
 BrandView.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

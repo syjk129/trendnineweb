@@ -1,18 +1,22 @@
-export interface AuthDataProps {
-    username: string;
+export interface AuthFormDataProps {
+    email: string;
     password: string;
+}
+
+export type AuthFormData = AuthFormDataProps;
+
+export interface AuthDataProps extends AuthFormDataProps {
+    isNewUser: boolean;
 }
 
 export type AuthData = AuthDataProps;
 
-export interface RegisterDataProps extends AuthData {
-    firstName: string;
-    lastName: string;
-}
-
-export type RegisterData = RegisterDataProps;
-
 export interface AuthFormProps extends AuthData {
     onSubmit(event: any): void;
-    onFormChange(data: Partial<AuthData | RegisterData>): void;
+    onFormChange(data: Partial<AuthData>): void;
+}
+
+export class FacebookLoginResponse {
+    code: string;
+    error?: string;
 }

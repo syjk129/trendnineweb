@@ -3,28 +3,25 @@ import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { ChangeEvent } from "react";
-import { GoogleLogin, GoogleLoginResponseOffline } from "react-google-login";
+import { GoogleLoginResponseOffline } from "react-google-login";
 import { match } from "react-router";
 
 import { AppContext, AppContextTypes } from "../../app";
 import WithUserSession from "../../app/withUserSession";
 import Input, { InputType } from "../../components/input";
+import Modal from "../../components/modal";
+import Cookies from "../../util/cookies";
+import RouteProps from "../routeProps";
 import AuthForm from "./authForm";
 import FacebookLogin, { FacebookLoginResponse } from "./facebookLogin";
-import LoginForm from "./loginForm";
-import RegisterForm from "./registerForm";
-import { AuthData, RegisterData, RegisterDataProps } from "./types";
+import { AuthData } from "./types";
 
 
-interface AuthProps {
-    history: H.History;
-    location: any;
-    match: match<string>;
+interface AuthProps extends RouteProps {
     apiUrl: string;
+    close(): void;
     setLoggedState(loggedIn: boolean): void;
 }
-
-type AuthFormData = Partial<RegisterData>;
 
 export default class Auth extends React.Component<AuthProps> {
     static contextTypes: AppContext;
@@ -52,17 +49,17 @@ export default class Auth extends React.Component<AuthProps> {
 
     render() {
         return (
-            <AuthForm
-                isNewUser={this._isNewUser()}
-                getUser={this._getUser}
-                login={this._login}
-                register={this._register}
-                authenticateFacebook={this._authenticateFacebook}
-                authenticateGoogle={this._authenticateGoogle}
-                history={this.props.history}
-                location={this.props.location}
-                match={this.props.match}
-            />
+            <Modal isOpen close={this.props.close}>
+                <AuthForm
+                    getUser={this._getUser}
+                    authenticate={this._authenticate}
+                    authenticateFacebook={this._authenticateFacebook}
+                    authenticateGoogle={this._authenticateGoogle}
+                    history={this.props.history}
+                    location={this.props.location}
+                    match={this.props.match}
+                />
+            </Modal>
         );
     }
 
@@ -74,14 +71,10 @@ export default class Auth extends React.Component<AuthProps> {
         return this.props.match.path === "/register";
     }
 
-    @autobind
-    private _login(data: AuthData) {
-        return this.context.api.authenticate(data.username, data.password);
-    }
-
-    @autobind
-    private _register(data: RegisterData) {
-        return this.context.api.authenticate(data.username, data.password, data.firstName, data.lastName);
+    private _authenticate = async (data: AuthData) => {
+        await this.context.api.authenticate(data.email, data.password);
+        this.props.setLoggedState(true);
+        this.props.close();
     }
 
     @autobind
@@ -108,7 +101,7 @@ export default class Auth extends React.Component<AuthProps> {
     private _logout() {
         this.props.setLoggedState(false);
         localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        localStorage.removeItem("tn_auth_token");
         this.props.history.push("/");
     }
 }
@@ -116,4 +109,5 @@ export default class Auth extends React.Component<AuthProps> {
 Auth.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

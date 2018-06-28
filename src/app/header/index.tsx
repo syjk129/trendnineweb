@@ -17,7 +17,7 @@ class Header extends React.Component<HeaderProps> {
                     <DesktopHeader {...this.props} />
                 </BrowserView>
                 <MobileView device={isMobile}>
-                   <MobileHeader {...this.props} />
+                    <MobileHeader {...this.props} />
                 </MobileView>
             </div>
         );

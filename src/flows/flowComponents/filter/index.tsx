@@ -305,4 +305,5 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
 Filter.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

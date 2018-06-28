@@ -84,4 +84,5 @@ export default class Trending extends React.Component<TrendingProps, TrendingSta
 Trending.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

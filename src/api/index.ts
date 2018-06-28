@@ -31,15 +31,13 @@ export default class Api {
         this._apiUrl = options.apiUrl;
     }
 
-    async authenticate(email: string, password: string, firstName?: string, lastName?: string): Promise<void> {
+    async authenticate(email: string, password: string, isNewUser: boolean): Promise<void> {
         try {
             let token;
-            let request;
-            if (firstName && lastName) {
-                request = { email, password, first_name: firstName, last_name: lastName, is_blogger: false };
+            const request = { email, password };
+            if (isNewUser) {
                 token = await this._POST("/api/v1/users", request);
             } else {
-                request = { email, password, firstName, lastName };
                 token = await this._POST("/api/v1/users/authenticate", request);
             }
             if (token) {

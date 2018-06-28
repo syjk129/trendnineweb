@@ -179,4 +179,5 @@ export default class User extends React.Component<Props, UserState> {
 User.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

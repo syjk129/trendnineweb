@@ -245,4 +245,5 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 ContentToolbar.contextTypes = {
     api: PropTypes.any,
     setError: PropTypes.func,
+    openModal: PropTypes.func,
 };

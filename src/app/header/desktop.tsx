@@ -38,7 +38,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                         </div>
                         <div className="header-right-buttons">
                             {(!loggedIn || !user) &&
-                                <LinkButton to="/login">Log In</LinkButton>
+                                <LinkButton to={`${this.props.location.pathname}/login`}>Log In</LinkButton>
                             }
                             {loggedIn && user &&
                                 <div className="user-logged-in-buttons">
