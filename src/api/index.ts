@@ -31,33 +31,22 @@ export default class Api {
         this._apiUrl = options.apiUrl;
     }
 
-    async authenticate(email: string, password: string, isNewUser: boolean): Promise<void> {
-        try {
-            let token;
-            const request = { email, password };
-            if (isNewUser) {
-                token = await this._POST("/api/v1/users", request);
-            } else {
-                token = await this._POST("/api/v1/users/authenticate", request);
-            }
-            if (token) {
-                localStorage.setItem(tokenName, token.token);
-                return token.token;
-            }
-        } catch (error) {
-            throw error;
+    authenticate(email: string, password: string, isNewUser: boolean): Promise<void> {
+        const request = { email, password };
+        if (isNewUser) {
+            return this._POST("/api/v1/users", request);
+        } else {
+            return this._POST("/api/v1/users/authenticate", request);
         }
     }
 
-    async authenticateGoogle(code: string) {
-        const res = await this._POST("/api/v1/users/google", { code });
-        localStorage.setItem(tokenName, res.token);
+    authenticateGoogle(code: string) {
+        return this._POST("/api/v1/users/google", { code });
     }
 
     // TODO - Change it to pass token instead of access token
-    async authenticateFacebook(code: string) {
-        const res = await this._POST("/api/v1/users/facebook", { code });
-        localStorage.setItem(tokenName, res.token);
+    authenticateFacebook(code: string) {
+        return this._POST("/api/v1/users/facebook", { code });
     }
 
     verifyToken(token: string): Promise<void> {

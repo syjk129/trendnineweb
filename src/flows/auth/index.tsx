@@ -65,14 +65,10 @@ export default class Auth extends React.Component<AuthProps> {
 
     private _authToken: string;
 
-    @autobind
-    private _isNewUser(): boolean {
-        // TODO: do this better
-        return this.props.match.path === "/register";
-    }
-
     private _authenticate = async (data: AuthData) => {
-        await this.context.api.authenticate(data.email, data.password, data.isNewUser);
+        const token = await this.context.api.authenticate(data.email, data.password, data.isNewUser);
+        this._setToken(token);
+        // save token.token
         this.props.setLoggedState(true);
         this.props.close();
     }
@@ -83,13 +79,14 @@ export default class Auth extends React.Component<AuthProps> {
     }
 
     private _authenticateGoogle = async (response: GoogleLoginResponseOffline) => {
-        await this.context.api.authenticateGoogle(response.code);
+        const token = await this.context.api.authenticateGoogle(response.code);
+        // save token.token
         this.props.setLoggedState(true);
         this.props.close();
     }
 
     private _authenticateFacebook = async (response: FacebookLoginResponse) => {
-        await this.context.api.authenticateFacebook(response.code);
+        const token = this.context.api.authenticateFacebook(response.code);
         this.props.setLoggedState(true);
         this.props.close();
     }
@@ -105,6 +102,15 @@ export default class Auth extends React.Component<AuthProps> {
         localStorage.removeItem("user");
         localStorage.removeItem("tn_auth_token");
         this.props.history.push("/");
+    }
+
+    private _setToken = (token: any) => {
+        if (token.token) {
+            localStorage.setItem("tn_auth_token", token.token);
+            // const date = new Date();
+            // date.setDate(new Date(Date.now()).getDate() + 5);
+            // Cookies.setCookie("tn_auth_token", token.token, date);
+        }
     }
 }
 

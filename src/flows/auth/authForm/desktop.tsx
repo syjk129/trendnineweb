@@ -12,7 +12,7 @@ interface DesktopAuthFormProps {
     isNewUser: boolean;
     toggleNewUser(): void;
     onFormChange(data: Partial<AuthFormData>);
-    onSubmit(): void;
+    onSubmit(event: React.FormEvent): void;
     onGoogleSuccess(response: GoogleLoginResponseOffline): void;
     onGoogleFailure(response: GoogleLoginResponseOffline): void;
     onFacebookLogin(response: FacebookLoginResponse): void;
@@ -48,6 +48,7 @@ export default function DesktopAuthForm({
                         onChange={(password) => onFormChange({ password })}
                     />
                     <p className="signup-disclaimer">By signing up, you agree to TrendNine's Terms of Service & Privacy Policy</p>
+                    <input type="submit" style={{ display: "none" }} />
                     <Button onClick={onSubmit}>Sign up</Button>
                     <LinkButton onClick={toggleNewUser}>Sign in</LinkButton>
                 </form>
@@ -67,6 +68,7 @@ export default function DesktopAuthForm({
                         value={password}
                         onChange={(password) => onFormChange({ password })}
                     />
+                    <input type="submit" style={{ display: "none" }} />
                     <Button onClick={onSubmit}>Sign in</Button>
                     <LinkButton onClick={toggleNewUser}>Sign in</LinkButton>
                 </form>

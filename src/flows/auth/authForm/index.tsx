@@ -47,7 +47,8 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
         this.setState({ isNewUser: !this.state.isNewUser });
     }
 
-    private _onSubmit = async () => {
+    private _onSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
         await this.props.authenticate(this.state);
         await this._setLoggedInUser();
         return false;
