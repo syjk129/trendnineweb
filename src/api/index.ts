@@ -259,6 +259,13 @@ export default class Api {
         return this.unwishlist(productId, "product");
     }
 
+    updatePostProductTags(post_id: string, productTags: Array<any>): Promise<void> {
+        const request = {
+            product_tags: productTags,
+        };
+        return this._PUT(`/api/v1/posts/product_tags/${post_id}`, request);
+    }
+
     private _apiUrl: string;
     private _apiOptions: ApiOptions;
 
