@@ -77,6 +77,7 @@ export default class PostView extends React.Component<Props, PostState> {
                         likeComment={this._likeComment}
                         unlikeComment={this._unlikeComment}
                         submitComment={this._submitComment}
+                        updatePostProductTags={this._submitProductTagsChange}
                     />
                 </BrowserView>
                 <MobileView device={isMobile}>
@@ -109,6 +110,11 @@ export default class PostView extends React.Component<Props, PostState> {
     @autobind
     private _unlikeComment(commentId: string) {
         return this.context.api.unlikeComment(this._postId, commentId);
+    }
+
+    @autobind
+    private _submitProductTagsChange(postId: string, productTags: Array<any>) {
+        return this.context.api.updatePostProductTags(postId, productTags);
     }
 
     @autobind

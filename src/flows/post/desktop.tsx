@@ -19,6 +19,7 @@ import { ContentSection, SidebarPostProductListSection, SidebarSection } from ".
 import Tag from "../flowComponents/tag";
 import PostAuthorDetails from "./postAuthorDetails";
 import ProductTag from "./productTag";
+import productTag from "./productTag";
 
 interface DesktopPostProps {
     post: Post;
@@ -29,15 +30,20 @@ interface DesktopPostProps {
     likeComment(commentId: string): Promise<void>;
     unlikeComment(commentId: string): Promise<void>;
     submitComment(comment: string, parentCommentId: string): Promise<void>;
+    updatePostProductTags?(postId: string, productTags: Array<any>): Promise<void>;
 }
 
 interface DesktopPostState {
     productTags: Array<any>;
+    editableProductTags: Array<any>;
+    isManager: boolean;
 }
 
 export default class DesktopPost extends React.Component<DesktopPostProps, DesktopPostState> {
     state: DesktopPostState = {
         productTags: [],
+        editableProductTags: [],
+        isManager: false,
     };
 
     constructor(props: DesktopPostProps) {
@@ -49,6 +55,27 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
     componentDidMount() {
         this._updateImageTags();
         window.addEventListener("resize", this._updateImageTags);
+
+        const rect = this._coverImageRef.current.getBoundingClientRect();
+
+        // remove this later
+        const user = localStorage.getItem("user");
+        const token = localStorage.getItem("tn_auth_token");
+        let isManager = false;
+        if (user !== null && user !== "undefined" && token && token !== "undefined" ) {
+            let parsedUser = JSON.parse(user);
+            isManager = parsedUser["auth_level"] >= 3;
+        }
+
+        this.setState({
+            editableProductTags: this.props.post.product_tags.map(tag => ({
+                product_id: tag.product_id,
+                name: this.props.post.products.find(product => product.id === tag.product_id).title,
+                x_axis: tag.x_axis,
+                y_axis: tag.y_axis,
+            })),
+            isManager: isManager,
+        });
     }
 
     render() {
@@ -107,6 +134,24 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                 src={post.cover_image.original_image_url}
                                 setRef={this._coverImageRef}
                             />
+                            {this.state.isManager && this.state.editableProductTags.length > 0 && this.state.editableProductTags.map(tag => (
+                                <div>
+                                    {tag.name}
+                                    <input
+                                        type="number"
+                                        defaultValue={tag.x_axis}
+                                        onChange={(e) => this._handleProductTagsChange(e, tag, true)}
+                                    />
+                                    <input
+                                        type="number"
+                                        defaultValue={tag.y_axis}
+                                        onChange={(e) => this._handleProductTagsChange(e, tag, false)}
+                                    />
+                                </div>
+                            ))}
+                            {<button onClick={this._submitProductTagsChange}>
+                                Update
+                            </button>}
                             {this.state.productTags.length > 0 && this.state.productTags.map(tag => (
                                 <ProductTag tag={tag} />
                             ))}
@@ -217,6 +262,8 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                     left: rect.left + rect.width * tag.x_axis,
                     top: rect.top + rect.height * tag.y_axis,
                 },
+                x_axis: tag.x_axis,
+                y_axis: tag.y_axis,
             }))});
         }
     }
@@ -234,6 +281,27 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                 wishlisted={product.wishlisted}
             />
         </div>);
+    }
+
+    @autobind
+    private _handleProductTagsChange(event, tag, is_x) {
+        let product_tags = this.state.editableProductTags;
+        for (let i = 0; i < product_tags.length; i++) {
+            if (product_tags[i].product_id === tag.product_id) {
+                if (is_x) {
+                    product_tags[i].x_axis = parseFloat(event.target.value);
+                } else {
+                    product_tags[i].y_axis = parseFloat(event.target.value);
+                }
+            }
+        }
+        this.setState({ editableProductTags: product_tags });
+    }
+
+    @autobind
+    private async _submitProductTagsChange() {
+        await this.props.updatePostProductTags(this.props.post.id, this.state.editableProductTags);
+        window.location.reload(false);
     }
 
 }
