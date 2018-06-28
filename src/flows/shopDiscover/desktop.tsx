@@ -43,6 +43,12 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         this.refreshContent(this.props);
     }
 
+    componentWillReceiveProps(nextProps: ShopDiscoverProps) {
+        if (nextProps.location.search !== this.props.location.search) {
+            this.refreshContent(nextProps);
+        }
+    }
+
     async componentDidMount() {
         const categories = await this.props.getCategories();
         this.setState({ categories });

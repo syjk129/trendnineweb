@@ -14,7 +14,7 @@ interface ButtonProps {
     variant?: ButtonVariant;
     size?: ButtonSize;
     children?: React.ReactNode;
-    onClick?(): void;
+    onClick?(event?: React.FormEvent): void;
 }
 
 export default function Button({

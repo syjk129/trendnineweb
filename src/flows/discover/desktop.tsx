@@ -45,10 +45,17 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         this.updateWindowWidth();
     }
 
+    componentWillReceiveProps(nextProps: DiscoverProps) {
+        if (nextProps.location.search !== this.props.location.search) {
+            this.refreshContent(nextProps);
+        }
+    }
+
     async refreshContent(props: DiscoverProps) {
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);
         const queryString = postParam.convertUrlParamToQueryString();
+        this.setState({ isLoading: true });
 
         const [
             trendingPosts,
