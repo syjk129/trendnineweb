@@ -60,8 +60,8 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
 
         // remove this later
         this._coverImageRef.current.addEventListener("click", (event) => {
-            console.log(`x: ${(event.clientX - rect.left) / rect.width}`);
-            console.log(`y: ${(event.clientY - rect.top) / rect.height}`);
+            console.log(`x: ${event.offsetX / rect.width}`);
+            console.log(`y: ${event.offsetY / rect.height}`);
         });
         const user = localStorage.getItem("user");
         const token = localStorage.getItem("tn_auth_token");
