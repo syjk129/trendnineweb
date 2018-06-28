@@ -153,7 +153,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                     />
                                 </div>
                             ))}
-                            {<button onClick={this._submitProductTagsChange}>
+                            {this.state.isManager && <button onClick={this._submitProductTagsChange}>
                                 Update
                             </button>}
                             {this.state.productTags.length > 0 && this.state.productTags.map(tag => (
