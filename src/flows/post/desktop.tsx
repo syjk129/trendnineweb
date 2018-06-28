@@ -68,16 +68,6 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
         }
 
         this.setState({
-            productTags: this.props.post.product_tags.map(tag => ({
-                product_id: tag.product_id,
-                name: this.props.post.products.find(product => product.id === tag.product_id).title,
-                style: {
-                    left: rect.left + rect.width * tag.x_axis,
-                    top: rect.top + rect.height * tag.y_axis,
-                },
-                x_axis: tag.x_axis,
-                y_axis: tag.y_axis,
-                })),
             editableProductTags: this.props.post.product_tags.map(tag => ({
                 product_id: tag.product_id,
                 name: this.props.post.products.find(product => product.id === tag.product_id).title,
@@ -310,7 +300,8 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
 
     @autobind
     private async _submitProductTagsChange() {
-        this.props.updatePostProductTags(this.props.post.id, this.state.editableProductTags);
+        await this.props.updatePostProductTags(this.props.post.id, this.state.editableProductTags);
+        window.location.reload(false);
     }
 
 }
