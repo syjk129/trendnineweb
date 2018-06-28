@@ -82,14 +82,16 @@ export default class Auth extends React.Component<AuthProps> {
         return this.context.api.getUser();
     }
 
-    @autobind
-    private _authenticateGoogle(response: GoogleLoginResponseOffline) {
-        return this.context.api.authenticateGoogle(response.code);
+    private _authenticateGoogle = async (response: GoogleLoginResponseOffline) => {
+        await this.context.api.authenticateGoogle(response.code);
+        this.props.setLoggedState(true);
+        this.props.close();
     }
 
-    @autobind
-    private _authenticateFacebook(response: FacebookLoginResponse) {
-        return this.context.api.authenticateFacebook(response.code);
+    private _authenticateFacebook = async (response: FacebookLoginResponse) => {
+        await this.context.api.authenticateFacebook(response.code);
+        this.props.setLoggedState(true);
+        this.props.close();
     }
 
     @autobind
