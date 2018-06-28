@@ -72,7 +72,7 @@ export default class Auth extends React.Component<AuthProps> {
     }
 
     private _authenticate = async (data: AuthData) => {
-        await this.context.api.authenticate(data.email, data.password);
+        await this.context.api.authenticate(data.email, data.password, data.isNewUser);
         this.props.setLoggedState(true);
         this.props.close();
     }

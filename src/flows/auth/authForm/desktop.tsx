@@ -73,7 +73,7 @@ export default function DesktopAuthForm({
             )}
             <GoogleLogin
                 className="google-login"
-                clientId="583186164212-3oh7qhtbmbso5s1p9m8sa2tjej5idp9k.apps.googleusercontent.com"
+                clientId="174930742509-kvp3mkdgdb5c8staoesefgltj377tgsq.apps.googleusercontent.com"
                 responseType="code"
                 onSuccess={onGoogleSuccess}
                 onFailure={onGoogleFailure}
