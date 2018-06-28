@@ -40,11 +40,13 @@
         padding: $mobile-page-spacing $mobile-icon-size + $mobile-page-spacing;
 
         .link-button {
+            font-weight: $font-weight-light;
+            text-transform: uppercase;
             font-size: $font-size-3;
             padding: $large-spacing 0;
 
-            &.menu-link {
-                border-bottom: $standard-border-width solid #fff;
+            &.selected {
+                font-weight: $font-weight-bold;
             }
         }
     }
@@ -60,4 +62,9 @@
         font-size: $font-size-3;
         padding-left: 0;
     }
+}
+
+.menu-divider {
+    margin: $base-spacing * 2 0;
+    border-bottom: $standard-border-width solid #fff;
 }

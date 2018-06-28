@@ -61,7 +61,6 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     >
                         Trending
                     </LinkButton>
-
                     <LinkButton
                         className="menu-link"
                         to={isShop ? "/shop/feed" : "/feed"}
@@ -76,8 +75,27 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     >
                        New Arrivals
                     </LinkButton>
-                    <br/>
-                    <LinkButton onClick={this._logout}>Sign out</LinkButton>
+                    <div className="menu-divider" />
+                    <LinkButton
+                        className="menu-link"
+                        to="/shop/discover"
+                        onClick={this.props.toggleMenu}
+                        selected={isShop}
+                    >
+                        Shop
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        to="/discover"
+                        onClick={this.props.toggleMenu}
+                        selected={!isShop}
+                    >
+                        Discover
+                    </LinkButton>
+                    <div className="menu-divider" />
+                    <LinkButton className="menu-link" onClick={this._logout}>
+                        Sign Out
+                    </LinkButton>
                 </div>
             </div>
         );
