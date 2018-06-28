@@ -53,8 +53,8 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
             product_id: tag.product_id,
             name: this.props.post.products.find(product => product.id === tag.product_id).title,
             style: {
-                left: rect.left + rect.width * tag.x_axis,
-                top: rect.top + rect.height * tag.y_axis,
+                left: rect.left + rect.width * tag.x_axis + 15,
+                top: rect.top + rect.height * tag.y_axis - 17,
             },
         }))});
     }
