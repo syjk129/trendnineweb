@@ -62,3 +62,10 @@ export const IconMap = {
     [IconVariant.PLUS_OPEN]: IconVariant.MINUS_CLOSE,
     [IconVariant.SHARE]: IconVariant.SHARE,
 };
+
+export enum SocialIconType {
+    FACEBOOK = "https://www.facebook.com/trendnine/",
+    TWITTER = "https://twitter.com/trendnine",
+    INSTAGRAM = "https://www.instagram.com/trendnine/",
+    PINTEREST = "https://www.pinterest.com/trendnine/",
+}

@@ -1,14 +1,11 @@
-import * as H from "history";
 import * as React from "react";
-import { Link, match, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import { Person } from "../../api/models";
-import WithUserSession from "../../app/withUserSession";
-import { LinkButton } from "../../components/button/index";
+import { LinkButton } from "../../components/button";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
-import Input, { InputType, InputVariant } from "../../components/input";
+import Input, { InputVariant } from "../../components/input";
 import NavLink from "../../components/navLink";
-import * as Logo from "./logo.png";
+import * as Logo from "../logo.png";
 
 import "./style.scss";
 import { HeaderProps } from "./types";

@@ -65,7 +65,7 @@ export default class ShopCategoryTreeSidebar extends React.Component<ShopCategor
             <ul className="tree-item">
                 {categories.map(c =>
                     <li>
-                        <LinkButton onClick={() => this._onApply(c.display_name)}>
+                        <LinkButton onClick={() => this._onApply(c.full_name)}>
                             {c.display_name}
                         </LinkButton>
                         {this._renderCollapseButton(level, c, c.subcategories && c.subcategories.length > 0)}

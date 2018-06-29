@@ -1,17 +1,11 @@
-import autobind from "autobind-decorator";
-import * as H from "history";
 import * as React from "react";
-import TimeAgo from "react-timeago";
 
 import { PostPreview } from "../../../api/models";
 import { IconButton, LinkButton } from "../../../components/button";
-import {ButtonVariant} from "../../../components/button/types";
 import Card from "../../../components/card";
-import Carousel, { CarouselItem } from "../../../components/carousel";
-import Icon, { IconVariant} from "../../../components/icon";
 import formatTime from "../../../util/formatTime";
-import ActionLinks, {ActionLinksVariant} from "../../flowComponents/actions";
-import Author from "../../flowComponents/author";
+import ActionLinks, {ActionLinksVariant} from "../actions";
+import Author from "../author";
 
 import "./style.scss";
 

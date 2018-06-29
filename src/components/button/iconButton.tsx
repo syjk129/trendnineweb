@@ -2,7 +2,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 
-import { LinkButton } from "../button";
+import { LinkButton } from ".";
 import Icon, { IconMap, IconSize, IconVariant } from "../icon";
 import TextContent from "../textContent";
 

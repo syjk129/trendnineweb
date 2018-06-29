@@ -3,6 +3,7 @@ import * as React from "react";
 import { isMobile } from "react-device-detect";
 
 import getIconForVariant from "./getIconForVariant";
+import SocialIcon from "./socialIcon";
 import { IconMap, IconSize, IconVariant } from "./types";
 
 import "./style.scss";
@@ -51,5 +52,7 @@ export default function Icon({
         <img src={icon} className={classes} />
     );
 }
+
+export { SocialIcon };
 
 export * from "./types";

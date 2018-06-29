@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { ButtonVariant, LinkButton } from "../../../components/button";
 import Sticky from "../../../components/sticky";
-import ActionLinks, { ActionLinksVariant } from "../../flowComponents/actions";
+import ActionLinks, { ActionLinksVariant } from "../actions";
 
 import "./style.scss";
 

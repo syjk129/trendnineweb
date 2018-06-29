@@ -1,0 +1,53 @@
+@import "../../styles/variables";
+
+.footer {
+    width: 100%;
+    background-color: #fff;
+    padding: $page-spacing;
+    display: flex;
+    margin: auto;
+    max-width: $max-content-width;
+    min-width: $min-content-width;
+
+    .footer-logo {
+        width: $sidebar-width + $sidebar-padding;
+
+        .nav-logo {
+            width: 180px;
+        }
+    }
+
+    .footer-content {
+        display: flex;
+    }
+
+    .footer-column {
+        width: 210px;
+    }
+
+    .footer-title {
+        text-transform: uppercase;
+        font-weight: $font-weight-bold;
+        margin-bottom: $base-spacing * 2;
+    }
+
+    .footer-link,
+    .disclaimer {
+        display: block;
+        margin-bottom: $base-spacing;
+    }
+
+    .social-icon {
+        margin-right: $base-spacing;
+    }
+
+    .footer-disclaimer {
+        position: relative;
+        min-width: 240px;
+
+        .disclaimer {
+            position: absolute;
+            bottom: 0;
+        }
+    }
+}

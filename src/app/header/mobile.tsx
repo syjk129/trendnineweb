@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 
 import { IconButton } from "../../components/button";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
+import * as Logo from "../logo.png";
 import WithUserSession from "../withUserSession";
-import * as Logo from "./logo.png";
 import Menu from "./menu";
 import { HeaderProps } from "./types";
 

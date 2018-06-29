@@ -1,16 +1,16 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import { BrowserView, isBrowser, isMobile } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import { GoogleLogin, GoogleLoginResponseOffline } from "react-google-login";
 import { withRouter } from "react-router-dom";
 
 import { Person } from "../../api/models";
-import { AppContext, AppContextTypes } from "../../app";
-import Button, { LinkButton } from "../../components/button";
-import Input, { InputType, InputVariant } from "../../components/input";
-import RouteProps from "../../flows/routeProps";
+import { AppContext } from "../../app";
+import Button from "../../components/button";
+import Input, { InputVariant } from "../../components/input";
 import FacebookLogin, { FacebookLoginResponse } from "../auth/facebookLogin";
-import { AuthData, AuthFormData } from "../auth/types";
+import { AuthData } from "../auth/types";
+import RouteProps from "../routeProps";
 
 type SettingsProps = RouteProps;
 

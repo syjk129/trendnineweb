@@ -70,12 +70,12 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
     private _onApply() {
         let selectedValues = new Set();
         this.state.selectedCategories.forEach(c => {
-            selectedValues.add(c.display_name);
+            selectedValues.add(c.full_name);
         });
 
         this.state.selectedCategories.forEach(c => {
             c.subcategories.map(s => {
-                selectedValues.delete(s.display_name);
+                selectedValues.delete(s.full_name);
             });
         });
         this.setState({previousCategories: new Set(this.state.selectedCategories)});
@@ -126,7 +126,7 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
         return categories.map(c =>
             <div className="tree-checkbox">
                 <Checkbox
-                    value={c.display_name}
+                    value={c.full_name}
                     label={c.display_name}
                     checked={this._inSelectedCategory(c)}
                     onChange={() => this._toggleSelectedCategories(c)} />
@@ -219,7 +219,7 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
             return;
         }
         categories.map(c => {
-            if (ids.indexOf(c.display_name) > -1) {
+            if (ids.indexOf(c.full_name) > -1) {
                 output.add(c);
             }
             this._mapCategoriesFromId(output, ids, c.subcategories);

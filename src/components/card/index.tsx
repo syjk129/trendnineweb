@@ -2,13 +2,8 @@ import * as React from "react";
 import { isMobile } from "react-device-detect";
 import * as ReactDOM from "react-dom";
 import { Link, withRouter } from "react-router-dom";
-import TimeAgo from "react-timeago";
 
-import { Post } from "../../api/models";
-import Carousel, { CarouselItem } from "../../components/carousel";
-import Icon, { IconVariant } from "../../components/icon";
-import Image, { ImageFitVariant } from "../../components/image";
-import TextContent from "../../components/textContent";
+import Image, { ImageFitVariant } from "../image";
 import CardContainer from "./cardContainer";
 
 import "./style.scss";

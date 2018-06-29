@@ -6,7 +6,7 @@ import { Link, withRouter } from "react-router-dom";
 import { IconButton, LinkButton } from "../../../components/button";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
 import Input, { InputTheme, InputVariant } from "../../../components/input";
-import * as LogoWhite from "../logo_white.png";
+import * as LogoWhite from "../../logo_white.png";
 
 import "./style.scss";
 

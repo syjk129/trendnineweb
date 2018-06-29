@@ -1,10 +1,8 @@
-import autobind from "autobind-decorator";
 import * as React from "react";
 
-import { LinkButton } from "../../../components/button";
 import Card from "../../../components/card";
 import { IconVariant } from "../../../components/icon";
-import ActionLinks, { ActionLinksVariant } from "../../flowComponents/actions";
+import ActionLinks, { ActionLinksVariant } from "../actions";
 
 import "./style.scss";
 

@@ -25,9 +25,9 @@ export default class PageNavigation extends React.Component<PageNavigationProps,
 
     shouldComponentUpdate(nextProps: PageNavigationProps, nextState: PageNavigationState) {
         if (nextState.show !== this.state.show) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     onScroll = () => {

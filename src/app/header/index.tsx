@@ -2,7 +2,7 @@ import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 import { withRouter } from "react-router-dom";
 
-import WithUserSession from "../../app/withUserSession";
+import WithUserSession from "../withUserSession";
 import DesktopHeader from "./desktop";
 import MobileHeader from "./mobile";
 import { HeaderProps } from "./types";

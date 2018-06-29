@@ -1,10 +1,7 @@
 import autobind from "autobind-decorator";
-import { PropTypes } from "prop-types";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 import {
-    Link,
-    match,
     Redirect,
     Route,
 } from "react-router-dom";
@@ -129,6 +126,7 @@ export default class App extends React.Component<Props, AppState> {
                         <Route path="/register" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                         <Route path="*" component={null} />
                     </div>
+                    <Footer {...this.props} />
                     <Modal isOpen={this.state.modalContent !== null} close={this._closeModal}>
                         {this.state.modalContent}
                     </Modal>
