@@ -21,13 +21,16 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
 
     render() {
         const {
+            likes,
+            liked,
+            wishlisted,
             post,
             comments,
-            relatedProducts,
-            featuredTrendnines,
             likeComment,
             unlikeComment,
             submitComment,
+            toggleLike,
+            toggleWishlist,
         } = this.props;
 
         return (
@@ -43,14 +46,14 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                     <div className="post-subtitle">
                         <PostAuthorDetails
                             author={post.author}
+                            iconSize={IconSize.MEDIUM}
                             postDate={new Date(post.created)}
-                        />
-                        <ActionLinks
-                            variant={ActionLinksVariant.POST}
-                            id={post.id}
-                            wishlisted={post.wishlisted}
-                            likes={post.likes}
-                            liked={post.liked}
+                            postId={post.id}
+                            wishlisted={wishlisted}
+                            likes={likes}
+                            liked={liked}
+                            toggleLike={toggleLike}
+                            toggleWishlist={toggleWishlist}
                         />
                     </div>
                     <div className="post-details">

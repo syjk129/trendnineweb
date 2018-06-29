@@ -89,7 +89,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
         const {
             liked,
             likes,
-            wishlisted
+            wishlisted,
             post,
             comments,
             relatedPosts,

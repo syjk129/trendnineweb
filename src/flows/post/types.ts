@@ -1,6 +1,9 @@
 import { Comment, Person, Post, Product } from "../../api/models";
 
 export interface MobilePostProps {
+    likes: number;
+    liked: boolean;
+    wishlisted: boolean;
     post: Post;
     comments: Array<Comment>;
     relatedPosts: Array<Post>;
@@ -9,6 +12,8 @@ export interface MobilePostProps {
     likeComment(commentId: string): Promise<void>;
     unlikeComment(commentId: string): Promise<void>;
     submitComment(comment: string, parentCommentId: string): Promise<void>;
+    toggleLike(): void;
+    toggleWishlist(): void;
 }
 
 export enum TabbedSectionTypes {
