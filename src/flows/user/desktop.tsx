@@ -184,8 +184,8 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
             case UserContentType.FOLLOWER:
             case UserContentType.FOLLOWING:
                 return this.props.content.map(item => <UserCard user={item} following={item.followed} />);
+            }
         }
-
         return null;
     }
 }

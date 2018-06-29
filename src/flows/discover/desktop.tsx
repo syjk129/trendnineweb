@@ -1,12 +1,9 @@
 
 import autobind from "autobind-decorator";
-import { PropTypes } from "prop-types";
 import * as React from "react";
-import { match, withRouter } from "react-router-dom";
 
-import { Person, PostPreview } from "../../api/models";
-import Button, { LinkButton } from "../../components/button";
-import Card, { CardContainer } from "../../components/card";
+import { LinkButton } from "../../components/button";
+import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
@@ -70,11 +67,11 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         ]);
 
         this.setState({
-            posts: posts.list,
-            nextToken: posts.nextToken,
-            trendingPosts: trendingPosts,
-            featuredTrendnines: featuredTrendnines,
-            recommendedTrendnines: recommendedTrendnines,
+            posts: posts.result,
+            nextToken: posts.next_token,
+            trendingPosts: trendingPosts.result,
+            featuredTrendnines: featuredTrendnines.result,
+            recommendedTrendnines: recommendedTrendnines.result,
             postParam: postParam,
             isLoading: false,
         });
@@ -175,10 +172,10 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                 this.props.getFeedPosts(queryString, this.state.nextToken)
                 : this.props.getLatestPosts(queryString, this.state.nextToken));
         this.setState({
-            posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
+            posts: this.state.posts.concat(newPosts.result).filter((post, index, arr) => {
                 return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
             }),
-            nextToken: newPosts.nextToken,
+            nextToken: newPosts.next_token,
             loadingNext: false,
         });
     }
@@ -210,9 +207,9 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
                 <div className="recommended-trendsetters">
                     {this.state.recommendedTrendnines.slice(0, 6).map(trendsetter => (
-                        <LinkButton className="trendsetter" to={`/user/${trendsetter.id}`}>
-                            <img src={trendsetter.profile_image_url} />
-                            <div>{trendsetter.first_name} {trendsetter.last_name}</div>
+                        <LinkButton className="trendsetter" to={`/user/${trendsetter.user.id}`}>
+                            <img src={trendsetter.user.profile_image_url} />
+                            <div>{trendsetter.user.first_name} {trendsetter.user.last_name}</div>
                         </LinkButton>
                     ))}
                 </div>

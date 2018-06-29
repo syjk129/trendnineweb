@@ -3,15 +3,18 @@ import {
     Category,
     Comment,
     Featured,
-    Pagination,
     Person,
     Post,
     PostPreview,
-    Posts,
     Products,
     Retailer,
     Tag,
 } from "./models";
+
+import {
+    FeaturedInfluencerResponse,
+    PostResponse,
+} from "./responses";
 
 import {
     AuthError,
@@ -79,15 +82,15 @@ export default class Api {
         return this._GET_PAGINATION(url, nextToken);
     }
 
-    getLatestPosts(queryString?: string, nextToken?: string): Promise<Post> {
+    getLatestPosts(queryString?: string, nextToken?: string): Promise<PostResponse> {
         return this._GET_PAGINATION(`/api/v1/posts?${queryString}`, nextToken);
     }
 
-    getTrendingPosts(): Promise<Array<PostPreview>> {
+    getTrendingPosts(): Promise<PostResponse> {
         return this._GET("/api/v1/posts/trending");
     }
 
-    getFeedPosts(queryString?: string, nextToken?: string): Promise<Posts> {
+    getFeedPosts(queryString?: string, nextToken?: string): Promise<PostResponse> {
         return this._GET_PAGINATION(`/api/v1/posts?following_only=true&${queryString}`, nextToken);
     }
 
@@ -99,7 +102,7 @@ export default class Api {
         return this._GET_PAGINATION(`/api/v1/marketplace/products?following_only=true&${queryString}`, nextToken);
     }
 
-    searchPosts(queryString?: string): Promise<Array<PostPreview>> {
+    searchPosts(queryString?: string): Promise<PostResponse> {
         return this._GET(`/api/v1/posts/search?keyword=${queryString}`);
     }
 
@@ -119,11 +122,11 @@ export default class Api {
         return this._GET(`/api/v1/marketplace/products/related`);
     }
 
-    getFeaturedTrendnines(): Promise<Array<Person>> {
+    getFeaturedTrendnines(): Promise<FeaturedInfluencerResponse> {
         return this._GET("/api/v1/influencers");
     }
 
-    getTodaysTrendnines(pageSize?: number): Promise<Array<Person>> {
+    getTodaysTrendnines(pageSize?: number): Promise<FeaturedInfluencerResponse> {
         let url = "/api/v1/influencers/today";
 
         if (pageSize) {
@@ -272,7 +275,7 @@ export default class Api {
             }
 
             const responseJson = await response.json();
-            return responseJson.result;
+            return responseJson;
         } catch (err) {
             this._apiOptions.setError(err);
         }
@@ -300,10 +303,7 @@ export default class Api {
             }
 
             const responseJson = await response.json();
-            return {
-                list: responseJson.result,
-                nextToken: responseJson.next_token,
-            };
+            return responseJson;
         } catch (err) {
             throw new Error(err);
         }

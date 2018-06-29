@@ -72,11 +72,11 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         ]);
 
         this.setState({
-            posts: posts.list,
-            nextToken: posts.nextToken,
-            trendingPosts: trendingPosts,
-            featuredTrendnines: featuredTrendnines,
-            recommendedTrendnines: recommendedTrendnines,
+            posts: posts.result,
+            nextToken: posts.next_token,
+            trendingPosts: trendingPosts.result,
+            featuredTrendnines: featuredTrendnines.result,
+            recommendedTrendnines: recommendedTrendnines.result,
             postParam: postParam,
             isLoading: false,
         });
@@ -157,10 +157,10 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                 this.props.getFeedPosts(queryString, this.state.nextToken)
                 : this.props.getLatestPosts(queryString, this.state.nextToken));
         this.setState({
-            posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
+            posts: this.state.posts.concat(newPosts.result).filter((post, index, arr) => {
                 return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
             }),
-            nextToken: newPosts.nextToken,
+            nextToken: newPosts.next_token,
         });
     }
 

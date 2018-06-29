@@ -1,16 +1,14 @@
-import * as H from "history";
-import { match } from "react-router-dom";
-
-import { FeaturedInfluencer, Person, Post, PostPreview, Posts } from "../../api/models";
+import { FeaturedInfluencer, Person, Post, PostPreview } from "../../api/models";
+import { FeaturedInfluencerResponse, PostResponse } from "../../api/responses";
 import { PostParam } from "../model";
 import RouteProps from "../routeProps";
 
 export interface DiscoverProps extends RouteProps {
-    getTrendingPosts(): Array<Post>;
-    getFeedPosts(queryString?: string, nextToken?: string): Posts;
-    getLatestPosts(queryString?: string, nextToken?: string): Posts;
-    getTodaysTrendnines(): Array<FeaturedInfluencer>;
-    getFeaturedTrendnines(): Array<Person>;
+    getTrendingPosts(): PostResponse;
+    getFeedPosts(queryString?: string, nextToken?: string): PostResponse;
+    getLatestPosts(queryString?: string, nextToken?: string): PostResponse;
+    getTodaysTrendnines(): FeaturedInfluencerResponse;
+    getFeaturedTrendnines(): FeaturedInfluencerResponse;
 }
 
 export interface DiscoverState {
@@ -18,7 +16,7 @@ export interface DiscoverState {
     nextToken: string | null;
     trendingPosts: Array<PostPreview>;
     featuredTrendnines: Array<FeaturedInfluencer>;
-    recommendedTrendnines: Array<Person>;
+    recommendedTrendnines: Array<FeaturedInfluencer>;
     postParam: PostParam;
     isLoading: boolean;
     loadingNext: boolean;

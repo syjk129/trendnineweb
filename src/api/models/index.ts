@@ -8,7 +8,6 @@ import Pagination from "./pagination";
 import Person from "./person";
 import Post from "./post";
 import PostPreview from "./post-preview";
-import Posts from "./posts";
 import Product from "./product";
 import Products from "./products";
 import Retailer from "./retailer";
@@ -25,7 +24,6 @@ export {
     Person,
     Post,
     PostPreview,
-    Posts,
     Product,
     Products,
     Retailer,
