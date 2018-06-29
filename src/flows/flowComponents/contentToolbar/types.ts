@@ -55,12 +55,16 @@ export class FilterOption {
 }
 
 export class SelectFilter {
+    isSelectFilter: boolean = true;
+
     selectedIds: Array<string> = [];
 }
 
 export class RangeValueFilter {
-    minValue: number;
-    maxValue: number;
+    isRangeValueFilter: boolean = true;
+
+    minValue: number = null;
+    maxValue: number = null;
 }
 
 export class SortFilter {
@@ -70,5 +74,9 @@ export class SortFilter {
 export type Filter = SelectFilter | RangeValueFilter | SortFilter;
 
 export function isSelectFilter(filter: any): filter is SelectFilter {
-    return filter.selectedIds;
+    return filter.isSelectFilter;
+}
+
+export function isRangeValueFilter(filter: any): filter is RangeValueFilter {
+    return filter.isRangeValueFilter;
 }

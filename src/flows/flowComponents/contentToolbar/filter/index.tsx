@@ -1,10 +1,8 @@
-import autobind from "autobind-decorator";
+import { Range } from "rc-slider";
 import * as React from "react";
-import { render } from "react-dom";
 
 import { FilterSearchResult } from "../../../../api/models";
 import Checkbox from "../../../../components/checkbox";
-import Icon, { IconVariant } from "../../../../components/icon";
 import Input from "../../../../components/input";
 import { ListContainer, ListItem } from "../list";
 import { Filter, FilterCategory, FilterOption, FilterType } from "../types";
@@ -20,6 +18,7 @@ interface FilterViewProps {
     selectFilterType(filterType: FilterType | null): void;
     toggleSelectFilterItem(filterId: string): void;
     toggleFilterActive(): void;
+    onRangeFilterChange(min: number, max: number): void;
     onSearchStringChange(searchString: string): void;
 }
 
@@ -27,12 +26,9 @@ export default class FilterView extends React.Component<FilterViewProps> {
     render() {
         const {
             currentFilterType,
-            selectedFilters,
             filterOptions,
-            filters,
             selectFilterType,
-            toggleSelectFilterItem,
-            toggleFilterActive,
+            selectedFilters,
         } = this.props;
 
         return (
@@ -45,16 +41,14 @@ export default class FilterView extends React.Component<FilterViewProps> {
         );
     }
 
-    @autobind
-    private _renderFilterSearch() {
+    private _renderFilterSearch = () => {
         const {
             currentFilterType,
-            selectedFilters,
             filterOptions,
+            selectedFilters,
             filters,
             selectFilterType,
             toggleSelectFilterItem,
-            toggleFilterActive,
         } = this.props;
 
         const filterOption = filterOptions.find(filterOption => filterOption.type === currentFilterType);
@@ -70,7 +64,7 @@ export default class FilterView extends React.Component<FilterViewProps> {
                                 onChange={this.props.onSearchStringChange}
                             />
                         </div>
-                        <div className="filter-results">
+                        <div className="filter-search-results">
                             {filters[currentFilterType].map(filterSearchResult => (
                                 <Checkbox
                                     value={filterSearchResult.id}
@@ -83,12 +77,40 @@ export default class FilterView extends React.Component<FilterViewProps> {
                     </div>
                 );
             case FilterCategory.RANGE:
-                return null;
+                return (
+                    <div className="filter-search-container">
+                        <ListItem label={currentFilterType} open onClick={() => selectFilterType(null)} />
+                        <div className="filter-results">
+                            <div className="range-label">
+                                <span>
+                                    ${selectedFilters[currentFilterType] && selectedFilters[currentFilterType].minValue || 0}
+                                </span>
+                                <span>
+                                    ${selectedFilters[currentFilterType] && selectedFilters[currentFilterType].maxValue || 5000}
+                                </span>
+                            </div>
+                            <Range
+                                min={0}
+                                max={5000}
+                                step={10}
+                                allowCross={false}
+                                value={[
+                                    selectedFilters[currentFilterType] && selectedFilters[currentFilterType].minValue || 0,
+                                    selectedFilters[currentFilterType] && selectedFilters[currentFilterType].maxValue || 5000,
+                                ]}
+                                onChange={this._onRangeFilterChange}
+                            />
+                        </div>
+                    </div>
+                );
         }
     }
 
-    @autobind
-    private _isFilterSearchResultChecked(filterSearchResult: FilterSearchResult) {
+    private _onRangeFilterChange = (value: Array<number>) => {
+        return this.props.onRangeFilterChange(value[0], value[1]);
+    }
+
+    private _isFilterSearchResultChecked = (filterSearchResult: FilterSearchResult) => {
         if (this.props.selectedFilters[this.props.currentFilterType]) {
             return this.props.selectedFilters[this.props.currentFilterType].selectedIds.includes(filterSearchResult.id);
         }

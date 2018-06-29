@@ -4,11 +4,24 @@ import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 
 import { FilterSearchResult } from "../../../api/models";
-import { AppContext, AppContextTypes } from "../../../app";
+import { AppContext } from "../../../app";
 import { ContentType } from "../../model";
 import RouteProps from "../../routeProps";
 import MobileContentToolbar from "./mobile";
-import { Filter, FilterCategory, FilterOption, FilterQueryParamMap, FilterType, RangeValueFilter, SelectFilter, SortFilter, SortQueryParamMap, SortType, ToolbarType } from "./types";
+import {
+    Filter,
+    FilterCategory,
+    FilterOption,
+    FilterQueryParamMap,
+    FilterType,
+    isRangeValueFilter,
+    isSelectFilter,
+    RangeValueFilter,
+    SelectFilter,
+    SortQueryParamMap,
+    SortType,
+    ToolbarType,
+} from "./types";
 
 import "./style.scss";
 
@@ -57,8 +70,6 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     render() {
         const {
-            className,
-            contentType,
             setGridSize,
         } = this.props;
 
@@ -74,6 +85,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                         toggleSelectFilterItem={this._toggleSelectFilterItem}
                         toggleActiveToolbar={this._toggleActiveToolbar}
                         onSearchStringChange={this._onSearchStringChange}
+                        onRangeFilterChange={this._onRangeFilterChange}
                         removeFilterItem={this._removeFilterItem}
                         setGridSize={setGridSize}
                     />
@@ -83,6 +95,17 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     }
 
     private _searchTimeout: any;
+
+    private _onRangeFilterChange = (min: number, max: number) => {
+        const selectedFilters = this.state.selectedFilters;
+        let selectFilter = selectedFilters[this.state.currentFilterType] || new RangeValueFilter;
+
+        selectFilter.minValue = min;
+        selectFilter.maxValue = max;
+        selectedFilters[this.state.currentFilterType] = selectFilter;
+
+        this.setState({ selectedFilters, hasChanged: true });
+    }
 
     @autobind
     private async _onSearchStringChange(searchString: string) {
@@ -111,6 +134,14 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 const [filterType, values] = queryParam.split("=");
                 if (filterType.toLowerCase() === "sort") {
                     sortType = SortQueryParamMap[values.toLowerCase()];
+                } else if (filterType.toLowerCase() === "price_low") {
+                    const rangeFilter = selectedFilters[FilterType.PRICE_RANGE] || new RangeValueFilter;
+                    rangeFilter.minValue = values;
+                    selectedFilters[FilterType.PRICE_RANGE] = rangeFilter;
+                } else if (filterType.toLowerCase() === "price_high") {
+                    const rangeFilter = selectedFilters[FilterType.PRICE_RANGE] || new RangeValueFilter;
+                    rangeFilter.maxValue = values;
+                    selectedFilters[FilterType.PRICE_RANGE] = rangeFilter;
                 } else {
                     selectedFilters[FilterQueryParamMap[filterType]] = { selectedIds: values.split(",") } as SelectFilter;
                 }
@@ -126,7 +157,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 return this.context.api.getBrands(query);
             case FilterType.CATEGORY:
             case FilterType.PRICE_RANGE:
-                return [];
+                return new RangeValueFilter();
             case FilterType.RETAILER:
                 return this.context.api.getRetailers(query);
             case FilterType.TAGS:
@@ -178,11 +209,17 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     private _applyFilters() {
         // Apply filter query param
         let queryString = Object.keys(this.state.selectedFilters).reduce((result, filterType) => {
-            const temp = this.state.selectedFilters[filterType].selectedIds.join(",");
-            if (temp.length === 0) {
-                return result;
+            let filterParams = "";
+            if (isRangeValueFilter(this.state.selectedFilters[filterType])) {
+                filterParams += `price_high=${this.state.selectedFilters[filterType].maxValue}`;
+                filterParams += `&price_low=${this.state.selectedFilters[filterType].minValue}`;
+            } else {
+                const selectedIds = this.state.selectedFilters[filterType].selectedIds.join(",");
+                if (selectedIds.length === 0) return result;
+
+                filterParams = `${FilterQueryParamMap[filterType]}=${this.state.selectedFilters[filterType].selectedIds.join(",")}`;
             }
-            return `${result}${result.length !== 0 ? "&" : ""}${FilterQueryParamMap[filterType]}=${temp}`;
+            return `${result}${result.length !== 0 ? "&" : ""}${filterParams}`;
         }, "");
 
         // Apply sort query param

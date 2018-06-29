@@ -1,10 +1,24 @@
 @import "../../../../styles/variables";
 
+.filter-search-results {
+    box-sizing: border-box;
+    padding: $mobile-page-spacing;
+    height: calc(100% - 67px - 46px);
+    overflow: auto;
+}
+
 .filter-results {
     box-sizing: border-box;
     padding: $mobile-page-spacing;
     height: calc(100% - 67px - 46px);
     overflow: auto;
+}
+
+.range-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: $font-size-2;
+    margin-bottom: $base-spacing;
 }
 
 .filter-search {

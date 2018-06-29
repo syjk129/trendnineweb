@@ -27,6 +27,7 @@ interface MobileContentToolbarProps {
     toggleSelectFilterItem(filterId: string): void;
     toggleActiveToolbar(toolbarType: ToolbarType | null): void;
     removeFilterItem(filterId: string): void;
+    onRangeFilterChange(min: number, max: number): void;
     onSearchStringChange(searchString: string): void;
 }
 
@@ -52,9 +53,10 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
             selectFilterType,
             selectSortType,
             toggleSelectFilterItem,
-            toggleActiveToolbar,
+            onRangeFilterChange,
             onSearchStringChange,
         } = this.props;
+        console.log(selectedFilters);
 
         return (
             <Sticky id="mobile-content-toolbar" stickyClassName="sticky-mobile-content-toolbar">
@@ -102,6 +104,7 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                         selectFilterType={selectFilterType}
                         toggleSelectFilterItem={toggleSelectFilterItem}
                         toggleFilterActive={() => this._toggleFilterActive(ToolbarType.FILTER)}
+                        onRangeFilterChange={onRangeFilterChange}
                         onSearchStringChange={onSearchStringChange}
                     />
                 }
@@ -113,9 +116,6 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
             </Sticky>
         );
     }
-
-    private _offsetTop: number;
-    private _toolbarElement: HTMLElement;
 
     @autobind
     private _renderFilterChips(filterType: FilterType) {
