@@ -22,7 +22,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
         const user = JSON.parse(localStorage.getItem("user"));
 
         return (
-            <div className="main-header">
+            <div className="main-header" id="main-header">
                 <div className="user-header">
                     <div className="nav-content">
                         <div className="header-left-buttons">

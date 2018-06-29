@@ -14,7 +14,7 @@ export default class Footer extends React.Component<Props> {
         const isShop = this.props.location.pathname === "/shop";
 
         return (
-            <div className="footer">
+            <div className="footer" id="footer">
                 <div className="footer-logo">
                     <Link className="nav-logo-container" to={isShop ? "/shop/home" : "/discover"}><img className="nav-logo" src={Logo} /></Link>
                 </div>

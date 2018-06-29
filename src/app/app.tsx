@@ -80,6 +80,12 @@ export default class App extends React.Component<Props, AppState> {
         modalContent: null,
     };
 
+    constructor(props: Props) {
+        super(props);
+
+        this._mainContentRef = React.createRef();
+    }
+
     componentWillMount() {
         const user = localStorage.getItem("user");
         const token = localStorage.getItem("tn_auth_token");
@@ -96,6 +102,12 @@ export default class App extends React.Component<Props, AppState> {
         }
     }
 
+    componentDidMount() {
+        const header = document.getElementById("main-header");
+        const footer = document.getElementById("footer");
+        this._mainContentRef.current.style.minHeight = `${window.innerHeight - header.getBoundingClientRect().height - footer.getBoundingClientRect().height}px`;
+    }
+
     componentWillReceiveProps(nextProps: Props) {
         if (nextProps.location !== this.props.location) {
             this._previousLocation = this.props.location;
@@ -107,7 +119,7 @@ export default class App extends React.Component<Props, AppState> {
             <ErrorBoundary setLoggedState={this._setLoggedState} removeError={this._removeError} errors={this.state.errors}>
                 <AppProvider {...this.props} setError={this._setError} openModal={this._openModal}>
                     <Header loggedIn={this.state.loggedIn} />
-                    <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content">
+                    <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
                         <Route path="/discover/:pageName?" component={Discover} />
                         <Route path="/feed" component={Discover} />
@@ -135,6 +147,7 @@ export default class App extends React.Component<Props, AppState> {
         );
     }
 
+    private _mainContentRef: React.RefObject<HTMLDivElement>;
     private _previousLocation: any;
 
     @autobind

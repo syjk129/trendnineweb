@@ -30,6 +30,7 @@ a {
     margin-top: $navbar-height;
     max-width: $max-content-width;
     min-width: $min-content-width;
+    min-height: calc(100% - #{$navbar-height});
 
     &.mobile-view {
         padding: 0;
