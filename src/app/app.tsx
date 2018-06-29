@@ -105,7 +105,9 @@ export default class App extends React.Component<Props, AppState> {
     componentDidMount() {
         const header = document.getElementById("main-header");
         const footer = document.getElementById("footer");
-        this._mainContentRef.current.style.minHeight = `${window.innerHeight - header.getBoundingClientRect().height - footer.getBoundingClientRect().height}px`;
+        const headerHeight = header ? header.getBoundingClientRect().height : 0;
+        const footerHeight = footer ? footer.getBoundingClientRect().height : 0;
+        this._mainContentRef.current.style.minHeight = `${window.innerHeight - headerHeight - footerHeight}px`;
     }
 
     componentWillReceiveProps(nextProps: Props) {
