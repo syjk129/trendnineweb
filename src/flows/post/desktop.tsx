@@ -72,12 +72,15 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
         }
 
         this.setState({
-            editableProductTags: this.props.post.product_tags.map(tag => ({
-                product_id: tag.product_id,
-                name: this.props.post.products.find(product => product.id === tag.product_id).title,
-                x_axis: tag.x_axis,
-                y_axis: tag.y_axis,
-            })),
+            editableProductTags: this.props.post.product_tags.map(tag => {
+                const product = this.props.post.products.find(product => product.id === tag.product_id);
+                return {
+                    product_id: tag.product_id,
+                    name: product && product.title || "",
+                    x_axis: tag.x_axis,
+                    y_axis: tag.y_axis,
+                };
+            }),
             isManager: isManager,
         });
     }
@@ -242,14 +245,17 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
     private _updateImageTags = () => {
         const rect = this._coverImageRef.current.getBoundingClientRect();
 
-        this.setState({ productTags: this.props.post.product_tags.map(tag => ({
-            product_id: tag.product_id,
-            name: this.props.post.products.find(product => product.id === tag.product_id).title,
-            style: {
-                left: rect.left + rect.width * tag.x_axis + 15,
-                top: rect.top + rect.height * tag.y_axis - 17,
-            },
-        }))});
+        this.setState({ productTags: this.props.post.product_tags.map(tag => {
+            const product = this.props.post.products.find(product => product.id === tag.product_id);
+            return {
+                product_id: tag.product_id,
+                name: product && product.title || "",
+                style: {
+                    left: rect.left + rect.width * tag.x_axis + 15,
+                    top: rect.top + rect.height * tag.y_axis - 17,
+                },
+            };
+        })});
     }
 
     @autobind
