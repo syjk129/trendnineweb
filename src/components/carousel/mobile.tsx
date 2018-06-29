@@ -14,7 +14,6 @@ export default function MobileCarousel({
         adaptiveHeight: false,
         arrows: false,
         dots: true,
-        infinite: true,
         slidesToShow: slidesToShow || 2,
         slidesToScroll: 1,
     };

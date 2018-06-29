@@ -88,13 +88,12 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
             comments,
             relatedPosts,
             relatedProducts,
-            featuredTrendnines,
             likeComment,
             unlikeComment,
             submitComment,
         } = this.props;
 
-        const commentsTitle = comments.length > 0 ? (
+        const commentsTitle = comments && comments.length > 0 ? (
             `Comments (${comments.length})`
         )  : "Comments";
 

@@ -38,6 +38,7 @@ interface PostState {
     relatedProducts: Array<any>;
     relatedPosts: Array<Post>;
     featuredTrendnines: Array<Person>;
+    isLoading: boolean;
 }
 
 export default class PostView extends React.Component<Props, PostState> {
@@ -49,6 +50,7 @@ export default class PostView extends React.Component<Props, PostState> {
         relatedProducts: [],
         relatedPosts: [],
         featuredTrendnines: [],
+        isLoading: true;
     };
 
     componentWillMount() {
@@ -62,9 +64,7 @@ export default class PostView extends React.Component<Props, PostState> {
     }
 
     render() {
-        const { post, comments, relatedProducts, relatedPosts } = this.state;
-
-        if (!post || !comments || !relatedPosts || !relatedProducts) {
+        if (this.state.isLoading) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
@@ -158,7 +158,7 @@ export default class PostView extends React.Component<Props, PostState> {
                 recentlyViewedArray.unshift({ type: "Post", content: post});
             }
 
-            this.setState({ post, comments, relatedProducts, relatedPosts, featuredTrendnines });
+            this.setState({ post, comments, relatedProducts, relatedPosts, featuredTrendnines, isLoading: false });
             localStorage.setItem("recentlyViewed", JSON.stringify(recentlyViewedArray.slice(0, 5)));
         } catch (err) {
             throw new Error(err);

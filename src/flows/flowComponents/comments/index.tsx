@@ -36,7 +36,7 @@ export default class Comments extends React.Component<CommentsProps, CommentsSta
                     onChange={this._updateComment}
                     submitComment={this._submitComment}
                 />
-                {this.props.comments.map((comment: Comment) => (
+                {this.props.comments && this.props.comments.map((comment: Comment) => (
                     <CommentItem
                         key={comment.id}
                         comment={comment}

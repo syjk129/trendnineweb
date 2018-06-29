@@ -29,12 +29,9 @@ export function isAuthError(error: any): error is AuthError {
 }
 
 export async function createErrorFromResponse(responseJson: any) {
-    const errorKey = Object.keys(responseJson);
-    const message = responseJson.result ? responseJson.result[errorKey][0] : responseJson[errorKey][0];
-
     if (responseJson.status === 401) {
-        return new AuthError(new Error(message || responseJson.statusText));
+        return new AuthError(new Error(responseJson.statusText));
     }
 
-    return new NetworkError(new Error(message || responseJson.statusText));
+    return new NetworkError(new Error(responseJson.statusText));
 }

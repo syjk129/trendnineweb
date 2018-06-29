@@ -261,7 +261,6 @@ export default class Api {
             if (!response.ok) {
                 const err = await createErrorFromResponse(responseJson);
                 this._apiOptions.setError(err);
-                return Promise.reject();
             }
 
             if (response.status === 204) {
@@ -291,7 +290,6 @@ export default class Api {
             if (!response.ok) {
                 const err = await createErrorFromResponse(responseJson);
                 this._apiOptions.setError(err);
-                return Promise.reject();
             }
 
             if (response.status === 204) {
@@ -335,7 +333,6 @@ export default class Api {
             if (!response.ok) {
                 const err = await createErrorFromResponse(responseJson);
                 this._apiOptions.setError(err);
-                return Promise.reject();
             }
 
             return responseJson;
