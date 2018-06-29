@@ -1,25 +1,44 @@
 @import "../../../styles/variables";
 
-.post-author-details {
+.post-author {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
     align-items: center;
     font-size: $font-size-1;
     line-height: $line-height-1;
 
-    a {
-        display: inline-flex;
-        vertical-align: middle;
-        align-items: center;
+    .post-author-details {
+        a {
+            display: inline-flex;
+            vertical-align: middle;
+            align-items: center;
 
-        img {
-            width: $profile-image-size;
-            height: $profile-image-size;
-            border-radius: 100%;
-            object-fit: cover;
-            margin-right: $base-spacing;
+            img {
+                width: $profile-image-size;
+                height: $profile-image-size;
+                border-radius: 100%;
+                object-fit: cover;
+                margin-right: $base-spacing;
+            }
         }
     }
 
     .separator {
         margin: 0 $base-spacing;
+    }
+
+    .post-action-btns {
+        display: flex;
+    }
+
+    .post-action-btns * {
+        margin-left: $base-spacing;
+    }
+
+    .likes {
+        display: flex;
+        align-items: center;
+        font-size: $font-size-2;
     }
 }

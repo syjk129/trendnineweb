@@ -1,27 +1,25 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { Link } from "react-router-dom";
 
 import { Comment, Person, Post, Product } from "../../api/models";
-import { ButtonVariant, LinkButton } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
-import Icon, { IconSize, IconVariant} from "../../components/icon";
-import Image, { ImageFitVariant, ImageRatioVariant } from "../../components/image";
+import { IconSize } from "../../components/icon";
+import Image, { ImageFitVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import Sticky from "../../components/sticky";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
-import Featured from "../flowComponents/featured";
 import { PostRank } from "../flowComponents/ranking";
 import { ContentSection, SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
 import PostAuthorDetails from "./postAuthorDetails";
 import ProductTag from "./productTag";
-import productTag from "./productTag";
 
 interface DesktopPostProps {
+    likes: number;
+    liked: boolean;
+    wishlisted: boolean;
     post: Post;
     comments: Array<Comment>;
     relatedPosts: Array<Post>;
@@ -31,6 +29,8 @@ interface DesktopPostProps {
     unlikeComment(commentId: string): Promise<void>;
     submitComment(comment: string, parentCommentId: string): Promise<void>;
     updatePostProductTags?(postId: string, productTags: Array<any>): Promise<void>;
+    toggleWishlist(): void;
+    toggleLike(): void;
 }
 
 interface DesktopPostState {
@@ -87,6 +87,9 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
 
     render() {
         const {
+            liked,
+            likes,
+            wishlisted
             post,
             comments,
             relatedPosts,
@@ -94,6 +97,8 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
             likeComment,
             unlikeComment,
             submitComment,
+            toggleLike,
+            toggleWishlist,
         } = this.props;
 
         const commentsTitle = comments && comments.length > 0 ? (
@@ -167,15 +172,14 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                             <div className="post-subtitle">
                                 <PostAuthorDetails
                                     author={post.author}
-                                    postDate={new Date(post.created)}
-                                />
-                                <ActionLinks
-                                    variant={ActionLinksVariant.POST}
-                                    id={post.id}
-                                    wishlisted={post.wishlisted}
-                                    likes={post.likes}
-                                    liked={post.liked}
                                     iconSize={IconSize.MEDIUM}
+                                    postDate={new Date(post.created)}
+                                    postId={post.id}
+                                    wishlisted={wishlisted}
+                                    likes={likes}
+                                    liked={liked}
+                                    toggleLike={toggleLike}
+                                    toggleWishlist={toggleWishlist}
                                 />
                             </div>
                             <div className="post-details">

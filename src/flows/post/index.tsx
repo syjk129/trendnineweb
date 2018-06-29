@@ -39,6 +39,9 @@ interface PostState {
     relatedPosts: Array<Post>;
     featuredTrendnines: Array<Person>;
     isLoading: boolean;
+    wishlisted: boolean;
+    liked: boolean;
+    likes: number;
 }
 
 export default class PostView extends React.Component<Props, PostState> {
@@ -51,6 +54,9 @@ export default class PostView extends React.Component<Props, PostState> {
         relatedPosts: [],
         featuredTrendnines: [],
         isLoading: true,
+        wishlisted: false,
+        liked: false,
+        likes: 0,
     };
 
     componentWillMount() {
@@ -78,6 +84,8 @@ export default class PostView extends React.Component<Props, PostState> {
                         unlikeComment={this._unlikeComment}
                         submitComment={this._submitComment}
                         updatePostProductTags={this._submitProductTagsChange}
+                        toggleWishlist={this._toggleWishlist}
+                        toggleLike={this._toggleLike}
                     />
                 </BrowserView>
                 <MobileView device={isMobile}>
@@ -86,6 +94,8 @@ export default class PostView extends React.Component<Props, PostState> {
                         likeComment={this._likeComment}
                         unlikeComment={this._unlikeComment}
                         submitComment={this._submitComment}
+                        toggleWishlist={this._toggleWishlist}
+                        toggleLike={this._toggleLike}
                     />
                 </MobileView>
             </div>
@@ -93,7 +103,25 @@ export default class PostView extends React.Component<Props, PostState> {
     }
 
     private _postId: string;
-    private _imageRef: any;
+
+    private _toggleWishlist = () => {
+        this.setState({ wishlisted: !this.state.wishlisted });
+        if (this.state.wishlisted) {
+            this.context.api.unwishlist(this._postId, "blog");
+        } else {
+            this.context.api.wishlist(this._postId, "blog");
+        }
+    }
+
+    private _toggleLike = () => {
+        if (this.state.liked) {
+            this.context.api.unlikePost(this._postId);
+            this.setState({ liked: false, likes: this.state.likes - 1 });
+        } else {
+            this.context.api.likePost(this._postId);
+            this.setState({ liked: true, likes: this.state.likes + 1 });
+        }
+    }
 
     @autobind
     private async _submitComment(comment: string, parentCommentId: string) {
@@ -120,14 +148,6 @@ export default class PostView extends React.Component<Props, PostState> {
     @autobind
     private async _fetchData() {
         this._postId = this.props.match.params.postId;
-        this.setState({
-            post: null,
-            comments: [],
-            relatedProducts: [],
-            relatedPosts: [],
-            featuredTrendnines: [],
-        });
-
         try {
             const [
                 post,
@@ -158,7 +178,17 @@ export default class PostView extends React.Component<Props, PostState> {
                 recentlyViewedArray.unshift({ type: "Post", content: post});
             }
 
-            this.setState({ post, comments, relatedProducts, relatedPosts, featuredTrendnines, isLoading: false });
+            this.setState({
+                post,
+                comments,
+                relatedProducts,
+                relatedPosts,
+                featuredTrendnines,
+                isLoading: false,
+                wishlisted: post.wishlisted,
+                liked: post.liked,
+                likes: post.likes,
+            });
             localStorage.setItem("recentlyViewed", JSON.stringify(recentlyViewedArray.slice(0, 5)));
         } catch (err) {
             throw new Error(err);
