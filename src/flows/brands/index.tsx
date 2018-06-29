@@ -52,24 +52,35 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
     }
 
     async refreshContent(props: Props) {
-        const brandList = await this.context.api.getBrands("");
-
         let asciiCode = 0;
         let breakIndex = [0];
-        brandList.forEach((brand, index) => {
-            if (brand && brand.name) {
-                let code = brand.name.charCodeAt(0);
-                if (code !== asciiCode) {
-                    asciiCode = code;
-                    if (this._isAlphabet(code)) {
-                        breakIndex.push(index);
+        let idx = 0;
+        let brands = [];
+        let nextToken = null;
+
+        while (true) {
+            const brandList = await this.context.api.getBrands("", nextToken);
+            brandList.list.forEach((brand) => {
+                if (brand && brand.name) {
+                    let code = brand.name.charCodeAt(0);
+                    if (code !== asciiCode) {
+                        asciiCode = code;
+                        if (this._isAlphabet(code)) {
+                            breakIndex.push(idx);
+                        }
                     }
+                    idx++;
+                    brands.push(brand);
                 }
+            });
+            nextToken = brandList.nextToken;
+            if (!nextToken) {
+                break;
             }
-        });
+        }
 
         this.setState({
-            brandList,
+            brandList: brands,
             breakIndex,
             isLoading: false,
         });
@@ -130,7 +141,7 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
                         )}
                         {brands.slice(index, breakIndex[i + 1]).map(b => (
                             <LinkButton to={isShop ? `/shop/discover?brands=${b.id}` : `/discover?brands=${b.id}`}>
-                                {b.name}
+                                {b.name} ({b.item_count})
                             </LinkButton>
                         ))}
                     </div>

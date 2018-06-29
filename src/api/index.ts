@@ -74,13 +74,9 @@ export default class Api {
         return this._GET(url);
     }
 
-    getBrands(keyword?: string): Promise<Array<Brand>> {
-        let url = "/api/v1/marketplace/products/brands";
-
-        if (keyword) {
-            url += `?keyword=${keyword}`;
-        }
-        return this._GET(url);
+    getBrands(keyword?: string, nextToken?: string): Promise<Array<Brand>> {
+        const url = `/api/v1/marketplace/products/brands?keyword=${keyword}`;
+        return this._GET_PAGINATION(url, nextToken);
     }
 
     getLatestPosts(queryString?: string, nextToken?: string): Promise<Post> {

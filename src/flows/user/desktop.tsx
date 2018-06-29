@@ -17,6 +17,7 @@ import Tag from "../flowComponents/tag";
 import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
 import FollowButton from "./followButton";
+import Settings from "./settings";
 import UserTabs from "./userTabs";
 
 import { UserContentType } from "./types";
@@ -101,16 +102,20 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                                     TODO: SOCIAL links
                                 </div>
                             </SidebarSection>
-                            <SidebarSection title={`${influencer.first_name}'s Top Posts`}>
-                                <PostRank posts={profile.top_posts} hideRanks hideName />
-                            </SidebarSection>
-                            <SidebarSection title={`${influencer.first_name}'s Top Tags`}>
-                                <div className="tag-container">
-                                    {profile.top_post_tags.map(tag => (
-                                        <Tag tag={tag} />
-                                    ))}
-                                </div>
-                            </SidebarSection>
+                            {profile.top_posts && profile.top_posts.length > 0 &&
+                                <SidebarSection title={`${influencer.first_name}'s Top Posts`}>
+                                    <PostRank posts={profile.top_posts} hideRanks hideName />
+                                </SidebarSection>
+                            }
+                            {profile.top_post_tags && profile.top_post_tags.length > 0  &&
+                                <SidebarSection title={`${influencer.first_name}'s Top Tags`}>
+                                    <div className="tag-container">
+                                        {profile.top_post_tags.map(tag => (
+                                            <Tag tag={tag} />
+                                        ))}
+                                    </div>
+                                </SidebarSection>
+                            }
                         </div>
                     )}
                     {recentlyViewed &&
@@ -147,6 +152,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                             </div>
                         </Sticky>
                     )}
+                    {this._renderSettings()}
                     <CardContainer>
                         {this._renderContent()}
                     </CardContainer>
@@ -154,6 +160,15 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                 </Content>
             </div>
         );
+    }
+
+    @autobind
+    private _renderSettings() {
+        if (this.props.contentType === UserContentType.SETTINGS) {
+            return (<Settings />);
+        }
+
+        return null;
     }
 
     @autobind
@@ -169,7 +184,6 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
             case UserContentType.FOLLOWER:
             case UserContentType.FOLLOWING:
                 return this.props.content.map(item => <UserCard user={item} following={item.followed} />);
-            }
         }
 
         return null;
