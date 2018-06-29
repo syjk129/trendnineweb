@@ -82,9 +82,8 @@ export default class Api {
         return this._GET_PAGINATION(`/api/v1/posts?${queryString}`, nextToken);
     }
 
-    getTrendingPosts(pageSize?: number): Promise<Array<PostPreview>> {
-        let url = "/api/v1/posts/trending";
-        return this._GET("/api/v1/posts/trending");
+    getTrendingPosts(): Promise<Array<PostPreview>> {
+        return this._GET("/api/v1/posts/trending?page_size=5");
     }
 
     getFeedPosts(queryString?: string, nextToken?: string): Promise<Posts> {
@@ -120,16 +119,11 @@ export default class Api {
     }
 
     getFeaturedTrendnines(): Promise<Array<Person>> {
-        return this._GET("/api/v1/influencers");
+        return this._GET("/api/v1/influencers?page_size=6");
     }
 
-    getTodaysTrendnines(pageSize?: number): Promise<Array<Person>> {
-        let url = "/api/v1/influencers/today";
-
-        if (pageSize) {
-            url += `?page_size=${pageSize}`;
-        }
-        return this._GET(url);
+    getTodaysTrendnines(): Promise<Array<Person>> {
+        return this._GET("/api/v1/influencers/today");
     }
 
     getCart(): Promise<any> {

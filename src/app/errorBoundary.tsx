@@ -38,8 +38,6 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
         props.errors.forEach(error => {
             if (isAuthError(error)) {
                 this.props.history.push("/login");
-            } else {
-                alert(error.message);
             }
             // for now, remove all errors
             this.props.removeError(error);
