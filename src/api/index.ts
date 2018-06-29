@@ -107,7 +107,7 @@ export default class Api {
     }
 
     getRelatedPosts(postId: string): Promise<Post> {
-        return this._GET(`/api/v1/posts/${postId}/related`);
+        return this._GET(`/api/v1/posts/${postId}/related?page_size=5`);
     }
 
     getProduct(productId: string): Promise<any> {
@@ -115,7 +115,7 @@ export default class Api {
     }
 
     getRelatedProducts(): Promise<any> {
-        return this._GET(`/api/v1/marketplace/products/related`);
+        return this._GET(`/api/v1/marketplace/products/related?page_size=10`);
     }
 
     getFeaturedTrendnines(): Promise<Array<Person>> {
