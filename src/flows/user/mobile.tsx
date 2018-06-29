@@ -20,6 +20,7 @@ import { Filters, PostParam } from "../model";
 import FollowButton from "./followButton";
 import UserTabs from "./userTabs";
 
+import Settings from "./settings";
 import { UserContentType } from "./types";
 
 interface MobileUserProps {
@@ -108,6 +109,8 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                 {(contentType === UserContentType.POST || contentType === UserContentType.PRODUCT) && (
                     <MobileFilter setGridSize={this._setGridSize} />
                 )}
+
+                {this._renderSettings()}
                 <CardContainer gridSize={this.state.gridSize}>
                     {this._renderContent()}
                 </CardContainer>
@@ -119,6 +122,15 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
     @autobind
     private _setGridSize(gridSize: number) {
         this.setState({ gridSize });
+    }
+
+    @autobind
+    private _renderSettings() {
+        if (this.props.contentType === UserContentType.SETTINGS) {
+            return (<Settings />);
+        }
+
+        return null;
     }
 
     @autobind

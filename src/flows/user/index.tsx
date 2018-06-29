@@ -41,14 +41,28 @@ export default class User extends React.Component<Props, UserState> {
     };
 
     componentWillMount() {
+        const userName = this.props.match.params.userId;
         this._user = JSON.parse(localStorage.getItem("user")) || {};
         let contentType = this.props.match.params.pageName ? this.props.match.params.pageName : UserContentType.POST;
+
+        if (this._user && this._user.username === userName && !this.props.match.params.pageName) {
+            this.props.history.push(`/user/${this.props.match.params.userId}/bookmarks`);
+            contentType = UserContentType.POST_WISHLIST;
+        }
+
         this._updateContent(this.props, contentType);
     }
 
     async getDerivedStateFromProps() {
+        const userName = this.props.match.params.userId;
         this._user = JSON.parse(localStorage.getItem("user")) || {};
         let contentType = this.props.match.params.pageName ? this.props.match.params.pageName : UserContentType.POST;
+
+        if (this._user && this._user.username === userName && !this.props.match.params.pageName) {
+            this.props.history.push(`/user/${this.props.match.params.userId}/bookmarks`);
+            contentType = UserContentType.POST_WISHLIST;
+        }
+
         this._updateContent(this.props, contentType);
     }
 
@@ -115,14 +129,6 @@ export default class User extends React.Component<Props, UserState> {
 
     @autobind
     private async _updateContent(props: Props, contentType?: UserContentType) {
-        this.setState({
-            profile: null,
-            content: [],
-            contentType: UserContentType.POST,
-            nextToken: "",
-            postParam: null,
-        });
-
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);
         const queryString = postParam.convertUrlParamToQueryString();
@@ -139,23 +145,25 @@ export default class User extends React.Component<Props, UserState> {
     @autobind
     private async _fetchContent(contentType: UserContentType, queryString?: string, nextToken?: string) {
         switch (contentType) {
-        case UserContentType.POST:
-            return this.context.api.getPostsForUser(this._userId, queryString, nextToken);
-        case UserContentType.PRODUCT:
-            return this.context.api.getProductsForUser(this._userId, queryString, nextToken);
-        case UserContentType.FOLLOWER:
-            return this.context.api.getUserFollowers(this._userId, queryString, nextToken);
-        case UserContentType.FOLLOWING:
-            return this._user.username === this._userId ? this.context.api.getUserFollowing(this._userId, queryString, nextToken) : null;
-        case UserContentType.POST_WISHLIST:
-        case UserContentType.PRODUCT_WISHLIST:
-            if (this._user.username !== this._userId) return null;
-            const wishlistItems = await this.context.api.getWishlist();
-            if (contentType === UserContentType.POST_WISHLIST) {
-                return wishlistItems.post_items;
-            } else {
-                return wishlistItems.product_items;
-            }
+            case UserContentType.POST:
+                return this.context.api.getPostsForUser(this._userId, queryString, nextToken);
+            case UserContentType.PRODUCT:
+                return this.context.api.getProductsForUser(this._userId, queryString, nextToken);
+            case UserContentType.FOLLOWER:
+                return this.context.api.getUserFollowers(this._userId, queryString, nextToken);
+            case UserContentType.FOLLOWING:
+                return this._user.username === this._userId ? this.context.api.getUserFollowing(this._userId, queryString, nextToken) : null;
+            case UserContentType.POST_WISHLIST:
+            case UserContentType.PRODUCT_WISHLIST:
+                if (this._user.username !== this._userId) return null;
+                const wishlistItems = await this.context.api.getWishlist();
+                if (contentType === UserContentType.POST_WISHLIST) {
+                    return wishlistItems.post_items;
+                } else {
+                    return wishlistItems.product_items;
+                }
+            case UserContentType.SETTINGS:
+                return [];
         }
     }
 
