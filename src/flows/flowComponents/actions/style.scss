@@ -1,7 +1,9 @@
 @import "../../../styles/variables";
 
 .action-btns {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
 
     .left-icons {
         display: flex;
@@ -11,5 +13,9 @@
         display: flex;
         align-items: center;
         margin-right: $base-spacing;
+    }
+
+    .user-actions {
+        display: flex;
     }
 }

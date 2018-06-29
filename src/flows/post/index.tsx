@@ -50,7 +50,7 @@ export default class PostView extends React.Component<Props, PostState> {
         relatedProducts: [],
         relatedPosts: [],
         featuredTrendnines: [],
-        isLoading: true;
+        isLoading: true,
     };
 
     componentWillMount() {
