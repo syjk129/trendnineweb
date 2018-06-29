@@ -1,5 +1,8 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
+import { IconButton } from "../button";
+import { IconSize, IconVariant } from "../icon";
 import "./style.scss";
 
 interface ModalProps {
@@ -50,9 +53,11 @@ export default class Modal extends React.Component<ModalProps> {
         };
 
         return (
-            <div className="modal" ref={this._modalRef} style={style}>
+            <div className={isMobile ? "mobile-modal" : "modal"} ref={this._modalRef} style={style}>
                 <div className="modal-content">
-                    <span className="close" onClick={this._close}>&times;</span>
+                    <div className="modal-header">
+                        <span className="close" onClick={this._close}>&times;</span>
+                    </div>
                     {children}
                 </div>
             </div>

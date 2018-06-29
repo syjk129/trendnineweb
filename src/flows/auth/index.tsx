@@ -1,19 +1,13 @@
 import autobind from "autobind-decorator";
-import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import { ChangeEvent } from "react";
 import { GoogleLoginResponseOffline } from "react-google-login";
-import { match } from "react-router";
 
-import { AppContext, AppContextTypes } from "../../app";
-import WithUserSession from "../../app/withUserSession";
-import Input, { InputType } from "../../components/input";
+import { AppContext } from "../../app";
 import Modal from "../../components/modal";
-import Cookies from "../../util/cookies";
 import RouteProps from "../routeProps";
 import AuthForm from "./authForm";
-import FacebookLogin, { FacebookLoginResponse } from "./facebookLogin";
+import { FacebookLoginResponse } from "./facebookLogin";
 import { AuthData } from "./types";
 
 
@@ -80,13 +74,13 @@ export default class Auth extends React.Component<AuthProps> {
 
     private _authenticateGoogle = async (response: GoogleLoginResponseOffline) => {
         const token = await this.context.api.authenticateGoogle(response.code);
-        // save token.token
         this.props.setLoggedState(true);
         this.props.close();
     }
 
     private _authenticateFacebook = async (response: FacebookLoginResponse) => {
         const token = this.context.api.authenticateFacebook(response.code);
+        this._setToken(token);
         this.props.setLoggedState(true);
         this.props.close();
     }

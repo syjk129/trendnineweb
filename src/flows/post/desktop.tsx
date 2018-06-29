@@ -254,25 +254,6 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
     }
 
     @autobind
-    private _setImageRef(element: Element) {
-        const image = ReactDOM.findDOMNode(element);
-        if (image instanceof Element) {
-            const rect = image.getBoundingClientRect();
-
-            this.setState({ productTags: this.props.post.product_tags.map(tag => ({
-                product_id: tag.product_id,
-                name: this.props.post.products.find(product => product.id === tag.product_id).title,
-                style: {
-                    left: rect.left + rect.width * tag.x_axis,
-                    top: rect.top + rect.height * tag.y_axis,
-                },
-                x_axis: tag.x_axis,
-                y_axis: tag.y_axis,
-            }))});
-        }
-    }
-
-    @autobind
     private _renderProductFooter(product) {
         return (
         <div className="post-card-hover-footer">

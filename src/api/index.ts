@@ -14,7 +14,6 @@ import {
 } from "./models";
 
 import {
-    AuthError,
     createErrorFromResponse,
 } from "./errors";
 
@@ -83,7 +82,8 @@ export default class Api {
         return this._GET_PAGINATION(`/api/v1/posts?${queryString}`, nextToken);
     }
 
-    getTrendingPosts(): Promise<Array<PostPreview>> {
+    getTrendingPosts(pageSize?: number): Promise<Array<PostPreview>> {
+        let url = "/api/v1/posts/trending";
         return this._GET("/api/v1/posts/trending");
     }
 
@@ -263,15 +263,17 @@ export default class Api {
                 headers: this._getRequestHeader(),
             });
 
+            const responseJson = await response.json();
             if (!response.ok) {
-                this._apiOptions.setError(createErrorFromResponse(response));
+                const err = await createErrorFromResponse(responseJson);
+                this._apiOptions.setError(err);
+                return Promise.reject();
             }
 
             if (response.status === 204) {
                 return [];
             }
 
-            const responseJson = await response.json();
             return responseJson.result;
         } catch (err) {
             this._apiOptions.setError(err);
@@ -291,15 +293,17 @@ export default class Api {
                 mode: "cors",
             });
 
+            const responseJson = await response.json();
             if (!response.ok) {
-                console.warn("not ok");
+                const err = await createErrorFromResponse(responseJson);
+                this._apiOptions.setError(err);
+                return Promise.reject();
             }
 
             if (response.status === 204) {
                 return [];
             }
 
-            const responseJson = await response.json();
             return {
                 list: responseJson.result,
                 nextToken: responseJson.next_token,
@@ -332,11 +336,14 @@ export default class Api {
                 body: JSON.stringify(requestObject),
                 mode: "cors",
             });
-            if (!response.ok) {
-                this._apiOptions.setError(createErrorFromResponse(response));
-            }
 
             const responseJson = await response.json();
+            if (!response.ok) {
+                const err = await createErrorFromResponse(responseJson);
+                this._apiOptions.setError(err);
+                return Promise.reject();
+            }
+
             return responseJson;
         } catch (err) {
             this._apiOptions.setError(err);

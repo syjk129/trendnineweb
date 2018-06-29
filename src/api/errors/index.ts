@@ -5,7 +5,7 @@ export class NetworkError extends Error {
     readonly error: Error;
 
     constructor(err: Error) {
-        super(`NetworkError: ${err}`);
+        super(err.message);
 
         this.error = err;
     }
@@ -18,9 +18,9 @@ export class AuthError extends Error {
     readonly error: Error;
 
     constructor(err: Error) {
-       super(`AuthError: ${err}`);
+        super(err.message);
 
-       this.error = err;
+        this.error = err;
     }
 }
 
@@ -28,10 +28,13 @@ export function isAuthError(error: any): error is AuthError {
     return error.isAuthError;
 }
 
-export function createErrorFromResponse(response: Response) {
-    if (response.status === 401) {
-        return new AuthError(new Error(response.statusText));
+export async function createErrorFromResponse(responseJson: any) {
+    const errorKey = Object.keys(responseJson);
+    const message = responseJson.result ? responseJson.result[errorKey][0] : responseJson[errorKey][0];
+
+    if (responseJson.status === 401) {
+        return new AuthError(new Error(message || responseJson.statusText));
     }
 
-    return new NetworkError(new Error(response.statusText));
+    return new NetworkError(new Error(message || responseJson.statusText));
 }
