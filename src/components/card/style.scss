@@ -23,7 +23,7 @@ $min-card-width-3: 98px;
         position: absolute;
         width: $card-hover-width;
         background-color: #fff;
-        margin-left: 300px;
+        margin: $base-spacing;
         box-shadow: 0 0 15px $color-grey-2;
     }
 

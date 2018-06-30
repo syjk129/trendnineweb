@@ -2,7 +2,8 @@
 
 .card-hover {
     border: $standard-border-width solid $standard-border-color;
-    max-height: 290px;
+    max-height: $card-hover-width;
+    max-width: $card-hover-width;
     overflow-y: scroll;
 }
 
