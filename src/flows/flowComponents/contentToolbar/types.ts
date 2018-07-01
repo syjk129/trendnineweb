@@ -9,9 +9,9 @@ export enum FilterType {
 }
 
 export enum SortType {
-    RELEVANCE = "Relevance",
-    LATEST = "Latest",
-    POPULARITY = "Popularity",
+    RELEVANCE = "Picks for You",
+    LATEST = "What's New",
+    POPULARITY = "Most Popular",
     PRICE_HIGH_TO_LOW = "Price: High to Low",
     PRICE_LOW_TO_HIGH = "Price: Low to High",
 }

@@ -132,6 +132,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         onCallback={this._authenticateFacebook}
                     />
                 }
+                <Button onClick={() => this.props.history.push("/logout")}>Sign out</Button>
             </div>
         );
     }

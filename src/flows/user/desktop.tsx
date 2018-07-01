@@ -76,7 +76,6 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                                         circle
                                         square
                                     />
-
                                     <div className="activity-container">
                                         <div>
                                             <span className="identifier">TODAY</span>
@@ -98,9 +97,9 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                                         />
                                     </div>
                                 )}
-                                <div className="social-container">
+                                {/* <div className="social-container">
                                     TODO: SOCIAL links
-                                </div>
+                                </div> */}
                             </SidebarSection>
                             {profile.top_posts && profile.top_posts.length > 0 &&
                                 <SidebarSection title={`${influencer.first_name}'s Top Posts`}>

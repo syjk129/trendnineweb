@@ -62,7 +62,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     onClick={() => setContent(UserContentType.FOLLOWER)}
                 >
                     <p>FOLLOWERS</p>
-                    <p>{profile.follower_count}</p>
+                    <p>{profile.follower_count || 0}</p>
                 </NavLink>
             }
             {isSelf &&
@@ -72,7 +72,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     onClick={() => setContent(UserContentType.FOLLOWING)}
                 >
                     <p>FOLLOWING</p>
-                    <p>{profile.following_count}</p>
+                    <p>{profile.following_count || 0}</p>
                 </NavLink>
             }
             {isSelf &&

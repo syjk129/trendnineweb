@@ -1,9 +1,9 @@
 import Sort from ".";
 
 export class SortConstants {
-    static RELEVANCE = "Relevance";
-    static LATEST = "Latest";
-    static POPULARITY = "Popularity";
+    static RELEVANCE = "Picks for You";
+    static LATEST = "What's New";
+    static POPULARITY = "Most Popular";
     static PRICE_HIGH_TO_LOW = "Price: High to Low";
     static PRICE_LOW_TO_HIGH = "Price: Low to High";
     static SORT_LIST = [
