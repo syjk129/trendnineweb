@@ -241,7 +241,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     @autobind
     private async _onSearchBrands(value?: string) {
         const brands = await this.context.api.getBrands(value);
-        const searchedRetailerCheckboxes = brands.map(b => {
+        const searchedRetailerCheckboxes = brands.list.map(b => {
             return new SearchCheckbox(b.id, `${b.name} (${b.item_count})`);
         });
         this.setState({searchResult: new Set(searchedRetailerCheckboxes)});

@@ -8,6 +8,20 @@
     font-size: $font-size-2;
     font-weight: $font-weight-bold;
     text-transform: uppercase;
+
+    .list-label,
+    .list-label-back {
+        width: 100%;
+        display: flex;
+    }
+
+    .list-label {
+        justify-content: space-between;
+    }
+
+    .back-button {
+        margin-right: $base-spacing;
+    }
 }
 
 .list-container {

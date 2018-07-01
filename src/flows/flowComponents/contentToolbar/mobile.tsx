@@ -1,11 +1,9 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 
-import { FilterSearchResult } from "../../../api/models";
+import { Category, FilterSearchResult } from "../../../api/models";
 import { IconButton } from "../../../components/button";
 import Checkbox from "../../../components/checkbox";
-import Chip from "../../../components/chip";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
 import Sticky from "../../../components/sticky";
 import FilterView from "./filter";
@@ -16,6 +14,7 @@ interface MobileContentToolbarProps {
     activeToolbar: ToolbarType | null;
     currentFilterType: FilterType | null;
     currentSortType: SortType;
+    currentCategory: Array<Category> | null;
     selectedFilters: Map<FilterType, Filter>;
     filterOptions: Array<FilterOption>;
     sortTypes: Array<SortType>;
@@ -23,6 +22,8 @@ interface MobileContentToolbarProps {
     searchString: string;
     setGridSize(size: number): void;
     selectFilterType(filterType: FilterType | null): void;
+    selectCurrentCategory(category: Category | null): void;
+    toggleCategory(category: Category): void;
     selectSortType(sortType: SortType): void;
     toggleSelectFilterItem(filterId: string): void;
     toggleActiveToolbar(toolbarType: ToolbarType | null): void;
@@ -45,18 +46,20 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
             activeToolbar,
             currentFilterType,
             currentSortType,
+            currentCategory,
             selectedFilters,
             filterOptions,
             sortTypes,
             filters,
             searchString,
             selectFilterType,
+            selectCurrentCategory,
             selectSortType,
+            toggleCategory,
             toggleSelectFilterItem,
             onRangeFilterChange,
             onSearchStringChange,
         } = this.props;
-        console.log(selectedFilters);
 
         return (
             <Sticky id="mobile-content-toolbar" stickyClassName="sticky-mobile-content-toolbar">
@@ -97,11 +100,14 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                 {activeToolbar === ToolbarType.FILTER &&
                     <FilterView
                         currentFilterType={currentFilterType}
+                        currentCategory={currentCategory}
                         selectedFilters={selectedFilters}
                         filterOptions={filterOptions}
                         filters={filters}
                         searchString={searchString}
                         selectFilterType={selectFilterType}
+                        selectCurrentCategory={selectCurrentCategory}
+                        toggleCategory={toggleCategory}
                         toggleSelectFilterItem={toggleSelectFilterItem}
                         toggleFilterActive={() => this._toggleFilterActive(ToolbarType.FILTER)}
                         onRangeFilterChange={onRangeFilterChange}

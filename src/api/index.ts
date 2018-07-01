@@ -74,7 +74,10 @@ export default class Api {
     }
 
     getBrands(keyword?: string, nextToken?: string): Promise<Array<Brand>> {
-        const url = `/api/v1/marketplace/products/brands?keyword=${keyword}`;
+        let url = "/api/v1/marketplace/products/brands";
+        if (keyword) {
+            url = `${url}?keyword=${keyword}`;
+        }
         return this._GET_PAGINATION(url, nextToken);
     }
 
@@ -356,6 +359,7 @@ export default class Api {
 
         return {
             "Accept": "application/json",
+            // "Access-Control-Allow-Origin": "*",
             "Authorization": jwtToken,
             "Content-Type": "application/json",
         };

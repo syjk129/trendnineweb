@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 
-import { FilterSearchResult } from "../../../api/models";
+import { Category, FilterSearchResult } from "../../../api/models";
 import { AppContext } from "../../../app";
 import { ContentType } from "../../model";
 import RouteProps from "../../routeProps";
@@ -15,12 +15,13 @@ import {
     FilterQueryParamMap,
     FilterType,
     isRangeValueFilter,
-    isSelectFilter,
+    isTreeSelectFilter,
     RangeValueFilter,
     SelectFilter,
     SortQueryParamMap,
     SortType,
     ToolbarType,
+    TreeSelectFilter,
 } from "./types";
 
 import "./style.scss";
@@ -40,6 +41,7 @@ interface ContentToolbarState {
     sortTypes: Array<SortType>;
     filters: Map<FilterType, Array<FilterSearchResult>>;
     selectedFilters: Map<FilterType, Filter>;
+    currentCategory: Array<Category> | null;
     currentFilterType: FilterType | null;
     currentSortType: SortType;
     searchString: string;
@@ -55,6 +57,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         sortTypes: this._getSortTypes(),
         filters: new Map(),
         selectedFilters: new Map(),
+        currentCategory: null,
         currentFilterType: null,
         currentSortType: SortType.RELEVANCE,
         searchString: "",
@@ -82,6 +85,8 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                         {...this.state}
                         selectFilterType={this._selectFilterType}
                         selectSortType={this._selectSortType}
+                        selectCurrentCategory={this._selectCurrentCategory}
+                        toggleCategory={this._toggleCategory}
                         toggleSelectFilterItem={this._toggleSelectFilterItem}
                         toggleActiveToolbar={this._toggleActiveToolbar}
                         onSearchStringChange={this._onSearchStringChange}
@@ -121,8 +126,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     private async _populateFilters() {
         const filters = this.state.filters;
         for (const filterOption of this.state.filterOptions) {
-            const filterContent = await this._getFilterContent(filterOption.type, this.state.searchString);
-            filters[filterOption.type] = filterContent;
+            filters[filterOption.type] = await this._getFilterContent(filterOption.type, this.state.searchString);
         }
 
         // Update selectedFilters
@@ -132,36 +136,42 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
             const queryParams = location.search.slice(1).split("&");
             queryParams.forEach(queryParam => {
                 const [filterType, values] = queryParam.split("=");
+                const sanitizedValues = decodeURI(values);
                 if (filterType.toLowerCase() === "sort") {
-                    sortType = SortQueryParamMap[values.toLowerCase()];
+                    sortType = SortQueryParamMap[sanitizedValues.toLowerCase()];
                 } else if (filterType.toLowerCase() === "price_low") {
                     const rangeFilter = selectedFilters[FilterType.PRICE_RANGE] || new RangeValueFilter;
-                    rangeFilter.minValue = values;
+                    rangeFilter.minValue = sanitizedValues;
                     selectedFilters[FilterType.PRICE_RANGE] = rangeFilter;
                 } else if (filterType.toLowerCase() === "price_high") {
                     const rangeFilter = selectedFilters[FilterType.PRICE_RANGE] || new RangeValueFilter;
-                    rangeFilter.maxValue = values;
+                    rangeFilter.maxValue = sanitizedValues;
                     selectedFilters[FilterType.PRICE_RANGE] = rangeFilter;
+                } else if (filterType.toLowerCase() === FilterQueryParamMap[FilterType.CATEGORY]) {
+                    const treeFilter = selectedFilters[FilterType.CATEGORY] || new TreeSelectFilter;
+                    treeFilter.selectedTree = sanitizedValues.split(",");
+                    selectedFilters[FilterQueryParamMap[filterType]] = treeFilter;
                 } else {
-                    selectedFilters[FilterQueryParamMap[filterType]] = { selectedIds: values.split(",") } as SelectFilter;
+                    selectedFilters[FilterQueryParamMap[filterType]] = { selectedIds: sanitizedValues.split(",") } as SelectFilter;
                 }
             });
         }
         this.setState({ filters, selectedFilters, currentSortType: sortType });
     }
 
-    @autobind
-    private _getFilterContent(filterType: FilterType, query?: string) {
+    private _getFilterContent = async (filterType: FilterType, query?: string) => {
         switch (filterType) {
             case FilterType.BRANDS:
-                return this.context.api.getBrands(query);
+                const brands = await this.context.api.getBrands(query);
+                return brands.list;
             case FilterType.CATEGORY:
+                return await this.context.api.getCategories();
             case FilterType.PRICE_RANGE:
                 return new RangeValueFilter();
             case FilterType.RETAILER:
-                return this.context.api.getRetailers(query);
+                return await this.context.api.getRetailers(query);
             case FilterType.TAGS:
-                return this.context.api.getTags(query);
+                return await this.context.api.getTags(query);
             default:
                 throw new Error(`Unsupported filter type ${filterType}`);
         }
@@ -210,14 +220,20 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         // Apply filter query param
         let queryString = Object.keys(this.state.selectedFilters).reduce((result, filterType) => {
             let filterParams = "";
-            if (isRangeValueFilter(this.state.selectedFilters[filterType])) {
-                filterParams += `price_high=${this.state.selectedFilters[filterType].maxValue}`;
-                filterParams += `&price_low=${this.state.selectedFilters[filterType].minValue}`;
+            const selectedFilter = this.state.selectedFilters[filterType];
+            if (isRangeValueFilter(selectedFilter)) {
+                filterParams += `price_high=${selectedFilter.maxValue}`;
+                filterParams += `&price_low=${selectedFilter.minValue}`;
+            } else if (isTreeSelectFilter(selectedFilter)) {
+                filterParams = "categories=";
+                filterParams = selectedFilter.selectedTree.reduce((param: string, category: string, index: number) => (
+                    `${param}${category},`
+                ), filterParams);
             } else {
-                const selectedIds = this.state.selectedFilters[filterType].selectedIds.join(",");
+                const selectedIds = selectedFilter.selectedIds.join(",");
                 if (selectedIds.length === 0) return result;
 
-                filterParams = `${FilterQueryParamMap[filterType]}=${this.state.selectedFilters[filterType].selectedIds.join(",")}`;
+                filterParams = `${FilterQueryParamMap[filterType]}=${selectedFilter.selectedIds.join(",")}`;
             }
             return `${result}${result.length !== 0 ? "&" : ""}${filterParams}`;
         }, "");
@@ -235,7 +251,53 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     @autobind
     private _selectFilterType(filterType: FilterType | null) {
-        this.setState({ currentFilterType: filterType });
+        this.setState({
+            currentFilterType: filterType,
+            currentCategory: filterType === FilterType.CATEGORY ? [this.state.filters[filterType][1]] : null,
+        });
+    }
+
+    private _toggleCategory = (category: Category) => {
+        let selectedFilters = this.state.selectedFilters;
+        let tree = selectedFilters[this.state.currentFilterType] || new TreeSelectFilter;
+        const currentCategory = tree.selectedTree.find(selectedCategory => selectedCategory === category.full_name);
+        if (currentCategory) {
+            tree.selectedTree = this._removeCategory(category, tree.selectedTree);
+        } else {
+            tree.selectedTree = this._addCategory(category, tree.selectedTree);
+        }
+        selectedFilters[this.state.currentFilterType] = tree;
+        this.setState({ selectedFilters, hasChanged: true });
+    }
+
+    private _removeCategory = (category: Category, selectedTree: Array<string>) => {
+        let newTree = selectedTree;
+        newTree = newTree.filter(t => t !== category.full_name);
+        return category.subcategories.reduce((tree: Array<string>, subcategory: Category) => {
+            return this._removeCategory(subcategory, tree);
+        }, newTree);
+    }
+
+    private _addCategory = (category: Category, selectedTree: Array<string>) => {
+        let newTree = selectedTree;
+        newTree.push(category.full_name);
+        return category.subcategories.reduce((tree: Array<string>, subcategory: Category) => {
+            return this._addCategory(subcategory, tree);
+        }, newTree);
+    }
+
+    private _selectCurrentCategory = (category: Category | null) => {
+        let currentCategory = this.state.currentCategory;
+        if (category) {
+            currentCategory.push(category);
+        } else {
+            currentCategory.pop();
+        }
+        if (currentCategory.length === 0) {
+            this.setState({ currentCategory: null, currentFilterType: null });
+        } else {
+            this.setState({ currentCategory });
+        }
     }
 
     @autobind
@@ -249,7 +311,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
             case ContentType.POST:
             case ContentType.PRODUCT:
                 return [
-                    { type: FilterType.CATEGORY, category: FilterCategory.SEARCH } as FilterOption,
+                    { type: FilterType.CATEGORY, category: FilterCategory.TREE_SELECT } as FilterOption,
                     { type: FilterType.BRANDS, category: FilterCategory.SEARCH } as FilterOption,
                     { type: FilterType.PRICE_RANGE, category: FilterCategory.RANGE} as FilterOption,
                     { type: FilterType.RETAILER, category: FilterCategory.SEARCH } as FilterOption,

@@ -62,7 +62,7 @@ export default class PostCard extends React.Component<PostCardProps> {
                 </div>
                 <div className="post-card-footer">
                     <ActionLinks
-                        iconSize={isMobile ? IconSize.MEDIUM : IconSize.SMALL}
+                        iconSize={IconSize.SMALL}
                         variant={ActionLinksVariant.POST}
                         id={post.id}
                         wishlisted={post.wishlisted}

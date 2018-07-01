@@ -5,6 +5,10 @@
     padding: $mobile-page-spacing;
     height: calc(100% - 67px - 46px);
     overflow: auto;
+
+    .checkbox-container {
+        margin: $base-spacing 0;
+    }
 }
 
 .filter-results {

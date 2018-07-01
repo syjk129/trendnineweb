@@ -1,7 +1,7 @@
 import { Range } from "rc-slider";
 import * as React from "react";
 
-import { FilterSearchResult } from "../../../../api/models";
+import { Category, FilterSearchResult } from "../../../../api/models";
 import Checkbox from "../../../../components/checkbox";
 import Input from "../../../../components/input";
 import { ListContainer, ListItem } from "../list";
@@ -11,11 +11,14 @@ import "./style.scss";
 
 interface FilterViewProps {
     currentFilterType: FilterType | null;
+    currentCategory: Array<Category> | null;
     selectedFilters: Map<FilterType, Filter>;
     filterOptions: Array<FilterOption>;
     filters: Map<FilterType, Array<FilterSearchResult>>;
     searchString: string;
     selectFilterType(filterType: FilterType | null): void;
+    selectCurrentCategory(category: Category | null): void;
+    toggleCategory(category: Category): void;
     toggleSelectFilterItem(filterId: string): void;
     toggleFilterActive(): void;
     onRangeFilterChange(min: number, max: number): void;
@@ -28,7 +31,6 @@ export default class FilterView extends React.Component<FilterViewProps> {
             currentFilterType,
             filterOptions,
             selectFilterType,
-            selectedFilters,
         } = this.props;
 
         return (
@@ -44,6 +46,7 @@ export default class FilterView extends React.Component<FilterViewProps> {
     private _renderFilterSearch = () => {
         const {
             currentFilterType,
+            currentCategory,
             filterOptions,
             selectedFilters,
             filters,
@@ -56,7 +59,7 @@ export default class FilterView extends React.Component<FilterViewProps> {
             case FilterCategory.SEARCH:
                 return (
                     <div className="filter-search-container">
-                        <ListItem label={currentFilterType} open onClick={() => selectFilterType(null)} />
+                        <ListItem label={currentFilterType} back open onClick={() => selectFilterType(null)} />
                         <div className="filter-search">
                             <Input
                                 placeholder={`Search for ${currentFilterType}`}
@@ -79,7 +82,7 @@ export default class FilterView extends React.Component<FilterViewProps> {
             case FilterCategory.RANGE:
                 return (
                     <div className="filter-search-container">
-                        <ListItem label={currentFilterType} open onClick={() => selectFilterType(null)} />
+                        <ListItem label={currentFilterType} back open onClick={() => selectFilterType(null)} />
                         <div className="filter-results">
                             <div className="range-label">
                                 <span>
@@ -101,6 +104,22 @@ export default class FilterView extends React.Component<FilterViewProps> {
                                 onChange={this._onRangeFilterChange}
                             />
                         </div>
+                    </div>
+                );
+            case FilterCategory.TREE_SELECT:
+                const category = currentCategory.slice(-1)[0];
+                return (
+                    <div className="tree-select-filter">
+                        <ListItem label={category.display_name} back open onClick={() => this.props.selectCurrentCategory(null)} />
+                        {category.subcategories.map((subcategory: Category) => (
+                            <ListItem
+                                label={subcategory.display_name}
+                                value={subcategory.id}
+                                checked={selectedFilters[currentFilterType] && selectedFilters[currentFilterType].selectedTree.some(t => t === subcategory.full_name) || false}
+                                onSelect={() => this.props.toggleCategory(subcategory)}
+                                onClick={() => this.props.selectCurrentCategory(subcategory)}
+                            />
+                        ))}
                     </div>
                 );
         }

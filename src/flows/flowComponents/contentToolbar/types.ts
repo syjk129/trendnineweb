@@ -1,3 +1,5 @@
+import { Category } from "../../../api/models";
+
 export enum FilterType {
     CATEGORY = "Category",
     BRANDS = "Brands",
@@ -19,10 +21,10 @@ export const FilterQueryParamMap = {
     [FilterType.BRANDS]: "brand_ids",
     [FilterType.RETAILER]: "merchant_ids",
     [FilterType.TAGS]: "tags",
-    "categories": [FilterType.CATEGORY],
-    "brand_ids": [FilterType.BRANDS],
-    "merchant_ids": [FilterType.RETAILER],
-    "tags": [FilterType.TAGS],
+    "categories": FilterType.CATEGORY,
+    "brand_ids": FilterType.BRANDS,
+    "merchant_ids": FilterType.RETAILER,
+    "tags": FilterType.TAGS,
 };
 
 export const SortQueryParamMap = {
@@ -47,6 +49,7 @@ export enum FilterCategory {
     SEARCH,
     RANGE,
     SELECT,
+    TREE_SELECT,
 }
 
 export class FilterOption {
@@ -71,7 +74,13 @@ export class SortFilter {
     type: SortType;
 }
 
-export type Filter = SelectFilter | RangeValueFilter | SortFilter;
+export class TreeSelectFilter {
+    isTreeSelectFilter: boolean = true;
+
+    selectedTree: Array<string> = [];
+}
+
+export type Filter = SelectFilter | RangeValueFilter | SortFilter | TreeSelectFilter;
 
 export function isSelectFilter(filter: any): filter is SelectFilter {
     return filter.isSelectFilter;
@@ -79,4 +88,8 @@ export function isSelectFilter(filter: any): filter is SelectFilter {
 
 export function isRangeValueFilter(filter: any): filter is RangeValueFilter {
     return filter.isRangeValueFilter;
+}
+
+export function isTreeSelectFilter(filter: any): filter is TreeSelectFilter {
+    return filter.isTreeSelectFilter;
 }
