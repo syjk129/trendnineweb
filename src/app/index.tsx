@@ -5,7 +5,7 @@ import App from "./app";
 
 export default function AppContainer() {
     return (
-        <BrowserRouter onUpdate={() => window.scrollTo(0, 0)} history={browserHistory}>
+        <BrowserRouter history={browserHistory}>
             <Route component={App} />
         </BrowserRouter>
     );

@@ -150,7 +150,7 @@ export default class Api {
     getFeaturedTrendnines(pageSize?: number): Promise<Array<Person>> {
         let url = "/api/v1/influencers";
         if (pageSize) {
-            url += `/page_size=${pageSize}`;
+            url += `?page_size=${pageSize}`;
         }
         return this._GET(url);
     }

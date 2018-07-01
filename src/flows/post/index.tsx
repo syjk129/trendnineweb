@@ -60,12 +60,12 @@ export default class PostView extends React.Component<Props, PostState> {
     };
 
     componentWillMount() {
-        this._fetchData();
+        this._fetchData(this.props);
     }
 
     componentWillReceiveProps(nextProps: Props) {
         if (nextProps.location.pathname !== this.props.location.pathname) {
-            this._fetchData();
+            this._fetchData(nextProps);
         }
     }
 
@@ -146,8 +146,9 @@ export default class PostView extends React.Component<Props, PostState> {
     }
 
     @autobind
-    private async _fetchData() {
-        this._postId = this.props.match.params.postId;
+    private async _fetchData(props: Props) {
+        this.setState({ isLoading: true });
+        this._postId = props.match.params.postId;
         try {
             const [
                 post,

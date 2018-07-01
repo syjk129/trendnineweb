@@ -113,6 +113,7 @@ export default class App extends React.Component<Props, AppState> {
 
     componentWillReceiveProps(nextProps: Props) {
         if (nextProps.location !== this.props.location) {
+            window.scrollTo(0, 0);
             this._previousLocation = this.props.location;
         }
     }

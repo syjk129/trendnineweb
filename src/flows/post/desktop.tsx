@@ -52,9 +52,15 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
         this._coverImageRef = React.createRef();
     }
 
+    componentWillReceiveProps(nextProps: DesktopPostProps) {
+        if (nextProps.post.id !== this.props.post.id) {
+            this._updateImageTags(nextProps);
+        }
+    }
+
     componentDidMount() {
-        this._updateImageTags();
-        window.addEventListener("resize", this._updateImageTags);
+        this._updateImageTags(this.props);
+        window.addEventListener("resize", () => this._updateImageTags(this.props));
 
         const rect = this._coverImageRef.current.getBoundingClientRect();
 
@@ -246,11 +252,11 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
 
     private _coverImageRef: React.RefObject<HTMLDivElement>;
 
-    private _updateImageTags = () => {
+    private _updateImageTags = (props: DesktopPostProps) => {
         const rect = this._coverImageRef.current.getBoundingClientRect();
 
-        this.setState({ productTags: this.props.post.product_tags.map(tag => {
-            const product = this.props.post.products.find(product => product.id === tag.product_id);
+        this.setState({ productTags: props.post.product_tags.map(tag => {
+            const product = props.post.products.find(product => product.id === tag.product_id);
             return {
                 product_id: tag.product_id,
                 name: product && product.title || "",
