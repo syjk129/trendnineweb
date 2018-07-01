@@ -2,7 +2,6 @@
 
 .welcome-banner {
     position: relative;
-    margin: 0 -#{$page-spacing};
 
     .welcome-buttons {
         position: absolute;
@@ -18,6 +17,10 @@
             color: #fff;
             border-color: #fff;
         }
+    }
+
+    @media (max-width: 1440px) {
+        margin: 0 -#{$page-spacing};
     }
 }
 
