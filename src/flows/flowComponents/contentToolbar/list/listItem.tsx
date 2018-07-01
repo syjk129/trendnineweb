@@ -29,7 +29,9 @@ export default function ListItem ({ label, back, value, checked, open, onSelect,
             ) : (
                 <span className="list-label" onClick={onClick}>
                     <span className="label">{label}</span>
-                    <div><Icon variant={open ? IconVariant.ARROW_LEFT : IconVariant.ARROW_RIGHT} /></div>
+                    {onClick && (
+                        <div><Icon variant={open ? IconVariant.ARROW_LEFT : IconVariant.ARROW_RIGHT} /></div>
+                    )}
                 </span>
             )}
         </div>

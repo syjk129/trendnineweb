@@ -225,10 +225,12 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 filterParams += `price_high=${selectedFilter.maxValue}`;
                 filterParams += `&price_low=${selectedFilter.minValue}`;
             } else if (isTreeSelectFilter(selectedFilter)) {
-                filterParams = "categories=";
                 filterParams = selectedFilter.selectedTree.reduce((param: string, category: string, index: number) => (
                     `${param}${category},`
                 ), filterParams);
+                if (filterParams.length > 0) {
+                    filterParams = `${FilterQueryParamMap[filterType]}=${filterParams}`;
+                }
             } else {
                 const selectedIds = selectedFilter.selectedIds.join(",");
                 if (selectedIds.length === 0) return result;

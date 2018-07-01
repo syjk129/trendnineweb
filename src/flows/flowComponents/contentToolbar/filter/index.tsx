@@ -117,7 +117,7 @@ export default class FilterView extends React.Component<FilterViewProps> {
                                 value={subcategory.id}
                                 checked={selectedFilters[currentFilterType] && selectedFilters[currentFilterType].selectedTree.some(t => t === subcategory.full_name) || false}
                                 onSelect={() => this.props.toggleCategory(subcategory)}
-                                onClick={() => this.props.selectCurrentCategory(subcategory)}
+                                onClick={subcategory.subcategories.length > 0 && (() => this.props.selectCurrentCategory(subcategory))}
                             />
                         ))}
                     </div>
