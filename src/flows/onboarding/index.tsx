@@ -52,7 +52,7 @@ export default class Onboarding extends React.Component<OnboardingProps, Onboard
 
     private _unfollowAll = () => {
         this.setState({ followed: [] });
-        this.state.followed.forEach(followedInfluencer => this.context.api.unFollowUser(followedInfluencer));
+        this.state.followed.forEach(followedInfluencer => this.context.api.unfollowUser(followedInfluencer));
     }
 
     private _followInfluencer = (influencer: Person) => {

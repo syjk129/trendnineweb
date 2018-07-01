@@ -9,7 +9,7 @@ interface DesktopOnboardingProps {
     followed: Array<string>;
     followInfluencer(influencer: Person): void;
     unfollowAll(): void;
-    close(): void;
+    close(redirect?: string): void;
     getPostsForUser(userId: string, queryString?: string): Promise<Array<PostPreview>>;
 }
 
@@ -44,7 +44,7 @@ export default function DesktopOnboarding({
                     <Button size={ButtonSize.WIDE} variant={ButtonVariant.OUTLINE} onClick={unfollowAll}>Unfollow All</Button>
                 </div>
                 <div className="button-container">
-                    <Button size={ButtonSize.WIDE} variant={ButtonVariant.OUTLINE} onClick={close}>Shop Now</Button>
+                    <Button size={ButtonSize.WIDE} variant={ButtonVariant.OUTLINE} onClick={() => close("/")}>Shop Now</Button>
                 </div>
             </div>
         </div>

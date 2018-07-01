@@ -58,7 +58,6 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
         const user = await this.props.getUser();
         if (user && user.username) {
             localStorage.setItem("user", JSON.stringify(user));
-            this.props.history.push("/");
         }
     }
 
