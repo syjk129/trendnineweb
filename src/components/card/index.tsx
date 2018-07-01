@@ -20,35 +20,15 @@ interface CardProps {
 }
 
 interface CardState {
-    hoverX: number;
-    hoverY: number;
 }
 
 class Card extends React.Component<CardProps, CardState> {
-    state: CardState = {
-        hoverX: 0,
-        hoverY: 0,
-    };
+    state: CardState = { };
 
-    componentDidMount() {
-        const cardElement = ReactDOM.findDOMNode(this.refs.card);
-        if (cardElement instanceof Element) {
-            const rect = cardElement.getBoundingClientRect();
-            if (rect.left + rect.width + 420 < window.innerWidth) {
-                this.setState({ hoverX: rect.width - 20, hoverY: 20 });
-            } else {
-                this.setState({ hoverX: - 215, hoverY: 20 });
-            }
-        }
-    }
+    componentDidMount() { }
 
     render() {
         const { imageUrl, scaleImage, redirectUrl, gridSize, title, singleLineTitle, hoverItem, footerItem } = this.props;
-
-        const hoverStyles = {
-            marginLeft: this.state.hoverX,
-            marginTop: this.state.hoverY,
-        };
 
         let classes = "card";
 
@@ -59,7 +39,7 @@ class Card extends React.Component<CardProps, CardState> {
         return (
             <div className={classes} ref="card">
                 {hoverItem && !isMobile && (
-                    <div className="card-hover-details" ref="hover" style={hoverStyles}>
+                    <div className="card-hover-details" ref="hover">
                         {hoverItem}
                     </div>
                 )}

@@ -15,6 +15,7 @@ interface FacebookLoginProps {
     sdkVersion: string;
     fields: string;
     responseType: string;
+    buttonText?: string;
     onCallback(response: FacebookLoginResponse): void;
 }
 
@@ -27,8 +28,9 @@ export class FacebookLoginResponse {
 
 export default class FacebookLogin extends React.Component<FacebookLoginProps, FacebookLoginState> {
     render() {
+        const buttonText = this.props.buttonText ? this.props.buttonText : "Login with Facebook";
         return (
-            <Button className="facebook-login" onClick={this._openLoginWindow}>Login with Facebook</Button>
+            <Button className="facebook-login" onClick={this._openLoginWindow}>{buttonText}</Button>
         );
     }
 

@@ -3,9 +3,13 @@
 .auth-form {
     input {
         max-width: 420px;
-        margin-top: $base-spacing * 2;
         margin-bottom: $base-spacing * 2;
         display: block;
+    }
+
+    input[type="submit"] {
+        max-width: 200px;
+        display: inline;
     }
 
     button {

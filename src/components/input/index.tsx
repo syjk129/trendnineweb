@@ -6,8 +6,11 @@ import "./style.scss";
 
 export enum InputType {
     TEXT = "text",
+    EMAIL = "email",
     PASSWORD = "password",
     CHECKBOX = "checkbox",
+    FILE = "file",
+    SUBMIT = "submit",
 }
 
 export enum InputVariant {
@@ -30,6 +33,7 @@ interface InputProps {
     placeholder?: string;
     disabled?: boolean;
     checked?: boolean;
+    required?: boolean;
     onChange?(value: any): void;
     onEnterPress?(value: any): void;
 }
@@ -66,6 +70,10 @@ export default class Input extends React.Component<InputProps, never> {
                 break;
         }
 
+        if (this.props.type === InputType.SUBMIT) {
+            classes += "button";
+        }
+
         return (
             <input
                 className={classes}
@@ -76,6 +84,7 @@ export default class Input extends React.Component<InputProps, never> {
                 disabled={this.props.disabled}
                 checked={this.props.checked}
                 type={this.props.type}
+                required={this.props.required}
             />
         );
     }
