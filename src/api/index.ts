@@ -31,10 +31,12 @@ export default class Api {
     }
 
     authenticate(email: string, password: string, isNewUser: boolean): Promise<void> {
-        const request = { email, password };
+        let request;
         if (isNewUser) {
-            return this._POST("/api/v1/users", request);
+            request = { email, password, first_name: "First", last_name: "Last" };
+            return this._POST("/api/v1/users/registration", request);
         } else {
+            request = { email, password };
             return this._POST("/api/v1/users/authenticate", request);
         }
     }
@@ -121,8 +123,12 @@ export default class Api {
         return this._GET(`/api/v1/marketplace/products/related?page_size=10`);
     }
 
-    getFeaturedTrendnines(): Promise<Array<Person>> {
-        return this._GET("/api/v1/influencers?page_size=6");
+    getFeaturedTrendnines(pageSize?: number): Promise<Array<Person>> {
+        let url = "/api/v1/influencers";
+        if (pageSize) {
+            url += `/page_size=${pageSize}`;
+        }
+        return this._GET(url);
     }
 
     getTodaysTrendnines(): Promise<Array<Person>> {

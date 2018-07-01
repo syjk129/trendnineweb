@@ -13,7 +13,7 @@ import { AuthData } from "./types";
 
 interface AuthProps extends RouteProps {
     apiUrl: string;
-    close(): void;
+    close(redirect?: string): void;
     setLoggedState(loggedIn: boolean): void;
 }
 
@@ -57,14 +57,16 @@ export default class Auth extends React.Component<AuthProps> {
         );
     }
 
-    private _authToken: string;
-
     private _authenticate = async (data: AuthData) => {
         const token = await this.context.api.authenticate(data.email, data.password, data.isNewUser);
         this._setToken(token);
         // save token.token
         this.props.setLoggedState(true);
-        this.props.close();
+        if (data.isNewUser) {
+            this.props.close("/onboarding");
+        } else {
+            this.props.close();
+        }
     }
 
     @autobind

@@ -7,6 +7,7 @@ export enum ButtonVariant {
 export enum ButtonSize {
     FIT = "fit",
     WIDE = "wide",
+    SMALL = "small",
 }
 
 export interface ButtonProps {

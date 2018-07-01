@@ -160,7 +160,7 @@ export default class PostView extends React.Component<Props, PostState> {
                 this.context.api.getComments(this._postId),
                 this.context.api.getRelatedProducts(),
                 this.context.api.getRelatedPosts(this._postId),
-                this.context.api.getFeaturedTrendnines(),
+                this.context.api.getFeaturedTrendnines(6),
             ]);
 
             const recentlyViewed = localStorage.getItem("recentlyViewed");

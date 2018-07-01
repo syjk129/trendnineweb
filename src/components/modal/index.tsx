@@ -7,6 +7,7 @@ import "./style.scss";
 
 interface ModalProps {
     children: React.ReactNode;
+    className?: string;
     isOpen: boolean;
     close(): void;
 }
@@ -46,15 +47,20 @@ export default class Modal extends React.Component<ModalProps> {
     }
 
     render() {
-        const { children } = this.props;
+        const { children, className } = this.props;
 
         const style = {
             display: this.state.open ? "block" : "none",
         };
 
+        let classes = "modal-content";
+        if (className) {
+            classes += ` ${className}`;
+        }
+
         return (
             <div className={isMobile ? "mobile-modal" : "modal"} ref={this._modalRef} style={style}>
-                <div className="modal-content">
+                <div className={classes}>
                     <div className="modal-header">
                         <span className="close" onClick={this._close}>&times;</span>
                     </div>

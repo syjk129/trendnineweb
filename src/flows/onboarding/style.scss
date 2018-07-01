@@ -1,0 +1,90 @@
+@import "../../styles/variables";
+
+.desktop-onboarding {
+    .welcome {
+        font-family: $font-family-serif;
+        text-align: center;
+        font-size: $font-size-4;
+        font-weight: $font-weight-bold;
+        margin-bottom: $base-spacing * 3;
+    }
+
+    .get-started {
+        font-size: $font-size-2;
+    }
+
+    .follow-container {
+        max-height: 400px;
+        overflow: scroll;
+        padding: $base-spacing 0;
+        border-bottom: $standard-border-width * 2 solid $standard-border-color;
+        border-top: $standard-border-width * 2 solid $standard-border-color;
+        margin-bottom: $base-spacing * 2;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .onboarding-actions {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.onboarding-modal {
+    width: 800px;
+}
+
+.follow-influencer {
+    display: inline-block;
+    border: $standard-border-width solid black;
+    border-radius: 3px;
+    padding: $base-spacing;
+    width: calc(50% - #{$base-spacing * 2});
+    margin: $base-spacing;
+    box-sizing: border-box;
+
+    .influencer {
+        display: flex;
+        justify-content: space-between;
+
+        .influencer-details {
+            display: flex;
+
+            .influencer-image {
+                width: auto;
+                margin-right: $base-spacing;
+            }
+        }
+
+        .description {
+            display: flex;
+            flex-direction: column;
+
+            .name {
+                font-family: $font-family-serif;
+                font-weight: $font-weight-bold;
+                font-size: $font-size-2;
+            }
+
+            .username {
+                color: $color-grey-4;
+            }
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    .influencer-content {
+        display: flex;
+        justify-content: left;
+
+        .influencer-post-preview {
+            margin: $base-spacing / 2;
+            max-width: 80px;
+            width: calc(25% - #{$base-spacing / 2});
+        }
+    }
+}

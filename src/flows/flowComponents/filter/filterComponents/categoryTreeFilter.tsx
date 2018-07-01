@@ -1,12 +1,10 @@
 import autobind from "autobind-decorator";
-import { PropTypes } from "prop-types";
 import * as React from "react";
 
 import { Category } from "../../../../api/models";
 import Button, { ButtonVariant, IconButton } from "../../../../components/button";
 import Checkbox from "../../../../components/checkbox";
 import Icon, { IconVariant } from "../../../../components/icon";
-import SearchFilterInput from "./searchFilterInput";
 
 import "./style.scss";
 

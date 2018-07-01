@@ -55,6 +55,9 @@ export default function Button({
         case ButtonSize.WIDE:
             classes += " button-wide";
             break;
+        case ButtonSize.SMALL:
+            classes += " button-small";
+            break;
     }
 
     return (

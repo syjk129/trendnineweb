@@ -43,7 +43,7 @@ export default class Trending extends React.Component<TrendingProps, TrendingSta
         }
 
         try {
-            featuredTrendnines = await this.context.api.getFeaturedTrendnines();
+            featuredTrendnines = await this.context.api.getFeaturedTrendnines(6);
         } catch (err) {
             console.warn(err);
         }

@@ -11,6 +11,7 @@ import Modal from "../components/modal";
 import Auth from "../flows/auth";
 import BrandView from "../flows/brands";
 import Discover from "../flows/discover";
+import OnboardingView from "../flows/onboarding";
 import PostView from "../flows/post";
 import ProductView from "../flows/product";
 import RouteProps from "../flows/routeProps";
@@ -136,6 +137,7 @@ export default class App extends React.Component<Props, AppState> {
                         <Route path="/product/:productId" component={ProductView} />
                         <Route path="/trending" component={Trending} />
                         <Route path="/:url*/login" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />}/>
+                        <Route path="/:url*/onboarding" render={(props) => <OnboardingView {...props} close={this._redirectCloseModal} />}/>
                         <Route path="/logout" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                         <Route path="/register" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                         <Route path="*" component={null} />
@@ -177,8 +179,9 @@ export default class App extends React.Component<Props, AppState> {
         this.setState({ modalContent: component });
     }
 
-    private _redirectCloseModal = () => {
-        this.props.history.push(this._previousLocation && this._previousLocation.pathname || "/");
+    private _redirectCloseModal = (redirect?: string) => {
+        const location = this._previousLocation && `${this._previousLocation.pathname}${redirect || ""}` || redirect || "/"
+        this.props.history.push(this._previousLocation && `${this._previousLocation.pathname}${redirect || ""}` || redirect || "/");
     }
 
     private _closeModal = () => {
