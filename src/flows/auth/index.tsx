@@ -76,6 +76,7 @@ export default class Auth extends React.Component<AuthProps> {
 
     private _authenticateGoogle = async (response: GoogleLoginResponseOffline) => {
         const token = await this.context.api.authenticateGoogle(response.code);
+        this._setToken(token);
         this.props.setLoggedState(true);
         this.props.close();
     }
