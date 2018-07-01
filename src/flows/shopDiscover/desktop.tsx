@@ -1,6 +1,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
+import { Category } from "../../api/models";
 import { AppContext } from "../../app";
 import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
@@ -16,12 +17,14 @@ import ShopCategoryTreeSidebar from "./shopCategorySidebar";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
 interface DesktopShopDiscoverState extends ShopDiscoverState {
+    selectedCategories: Array<string>;
 }
 
 export default class DesktopShopDiscover extends React.Component<ShopDiscoverProps, DesktopShopDiscoverState> {
     static contextTypes: AppContext;
 
     state: DesktopShopDiscoverState = {
+        selectedCategories: [],
         categories: [],
         products: [],
         nextToken: null,
@@ -71,8 +74,8 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                     <div>
                         <ShopCategoryTreeSidebar
                             categoryList={this.state.categories}
-                            selectedCategories={this.props.selectedCategories}
-                            toggleCategory={this.props.toggleCategory}
+                            selectedCategories={this.state.selectedCategories}
+                            toggleCategory={this._toggleCategory}
                         />
                     </div>
                 </Sidebar>
@@ -165,4 +168,64 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
         return productCards;
     }
+
+    private _sanitizeCategories = (selectedCategories: Array<string>, category: Array<Category>) => {
+        let sanitizedCategories = selectedCategories;
+        return sanitizedCategories = sanitizedCategories.reduce((result, currentCategory) => {
+            return category.reduce((sanitized, c) => {
+                if (currentCategory === c.full_name) {
+                    return this._removeCategories(c.subcategories, sanitized);
+                }
+                if (c.subcategories && c.subcategories.length > 0) {
+                    return this._sanitizeCategories(sanitized, c.subcategories);
+                }
+                return sanitized;
+            }, result);
+        }, sanitizedCategories);
+    }
+
+    private _applyCategories = () => {
+        const categoryQuery = this._sanitizeCategories(this.state.selectedCategories, this.state.categories).join(",");
+        let pathname = this.props.location.pathname;
+        if (categoryQuery.length > 0) {
+            pathname += `?categories=${categoryQuery}`;
+        }
+        this.props.history.push(pathname);
+    }
+
+    private _toggleCategory = (category: Category) => {
+        let selectedCategories = this.state.selectedCategories;
+        const currentCategory = selectedCategories.find(selectedCategory => selectedCategory === category.full_name);
+        if (currentCategory) {
+            selectedCategories = this._removeCategory(category, selectedCategories);
+        } else {
+            selectedCategories = this._addCategory(category, selectedCategories);
+        }
+        this.setState({ selectedCategories }, this._applyCategories);
+    }
+
+    private _removeCategories = (categories: Array<Category>, selectedCategories: Array<string>) => {
+        return categories.reduce((tree: Array<string>, subcategory: Category) => {
+            return this._removeCategory(subcategory, tree);
+        }, selectedCategories);
+    }
+
+    private _removeCategory = (category: Category, selectedCategories: Array<string>, onlyChildren?: boolean) => {
+        let newTree = selectedCategories;
+        if (!onlyChildren) {
+            newTree = newTree.filter(t => t !== category.full_name);
+        }
+        return category.subcategories.reduce((tree: Array<string>, subcategory: Category) => {
+            return this._removeCategory(subcategory, tree);
+        }, newTree);
+    }
+
+    private _addCategory = (category: Category, selectedCategories: Array<string>) => {
+        let newTree = selectedCategories;
+        newTree.push(category.full_name);
+        return category.subcategories.reduce((tree: Array<string>, subcategory: Category) => {
+            return this._addCategory(subcategory, tree);
+        }, newTree);
+    }
+
 }

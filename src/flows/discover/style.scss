@@ -1,5 +1,26 @@
 @import "../../styles/variables";
 
+.welcome-banner {
+    position: relative;
+    margin: 0 -#{$page-spacing};
+
+    .welcome-buttons {
+        position: absolute;
+        bottom: 15%;
+        left: 5%;
+
+        .button {
+            margin-right: $base-spacing * 2;
+            width: 200px;
+        }
+
+        .button-outline {
+            color: #fff;
+            border-color: #fff;
+        }
+    }
+}
+
 .discover {
     display: flex;
 

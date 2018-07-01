@@ -25,6 +25,17 @@
         width: auto;
     }
 
+    &.button-secondary {
+        background-color: #fff;
+        color: $text-primary;
+
+        &:hover {
+            background-color: transparent;
+            border-color: #fff;
+            color: #fff;
+        }
+    }
+
     &.button-outline {
         background-color: transparent;
         border: $brand-color solid $standard-border-width;
@@ -34,6 +45,13 @@
             background-color: $color-accent;
             color: $color-white;
         }
+
+        &.white {
+            &:hover {
+                background-color: #fff;
+                color: $color-accent;
+            }
+        }
     }
 
     &.button-small {
@@ -41,7 +59,7 @@
     }
 
     &.button-wide {
-        padding: 10px 70px;
+        padding: 10px 50px;
     }
 
     &.rounded {

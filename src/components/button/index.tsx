@@ -11,6 +11,7 @@ interface ButtonProps {
     className?: string;
     inline?: boolean;
     rounded?: boolean;
+    white?: boolean;
     variant?: ButtonVariant;
     size?: ButtonSize;
     children?: React.ReactNode;
@@ -21,6 +22,7 @@ export default function Button({
     className,
     inline,
     rounded,
+    white,
     variant,
     size,
     children,
@@ -43,6 +45,9 @@ export default function Button({
         case ButtonVariant.PRIMARY:
             classes += " button-primary";
             break;
+        case ButtonVariant.SECONDARY:
+            classes += " button-secondary";
+            break;
         case ButtonVariant.OUTLINE:
             classes += " button-outline";
             break;
@@ -58,6 +63,10 @@ export default function Button({
         case ButtonSize.SMALL:
             classes += " button-small";
             break;
+    }
+
+    if (white) {
+        classes += " white";
     }
 
     return (
