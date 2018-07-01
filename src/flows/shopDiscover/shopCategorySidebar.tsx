@@ -1,5 +1,4 @@
 import autobind from "autobind-decorator";
-import { PropTypes } from "prop-types";
 import * as React from "react";
 
 import { Category } from "../../api/models";
@@ -12,7 +11,8 @@ import "./style.scss";
 interface ShopCategoryTreeSidebarProps {
     categoryList: Array<Category>;
     selectedCategory?: string;
-    onApply?(values: string): void;
+    selectedCategories: Array<string>;
+    toggleCategory(category: Category): void;
  }
 
 interface ShopCategoryTreeSidebarState {
@@ -24,12 +24,12 @@ export default class ShopCategoryTreeSidebar extends React.Component<ShopCategor
         expandedParents: new Map(),
     };
 
-    async componentWillReceiveProps() {
+    componentWillMount() {
         const expandedParents = new Map<number, Category>();
         expandedParents[0] = null;
         expandedParents[1] = null;
 
-        this.setState({expandedParents: expandedParents});
+        this.setState({ expandedParents });
     }
 
     render() {
@@ -38,11 +38,6 @@ export default class ShopCategoryTreeSidebar extends React.Component<ShopCategor
                 { this._renderCategoryTree(this.props.categoryList) }
             </div>
         );
-    }
-
-    @autobind
-    private _onApply(category: string) {
-        this.props.onApply(category);
     }
 
     @autobind
@@ -62,18 +57,31 @@ export default class ShopCategoryTreeSidebar extends React.Component<ShopCategor
     @autobind
     private _renderCategories(categories: Array<Category>, level: number) {
         return (
-            <ul className="tree-item">
-                {categories.map(c =>
-                    <li>
-                        <LinkButton onClick={() => this._onApply(c.full_name)}>
-                            {c.display_name}
-                        </LinkButton>
-                        {this._renderCollapseButton(level, c, c.subcategories && c.subcategories.length > 0)}
-                        {this.state.expandedParents[level] === c && <div className="subcategories">
-                            {this._renderCategories(c.subcategories, level + 1)}
-                        </div>}
-                    </li>)}
-            </ul>
+            <div className="tree-item">
+                {categories.map(category => (
+                    <div className="category-container">
+                        <div className="category">
+                            <Checkbox
+                                value={category.id}
+                                checked={this.props.selectedCategories.indexOf(category.full_name) !== -1}
+                                onChange={() => this.props.toggleCategory(category)}
+                            />
+                            <LinkButton
+                                className="category-name"
+                                onClick={() => this.props.toggleCategory(category)}
+                            >
+                                {category.display_name}
+                            </LinkButton>
+                            {this._renderCollapseButton(level, category, category.subcategories && category.subcategories.length > 0)}
+                        </div>
+                        {this.state.expandedParents[level] === category && (
+                            <div className="subcategories">
+                                {this._renderCategories(category.subcategories, level + 1)}
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
         );
     }
 
@@ -83,11 +91,11 @@ export default class ShopCategoryTreeSidebar extends React.Component<ShopCategor
             return null;
         }
 
-        let iconVariant = IconVariant.ARROW_RIGHT;
+        let iconVariant = IconVariant.ARROW_DOWN;
         if (this.state.expandedParents[level] === category) {
-            iconVariant = IconVariant.ARROW_LEFT;
+            iconVariant = IconVariant.ARROW_UP;
         }
-        return <IconButton icon={iconVariant} onClick={() => this._onExpand(level, category)}/>;
+        return <IconButton className="category-collapse" icon={iconVariant} onClick={() => this._onExpand(level, category)}/>;
     }
 
     @autobind

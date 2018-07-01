@@ -1,23 +1,14 @@
 import autobind from "autobind-decorator";
-import * as H from "history";
-import { PropTypes } from "prop-types";
 import * as React from "react";
-import { match, withRouter } from "react-router-dom";
 
-import { Category, Product } from "../../api/models";
-import { AppContext, AppContextTypes } from "../../app";
-import { LinkButton } from "../../components/button";
-import Card, { CardContainer } from "../../components/card";
-import Carousel, { CarouselItem } from "../../components/carousel";
+import { AppContext } from "../../app";
+import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
-import { PostCard, ProductCard } from "../flowComponents/cardView";
-import Featured from "../flowComponents/featured";
+import { ProductCard } from "../flowComponents/cardView";
 import Filter, { FilterTarget } from "../flowComponents/filter";
-import { PostRank } from "../flowComponents/ranking";
-import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
 import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
@@ -51,7 +42,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
     async componentDidMount() {
         const categories = await this.props.getCategories();
-        this.setState({ categories });
+        this.setState({ categories: categories });
     }
 
     async refreshContent(props: ShopDiscoverProps) {
@@ -80,7 +71,9 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                     <div>
                         <ShopCategoryTreeSidebar
                             categoryList={this.state.categories}
-                            onApply={this._filterCategory} />
+                            selectedCategories={this.props.selectedCategories}
+                            toggleCategory={this.props.toggleCategory}
+                        />
                     </div>
                 </Sidebar>
                 <Content>
@@ -123,12 +116,6 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
     @autobind
     private async _filterProducts(filters: Filters) {
         this.state.productParam.filters = filters;
-        this._push(this.state.productParam);
-    }
-
-    @autobind
-    private async _filterCategory(category: string) {
-        this.state.productParam.filters.categoryIds = new Array(category);
         this._push(this.state.productParam);
     }
 

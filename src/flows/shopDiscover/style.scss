@@ -7,13 +7,26 @@
         list-style: none;
         padding-left: 2 * $base-spacing;
 
-        li {
-            padding: $base-spacing 0;
-
+        .category-container {
             a {
                 display: inline-flex;
             }
         }
+
+        .category {
+            display: flex;
+            margin-bottom: $base-spacing * 2;
+
+            .category-name {
+                margin-bottom: 0;
+                margin-right: $base-spacing;
+            }
+        }
+    }
+
+    .category-collapse .icon {
+        width: 10px;
+        height: 10px;
     }
 }
 

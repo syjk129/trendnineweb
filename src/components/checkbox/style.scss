@@ -16,6 +16,7 @@
         width: $checkbox-size - 2 * $standard-border-width;
         background-color: transparent;
         border: $standard-border-width solid $standard-border-color;
+        border-radius: 3px;
     }
 
     &.mobile {
@@ -29,7 +30,6 @@
         .checkbox-checkmark {
             height: $checkbox-size;
             width: $checkbox-size;
-            border-radius: 3px;
         }
     }
 
