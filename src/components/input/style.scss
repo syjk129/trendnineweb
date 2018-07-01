@@ -1,11 +1,14 @@
 @import "../../styles/variables";
 
 input {
-    border: $standard-border-width solid $standard-border-color;
+    border: $standard-border-width solid $color-grey-2;
+    border-radius: $standard-border-radius;
+    box-sizing: border-box;
     padding: $base-spacing;
     width: 100%;
     text-align: left;
     outline: none;
+    font-size: $font-size-2;
 
     &.blank {
         border: none;

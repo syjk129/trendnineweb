@@ -26,8 +26,8 @@ export default function MobileProduct({
                 <p className="product-name">{product.title}</p>
                 <p className="product-seller">Sold by {product.merchant.name}</p>
                 <p className="product-price">${product.price}</p>
-                <Button variant={ButtonVariant.PRIMARY} onClick={() => window.open(product.url)}>Buy Now</Button>
-                <Button variant={ButtonVariant.OUTLINE} onClick={toggleWishlist}>{wishlistBtnText}</Button>
+                <Button rounded variant={ButtonVariant.PRIMARY} onClick={() => window.open(product.url)}>Buy Now</Button>
+                <Button rounded variant={ButtonVariant.OUTLINE} onClick={toggleWishlist}>{wishlistBtnText}</Button>
             </div>
             <ExpandableSection title="Product Details">
                 <div dangerouslySetInnerHTML={{ __html: product.description }} />

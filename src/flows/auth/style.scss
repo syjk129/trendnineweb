@@ -1,5 +1,9 @@
 @import "../../styles/variables";
 
+.auth-modal {
+    width: 480px;
+}
+
 .auth-form {
     input {
         max-width: 420px;
@@ -53,19 +57,19 @@
 
 .facebook-login {
     background-color: #3b5998;
+    text-transform: none;
 }
 
 .google-login {
     font-size: $font-size-2;
     font-family: $font-family-sans-serif;
-    text-transform: uppercase;
+    text-transform: none;
     padding: $base-spacing;
     width: 100%;
     height: $button-height;
     letter-spacing: $letter-spacing-1;
     outline: none;
     border: $standard-border-width solid transparent;
-    border-radius: $button-height / 2;
     color: #fff;
     background-color: #dd4b39;
 }

@@ -30,63 +30,72 @@ export default function DesktopAuthForm({
     onFacebookLogin,
 }: DesktopAuthFormProps) {
     return (
-        <div className="auth-form">
-            {isNewUser ? (
-                <form onSubmit={onSubmit}>
-                    <p className="form-name">Join TrendNine</p>
-                    <Input
-                        placeholder="Email Address"
-                        value={email}
-                        variant={InputVariant.UNDERLINE}
-                        onChange={(email) => onFormChange({ email })}
-                    />
-                    <Input
-                        placeholder="Password"
-                        type={InputType.PASSWORD}
-                        variant={InputVariant.UNDERLINE}
-                        value={password}
-                        onChange={(password) => onFormChange({ password })}
-                    />
-                    <p className="signup-disclaimer">By signing up, you agree to TrendNine's Terms of Service & Privacy Policy</p>
-                    <input type="submit" style={{ display: "none" }} />
-                    <Button onClick={onSubmit}>Sign up</Button>
-                    <LinkButton onClick={toggleNewUser}>Sign in</LinkButton>
-                </form>
-            ) : (
-                <form onSubmit={onSubmit}>
+        <div className="desktop-auth-form">
+            <form onSubmit={onSubmit}>
+                {isNewUser ? (
+                    <>
+                        <p className="form-name">Join TrendNine</p>
+                        <p className="registration-description">Create an account to personalize your shopping experience, follow your favorite influencers, like and wishlist outfits you love, and more.</p>
+                    </>
+                ) : (
                     <p className="form-name">Welcome back</p>
-                    <Input
-                        placeholder="Email Address"
-                        value={email}
-                        variant={InputVariant.UNDERLINE}
-                        onChange={(email) => onFormChange({ email })}
-                    />
-                    <Input
-                        placeholder="Password"
-                        type={InputType.PASSWORD}
-                        variant={InputVariant.UNDERLINE}
-                        value={password}
-                        onChange={(password) => onFormChange({ password })}
-                    />
-                    <input type="submit" style={{ display: "none" }} />
-                    <Button onClick={onSubmit}>Sign in</Button>
-                    <LinkButton onClick={toggleNewUser}>Sign in</LinkButton>
-                </form>
-            )}
-            <GoogleLogin
-                className="google-login"
-                clientId="174930742509-kvp3mkdgdb5c8staoesefgltj377tgsq.apps.googleusercontent.com"
-                responseType="code"
-                onSuccess={onGoogleSuccess}
-                onFailure={onGoogleFailure}
-            />
-            <FacebookLogin
-                appId="201224070695370"
-                sdkVersion="v3.0"
-                fields="name,email,picture"
-                responseType="code"
-                onCallback={onFacebookLogin}
-            />
+                )}
+                <GoogleLogin
+                    className="google-login button button-primary"
+                    clientId="174930742509-kvp3mkdgdb5c8staoesefgltj377tgsq.apps.googleusercontent.com"
+                    responseType="code"
+                    onSuccess={onGoogleSuccess}
+                    onFailure={onGoogleFailure}
+                />
+                <FacebookLogin
+                    appId="201224070695370"
+                    sdkVersion="v3.0"
+                    fields="name,email,picture"
+                    responseType="code"
+                    onCallback={onFacebookLogin}
+                />
+                <div className="divider" />
+                {isNewUser ? (
+                    <>
+                        <Input
+                            className="auth-input"
+                            placeholder="Email Address"
+                            value={email}
+                            onChange={(email) => onFormChange({ email })}
+                        />
+                        <Input
+                            className="auth-input"
+                            placeholder="Password"
+                            type={InputType.PASSWORD}
+                            value={password}
+                            onChange={(password) => onFormChange({ password })}
+                        />
+                        <p className="signup-disclaimer">By signing up, you agree to TrendNine's Terms of Service & Privacy Policy</p>
+                        <input type="submit" style={{ display: "none" }} />
+                        <Button className="submit-button" rounded onClick={onSubmit}>Sign up</Button>
+                        <p className="switch">Already on TrendNine?&nbsp;<LinkButton onClick={toggleNewUser}>Sign in</LinkButton></p>
+                    </>
+                ) : (
+                    <>
+                        <Input
+                            className="auth-input"
+                            placeholder="Email Address"
+                            value={email}
+                            onChange={(email) => onFormChange({ email })}
+                        />
+                        <Input
+                            className="auth-input"
+                            placeholder="Password"
+                            type={InputType.PASSWORD}
+                            value={password}
+                            onChange={(password) => onFormChange({ password })}
+                        />
+                        <input type="submit" style={{ display: "none" }} />
+                        <Button className="submit-button" rounded onClick={onSubmit}>Sign in</Button>
+                        <p className="switch">Don't have an account?&nbsp;<LinkButton onClick={toggleNewUser}>Sign up</LinkButton></p>
+                    </>
+                )}
+            </form>
         </div>
     );
 }

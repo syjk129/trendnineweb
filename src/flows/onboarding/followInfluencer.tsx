@@ -48,6 +48,7 @@ export default class FollowInfluencer extends React.Component<FollowInfluencerPr
                     </div>
                     <div className="button-container">
                         <Button
+                            rounded
                             variant={followed ? ButtonVariant.PRIMARY : ButtonVariant.OUTLINE}
                             onClick={follow}
                             size={ButtonSize.SMALL}

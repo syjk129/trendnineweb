@@ -16,7 +16,7 @@ export default function ViewMore({ isLoading, onClick }: ViewMoreProps) {
             {isLoading ? (
                 <Spinner />
             ) : (
-                <Button onClick={onClick} inline>View More</Button>
+                <Button rounded onClick={onClick} inline>View More</Button>
             )}
         </div>
     );

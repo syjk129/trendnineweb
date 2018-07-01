@@ -25,6 +25,7 @@ export default class FollowButton extends React.Component<FollowButtonProps, Fol
     render() {
         return (
             <Button
+                rounded
                 variant={this.state.followed ? ButtonVariant.PRIMARY : ButtonVariant.OUTLINE}
                 onClick={this._toggleSubscribe}>
                 {this.state.followed ? "Unfollow" : "Follow"}

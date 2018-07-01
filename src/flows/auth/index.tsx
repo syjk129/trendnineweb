@@ -43,7 +43,7 @@ export default class Auth extends React.Component<AuthProps> {
 
     render() {
         return (
-            <Modal isOpen close={this.props.close}>
+            <Modal className="auth-modal" isOpen close={this.props.close}>
                 <AuthForm
                     getUser={this._getUser}
                     authenticate={this._authenticate}

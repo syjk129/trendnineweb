@@ -21,7 +21,6 @@ export default function DesktopCommentInput({ comment, placeholder, user, onChan
                     inline
                     rounded
                     variant={ButtonVariant.OUTLINE}
-                    size={ButtonSize.WIDE}
                     onClick={submitComment}
                 >
                     Post

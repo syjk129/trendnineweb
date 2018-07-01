@@ -52,9 +52,10 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
                     </div>
                     <div className="filter-action-buttons">
                         <Button
+                            rounded
                             variant={ButtonVariant.PRIMARY}
                             onClick={this._onApply}>APPLY</Button>
-                        <Button variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
+                        <Button rounded variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
                     </div>
                 </div>
                 <div className="filter-content">

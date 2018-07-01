@@ -1,0 +1,46 @@
+@import "../../../styles/variables";
+
+.desktop-auth-form {
+    margin: $page-spacing;
+
+    .form-name {
+        font-family: $font-family-serif;
+        font-size: $font-size-4;
+        font-weight: $font-weight-bold;
+        text-align: center;
+        margin-bottom: $base-spacing * 4;
+    }
+
+    .registration-description {
+        font-size: $font-size-2;
+        text-align: center;
+    }
+
+    .button {
+        margin-bottom: $base-spacing;
+    }
+
+    .auth-input {
+        margin-bottom: $base-spacing;
+    }
+
+    .divider {
+        border-bottom: $standard-border-width * 2 solid $standard-border-color;
+        margin: $base-spacing * 2 0;
+    }
+
+    .switch {
+        text-align: center;
+        font-size: $font-size-2;
+
+        .link-button {
+            display: inline;
+            font-size: $font-size-2;
+            text-decoration: underline;
+        }
+    }
+
+    .submit-button {
+        margin-bottom: $base-spacing * 2;
+    }
+}

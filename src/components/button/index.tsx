@@ -27,16 +27,16 @@ export default function Button({
     onClick,
 }: ButtonProps) {
     let classes = "button";
+    if (rounded) {
+        classes += " rounded";
+    }
+
     if (className) {
         classes += ` ${className}`;
     }
 
     if (inline) {
         classes += " button-inline";
-    }
-
-    if (rounded) {
-        classes += " rounded";
     }
 
     switch (variant) {

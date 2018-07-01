@@ -7,6 +7,8 @@ import RouteProps from "../../routeProps";
 import { AuthData, FacebookLoginResponse } from "../types";
 import DesktopAuthForm from "./desktop";
 
+import "./style.scss";
+
 interface AuthFormProps extends RouteProps {
     getUser(): Promise<Person>;
     authenticate(data: AuthData): void;

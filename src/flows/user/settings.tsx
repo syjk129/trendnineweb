@@ -109,7 +109,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                     </div>
                     <input type="submit" style={{ display: "none" }} />
                     <Input type={InputType.SUBMIT} value="Save Changes" />
-                    <Button onClick={this._getUserData} variant={ButtonVariant.OUTLINE}>Cancel</Button>
+                    <Button rounded onClick={this._getUserData} variant={ButtonVariant.OUTLINE}>Cancel</Button>
                 </form>
 
                 {!this.state.is_google_linked &&
@@ -132,7 +132,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         onCallback={this._authenticateFacebook}
                     />
                 }
-                <Button onClick={() => this.props.history.push("/logout")}>Sign out</Button>
+                <Button rounded onClick={() => this.props.history.push("/logout")}>Sign out</Button>
             </div>
         );
     }
