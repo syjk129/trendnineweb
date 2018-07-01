@@ -86,7 +86,7 @@ export default class Api {
     }
 
     getTrendingPosts(): Promise<Array<PostPreview>> {
-        return this._GET("/api/v1/posts/trending?page_size=5");
+        return this._GET("/api/v1/posts/trending");
     }
 
     getFeedPosts(queryString?: string, nextToken?: string): Promise<Posts> {
