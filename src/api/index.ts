@@ -55,7 +55,11 @@ export default class Api {
     }
 
     getCategories(categoryId?: string): Promise<Array<Category>> {
-        return this._GET(`/api/v1/marketplace/products/categories${categoryId !== null ? "" : "/" + categoryId}`);
+        let url = "/api/v1/marketplace/products/categories";
+        if (categoryId) {
+            url += `/${categoryId}`;
+        }
+        return this._GET(url);
     }
 
     getTags(keyword: string): Promise<Array<Tag>> {
@@ -84,7 +88,11 @@ export default class Api {
     }
 
     getLatestPosts(queryString?: string, nextToken?: string): Promise<Post> {
-        return this._GET_PAGINATION(`/api/v1/posts?${queryString}`, nextToken);
+        let url = "/api/v1/posts";
+        if (queryString) {
+            url += `?${queryString}`;
+        }
+        return this._GET_PAGINATION(url, nextToken);
     }
 
     getTrendingPosts(): Promise<Array<PostPreview>> {
@@ -92,19 +100,35 @@ export default class Api {
     }
 
     getFeedPosts(queryString?: string, nextToken?: string): Promise<Posts> {
-        return this._GET_PAGINATION(`/api/v1/posts?following_only=true&${queryString}`, nextToken);
+        let url = "/api/v1/posts?following_only=true";
+        if (queryString) {
+            url += `&${queryString}`;
+        }
+        return this._GET_PAGINATION(url, nextToken);
     }
 
     getLatestProducts(queryString?: string, nextToken?: string): Promise<Products> {
-        return this._GET_PAGINATION(`/api/v1/marketplace/products?${queryString}`, nextToken);
+        let url = "/api/v1/marketplace/products";
+        if (queryString) {
+            url += `?${queryString}`;
+        }
+        return this._GET_PAGINATION(url, nextToken);
     }
 
     getFeedProducts(queryString?: string, nextToken?: string): Promise<Products> {
-        return this._GET_PAGINATION(`/api/v1/marketplace/products?following_only=true&${queryString}`, nextToken);
+        let url = "/api/v1/marketplace/products?following_only=true";
+        if (queryString) {
+            url += `&${queryString}`;
+        }
+        return this._GET_PAGINATION(url, nextToken);
     }
 
     searchPosts(queryString?: string): Promise<Array<PostPreview>> {
-        return this._GET(`/api/v1/posts/search?keyword=${queryString}`);
+        let url = "/api/v1/posts/search";
+        if (queryString) {
+            url += `?keyword=${queryString}`;
+        }
+        return this._GET(url);
     }
 
     getPost(postId: string): Promise<Post> {
@@ -152,7 +176,11 @@ export default class Api {
     }
 
     getPostsForUser(userId: string, queryString?: string): Promise<Array<PostPreview>> {
-        return this._GET(`/api/v1/users/${userId}/posts?${queryString}`);
+        let url = `/api/v1/users/${userId}/posts`;
+        if (queryString) {
+            url += `?${queryString}`;
+        }
+        return this._GET(url);
     }
 
     getWishlist(): Promise<Array<any>> {
@@ -160,7 +188,11 @@ export default class Api {
     }
 
     getProductsForUser(userId: string, queryString?: string): Promise<Array<PostPreview>> {
-        return this._GET(`/api/v1/users/${userId}/products?${queryString}`);
+        let url = `/api/v1/users/${userId}/products`;
+        if (queryString) {
+            url += `?${queryString}`;
+        }
+        return this._GET(url);
     }
 
     getUser(): Promise<Person> {
