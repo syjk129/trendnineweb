@@ -25,6 +25,7 @@ export enum InputTheme {
 }
 
 interface InputProps {
+    id?: string;
     value?: string;
     className?: string;
     type?: InputType;
@@ -71,11 +72,12 @@ export default class Input extends React.Component<InputProps, never> {
         }
 
         if (this.props.type === InputType.SUBMIT) {
-            classes += "button";
+            classes += " button";
         }
 
         return (
             <input
+                id={this.props.id}
                 className={classes}
                 value={this.props.value}
                 onChange={this._handleChange}

@@ -8,11 +8,16 @@ import {
 
 import Api from "../api";
 import Modal from "../components/modal";
+import AboutUs from "../flows/about";
 import Auth from "../flows/auth";
 import BrandView from "../flows/brands";
+import ContactUs from "../flows/contact";
 import Discover from "../flows/discover";
+import TermsAndConditions from "../flows/legal";
 import OnboardingView from "../flows/onboarding";
+import Opportunities from "../flows/opportunities";
 import PostView from "../flows/post";
+import PrivacyPolicy from "../flows/privacy";
 import ProductView from "../flows/product";
 import RouteProps from "../flows/routeProps";
 import Shop from "../flows/shop";
@@ -125,6 +130,11 @@ export default class App extends React.Component<Props, AppState> {
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
+                        <Route path="/about" component={AboutUs} />
+                        <Route path="/contact" component={ContactUs} />
+                        <Route path="/terms" component={TermsAndConditions} />
+                        <Route path="/opportunities" component={Opportunities} />
+                        <Route path="/privacy" component={PrivacyPolicy} />
                         <Route path="/discover/:pageName?" component={Discover} />
                         <Route path="/feed" component={Discover} />
                         <Route path="/brands" component={BrandView} />
@@ -134,6 +144,11 @@ export default class App extends React.Component<Props, AppState> {
                         <Route path="/shop/feed" component={ShopDiscover} />
                         <Route path="/shop/brands" component={BrandView} />
                         <Route path="/shop/product/:productId" component={ProductView} />
+                        <Route path="/shop/about" component={AboutUs} />
+                        <Route path="/shop/contact" component={ContactUs} />
+                        <Route path="/shop/terms" component={TermsAndConditions} />
+                        <Route path="/shop/opportunities" component={Opportunities} />
+                        <Route path="/shop/privacy" component={PrivacyPolicy} />
                         <Route path="/post/:postId" component={PostView} />
                         <Route path="/product/:productId" component={ProductView} />
                         <Route path="/trending" component={Trending} />

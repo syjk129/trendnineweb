@@ -1,0 +1,106 @@
+@import "../../styles/variables";
+
+.opportunities-header {
+    max-width: 860px;
+    padding-bottom: 5 * $base-spacing;
+    margin-bottom: 4 * $base-spacing;
+    border-bottom: solid $standard-border-width $standard-border-color;
+
+    .opportunities-header-title {
+        font-family: $font-family-serif;
+        font-size: $font-size-5;
+        line-height: $line-height-5;
+        font-weight: $font-weight-bold;
+        margin-bottom: $base-spacing * 2;
+    }
+
+    .link-button {
+        margin-top: 3 * $base-spacing;
+        font-size: $font-size-2;
+        font-family: $font-family-sans-serif;
+        text-transform: uppercase;
+        padding: $base-spacing $base-spacing * 2;
+        letter-spacing: $letter-spacing-1;
+        outline: none;
+        background-color: $color-accent;
+        color: $color-white;
+        width: 200px;
+    }
+}
+
+.opportunities-information-section {
+    max-width: 860px;
+    padding-bottom: 5 * $base-spacing;
+    margin-bottom: 4 * $base-spacing;
+    border-bottom: solid $standard-border-width $standard-border-color;
+
+    .opportunities-section {
+        max-width: 860px;
+        margin-bottom: $base-spacing * 9;
+        font-size: $font-size-2;
+        line-height: $line-height-2;
+
+        .opportunities-section-title {
+            font-family: $font-family-serif;
+            font-size: $font-size-4;
+            line-height: $line-height-4;
+            font-weight: $font-weight-bold;
+            margin-bottom: $base-spacing * 2;
+        }
+    }
+}
+
+.influencer-benefits {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+    grid-gap: $base-spacing * 2;
+    padding-top: 3 * $base-spacing;
+
+    .benefit-icon-container {
+        text-align: center;
+
+        .icon {
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    .benefit-content-title {
+        font-weight: $font-weight-bold;
+        padding-top: 3 * $base-spacing;
+    }
+}
+
+.opportunities-apply-section {
+    max-width: 450px;
+
+    .form-header {
+        font-family: $font-family-serif;
+        font-size: $font-size-4;
+        line-height: $line-height-4;
+        font-weight: $font-weight-bold;
+        margin-bottom: $base-spacing * 2;
+    }
+
+    input {
+        margin-bottom: $base-spacing;
+    }
+
+    .form-name {
+        display: flex;
+
+        input:last-child {
+            margin-left: 10px;
+        }
+    }
+
+    .rounded {
+        width: 200px;
+    }
+
+    .link-button {
+        text-decoration: underline;
+        font-size: $font-size-2;
+    }
+}

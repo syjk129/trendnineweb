@@ -36,6 +36,10 @@
         margin-bottom: $base-spacing;
     }
 
+    .social-buttons {
+        display: flex;
+    }
+
     .social-icon {
         margin-right: $base-spacing;
     }
@@ -44,9 +48,32 @@
         position: relative;
         min-width: 240px;
 
+        .footer-title {
+            text-transform: none;
+            font-size: $font-size-4;
+            font-family: $font-family-serif;
+        }
+
         .disclaimer {
             position: absolute;
             bottom: 0;
+        }
+
+        form {
+            width: 100%;
+            display: inline-flex;
+
+            input[type="email"] {
+                border-radius: $standard-border-radius 0 0 $standard-border-radius;
+                border-right: none;
+            }
+
+            input[type="submit"] {
+                font-weight: $font-weight-light;
+                font-size: $font-size-2;
+                width: 30%;
+                border-radius: 0 $standard-border-radius $standard-border-radius 0;
+            }
         }
     }
 }
