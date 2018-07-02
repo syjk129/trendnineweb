@@ -55,7 +55,7 @@ export default class Trending extends React.Component<TrendingProps, TrendingSta
         return (
             <div className="trending">
                 <Content>
-                    <ContentSection title="Today's TrendNine">
+                    <ContentSection title="In the Spotlight">
                         <Carousel>
                             {this.state.featuredTrendnines.slice(0, 10).map(trendnine => (
                                 <div className="featured-trendnine">
@@ -69,7 +69,7 @@ export default class Trending extends React.Component<TrendingProps, TrendingSta
                         </Carousel>
                     </ContentSection>
 
-                    <ContentSection title="Today's TrendNine">
+                    <ContentSection title="In the Spotlight">
                         <PostRank posts={this.state.posts} hideViewMore={true}/>
                         <PostRank posts={this.state.posts} hideViewMore={true}/>
                         <PostRank posts={this.state.posts} hideViewMore={true}/>

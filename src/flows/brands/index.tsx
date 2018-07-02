@@ -97,12 +97,6 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
         return (
             <div className="brands-content">
                 <Sidebar>
-                    <div className="sidebar-section">
-                        <div className="sidebar-brand-header">
-                            Brands
-                        </div>
-                    </div>
-
                     {recentlyViewed &&
                         <Sticky id="recently-viewed-section" stickyClassName="sticky-sidebar-recently-viewed">
                             <SidebarPostProductListSection title="Recently Viewed" items={recentlyViewed} />
@@ -110,6 +104,12 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
                     }
                 </Sidebar>
                 <Content>
+                    <div className="sidebar-section">
+                        <div className="sidebar-brand-header">
+                            Brands
+                        </div>
+                    </div>
+
                     <PageNavigation />
                     {this._renderAlphabet()}
                     {this._renderBrands()}

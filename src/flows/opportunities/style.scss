@@ -83,6 +83,13 @@
         margin-bottom: $base-spacing * 2;
     }
 
+    .signup-disclaimer {
+        &,
+        a {
+            font-size: $font-size-1;
+        }
+    }
+
     input {
         margin-bottom: $base-spacing;
     }

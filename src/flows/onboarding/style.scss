@@ -1,24 +1,28 @@
 @import "../../styles/variables";
 
 .desktop-onboarding {
+    margin-top: $base-spacing * 2;
+
     .welcome {
         font-family: $font-family-serif;
         text-align: center;
         font-size: $font-size-4;
         font-weight: $font-weight-bold;
-        margin-bottom: $base-spacing * 3;
+        margin-bottom: $base-spacing * 2;
     }
 
     .get-started {
+        text-align: center;
         font-size: $font-size-2;
+        margin-bottom: $base-spacing * 2;
     }
 
     .follow-container {
         max-height: 400px;
         overflow: scroll;
         padding: $base-spacing 0;
-        border-bottom: $standard-border-width * 2 solid $standard-border-color;
-        border-top: $standard-border-width * 2 solid $standard-border-color;
+        border-bottom: $standard-border-width solid $standard-border-color;
+        border-top: $standard-border-width solid $standard-border-color;
         margin-bottom: $base-spacing * 2;
         display: flex;
         flex-wrap: wrap;

@@ -17,7 +17,7 @@ export default function ContatUs() {
     return (
         <div className="static-content">
             <Sidebar>
-                <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About Us
+                <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Contact Us
             </Sidebar>
             <Content>
                 <PageNavigation />

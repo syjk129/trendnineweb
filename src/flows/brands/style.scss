@@ -6,7 +6,6 @@
 
     .sidebar-section {
         border-bottom: 0;
-        margin-bottom: $base-spacing * 15;
 
         .sidebar-brand-header {
             font-family: $font-family-serif;
@@ -36,6 +35,10 @@
         padding-bottom: $base-spacing;
         border-bottom: $standard-border-width solid $standard-border-color;
 
+        a {
+            font-size: $font-size-2;
+        }
+
         li {
             padding-right: $base-spacing * 1.5;
         }
@@ -44,6 +47,7 @@
     .brand-section-container {
         display: block;
         column-count: 5;
+        margin-bottom: 140px;
 
         .brand-section {
             break-inside: avoid-column;

@@ -70,7 +70,7 @@ export default function DesktopAuthForm({
                             value={password}
                             onChange={(password) => onFormChange({ password })}
                         />
-                        <p className="signup-disclaimer">By signing up, you agree to TrendNine's Terms of Service & Privacy Policy</p>
+                        <p className="signup-disclaimer">By signing up, you agree to TrendNine's <a href="/terms">Terms of Service</a> & <a href="/privacy">Privacy Policy</a></p>
                         <input type="submit" style={{ display: "none" }} />
                         <Button className="submit-button" rounded onClick={onSubmit}>Sign up</Button>
                         <p className="switch">Already on TrendNine?&nbsp;<LinkButton onClick={toggleNewUser}>Sign in</LinkButton></p>

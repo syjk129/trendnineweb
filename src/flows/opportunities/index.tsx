@@ -60,7 +60,7 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
                     </div>
                     <div className="opportunities-information-section">
                         <div className="opportunities-section">
-                            <p className="opportunities-section-title">A Commerce-Driven Marketing Platform</p>
+                            <p className="opportunities-section-title">A Commerce-Driven Marketing Platform for Influencers</p>
                             <p>
                                 Publish and monetize your social media accounts, blogs, and style content on TrendNine. <br/>
                                 TrendNine is designed to maximize opportunities for discovery, engagement, and sales.
@@ -127,7 +127,7 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
                                 onChange={(blog_url) => this._onInputChange({blog_url})}
                                 variant={InputVariant.OUTLINE}
                                 placeholder="Blog Url" />
-                            <p>
+                            <p className="signup-disclaimer">
                                 By signing up, you agree to TrendNine’s&nbsp;
                                 <LinkButton inline={true} to={isShop ? "/shop/terms" : "terms"} target="_blank">
                                     Terms of Service
