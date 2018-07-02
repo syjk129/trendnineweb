@@ -58,10 +58,6 @@
                 margin-top: auto;
                 margin-bottom: auto;
             }
-
-            .selected {
-                height: $line-height-3;
-            }
         }
 
         width: 100%;
@@ -75,8 +71,8 @@
             justify-content: space-between;
             height: $navbar-height - $navbar-menu-height;
 
-            .selected {
-                height: $line-height-1;
+            .header-left-buttons {
+                display: flex;
             }
         }
     }

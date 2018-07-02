@@ -16,12 +16,12 @@
         border: $standard-border-width solid $standard-border-color;
         padding: 0 $base-spacing * 2;
         display: flex;
-        justify-content: space-between;
         margin: auto;
         list-style: none;
 
         li {
             display: flex;
+            margin-right: 60px;
         }
 
         .filter-menu {

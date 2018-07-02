@@ -36,6 +36,10 @@
         margin-left: $base-spacing;
     }
 
+    &.mobile .post-action-btns * {
+        margin-left: $base-spacing / 2;
+    }
+
     .likes {
         display: flex;
         align-items: center;

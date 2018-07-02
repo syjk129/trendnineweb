@@ -3,7 +3,7 @@ import { Range } from "rc-slider";
 import "rc-slider/assets/index.css";
 import * as React from "react";
 
-import Button, { ButtonVariant } from "../../../../components/button";
+import Button, { ButtonSize, ButtonVariant } from "../../../../components/button";
 
 import "./style.scss";
 
@@ -45,18 +45,18 @@ export default class RangeFilter extends React.Component<RangeFilterProps, Range
                         <div>
                             <div className="filter-value">
                                 <span className="filter-value">
-                                    {this.state.value[0]}
+                                    ${this.state.value[0]}
                                 </span>
                                 <span className="filter-value">
-                                    {this.state.value[1]}
+                                    ${this.state.value[1]}+
                                 </span>
                             </div>
                             <Range min={min} max={max} step={step} allowCross={false} value={this.state.value} onChange={this._onSliderChange} />
                         </div>
                     </div>
                     <div className="filter-action-buttons">
-                        <Button rounded variant={ButtonVariant.PRIMARY} onClick={this._apply}>APPLY</Button>
-                        <Button rounded variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
+                        <Button size={ButtonSize.SMALL} rounded variant={ButtonVariant.PRIMARY} onClick={this._apply}>APPLY</Button>
+                        <Button size={ButtonSize.SMALL} rounded variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
                     </div>
                 </div>
                 <div className="filter-content">

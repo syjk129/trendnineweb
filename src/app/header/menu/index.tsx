@@ -28,7 +28,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
     };
 
     render() {
-        const { isShop } = this.props;
+        const { isShop, location } = this.props;
 
         return (
             <div className={`menu ${this.props.open && "open"}`}>
@@ -56,7 +56,8 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </div>
                     <LinkButton
                         className="menu-link"
-                        to={isShop ? "/shop/trending" : "/trending"}
+                        selected={location.pathname === "/discover" || location.pathname === "/shop/discover"}
+                        to={isShop ? "/shop/discover" : "/discover"}
                         onClick={this.props.toggleMenu}
                     >
                         Trending

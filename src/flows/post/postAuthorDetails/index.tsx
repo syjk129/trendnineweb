@@ -1,5 +1,6 @@
 import * as H from "history";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import { Person } from "../../../api/models";
 import { IconButton, LinkButton } from "../../../components/button";
@@ -28,8 +29,13 @@ export default class PostAuthorDetails extends React.Component<PostAuthorDetails
     render() {
         const { author, postDate, toggleLike, toggleWishlist } = this.props;
 
+        let classes = "post-author";
+        if (isMobile) {
+            classes += " mobile";
+        }
+
         return (
-            <div className="post-author">
+            <div className={classes}>
                 <div className="post-author-details">
                     <LinkButton to={`/user/${author.id}`}>
                         <img src={author.profile_image_url} />
@@ -53,7 +59,6 @@ export default class PostAuthorDetails extends React.Component<PostAuthorDetails
                     <IconButton
                         icon={IconVariant.SHARE}
                         size={this.props.iconSize}
-                        selected={this.props.wishlisted}
                         onClick={() => {}}
                     />
                     <IconButton

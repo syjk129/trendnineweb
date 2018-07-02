@@ -1,13 +1,18 @@
 import * as React from "react";
 
 import Button, { ButtonSize, ButtonVariant } from "../../../../components/button";
+import Icon, { IconVariant } from "../../../../components/icon";
 import TextArea from "../../../../components/textArea";
 import { CommentInputProps } from "./types";
 
 export default function DesktopCommentInput({ comment, placeholder, user, onChange, submitComment }: CommentInputProps) {
     return (
         <div className="comment-input-container">
-            {user && user.profile_image_url && <img src={user.profile_image_url} />}
+            {user && user.profile_image_url ? (
+                <img src={user.profile_image_url} />
+            ) : (
+                <Icon variant={IconVariant.PROFILE} />
+            )}
             <div className="comment-input">
                 <TextArea
                     rounded
@@ -17,14 +22,15 @@ export default function DesktopCommentInput({ comment, placeholder, user, onChan
                 >
                     asd
                 </TextArea>
-                <Button
-                    inline
-                    rounded
-                    variant={ButtonVariant.OUTLINE}
-                    onClick={submitComment}
-                >
-                    Post
-                </Button>
+                <div>
+                    <Button
+                        inline
+                        rounded
+                        onClick={submitComment}
+                    >
+                        Post
+                    </Button>
+                </div>
             </div>
         </div>
     );

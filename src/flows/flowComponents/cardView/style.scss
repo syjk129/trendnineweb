@@ -89,13 +89,13 @@
     }
 
     .author {
-        margin-bottom: $base-spacing-sm;
+        margin-bottom: $base-spacing;
     }
 }
 
 .mobile {
     .card-content .card-title-container {
-        height: $line-height-5;
+        height: $mobile-line-height-3 * 2;
     }
 }
 

@@ -66,11 +66,11 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                 <div className="toolbar">
                     <div className="filter-toggle" onClick={() => this._toggleFilterActive(ToolbarType.FILTER)}>
                         <span className="filter-toggle-label">Filter</span>
-                        <Icon variant={IconVariant.PLUS_OPEN} selected={activeToolbar === ToolbarType.FILTER} />
+                        <Icon variant={IconVariant.ARROW_DOWN} selected={activeToolbar === ToolbarType.FILTER} />
                     </div>
                     <div className="filter-toggle" onClick={() => this._toggleFilterActive(ToolbarType.SORT)}>
                         <span className="filter-toggle-label">Sort</span>
-                        <Icon variant={IconVariant.PLUS_OPEN} selected={activeToolbar === ToolbarType.SORT} />
+                        <Icon variant={IconVariant.ARROW_DOWN} selected={activeToolbar === ToolbarType.SORT} />
                     </div>
                     <div className="grid-sizes">
                         <IconButton

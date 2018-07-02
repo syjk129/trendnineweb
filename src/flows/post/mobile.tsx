@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
-import { Comment, Person, Post, Product } from "../../api/models";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
 import Image, { ImageRatioVariant } from "../../components/image";
@@ -10,7 +10,6 @@ import Comments from "../flowComponents/comments";
 import { ContentSection, SidebarSection, TabbedSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
 import PostAuthorDetails from "./postAuthorDetails";
-import ProductTag from "./productTag";
 import { MobilePostProps, MobilePostState, TabbedSectionTypes } from "./types";
 
 export default class MobilePost extends React.Component<MobilePostProps, MobilePostState> {
@@ -46,7 +45,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                     <div className="post-subtitle">
                         <PostAuthorDetails
                             author={post.author}
-                            iconSize={IconSize.LARGE}
+                            iconSize={isMobile ? IconSize.MEDIUM : IconSize.LARGE}
                             postDate={new Date(post.created)}
                             postId={post.id}
                             wishlisted={wishlisted}
@@ -72,7 +71,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                             <CarouselItem
                                 imageUrl={content.image && content.image.small_image_url}
                                 redirectUrl={`/product/${content.id}`}
-                                title={(content.brand && content.brand.name) || content.author.username}
+                                title={(content.brand && content.brand.name) || (content.author && content.author.username)}
                                 detail={content.title}
                                 subdetail={ this._renderProductFooter(content) }
                             />

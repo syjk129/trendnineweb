@@ -141,7 +141,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                     }
                     {filterList.indexOf(FilterConstants.TAG) > -1 &&
                         <SearchFilter
-                            placeholder="Search for Tags"
+                            placeholder="Search for a Style"
                             active={this.state.activeFilter === FilterConstants.TAG}
                             selectedValues={this.state.filters.tagIds}
                             onApply={(v) => this._applyFilter(FilterConstants.TAG_PARAM_STRING, v)}

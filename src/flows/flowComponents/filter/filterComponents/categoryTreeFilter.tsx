@@ -2,7 +2,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import { Category } from "../../../../api/models";
-import Button, { ButtonVariant, IconButton } from "../../../../components/button";
+import Button, { ButtonSize, ButtonVariant, IconButton } from "../../../../components/button";
 import Checkbox from "../../../../components/checkbox";
 import Icon, { IconVariant } from "../../../../components/icon";
 
@@ -52,10 +52,11 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
                     </div>
                     <div className="filter-action-buttons">
                         <Button
+                            size={ButtonSize.SMALL}
                             rounded
                             variant={ButtonVariant.PRIMARY}
                             onClick={this._onApply}>APPLY</Button>
-                        <Button rounded variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
+                        <Button size={ButtonSize.SMALL} rounded variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
                     </div>
                 </div>
                 <div className="filter-content">

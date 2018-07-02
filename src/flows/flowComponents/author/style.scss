@@ -26,6 +26,11 @@
         .author-name {
             font-size: $mobile-font-size-1;
         }
+
+        .author-image img {
+            width: 30px;
+            height: 30px;
+        }
     }
 
     time {

@@ -32,6 +32,7 @@
 
         .filter-action {
             min-width: $min-card-width;
+            max-width: 400px;
             width: calc(100% - #{$button-width-xs} * 2 - #{$base-spacing} * 2);
         }
 

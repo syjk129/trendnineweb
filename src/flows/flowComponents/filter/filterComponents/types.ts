@@ -10,8 +10,8 @@ export class FilterConstants {
     static PRICE_RANGE = "PRICE RANGE";
     // static ON_SALE = "ON SALE";
     // static NEW_ARRIVALS = "NEW ARRIVALS";
-    static RETAILER = "RETAILER";
-    static TAG = "TAG";
+    static RETAILER = "STORE";
+    static TAG = "STYLE";
 
     static CATEGORY_PARAM_STRING = "categories";
     static BRAND_PARAM_STRING = "brand_ids";

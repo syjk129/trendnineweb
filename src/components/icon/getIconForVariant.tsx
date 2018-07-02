@@ -5,6 +5,7 @@ import * as ArrowLeft from "./icons/arrow_left.png";
 import * as ArrowRight from "./icons/arrow_right.png";
 import * as ArrowUp from "./icons/arrow_up.png";
 import * as ArrowUpGreen from "./icons/arrow_up_green.png";
+import * as ArrowUpWhite from "./icons/arrow_up_white.png";
 import * as ArrowZero from "./icons/arrow_zero.png";
 import * as Automated from "./icons/automated.png";
 import * as Bag from "./icons/bag.png";
@@ -23,8 +24,10 @@ import * as PlusOpen from "./icons/plus_open.png";
 import * as Preview1 from "./icons/preview1.png";
 import * as Preview2 from "./icons/preview2.png";
 import * as Preview3 from "./icons/preview3.png";
+import * as Profile from "./icons/profile.png";
 import * as Search from "./icons/search.png";
 import * as Share from "./icons/share.png";
+import * as ShareFilled from "./icons/share_filled.png";
 import * as Time from "./icons/time.png";
 import * as Wishlist from "./icons/wishlist.png";
 import * as WishlistFilled from "./icons/wishlist_filled.png";
@@ -47,6 +50,8 @@ export default function getIconForVariant(variant: IconVariant) {
             return ArrowUp;
         case IconVariant.ARROW_UP_GREEN:
             return ArrowUpGreen;
+        case IconVariant.ARROW_UP_WHITE:
+            return ArrowUpWhite;
         case IconVariant.ARROW_ZERO:
             return ArrowZero;
         case IconVariant.AUTOMATED:
@@ -77,6 +82,8 @@ export default function getIconForVariant(variant: IconVariant) {
             return Monetize;
         case IconVariant.PLUS_OPEN:
             return PlusOpen;
+        case IconVariant.PROFILE:
+            return Profile;
         case IconVariant.GRID_SIZE_1:
             return Preview1;
         case IconVariant.GRID_SIZE_2:
@@ -87,6 +94,8 @@ export default function getIconForVariant(variant: IconVariant) {
             return Search;
         case IconVariant.SHARE:
             return Share;
+        case IconVariant.SHARE_FILLED:
+            return ShareFilled;
         case IconVariant.TIME:
             return Time;
         case IconVariant.WISHLIST:

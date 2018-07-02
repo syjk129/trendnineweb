@@ -2,7 +2,7 @@ import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 
-import Button, { ButtonVariant } from "../../../../components/button";
+import Button, { ButtonSize, ButtonVariant } from "../../../../components/button";
 import Checkbox from "../../../../components/checkbox";
 import SearchFilterInput from "./searchFilterInput";
 
@@ -55,10 +55,11 @@ export default class SearchFilter extends React.Component<SearchFilterProps, Sea
                     </div>
                     <div className="filter-action-buttons">
                         <Button
+                            size={ButtonSize.SMALL}
                             rounded
                             variant={ButtonVariant.PRIMARY}
                             onClick={this._onApply}>APPLY</Button>
-                        <Button rounded variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
+                        <Button size={ButtonSize.SMALL} rounded variant={ButtonVariant.OUTLINE} onClick={this._cancel}>CANCEL</Button>
                     </div>
                 </div>
                 <div className="filter-content">
