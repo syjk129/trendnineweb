@@ -46,6 +46,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
     componentWillReceiveProps(nextProps: DiscoverProps) {
         if (nextProps.location !== this.props.location) {
+            this._categoryName = nextProps.match.params.categoryName;
             this.refreshContent(nextProps);
         }
     }
@@ -106,7 +107,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
         return (
             <>
-                {!user && !this._categoryName && (
+                {!user && this.props.location.pathname === "/discover" && !this._categoryName && (
                     <div className="welcome-banner">
                         <Image src={WelcomeImage} />
                         <div className="welcome-buttons">
