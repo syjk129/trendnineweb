@@ -9,14 +9,6 @@ $min-card-width-3: 98px;
     min-width: $min-card-width;
     box-shadow: 0 1px 2px rgba(25, 25, 25, 0.2);
 
-    &.grid-size-2 {
-        min-width: $min-card-width-2;
-    }
-
-    &.grid-size-3 {
-        min-width: $min-card-width-3;
-    }
-
     .card-hover-details {
         visibility: hidden;
         z-index: 1;
@@ -37,6 +29,40 @@ $min-card-width-3: 98px;
             line-height: $line-height-2;
             font-weight: bold;
         }
+    }
+
+    &.mobile {
+        .card-content {
+            font-size: $mobile-font-size-1;
+            line-height: $mobile-font-size-1;
+
+            .title {
+                font-size: $mobile-font-size-2;
+                line-height: $line-height-3;
+            }
+        }
+    }
+
+    &.grid-size-2 {
+        min-width: $min-card-width-2;
+
+        &.mobile {
+            .card-title-container {
+                height: 50px;
+            }
+
+            .title {
+                font-size: $mobile-font-size-1;
+            }
+
+            .author {
+                font-size: $mobile-font-size-1;
+            }
+        }
+    }
+
+    &.grid-size-3 {
+        min-width: $min-card-width-3;
     }
 
     &:hover {

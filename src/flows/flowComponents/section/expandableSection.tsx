@@ -24,7 +24,7 @@ export default class ExpandableSection extends React.Component<ExpandableSection
             <div className="expandable-section">
                 <div className="section-header" onClick={this._toggleOpen}>
                     <p>{this.props.title}</p>
-                    <IconButton icon={IconVariant.PLUS_OPEN} size={IconSize.SMALL} selected={this.state.isOpen} />
+                    <IconButton icon={IconVariant.PLUS_OPEN} size={IconSize.MEDIUM} selected={this.state.isOpen} />
                 </div>
                 {this.state.isOpen && this.props.children}
             </div>

@@ -32,10 +32,6 @@ export default function Icon({
     const icon = getIconForVariant(selected ? IconMap[variant] : variant);
     let classes = "icon";
 
-    if (isMobile) {
-        classes += " mobile";
-    }
-
     switch (size) {
         case IconSize.LARGE:
             classes += " large";
@@ -46,7 +42,10 @@ export default function Icon({
         case IconSize.SMALL:
             classes += " small";
             break;
- }
+    }
+    if (isMobile) {
+        classes += " mobile";
+    }
 
     return (
         <img src={icon} className={classes} />

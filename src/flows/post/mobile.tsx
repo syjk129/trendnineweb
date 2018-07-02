@@ -46,7 +46,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                     <div className="post-subtitle">
                         <PostAuthorDetails
                             author={post.author}
-                            iconSize={IconSize.MEDIUM}
+                            iconSize={IconSize.LARGE}
                             postDate={new Date(post.created)}
                             postId={post.id}
                             wishlisted={wishlisted}

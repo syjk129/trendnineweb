@@ -58,11 +58,11 @@ export default class PostCard extends React.Component<PostCardProps> {
             <div>
                 <div className="author-date">
                     <Author author={post.author} />
-                    {formatTime(post.created)}
+                    {gridSize !== 2 && formatTime(post.created)}
                 </div>
                 <div className="post-card-footer">
                     <ActionLinks
-                        iconSize={IconSize.SMALL}
+                        iconSize={isMobile && gridSize !== 2 ? IconSize.LARGE : IconSize.MEDIUM}
                         variant={ActionLinksVariant.POST}
                         id={post.id}
                         wishlisted={post.wishlisted}

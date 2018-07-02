@@ -33,7 +33,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
         return (
             <div className={`menu ${this.props.open && "open"}`}>
                 <div className="menu-header">
-                    <IconButton className="close" icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this.props.toggleMenu} selected />
+                    <IconButton className="close" icon={IconVariant.MENU} size={IconSize.LARGE} onClick={this.props.toggleMenu} selected />
                     <Link to={isShop ? "/shop/discover" : "/discover"}>
                         <img
                             className="nav-logo"

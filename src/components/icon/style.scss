@@ -9,34 +9,63 @@
     margin: auto;
     object-fit: contain;
 
-    &.medium {
-        width: $icon-size-2;
-        height: $icon-size-2;
+    &.small {
+        width: $icon-size-small;
+        height: $icon-size-small;
 
         &::before {
-            width: $icon-size-2 - 1;
-            height: $icon-size-2 - 1;
+            width: $icon-size-small - 1;
+            height: $icon-size-small - 1;
+        }
+
+        &.mobile {
+            width: $mobile-icon-small;
+            height: $mobile-icon-small;
+
+            &::before {
+                width: $mobile-icon-small - 1;
+                height: $mobile-icon-small - 1;
+            }
+        }
+    }
+
+    &.medium {
+        width: $icon-size-medium;
+        height: $icon-size-medium;
+
+        &::before {
+            width: $icon-size-medium - 1;
+            height: $icon-size-medium - 1;
+        }
+
+        &.mobile {
+            width: $mobile-icon-medium;
+            height: $mobile-icon-medium;
+
+            &::before {
+                width: $mobile-icon-medium - 1;
+                height: $mobile-icon-medium - 1;
+            }
         }
     }
 
     &.large {
-        width: $icon-size-3;
-        height: $icon-size-3;
+        width: $icon-size-large;
+        height: $icon-size-large;
 
         &::before {
-            width: $icon-size-3 - 1;
-            height: $icon-size-3 - 1;
+            width: $icon-size-large - 1;
+            height: $icon-size-large - 1;
         }
-    }
 
-    &.mobile.medium {
-        margin: 0;
-        width: $mobile-icon-size;
-        height: $mobile-icon-size;
+        &.mobile {
+            width: $mobile-icon-large;
+            height: $mobile-icon-large;
 
-        &::before {
-            width: $mobile-icon-size - 1;
-            height: $mobile-icon-size - 1;
+            &::before {
+                width: $mobile-icon-large - 1;
+                height: $mobile-icon-large - 1;
+            }
         }
     }
 

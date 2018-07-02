@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 import TimeAgo from "react-timeago";
 
 import { Person } from "../../../api/models";
@@ -14,8 +15,13 @@ interface AuthorProps {
 }
 
 export default function Author({ author, date }: AuthorProps) {
+    let classes = "author";
+    if (isMobile) {
+        classes += " mobile";
+    }
+
     return (
-        <div className="author">
+        <div className={classes}>
             <LinkButton to={`/user/${author.username}`}>
                 <Image className="author-image" inline circle src={author.profile_image_url} />
                 <TextContent className="author-name">

@@ -75,17 +75,17 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                     <div className="grid-sizes">
                         <IconButton
                             icon={IconVariant.GRID_SIZE_1}
-                            size={IconSize.SMALL}
+                            size={IconSize.MEDIUM}
                             onClick={() => this.props.setGridSize(1)}
                         />
                         <IconButton
                             icon={IconVariant.GRID_SIZE_2}
-                            size={IconSize.SMALL}
+                            size={IconSize.MEDIUM}
                             onClick={() => this.props.setGridSize(2)}
                         />
                         <IconButton
                             icon={IconVariant.GRID_SIZE_3}
-                            size={IconSize.SMALL}
+                            size={IconSize.MEDIUM}
                             onClick={() => this.props.setGridSize(3)}
                         />
                    </div>

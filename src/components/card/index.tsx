@@ -36,6 +36,10 @@ class Card extends React.Component<CardProps, CardState> {
             classes += ` grid-size-${gridSize}`;
         }
 
+        if (isMobile) {
+            classes += " mobile";
+        }
+
         return (
             <div className={classes} ref="card">
                 {hoverItem && !isMobile && (
@@ -45,6 +49,7 @@ class Card extends React.Component<CardProps, CardState> {
                 )}
                 <Link to={redirectUrl}>
                     <Image
+                        className="card-image"
                         src={imageUrl}
                         fit={scaleImage ? ImageFitVariant.SCALED : ImageFitVariant.COVER}
                         square

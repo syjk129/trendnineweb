@@ -178,7 +178,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                             <div className="post-subtitle">
                                 <PostAuthorDetails
                                     author={post.author}
-                                    iconSize={IconSize.MEDIUM}
+                                    iconSize={IconSize.LARGE}
                                     postDate={new Date(post.created)}
                                     postId={post.id}
                                     wishlisted={wishlisted}

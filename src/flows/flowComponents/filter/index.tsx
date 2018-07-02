@@ -5,7 +5,7 @@ import * as React from "react";
 import { Category, Person } from "../../../api/models";
 import { AppContext, AppContextTypes } from "../../../app";
 import Button, { ButtonVariant, LinkButton } from "../../../components/button";
-import Icon, { IconVariant } from "../../../components/icon";
+import Icon, { IconSize, IconVariant } from "../../../components/icon";
 import { Filters } from "../../model";
 import CategoryTreeFilter from "./filterComponents/categoryTreeFilter";
 import RangeFilter from "./filterComponents/rangeFilter";
@@ -72,7 +72,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                 <div className={`filter-anchor ${this.props.className}`}>
                     <LinkButton onClick={this._toggleFilter}>
                         Filter&nbsp;&nbsp;
-                        <Icon variant={this.state.isFilterActive ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
+                        <Icon size={IconSize.SMALL} variant={this.state.isFilterActive ? IconVariant.ARROW_UP : IconVariant.ARROW_DOWN} />
                     </LinkButton>
                 </div>
                 <div className={`filter-content-box ${this.state.isFilterActive ? "" : "hidden"} ${this.props.className}`}>

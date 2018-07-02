@@ -33,11 +33,11 @@
     .nav-logo {
         width: 150px;
         object-fit: contain;
-        height: $mobile-icon-size;
+        height: $mobile-icon-large;
     }
 
     .menu-content {
-        padding: $mobile-page-spacing $mobile-icon-size + $mobile-page-spacing;
+        padding: $mobile-page-spacing $mobile-icon-large + $mobile-page-spacing;
 
         .link-button {
             font-weight: $font-weight-light;

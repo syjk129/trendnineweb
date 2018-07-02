@@ -40,7 +40,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                             {loggedIn && user &&
                                 <div className="user-logged-in-buttons">
                                     <LinkButton to={`/user/${user.username}`}>
-                                        <Icon variant={IconVariant.GIRL} size={IconSize.MEDIUM} />
+                                        <Icon variant={IconVariant.GIRL} size={IconSize.LARGE} />
                                     </LinkButton>
                                 </div>
                             }
@@ -58,7 +58,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                             </div>
                             <div className="search">
                                 <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
-                                <Icon variant={IconVariant.SEARCH}></Icon>
+                                <Icon size={IconSize.LARGE} variant={IconVariant.SEARCH}></Icon>
                             </div>
                         </div>
                     </div>

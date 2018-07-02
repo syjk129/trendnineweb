@@ -93,6 +93,12 @@
     }
 }
 
+.mobile {
+    .card-content .card-title-container {
+        height: $line-height-5;
+    }
+}
+
 .post-card-content {
     display: flex;
     justify-content: space-between;

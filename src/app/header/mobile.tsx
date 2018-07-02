@@ -30,14 +30,14 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
             <div className="header">
                 <Menu open={this.state.showMenu} toggleMenu={this._toggleMenu} isShop={isShop} />
                 <div className="mobile-header">
-                    <IconButton icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this._toggleMenu} selected={false} />
+                    <IconButton icon={IconVariant.MENU} size={IconSize.LARGE} onClick={this._toggleMenu} selected={false} />
                     <Link className="nav-logo-container" to={isShop ? "/shop/discover" : "/discover"}>
                         <img
                             className="nav-logo"
                             src={Logo}
                         />
                     </Link>
-                    <IconButton icon={IconVariant.GIRL} size={IconSize.MEDIUM} url={user ? `/user/${user.id}` : "/login"}/>
+                    <IconButton icon={IconVariant.GIRL} size={IconSize.LARGE} url={user ? `/user/${user.id}` : "/login"}/>
                 </div>
             </div>
         );

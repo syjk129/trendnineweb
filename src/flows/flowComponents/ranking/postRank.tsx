@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 
 import { PostPreview } from "../../../api/models";
 import Button, { ButtonVariant, LinkButton } from "../../../components/button";
-import Icon, { IconVariant } from "../../../components/icon";
+import Icon, { IconSize, IconVariant } from "../../../components/icon";
 
 import "./style.scss";
 
@@ -72,11 +72,11 @@ class PostRank extends React.Component<PostRankProps> {
 
     private _getRankIcon(rankChange: number) {
         if (rankChange > 0) {
-            return <Icon variant={IconVariant.ARROW_UP_GREEN}></Icon>;
+            return <Icon size={IconSize.SMALL} variant={IconVariant.ARROW_UP_GREEN}></Icon>;
         } else if (rankChange < 0) {
-            return <Icon variant={IconVariant.ARROW_DOWN_RED}></Icon>;
+            return <Icon size={IconSize.SMALL} variant={IconVariant.ARROW_DOWN_RED}></Icon>;
         } else {
-            return <Icon variant={IconVariant.ARROW_ZERO}></Icon>;
+            return <Icon size={IconSize.SMALL} variant={IconVariant.ARROW_ZERO}></Icon>;
         }
     }
 }
