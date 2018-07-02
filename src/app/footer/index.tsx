@@ -5,7 +5,7 @@ import { isMobile } from "react-device-detect";
 import { Link } from "react-router-dom";
 
 import { AppContext } from "../../app";
-import Button, { ButtonSize } from "../../components/button";
+import Button, { ButtonSize, LinkButton } from "../../components/button";
 import { SocialIcon, SocialIconType } from "../../components/icon";
 import Input, { InputType, InputVariant } from "../../components/input";
 import RouteProps from "../../flows/routeProps";
@@ -47,10 +47,12 @@ export default class Footer extends React.Component<Props, FooterState> {
                     </div>
                     <div className="footer-column">
                         <p className="footer-title">Follow us</p>
-                        <SocialIcon icon={SocialIconType.INSTAGRAM} />
-                        <SocialIcon icon={SocialIconType.FACEBOOK} />
-                        <SocialIcon icon={SocialIconType.TWITTER} />
-                        <SocialIcon icon={SocialIconType.PINTEREST} />
+                        <div className="social-buttons">
+                            <LinkButton href="https://www.instagram.com/trendnine/" target="_blank"><SocialIcon icon={SocialIconType.INSTAGRAM} /></LinkButton>
+                            <LinkButton href="https://www.facebook.com/trendnine" target="_blank"><SocialIcon icon={SocialIconType.FACEBOOK} /></LinkButton>
+                            <LinkButton href="https://twitter.com/trendnine" target="_blank"><SocialIcon icon={SocialIconType.TWITTER} /></LinkButton>
+                            <LinkButton href="https://www.pinterest.com/trendnine/" target="_blank"><SocialIcon icon={SocialIconType.PINTEREST} /></LinkButton>
+                        </div>
                     </div>
                     <div className="footer-disclaimer">
                         <p className="footer-title">Don't Miss Out</p>
