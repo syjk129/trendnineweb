@@ -1,5 +1,20 @@
 import { Category } from "../../api/models";
 
+export function findCategory(categoryName: string, categories: Array<Category>) {
+    let found = categories.find(category => category.full_name === categoryName);
+    if (found) return found;
+    for (const category of categories) {
+        if (category.full_name === categoryName) {
+            return category;
+        }
+        found = findCategory(categoryName, category.subcategories);
+        if (found) {
+            return found;
+        }
+    }
+    return null;
+}
+
 export default class CategoryTree {
     selectedCategories: Set<string> = new Set();
     categories: Array<Category> = [];
@@ -15,25 +30,13 @@ export default class CategoryTree {
         }
         if (this.categories) {
             this.selectedCategories = selectedCategories.reduce((selectedCategories, categoryName) => {
-                const category = this._findCategory(categoryName, this.categories);
+                const category = findCategory(categoryName, this.categories);
                 if (category) {
                     return this.addCategory(category, selectedCategories);
                 }
                 return selectedCategories;
             }, this.selectedCategories);
         }
-    }
-
-    private _findCategory = (categoryName: string, categories: Array<Category>) => {
-        const found = categories.find(category => category.full_name === categoryName);
-        if (found) return found;
-        for (const category of categories) {
-            if (category.full_name === categoryName) {
-                return category;
-            }
-            return this._findCategory(categoryName, category.subcategories);
-        }
-        return null;
     }
 
     getQueryString = () => {

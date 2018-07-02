@@ -14,6 +14,7 @@ interface IconButtonProps {
     url?: string;
     className?: string;
     inline?: boolean;
+    noSwitch?: boolean;
     onClick?(): void;
 }
 
@@ -34,6 +35,7 @@ export default class IconButton extends React.Component<IconButtonProps, IconBut
             url,
             className,
             inline,
+            noSwitch,
             onClick,
         } = this.props;
 
@@ -48,8 +50,8 @@ export default class IconButton extends React.Component<IconButtonProps, IconBut
                 inline={inline}
                 to={url}
                 className={classes}
-                onMouseEnter={this._onMouseEnter}
-                onMouseLeave={this._onMouseLeave}
+                onMouseEnter={!noSwitch && this._onMouseEnter}
+                onMouseLeave={!noSwitch && this._onMouseLeave}
                 onClick={onClick}
             >
                 <Icon

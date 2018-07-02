@@ -5,7 +5,6 @@ import Content from "../../components/content";
 import Image from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import PageNavigation from "../flowComponents/pageNavigation";
-import { SidebarSection } from "../flowComponents/section";
 
 import "./style.scss";
 

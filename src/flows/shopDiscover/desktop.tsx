@@ -12,7 +12,7 @@ import { ProductCard } from "../flowComponents/cardView";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import Sort from "../flowComponents/sort";
 import ViewMore from "../flowComponents/viewMore";
-import { Filters, MenuCategoryQueryMap, PostParam } from "../model";
+import { Filters, MenuCategory, MenuCategoryQueryMap, PostParam } from "../model";
 import CategoryTree from "./category-tree";
 import ShopCategoryTreeSidebar from "./shopCategorySidebar";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
@@ -84,6 +84,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                 <Sidebar>
                     <div>
                         <ShopCategoryTreeSidebar
+                            menuCategory={this._categoryName}
                             categoryList={this.state.categories}
                             selectedCategories={this.state.selectedTree.selectedCategories}
                             toggleCategory={this._toggleCategory}
@@ -132,7 +133,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         );
     }
 
-    private _categoryName: string | null;
+    private _categoryName: MenuCategory | null;
 
     @autobind
     private async _filterProducts(filters: Filters) {

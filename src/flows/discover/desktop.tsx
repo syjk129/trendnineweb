@@ -51,10 +51,10 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     }
 
     async refreshContent(props: DiscoverProps) {
-        this._categoryName = props.match.params.categoryName;
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);
         let queryString = postParam.convertUrlParamToQueryString();
+        this._categoryName = props.match.params.categoryName;
         if (this._categoryName) {
             queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
         }
