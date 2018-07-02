@@ -19,7 +19,7 @@ module.exports = merge(commonConfig, {
                     {
                         loader: 'file-loader',
                         options: {
-                            name: '[path][name].[hash].[ext]'
+                            name: '[name].[ext]'
                         }
                     }
                 ]

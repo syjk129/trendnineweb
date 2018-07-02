@@ -2,6 +2,7 @@ import * as React from "react";
 import {render} from "react-dom";
 import {AppContainer} from "react-hot-loader";
 
+require("../favicon.png");
 import App from "./app";
 
 const rootEl = document.getElementById("root");
