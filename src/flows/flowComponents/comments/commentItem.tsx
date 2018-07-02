@@ -4,7 +4,8 @@ import TimeAgo from "react-timeago";
 
 import { Comment } from "../../../api/models";
 import { IconButton, LinkButton } from "../../../components/button";
-import { IconVariant } from "../../../components/icon";
+import Icon, { IconVariant } from "../../../components/icon";
+import formatTime from "../../../util/formatTime";
 import Author from "../author";
 import CommentInput from "./commentInput";
 
@@ -20,12 +21,14 @@ interface CommentItemProps {
 interface CommentItemState {
     reply: string;
     liked: boolean;
+    likes: number;
     showReply: boolean;
 }
 
 export default class CommentItem extends React.Component<CommentItemProps, CommentItemState> {
     state: CommentItemState = {
         reply: "",
+        likes: this.props.comment.likes,
         liked: this.props.comment.liked,
         showReply: false,
     };
@@ -33,47 +36,65 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
     render() {
         return (
             <div className="comment-item">
-                <Author author={this.props.comment.author} date={this.props.comment.created}/>
-                <p className="comment-content">{this.props.comment.content}</p>
-                <div className="comment-item-actions">
-                    {this.props.likeComment &&
-                        <IconButton
-                            inline
-                            icon={IconVariant.LIKE}
-                            selected={this.state.liked}
-                            onClick={this._likeComment}
-                        >
-                            {this.state.liked ? "Unlike" : `Like (${this.props.comment.likes})`}
-                        </IconButton>
-                    }
-                    {this.props.submitReply && this.props.comment.threaded_comments &&
-                        <IconButton
-                            inline
-                            icon={IconVariant.COMMENT}
-                            onClick={this._toggleReply}
-                        >
-                            {this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
-                        </IconButton>
-                    }
+                <div className="comment-author-img">
+                    {this.props.comment.author && this.props.comment.author.profile_image_url ? (
+                        <img src={this.props.comment.author.profile_image_url} />
+                    ) : (
+                        <Icon variant={IconVariant.PROFILE} />
+                    )}
                 </div>
-                {this.props.submitReply && this.state.showReply && (
-                    <div className="comment-reply">
-                        <CommentInput
-                            comment={this.state.reply}
-                            placeholder="Write your reply"
-                            onChange={this._onChange}
-                            submitComment={this._submitReply}
-                        />
-                        {this.props.comment.threaded_comments.map(comment => (
-                            <CommentItem
-                                key={comment.id}
-                                comment={comment}
-                                likeComment={this.props.likeComment}
-                                unlikeComment={this.props.unlikeComment}
-                            />
-                        ))}
+                <div className="comment">
+                    <div className="comment-author">
+                        <p className="name">
+                            {this.props.comment.author.username}
+                        </p>
+                        <span className="created">
+                            {formatTime(this.props.comment.created)}
+                        </span>
                     </div>
-                )}
+                    <p className="comment-content">{this.props.comment.content}</p>
+                    <div className="comment-item-actions">
+                        {this.props.likeComment &&
+                            <div className="like-button">
+                                <IconButton
+                                    className="like"
+                                    inline
+                                    icon={IconVariant.LIKE}
+                                    selected={this.state.liked}
+                                    onClick={this._likeComment}
+                                />
+                                <span className="likes">{this.state.likes > 0 ? this.state.likes : ""}</span>
+                            </div>
+                        }
+                        {this.props.submitReply && this.props.comment.threaded_comments &&
+                            <IconButton
+                                inline
+                                icon={IconVariant.COMMENT}
+                                onClick={this._toggleReply}
+                            >
+                                {this.props.comment.threaded_comments.length === 0 ? "Reply" : `Reply (${this.props.comment.threaded_comments.length})`}
+                            </IconButton>
+                        }
+                    </div>
+                    {this.props.submitReply && this.state.showReply && (
+                        <div className="comment-reply">
+                            <CommentInput
+                                comment={this.state.reply}
+                                placeholder="Write your reply"
+                                onChange={this._onChange}
+                                submitComment={this._submitReply}
+                            />
+                            {this.props.comment.threaded_comments.map(comment => (
+                                <CommentItem
+                                    key={comment.id}
+                                    comment={comment}
+                                    likeComment={this.props.likeComment}
+                                    unlikeComment={this.props.unlikeComment}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
         );
     }
@@ -97,10 +118,10 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
     private async _likeComment() {
         if (this.state.liked) {
             await this.props.unlikeComment(this.props.comment.id);
+            this.setState({ liked: false, likes: this.state.likes - 1 });
         } else {
             await this.props.likeComment(this.props.comment.id);
+            this.setState({ liked: true, likes: this.state.likes + 1 });
         }
-
-        this.setState({ liked: !this.state.liked });
     }
 }

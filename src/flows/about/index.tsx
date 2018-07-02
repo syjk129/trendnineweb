@@ -18,14 +18,14 @@ export default function AboutUs() {
     return (
         <div className="static-content">
             <Sidebar>
-                <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Contact Us
+                <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About
             </Sidebar>
             <Content>
                 <PageNavigation />
                 <div className="about-header">
                     <p className="about-header-title">
-                        Welcome to TrendNine, <br />
-                        <i>Shop in Style.</i>
+                        Welcome to TrendNine <br />
+                        <i>Shop in Style</i>
                     </p>
                     <p>Discover and shop your favorite looks from thousands of fashion influencers.</p>
                 </div>

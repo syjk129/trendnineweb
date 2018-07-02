@@ -6,8 +6,8 @@ export default class Comment {
     liked: boolean;
     likes: number;
     is_private: boolean;
-    created: Date;
-    modified: Date;
+    created: string;
+    modified: string;
     content: string;
     parent_comment_id: string | null;
     parent_post_id: string;

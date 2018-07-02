@@ -17,11 +17,12 @@
 
     .product-name {
         font-weight: $font-weight-bold;
-        line-height: $font-size-4;
+        line-height: $line-height-4;
         font-size: $font-size-4;
     }
 
     .product-seller {
+        color: $text-faded;
         font-size: $font-size-1;
         line-height: $line-height-1;
     }
@@ -30,16 +31,21 @@
         font-weight: $font-weight-bold;
         font-size: $font-size-2;
         line-height: $line-height-2;
-        margin-bottom: $base-spacing * 3;
+        margin-bottom: $base-spacing * 4;
+    }
+
+    .divider {
+        border-bottom: $standard-border-width solid $standard-border-color;
     }
 
     .product-information {
         font-size: $font-size-2;
         line-height: $line-height-2;
-        margin-bottom: $base-spacing * 2;
+        margin: $base-spacing * 4 0;
 
         .product-information-title {
-            margin-bottom: $base-spacing * 3;
+            margin-bottom: $base-spacing * 2;
+            font-weight: $font-weight-bold;
         }
     }
 

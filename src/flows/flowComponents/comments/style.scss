@@ -1,21 +1,47 @@
 @import "../../../styles/variables";
 
 .comment-item {
+    display: flex;
     margin-bottom: $base-spacing * 2;
 
-    .author {
+    .comment-author-img img {
+        width: 40px;
+        height: 40px;
+        margin-right: $base-spacing * 2;
+    }
+
+    .comment-author {
+        display: flex;
+        align-items: center;
         margin-bottom: $base-spacing;
+
+        .name {
+            font-size: $font-size-2;
+            margin-right: $base-spacing;
+            margin-bottom: 0;
+        }
+
+        .created {
+            font-size: $font-size-1;
+            color: $text-faded;
+        }
     }
 
     .comment-content {
         font-size: $font-size-2;
+        margin-bottom: $base-spacing;
     }
 
     .comment-item-actions {
         margin-bottom: $base-spacing;
+        display: flex;
 
-        a {
+        .like-button {
             margin-right: $base-spacing;
+        }
+
+        img {
+            margin-right: $base-spacing / 2;
         }
     }
 }

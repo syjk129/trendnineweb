@@ -34,16 +34,15 @@ export default class Footer extends React.Component<Props, FooterState> {
         return (
             <div className="footer" id="footer">
                 <div className="footer-logo">
-                    <Link className="nav-logo-container" to={isShop ? "/shop/home" : "/discover"}><img className="nav-logo" src={Logo} /></Link>
                 </div>
                 <div className="footer-content">
                     <div className="footer-column">
                         <p className="footer-title">Trendnine</p>
-                        <Link className="footer-link" to={isShop ? "/shop/about" : "/about"}>About us</Link>
+                        <Link className="footer-link" to={isShop ? "/shop/about" : "/about"}>About Us</Link>
                         <Link className="footer-link" to={isShop ? "/shop/opportunities" : "/opportunities"}>I'm an Influencer</Link>
                         <Link className="footer-link" to={isShop ? "/shop/terms" : "/terms"}>Terms &amp; Conditions</Link>
                         <Link className="footer-link" to={isShop ? "/shop/privacy" : "/privacy"}>Privacy Policy</Link>
-                        <Link className="footer-link" to={isShop ? "/shop/contact" : "/contact"}>Contact us</Link>
+                        <Link className="footer-link" to={isShop ? "/shop/contact" : "/contact"}>Contact Us</Link>
                     </div>
                     <div className="footer-column">
                         <p className="footer-title">Follow us</p>

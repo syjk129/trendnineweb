@@ -37,7 +37,7 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
                             src={Logo}
                         />
                     </Link>
-                    <IconButton icon={IconVariant.GIRL} size={IconSize.LARGE} url={user ? `/user/${user.id}` : "/login"}/>
+                    <IconButton icon={IconVariant.PROFILE} size={IconSize.LARGE} url={user ? `/user/${user.id}` : "/login"}/>
                 </div>
             </div>
         );

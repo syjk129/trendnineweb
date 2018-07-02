@@ -27,6 +27,8 @@
     p {
         font-size: $font-size-2;
         line-height: $line-height-2;
+        max-height: $line-height-2 * 2;
+        overflow: hidden;
 
         &.large {
             font-size: $font-size-2;

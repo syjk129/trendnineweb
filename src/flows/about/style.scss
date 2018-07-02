@@ -17,7 +17,7 @@
 
 .about-information-section {
     max-width: 860px;
-    padding-bottom: 5 * $base-spacing;
+    padding-bottom: $base-spacing;
     margin-bottom: 4 * $base-spacing;
     border-bottom: solid $standard-border-width $standard-border-color;
 
@@ -39,7 +39,7 @@
 
 .about-findout-section {
     .about-findout-title {
-        font-size: $font-size-3;
+        font-size: $font-size-4;
         line-height: $line-height-3;
         font-weight: $font-weight-bold;
         padding-bottom: $base-spacing * 4;
@@ -55,7 +55,7 @@
         }
 
         div:last-child {
-            padding-left: 2 * $base-spacing;
+            padding-left: 4 * $base-spacing;
         }
 
         .image-container {

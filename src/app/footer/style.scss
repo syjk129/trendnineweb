@@ -7,6 +7,7 @@
     margin: auto;
     max-width: $max-content-width;
     min-width: $min-content-width;
+    border-top: $standard-border-width solid $standard-border-color;
 
     .footer-logo {
         width: $sidebar-width + $sidebar-padding;
