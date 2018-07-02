@@ -12,7 +12,7 @@ import { ProductCard } from "../flowComponents/cardView";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import Sort from "../flowComponents/sort";
 import ViewMore from "../flowComponents/viewMore";
-import { Filters, PostParam } from "../model";
+import { Filters, MenuCategoryQueryMap, PostParam } from "../model";
 import CategoryTree from "./category-tree";
 import ShopCategoryTreeSidebar from "./shopCategorySidebar";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
@@ -39,7 +39,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
     }
 
     componentWillReceiveProps(nextProps: ShopDiscoverProps) {
-        if (nextProps.location.search !== this.props.location.search) {
+        if (nextProps.location !== this.props.location) {
             this.refreshContent(nextProps);
         }
     }
@@ -57,7 +57,12 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
     async refreshContent(props: ShopDiscoverProps) {
         const params = new URLSearchParams(props.location.search);
         const productParam = new PostParam(params);
-        const queryString = productParam.convertUrlParamToQueryString();
+        let queryString = productParam.convertUrlParamToQueryString();
+
+        this._categoryName = props.match.params.categoryName;
+        if (this._categoryName) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
 
         const products = location.pathname === "/shop/feed" ? await this.props.getFeedProducts() : await this.props.getLatestProducts(queryString);
 
@@ -126,6 +131,8 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
             </div>
         );
     }
+
+    private _categoryName: string | null;
 
     @autobind
     private async _filterProducts(filters: Filters) {

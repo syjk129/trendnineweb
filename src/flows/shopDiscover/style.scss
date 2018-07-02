@@ -1,5 +1,9 @@
 @import "../../styles/variables";
 
+.shop {
+    display: flex;
+}
+
 .category-sidebar-container {
     margin-left: -2 * $base-spacing;
 

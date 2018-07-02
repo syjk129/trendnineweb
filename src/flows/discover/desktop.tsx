@@ -16,7 +16,7 @@ import { PostRank } from "../flowComponents/ranking";
 import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
 import ViewMore from "../flowComponents/viewMore";
-import { Filters, PostParam } from "../model";
+import { Filters, MenuCategoryQueryMap, PostParam } from "../model";
 import * as WelcomeImage from "./welcome.png";
 
 import "./style.scss";
@@ -25,20 +25,6 @@ import { DiscoverProps, DiscoverState } from "./types";
 interface DesktopDiscoverState extends DiscoverState {
     numCardsPerRow: number;
 }
-
-enum MenuCategory {
-    ACCESSORIES = "accessories",
-    BAGS = "bags",
-    CLOTHING = "clothing",
-    SHOES = "shoes",
-}
-
-const MenuCategoryQueryMap = {
-    [MenuCategory.ACCESSORIES]: "Women'S Accessories",
-    [MenuCategory.BAGS]: "Handbags",
-    [MenuCategory.CLOTHING]:  "Women'S Clothes",
-    [MenuCategory.SHOES]: "Women'S Shoes",
-};
 
 export default class DesktopDiscover extends React.Component<DiscoverProps, DesktopDiscoverState> {
     state: DesktopDiscoverState = {

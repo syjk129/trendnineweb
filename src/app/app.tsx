@@ -135,7 +135,7 @@ export default class App extends React.Component<Props, AppState> {
                         <Route path="/feed" component={Discover} />
                         <Route path="/brands" component={BrandView} />
                         <Route path="/user/:userId/:pageName?" component={User} />
-                        <Route path="/shop/home" component={Shop} />
+                        <Route path="/shop/home" component={() => <Redirect to="/shop/discover" />} />
                         <Route path="/shop/discover" component={ShopDiscover} />
                         <Route path="/shop/feed" component={ShopDiscover} />
                         <Route path="/shop/brands" component={BrandView} />

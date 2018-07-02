@@ -2,7 +2,6 @@
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import { match, withRouter } from "react-router-dom";
 
 import { Featured } from "../../api/models";
 import { AppContext, AppContextTypes } from "../../app";
