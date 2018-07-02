@@ -3,7 +3,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 
 import { Category, Person } from "../../../api/models";
-import { AppContext, AppContextTypes } from "../../../app";
+import { AppContext } from "../../../app";
 import Button, { ButtonVariant, LinkButton } from "../../../components/button";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
 import { Filters } from "../../model";

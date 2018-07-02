@@ -13,18 +13,19 @@ import Filter, { FilterTarget } from "../flowComponents/filter";
 import Sort from "../flowComponents/sort";
 import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
+import CategoryTree from "./category-tree";
 import ShopCategoryTreeSidebar from "./shopCategorySidebar";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
 interface DesktopShopDiscoverState extends ShopDiscoverState {
-    selectedCategories: Array<string>;
+    selectedTree: CategoryTree;
 }
 
 export default class DesktopShopDiscover extends React.Component<ShopDiscoverProps, DesktopShopDiscoverState> {
     static contextTypes: AppContext;
 
     state: DesktopShopDiscoverState = {
-        selectedCategories: [],
+        selectedTree: new CategoryTree(),
         categories: [],
         products: [],
         nextToken: null,
@@ -45,11 +46,16 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
     async componentDidMount() {
         const categories = await this.props.getCategories();
-        this.setState({ categories: categories });
+        const selectedTree = this.state.selectedTree;
+        const params = new URLSearchParams(this.props.location.search);
+        const productParam = new PostParam(params);
+        selectedTree.categories = categories;
+        selectedTree.populateSelectedCategories(productParam.filters.categoryIds);
+        this.setState({ categories: categories, selectedTree });
     }
 
     async refreshContent(props: ShopDiscoverProps) {
-        const params = new URLSearchParams(location.search);
+        const params = new URLSearchParams(props.location.search);
         const productParam = new PostParam(params);
         const queryString = productParam.convertUrlParamToQueryString();
 
@@ -74,7 +80,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                     <div>
                         <ShopCategoryTreeSidebar
                             categoryList={this.state.categories}
-                            selectedCategories={this.state.selectedCategories}
+                            selectedCategories={this.state.selectedTree.selectedCategories}
                             toggleCategory={this._toggleCategory}
                         />
                     </div>
@@ -108,7 +114,12 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                     )}
 
                     <CardContainer>
-                        {this._renderProducts()}
+                        {this.state.products.map(product => (
+                            <ProductCard
+                                product={product}
+                                isShop
+                            />
+                        ))}
                     </CardContainer>
                     {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextProducts} />}
                 </Content>
@@ -157,75 +168,18 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         });
     }
 
-    @autobind
-    private _renderProducts() {
-        const products = this.state.products;
-        const productCards = products.map((post, index) => (
-            <ProductCard
-                product={post}
-                isShop={true}
-            />));
-
-        return productCards;
-    }
-
-    private _sanitizeCategories = (selectedCategories: Array<string>, category: Array<Category>) => {
-        let sanitizedCategories = selectedCategories;
-        return sanitizedCategories = sanitizedCategories.reduce((result, currentCategory) => {
-            return category.reduce((sanitized, c) => {
-                if (currentCategory === c.full_name) {
-                    return this._removeCategories(c.subcategories, sanitized);
-                }
-                if (c.subcategories && c.subcategories.length > 0) {
-                    return this._sanitizeCategories(sanitized, c.subcategories);
-                }
-                return sanitized;
-            }, result);
-        }, sanitizedCategories);
-    }
-
     private _applyCategories = () => {
-        const categoryQuery = this._sanitizeCategories(this.state.selectedCategories, this.state.categories).join(",");
+        let queryString = this.state.selectedTree.getQueryString();
         let pathname = this.props.location.pathname;
-        if (categoryQuery.length > 0) {
-            pathname += `?categories=${categoryQuery}`;
+        if (queryString) {
+            pathname += `?categories=${queryString}`;
         }
         this.props.history.push(pathname);
     }
 
     private _toggleCategory = (category: Category) => {
-        let selectedCategories = this.state.selectedCategories;
-        const currentCategory = selectedCategories.find(selectedCategory => selectedCategory === category.full_name);
-        if (currentCategory) {
-            selectedCategories = this._removeCategory(category, selectedCategories);
-        } else {
-            selectedCategories = this._addCategory(category, selectedCategories);
-        }
-        this.setState({ selectedCategories }, this._applyCategories);
+        const selectedTree = this.state.selectedTree;
+        selectedTree.toggleCategory(category);
+        this.setState({ selectedTree }, this._applyCategories);
     }
-
-    private _removeCategories = (categories: Array<Category>, selectedCategories: Array<string>) => {
-        return categories.reduce((tree: Array<string>, subcategory: Category) => {
-            return this._removeCategory(subcategory, tree);
-        }, selectedCategories);
-    }
-
-    private _removeCategory = (category: Category, selectedCategories: Array<string>, onlyChildren?: boolean) => {
-        let newTree = selectedCategories;
-        if (!onlyChildren) {
-            newTree = newTree.filter(t => t !== category.full_name);
-        }
-        return category.subcategories.reduce((tree: Array<string>, subcategory: Category) => {
-            return this._removeCategory(subcategory, tree);
-        }, newTree);
-    }
-
-    private _addCategory = (category: Category, selectedCategories: Array<string>) => {
-        let newTree = selectedCategories;
-        newTree.push(category.full_name);
-        return category.subcategories.reduce((tree: Array<string>, subcategory: Category) => {
-            return this._addCategory(subcategory, tree);
-        }, newTree);
-    }
-
 }

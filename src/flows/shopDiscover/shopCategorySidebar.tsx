@@ -11,7 +11,7 @@ import "./style.scss";
 interface ShopCategoryTreeSidebarProps {
     categoryList: Array<Category>;
     selectedCategory?: string;
-    selectedCategories: Array<string>;
+    selectedCategories: Set<string>;
     toggleCategory(category: Category): void;
  }
 
@@ -63,7 +63,7 @@ export default class ShopCategoryTreeSidebar extends React.Component<ShopCategor
                         <div className="category">
                             <Checkbox
                                 value={category.id}
-                                checked={this.props.selectedCategories.indexOf(category.full_name) !== -1}
+                                checked={this.props.selectedCategories.has(category.full_name)}
                                 onChange={() => this.props.toggleCategory(category)}
                             />
                             <LinkButton
