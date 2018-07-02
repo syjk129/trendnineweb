@@ -10,6 +10,7 @@ interface DesktopAuthFormProps {
     email: string;
     password: string;
     isNewUser: boolean;
+    errors: any;
     toggleNewUser(): void;
     onFormChange(data: Partial<AuthFormData>);
     onSubmit(event: React.FormEvent): void;
@@ -20,6 +21,7 @@ interface DesktopAuthFormProps {
 
 export default function DesktopAuthForm({
     email,
+    errors,
     password,
     isNewUser,
     toggleNewUser,
@@ -63,6 +65,11 @@ export default function DesktopAuthForm({
                             value={email}
                             onChange={(email) => onFormChange({ email })}
                         />
+                        {errors && errors["email"] && (
+                            <div className="input-error">
+                                {errors["email"]}
+                            </div>
+                        )}
                         <Input
                             className="auth-input"
                             placeholder="Password"
@@ -70,6 +77,11 @@ export default function DesktopAuthForm({
                             value={password}
                             onChange={(password) => onFormChange({ password })}
                         />
+                        {errors && errors["password"] && (
+                            <div className="input-error">
+                                {errors["password"]}
+                            </div>
+                        )}
                         <p className="signup-disclaimer">By signing up, you agree to TrendNine's <a href="/terms">Terms of Service</a> & <a href="/privacy">Privacy Policy</a></p>
                         <input type="submit" style={{ display: "none" }} />
                         <Button className="submit-button" rounded onClick={onSubmit}>Sign up</Button>

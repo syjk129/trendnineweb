@@ -10,10 +10,12 @@ import DesktopAuthForm from "./desktop";
 import "./style.scss";
 
 interface AuthFormProps extends RouteProps {
+    errors: any;
     getUser(): Promise<Person>;
     authenticate(data: AuthData): void;
     authenticateFacebook(response: FacebookLoginResponse): Promise<void>;
     authenticateGoogle(response: GoogleLoginResponseOffline): Promise<void>;
+    clearErrors(): void;
 }
 
 type AuthFormState = AuthData;
@@ -31,6 +33,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
                 <BrowserView device={isBrowser}>
                     <DesktopAuthForm
                         {...this.state}
+                        errors={this.props.errors}
                         toggleNewUser={this._toggleNewUser}
                         onFormChange={this._handleFormChange}
                         onSubmit={this._onSubmit}
@@ -46,6 +49,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     }
 
     private _toggleNewUser = () => {
+        this.props.clearErrors();
         this.setState({ isNewUser: !this.state.isNewUser });
     }
 

@@ -17,8 +17,16 @@ interface AuthProps extends RouteProps {
     setLoggedState(loggedIn: boolean): void;
 }
 
-export default class Auth extends React.Component<AuthProps> {
+interface AuthState {
+    errors: any;
+}
+
+export default class Auth extends React.Component<AuthProps, AuthState> {
     static contextTypes: AppContext;
+
+    state: AuthState = {
+        errors: [],
+    };
 
     constructor(props) {
         super(props);
@@ -45,10 +53,12 @@ export default class Auth extends React.Component<AuthProps> {
         return (
             <Modal className="auth-modal" isOpen close={this.props.close}>
                 <AuthForm
+                    errors={this.state.errors}
                     getUser={this._getUser}
                     authenticate={this._authenticate}
                     authenticateFacebook={this._authenticateFacebook}
                     authenticateGoogle={this._authenticateGoogle}
+                    clearErrors={this._clearErrors}
                     history={this.props.history}
                     location={this.props.location}
                     match={this.props.match}
@@ -58,15 +68,27 @@ export default class Auth extends React.Component<AuthProps> {
     }
 
     private _authenticate = async (data: AuthData) => {
-        const token = await this.context.api.authenticate(data.email, data.password, data.isNewUser);
-        this._setToken(token);
-        // save token.token
-        this.props.setLoggedState(true);
-        if (data.isNewUser) {
-            this.props.close("/onboarding");
+        const response = await this.context.api.authenticate(data.email, data.password, data.isNewUser);
+        if (response.token) {
+            this._setToken(response);
+            // save token.token
+            this.props.setLoggedState(true);
+            if (data.isNewUser) {
+                this.props.close("/onboarding");
+            } else {
+                this.props.close();
+            }
         } else {
-            this.props.close();
+            if (response["non_field_errors"]) {
+                alert(response["non_field_errors"]);
+            } else {
+                this.setState({ errors: response });
+            }
         }
+    }
+
+    private _clearErrors = () => {
+        this.setState({ errors: null });
     }
 
     @autobind

@@ -1,5 +1,9 @@
 @import "../../../styles/variables";
 
+.input-error {
+    color: red;
+}
+
 .desktop-auth-form {
     margin: $page-spacing;
 
@@ -23,13 +27,12 @@
     }
 
     .auth-input {
-        margin-bottom: $base-spacing;
+        margin-top: $base-spacing;
     }
 
     .divider {
         border-bottom: $standard-border-width * 2 solid $standard-border-color;
-        margin-top: $base-spacing;
-        margin-bottom: $base-spacing * 2;
+        margin: $base-spacing 0;
     }
 
     .switch {
