@@ -1,0 +1,116 @@
+@import "../../styles/variables";
+
+.about-header {
+    max-width: 860px;
+    padding-bottom: 5 * $base-spacing;
+    margin-bottom: 4 * $base-spacing;
+    border-bottom: solid $standard-border-width $standard-border-color;
+
+    .about-header-title {
+        font-family: $font-family-serif;
+        font-size: $font-size-5;
+        line-height: $line-height-5;
+        font-weight: $font-weight-bold;
+        margin-bottom: $base-spacing * 2;
+    }
+}
+
+.about-information-section {
+    max-width: 860px;
+    padding-bottom: 5 * $base-spacing;
+    margin-bottom: 4 * $base-spacing;
+    border-bottom: solid $standard-border-width $standard-border-color;
+
+    .about-section {
+        max-width: 640px;
+        margin-bottom: $base-spacing * 9;
+        font-size: $font-size-2;
+        line-height: $line-height-2;
+
+        .about-section-title {
+            font-family: $font-family-serif;
+            font-size: $font-size-4;
+            line-height: $line-height-4;
+            font-weight: $font-weight-bold;
+            margin-bottom: $base-spacing * 2;
+        }
+    }
+}
+
+.about-findout-section {
+    .about-findout-title {
+        font-size: $font-size-3;
+        line-height: $line-height-3;
+        font-weight: $font-weight-bold;
+        padding-bottom: $base-spacing * 4;
+    }
+
+    .about-findout-content {
+        display: flex;
+        max-width: 860px;
+        padding-bottom: 2 * $base-spacing;
+
+        &:last-child {
+            margin-bottom: $base-spacing * 10;
+        }
+
+        div:last-child {
+            padding-left: 2 * $base-spacing;
+        }
+
+        .image-container {
+            width: calc(50% - #{$base-spacing});
+        }
+
+        .findout-section {
+            width: calc(50% - #{$base-spacing});
+            margin-top: auto;
+            margin-bottom: auto;
+
+            .findout-number {
+                font-family: $font-family-serif;
+                font-size: 120px;
+                line-height: 120px;
+                color: $color-grey-2;
+                font-weight: $font-weight-bold;
+                font-style: italic;
+            }
+
+            .findout-title {
+                padding-top: $base-spacing;
+                font-family: $font-family-serif;
+                font-weight: $font-weight-bold;
+                font-size: $font-size-4;
+                line-height: $line-height-4;
+            }
+        }
+    }
+}
+
+.about-get-section {
+    background-image: url("https://s3.amazonaws.com/trendnine-static/images/get_it.png");
+    background-repeat: no-repeat;
+    background-size: auto;
+    height: 400px;
+
+    .about-get-content {
+        margin-left: 4 * $base-spacing;
+        padding-top: 125px;
+
+        .about-get-title {
+            font-family: $font-family-serif;
+            font-size: $font-size-5;
+            line-height: $line-height-5;
+            font-weight: $font-weight-bold;
+            margin-bottom: 3 * $base-spacing;
+        }
+
+        .button {
+            margin-top: 3 * $base-spacing;
+            font-size: $font-size-2;
+            line-height: $line-height-2;
+            text-align: center;
+            width: 200px;
+        }
+    }
+}

@@ -25,6 +25,10 @@ export enum IconVariant {
     MINUS_CLOSE = "minus_close",
     PLUS_OPEN = "plus_open",
     SHARE = "share",
+    BRANDING = "branding",
+    MONETIZE = "monetize",
+    AUTOMATED = "automated",
+    ANALYTICS = "analytics",
 }
 
 export enum IconSize {
@@ -61,6 +65,10 @@ export const IconMap = {
     [IconVariant.MINUS_CLOSE]: IconVariant.PLUS_OPEN,
     [IconVariant.PLUS_OPEN]: IconVariant.MINUS_CLOSE,
     [IconVariant.SHARE]: IconVariant.SHARE,
+    [IconVariant.BRANDING]: IconVariant.BRANDING,
+    [IconVariant.MONETIZE]: IconVariant.MONETIZE,
+    [IconVariant.AUTOMATED]: IconVariant.AUTOMATED,
+    [IconVariant.ANALYTICS]: IconVariant.ANALYTICS,
 };
 
 export enum SocialIconType {

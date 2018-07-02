@@ -73,6 +73,7 @@ export default class BrandView extends React.Component<Props, BrandViewState> {
                     brands.push(brand);
                 }
             });
+
             nextToken = brandList.nextToken;
             if (!nextToken) {
                 break;

@@ -80,9 +80,9 @@ export default class Api {
     }
 
     getBrands(keyword?: string, nextToken?: string): Promise<Array<Brand>> {
-        let url = "/api/v1/marketplace/products/brands";
+        let url = "/api/v1/marketplace/products/brands?";
         if (keyword) {
-            url = `${url}?keyword=${keyword}`;
+            url = `${url}keyword=${keyword}`;
         }
         return this._GET_PAGINATION(url, nextToken);
     }
@@ -252,6 +252,14 @@ export default class Api {
         };
 
         return this._POST(`/api/v1/marketplace/products/${productId}/reviews`, request);
+    }
+
+    subscribe(request): Promise<void> {
+        return this._POST(`/api/v1/subscribe`, request);
+    }
+
+    applyInfluencer(request): Promise<void> {
+        return this._POST(`/api/v1/comingsoon`, request);
     }
 
     wishlist(postId: string, itemType: string): Promise<void> {

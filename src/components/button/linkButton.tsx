@@ -15,6 +15,8 @@ interface LinkButtonProps extends InteractableProps {
     inline?: boolean;
     children: React.ReactNode;
     onClick?(): void;
+    target?: string;
+    href?: string;
 }
 
 export default class LinkButton extends React.Component<LinkButtonProps> {
@@ -28,6 +30,8 @@ export default class LinkButton extends React.Component<LinkButtonProps> {
             onClick,
             onMouseEnter,
             onMouseLeave,
+            target,
+            href,
         } = this.props;
 
         let classes = "link-button";
@@ -49,9 +53,11 @@ export default class LinkButton extends React.Component<LinkButtonProps> {
             <LinkEl
                 className={classes}
                 to={to}
+                href={href}
                 onClick={onClick}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
+                target={target}
             >
                 {children}
             </LinkEl>

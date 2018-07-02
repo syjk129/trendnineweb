@@ -1,0 +1,53 @@
+@import "../../styles/variables";
+
+.contact-header {
+    font-family: $font-family-serif;
+    font-size: $font-size-4;
+    line-height: $line-height-4;
+    font-weight: $font-weight-bold;
+}
+
+.contact-section {
+    padding: $base-spacing * 2 0;
+
+    p {
+        margin-bottom: 0;
+        line-height: $line-height-2;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    .contact-section-title {
+        text-transform: uppercase;
+        font-weight: $font-weight-bold;
+    }
+}
+
+.static-content {
+    display: flex;
+    margin-top: $navbar-height;
+    font-size: $font-size-2;
+    line-height: $line-height-2;
+    margin-bottom: $base-spacing * 10;
+
+    h3 {
+        font-family: $font-family-serif;
+        font-size: $font-size-5;
+        line-height: $line-height-5;
+        font-weight: $font-weight-bold;
+        margin-top: 0;
+    }
+
+    .sidebar {
+        color: $color-grey-2;
+        display: flex;
+
+        a {
+            color: $color-grey-2;
+            font-size: $font-size-2;
+            line-height: $line-height-2;
+        }
+    }
+}
