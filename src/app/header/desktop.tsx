@@ -55,6 +55,10 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                                 <NavLink url={isShop ? "/shop/discover" : "/discover"} pathname={pathname} large>Trending</NavLink>
                                 {loggedIn && user && <NavLink url={isShop ? "/shop/feed" : "/feed"} pathname={pathname} large>Feed</NavLink>}
                                 <NavLink url={isShop ? "/shop/brands" : "/brands"} pathname={pathname} large>Brands</NavLink>
+                                <NavLink url={isShop ? "/shop/category/clothing" : "/discover/category/clothing"} pathname={pathname} large>Clothing</NavLink>
+                                <NavLink url={isShop ? "/shop/category/shoes" : "/discover/category/shoes"} pathname={pathname} large>Shoes</NavLink>
+                                <NavLink url={isShop ? "/shop/category/bags" : "/discover/category/bags"} pathname={pathname} large>Bags</NavLink>
+                                <NavLink url={isShop ? "/shop/category/accessories" : "/discover/category/accessories"} pathname={pathname} large>accessories</NavLink>
                             </div>
                             <div className="search">
                                 <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>

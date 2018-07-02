@@ -3,7 +3,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import Button, { ButtonSize, ButtonVariant, LinkButton } from "../../components/button";
-import Card, { CardContainer } from "../../components/card";
+import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Image from "../../components/image";
 import Sidebar from "../../components/sidebar";
@@ -26,6 +26,20 @@ interface DesktopDiscoverState extends DiscoverState {
     numCardsPerRow: number;
 }
 
+enum MenuCategory {
+    ACCESSORIES = "accessories",
+    BAGS = "bags",
+    CLOTHING = "clothing",
+    SHOES = "shoes",
+}
+
+const MenuCategoryQueryMap = {
+    [MenuCategory.ACCESSORIES]: "Women'S Accessories",
+    [MenuCategory.BAGS]: "Handbags",
+    [MenuCategory.CLOTHING]:  "Women'S Clothes",
+    [MenuCategory.SHOES]: "Women'S Shoes",
+};
+
 export default class DesktopDiscover extends React.Component<DiscoverProps, DesktopDiscoverState> {
     state: DesktopDiscoverState = {
         posts: [],
@@ -45,15 +59,19 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     }
 
     componentWillReceiveProps(nextProps: DiscoverProps) {
-        if (nextProps.location.search !== this.props.location.search) {
+        if (nextProps.location !== this.props.location) {
             this.refreshContent(nextProps);
         }
     }
 
     async refreshContent(props: DiscoverProps) {
+        this._categoryName = props.match.params.categoryName;
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);
-        const queryString = postParam.convertUrlParamToQueryString();
+        let queryString = postParam.convertUrlParamToQueryString();
+        if (this._categoryName) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
         this.setState({ isLoading: true });
 
         const [
@@ -102,7 +120,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
         return (
             <>
-                {!user && (
+                {!user && !this._categoryName && (
                     <div className="welcome-banner">
                         <Image src={WelcomeImage} />
                         <div className="welcome-buttons">
@@ -189,6 +207,8 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
             </>
         );
     }
+
+    private _categoryName: string | null;
 
     private _renderPosts() {
         const posts = this.state.posts;

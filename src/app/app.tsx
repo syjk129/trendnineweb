@@ -130,12 +130,8 @@ export default class App extends React.Component<Props, AppState> {
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
-                        <Route path="/about" component={AboutUs} />
-                        <Route path="/contact" component={ContactUs} />
-                        <Route path="/terms" component={TermsAndConditions} />
-                        <Route path="/opportunities" component={Opportunities} />
-                        <Route path="/privacy" component={PrivacyPolicy} />
-                        <Route path="/discover/:pageName?" component={Discover} />
+                        <Route path="/discover/category/:categoryName" component={Discover} />
+                        <Route path="/discover" component={Discover} />
                         <Route path="/feed" component={Discover} />
                         <Route path="/brands" component={BrandView} />
                         <Route path="/user/:userId/:pageName?" component={User} />
@@ -144,14 +140,15 @@ export default class App extends React.Component<Props, AppState> {
                         <Route path="/shop/feed" component={ShopDiscover} />
                         <Route path="/shop/brands" component={BrandView} />
                         <Route path="/shop/product/:productId" component={ProductView} />
-                        <Route path="/shop/about" component={AboutUs} />
-                        <Route path="/shop/contact" component={ContactUs} />
-                        <Route path="/shop/terms" component={TermsAndConditions} />
-                        <Route path="/shop/opportunities" component={Opportunities} />
-                        <Route path="/shop/privacy" component={PrivacyPolicy} />
+                        <Route path="/shop/category/:categoryName" component={ShopDiscover} />
                         <Route path="/post/:postId" component={PostView} />
                         <Route path="/product/:productId" component={ProductView} />
                         <Route path="/trending" component={Trending} />
+                        <Route path="/:url*/about" component={AboutUs} />
+                        <Route path="/:url*/contact" component={ContactUs} />
+                        <Route path="/:url*/terms" component={TermsAndConditions} />
+                        <Route path="/:url*/opportunities" component={Opportunities} />
+                        <Route path="/:url*/privacy" component={PrivacyPolicy} />
                         <Route path="/:url*/login" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />}/>
                         <Route path="/:url*/onboarding" render={(props) => <OnboardingView {...props} close={this._redirectCloseModal} />}/>
                         <Route path="/logout" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
