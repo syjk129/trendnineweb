@@ -38,7 +38,7 @@ export default function DesktopAuthForm({
                         <p className="registration-description">Create an account to personalize your shopping experience, follow your favorite influencers, like and wishlist outfits you love, and more.</p>
                     </>
                 ) : (
-                    <p className="form-name">Welcome back</p>
+                    <p className="form-name">Welcome Back</p>
                 )}
                 <GoogleLogin
                     className="google-login button button-primary"
