@@ -28,7 +28,6 @@ export default class Modal extends React.Component<ModalProps> {
     }
 
     componentDidMount() {
-        document.body.classList.add("noscroll");
         window.onclick = event => {
             if (event.target === this._modalRef.current) {
                 this._modalRef.current.style.display = "none";
@@ -74,12 +73,9 @@ export default class Modal extends React.Component<ModalProps> {
     private _modalRef: React.RefObject<HTMLDivElement>;
 
     private _open = () => {
-        document.body.classList.add("noscroll");
-        this.setState({ open: true });
     }
 
     private _close = () => {
-        document.body.classList.remove("noscroll");
         this.props.close();
         this._modalRef.current.style.display = "none";
         this.setState({ open: false });
