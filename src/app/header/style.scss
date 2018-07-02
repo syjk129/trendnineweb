@@ -43,6 +43,13 @@
     top: 0;
     height: 66px;
 
+    .login-button {
+        height: 24px;
+        padding: 5px $base-spacing;
+        font-size: $font-size-1;
+        text-transform: none;
+    }
+
     .user-header,
     .nav-header {
         .nav-content {

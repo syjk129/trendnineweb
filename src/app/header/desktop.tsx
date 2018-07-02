@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-import { LinkButton } from "../../components/button";
+import Button, { ButtonVariant, LinkButton } from "../../components/button";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
 import Input, { InputVariant } from "../../components/input";
 import NavLink from "../../components/navLink";
@@ -35,7 +35,13 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                         </div>
                         <div className="header-right-buttons">
                             {(!loggedIn || !user) &&
-                                <LinkButton to={`${this.props.location.pathname}/login`}>Log In</LinkButton>
+                                <Button
+                                    className="login-button"
+                                    variant={ButtonVariant.OUTLINE}
+                                    onClick={() => history.push(`${location.pathname}/login`)}
+                                >
+                                    Login / Join
+                                </Button>
                             }
                             {loggedIn && user &&
                                 <div className="user-logged-in-buttons">
