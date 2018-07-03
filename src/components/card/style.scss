@@ -8,6 +8,7 @@ $min-card-width-3: 98px;
     background-color: #fff;
     min-width: $min-card-width;
     box-shadow: 0 1px 1px rgba(25, 25, 25, 0.1);
+    border-radius: $standard-border-radius;
 
     .card-hover-details {
         visibility: hidden;
@@ -29,6 +30,11 @@ $min-card-width-3: 98px;
             line-height: $line-height-2;
             font-weight: bold;
         }
+    }
+
+    .cover img {
+        border-top-right-radius: $standard-border-radius;
+        border-top-left-radius: $standard-border-radius;
     }
 
     &.mobile {

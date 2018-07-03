@@ -13,7 +13,7 @@ import FacebookLogin, { FacebookLoginResponse } from "../auth/facebookLogin";
 import { AuthFormDataProps } from "../auth/types";
 import RouteProps from "../routeProps";
 
-import "./style.scss":
+import "./style.scss";
 
 type SettingsProps = RouteProps;
 
