@@ -61,7 +61,7 @@ export default class PostView extends React.Component<Props, PostState> {
             <>
                 <PageNavigation />
                 <BrowserView device={isBrowser}>
-                    <meta property="og:url" content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
+                    <meta property="og:url" content={`beta.trendnine.com/posts/${this.state.post.id}`} />
                     <meta property="og:type" content="article" />
                     <meta property="og:title" content="TrendNine" />
                     <meta property="og:description" content={this.state.post.title} />
