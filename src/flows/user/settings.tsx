@@ -13,6 +13,8 @@ import FacebookLogin, { FacebookLoginResponse } from "../auth/facebookLogin";
 import { AuthFormDataProps } from "../auth/types";
 import RouteProps from "../routeProps";
 
+import "./style.scss":
+
 type SettingsProps = RouteProps;
 
 interface SettingsState extends AuthFormDataProps {
@@ -68,7 +70,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
             return null;
         }
 
-        const className = isMobile ? "auth-form mobile-auth-form" : "auth-form";
+        const className = isMobile ? "settings-auth-form mobile-auth-form" : "settings-auth-form";
 
         return (
             <div className={className}>
@@ -159,7 +161,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         </div>
                         <div className="link-buttons-container">
                             <input type="submit" style={{ display: "none" }} />
-                            <Input className="rounded" type={InputType.SUBMIT} value="Save Changes" />
+                            <Button rounded onClick={this._onSubmit}>Save Changes</Button>
                             <Button rounded onClick={this._getUserData} variant={ButtonVariant.OUTLINE}>Cancel</Button>
                         </div>
                     </form>
@@ -212,7 +214,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         </div>
                         <div className="link-buttons-container">
                             <input type="submit" style={{ display: "none" }} />
-                            <Input className="rounded" type={InputType.SUBMIT} value="Save Password" />
+                            <Button rounded onClick={this._onPasswordChange}>Save Password</Button>
                             <Button rounded onClick={this._getUserData} variant={ButtonVariant.OUTLINE}>Cancel</Button>
                         </div>
                     </form>

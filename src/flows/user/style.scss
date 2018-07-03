@@ -10,6 +10,108 @@
     }
 }
 
+.settings-auth-form {
+    max-width: 420px;
+
+    .input-container {
+        border-bottom: $standard-border-width solid $standard-border-color;
+        margin-top: $base-spacing * 2;
+        margin-bottom: $base-spacing * 2;
+
+        .google-login {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .facebook-login {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: $base-spacing * 2;
+        }
+    }
+
+    input {
+        max-width: 420px;
+        margin-bottom: $base-spacing * 2;
+        display: block;
+    }
+
+    .input-header {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: $base-spacing;
+
+        .error-msg {
+            color: $color-grey-2;
+        }
+    }
+
+    input[type="submit"] {
+        max-width: 200px;
+        display: inline;
+    }
+
+    button {
+        max-width: 200px;
+        margin-top: $base-spacing;
+        margin-bottom: $base-spacing;
+    }
+
+    .short-input-container {
+        width: 50%;
+
+        div {
+            margin-right: $base-spacing;
+        }
+    }
+
+    .name-container {
+        display: flex;
+
+        div {
+            &:first-child {
+                margin-right: $base-spacing;
+            }
+
+            &:last-child {
+                margin-left: $base-spacing;
+            }
+        }
+    }
+}
+
+.mobile-auth-form {
+    padding: 60px;
+
+    button {
+        margin-bottom: $base-spacing;
+    }
+
+    input {
+        font-size: $font-size-2;
+        box-sizing: border-box;
+        margin-bottom: $base-spacing;
+
+        &:last-of-type {
+            margin-bottom: $base-spacing * 2;
+        }
+    }
+
+    .form-name {
+        font-size: $font-size-3;
+        margin-bottom: $base-spacing * 3;
+    }
+
+    .toggle-register {
+        border-top: $standard-border-width solid $standard-border-color;
+        padding-top: $base-spacing * 2;
+
+        p {
+            font-size: $font-size-2;
+        }
+    }
+}
+
 .user {
     display: flex;
 
