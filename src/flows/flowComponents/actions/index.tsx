@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { AppContext, AppContextTypes } from "../../../app";
 import { IconButton, LinkButton } from "../../../components/button";
 import { IconSize, IconVariant } from "../../../components/icon";
+import FacebookShare from "../share/facebookShare";
 
 import "./style.scss";
 
@@ -75,7 +76,9 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
 
     @autobind
     private _share() {
-        console.log("share");
+        let pathname = this.props.variant === ActionLinksVariant.POST ? "/post" : "/product";
+        pathname += `/${this.props.id}`;
+        FacebookShare("201224070695370", pathname, () => { console.log("yo"); });
     }
 
     @autobind

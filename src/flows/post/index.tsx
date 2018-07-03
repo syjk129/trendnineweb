@@ -61,11 +61,6 @@ export default class PostView extends React.Component<Props, PostState> {
             <>
                 <PageNavigation />
                 <BrowserView device={isBrowser}>
-                    <meta property="og:url" content={`beta.trendnine.com/posts/${this.state.post.id}`} />
-                    <meta property="og:type" content="article" />
-                    <meta property="og:title" content="TrendNine" />
-                    <meta property="og:description" content={this.state.post.title} />
-                    <meta property="og:image" content={this.state.post.cover_image.small_image_url} />
                     <DesktopPost
                         {...this.state}
                         likeComment={this._likeComment}
@@ -77,11 +72,6 @@ export default class PostView extends React.Component<Props, PostState> {
                     />
                 </BrowserView>
                 <MobileView device={isMobile}>
-                    <meta property="og:url" content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
-                    <meta property="og:type" content="article" />
-                    <meta property="og:title" content="When Great Minds Don’t Think Alike" />
-                    <meta property="og:description" content="How much does culture influence creative thinking?" />
-                    <meta property="og:image" content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
                     <MobilePost
                         {...this.state}
                         likeComment={this._likeComment}

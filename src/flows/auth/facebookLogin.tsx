@@ -44,7 +44,7 @@ export default class FacebookLogin extends React.Component<FacebookLoginProps, F
         const onCallback = this.props.onCallback;
         const url = `https://www.facebook.com/${this.props.sdkVersion}/dialog/oauth?`
                     + `&client_id=${this.props.appId}`
-                    + `&redirect_uri=${window.location.href}${CALLBACK_URL_PATH}`
+                    + `&redirect_uri=${window.location.protocol}//${window.location.hostname}/login${CALLBACK_URL_PATH}`
                     + `&response_type=${this.props.responseType}`
                     + `&scope=email,public_profile`
                     + `&display=popup`;
