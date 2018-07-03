@@ -7,7 +7,6 @@ export interface MobilePostProps {
     post: Post;
     comments: Array<Comment>;
     relatedPosts: Array<Post>;
-    relatedProducts: Array<Product>;
     featuredTrendnines: Array<Person>;
     likeComment(commentId: string): Promise<void>;
     unlikeComment(commentId: string): Promise<void>;

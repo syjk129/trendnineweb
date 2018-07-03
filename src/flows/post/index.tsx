@@ -18,7 +18,6 @@ type Props = RouteProps;
 interface PostState {
     post: Post;
     comments: Array<Comment>;
-    relatedProducts: Array<any>;
     relatedPosts: Array<Post>;
     featuredTrendnines: Array<Person>;
     isLoading: boolean;
@@ -33,7 +32,6 @@ export default class PostView extends React.Component<Props, PostState> {
     state: PostState = {
         post: null,
         comments: [],
-        relatedProducts: [],
         relatedPosts: [],
         featuredTrendnines: [],
         isLoading: true,
@@ -138,13 +136,11 @@ export default class PostView extends React.Component<Props, PostState> {
             const [
                 post,
                 comments,
-                relatedProducts,
                 relatedPosts,
                 featuredTrendnines,
             ] = await Promise.all([
                 this.context.api.getPost(this._postId),
                 this.context.api.getComments(this._postId),
-                this.context.api.getRelatedProducts(),
                 this.context.api.getRelatedPosts(this._postId),
                 this.context.api.getFeaturedTrendnines(6),
             ]);
@@ -167,7 +163,6 @@ export default class PostView extends React.Component<Props, PostState> {
             this.setState({
                 post,
                 comments,
-                relatedProducts,
                 relatedPosts,
                 featuredTrendnines,
                 isLoading: false,

@@ -105,7 +105,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 tabbedContent = this.props.post.products;
                 break;
             case TabbedSectionTypes.YOU_MAY_ALSO_LIKE:
-                tabbedContent = this.props.relatedProducts;
+                tabbedContent = this.props.relatedPosts;
                 break;
         }
         this.setState({ tabbedContent, section });

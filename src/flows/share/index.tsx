@@ -12,7 +12,10 @@ interface ShareProps extends RouteProps {
 
 export default function ShareModal({ close, location, match }: ShareProps) {
     let shareUrl;
-    const url = match.params.url.split("/").filter(path => path !== "");
+    let url = [];
+    if (match.params.url) {
+        url = match.params.url.split("/").filter(path => path !== "");
+    }
     if (url.length === 2) {
         shareUrl = match.params.url;
     } else if (match.params.shareType && match.params.shareId) {
