@@ -4,7 +4,7 @@
     color: red;
 }
 
-.desktop-auth-form {
+.auth-form {
     margin: $page-spacing;
 
     .form-name {
@@ -35,6 +35,19 @@
 
         .auth-input:first-of-type {
             margin-right: $base-spacing;
+        }
+    }
+
+    &.mobile {
+        margin: 0;
+
+        .form-name {
+            font-size: $mobile-font-size-2;
+            margin-bottom: $base-spacing * 3;
+        }
+
+        .registration-description {
+            padding: 0;
         }
     }
 

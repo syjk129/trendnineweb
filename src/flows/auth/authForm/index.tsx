@@ -1,10 +1,12 @@
 import * as React from "react";
-import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
-import { GoogleLoginResponseOffline } from "react-google-login";
+import { isMobile } from "react-device-detect";
+import { GoogleLogin, GoogleLoginResponseOffline } from "react-google-login";
 
+import Button, { LinkButton } from "../../../components/button";
+import Input, { InputType } from "../../../components/input";
 import RouteProps from "../../routeProps";
+import FacebookLogin from "../facebookLogin";
 import { AuthData, FacebookLoginResponse } from "../types";
-import DesktopAuthForm from "./desktop";
 
 import "./style.scss";
 
@@ -28,22 +30,112 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     };
 
     render() {
+        let classes = "auth-form";
+        if (isMobile) {
+            classes += ` mobile`;
+        }
+
         return (
-            <div>
-                {/* <BrowserView device={isBrowser}> */}
-                    <DesktopAuthForm
-                        {...this.state}
-                        errors={this.props.errors}
-                        toggleNewUser={this._toggleNewUser}
-                        onFormChange={this._handleFormChange}
-                        onSubmit={this._onSubmit}
-                        onGoogleSuccess={this._onGoogleSuccess}
-                        onGoogleFailure={this._onGoogleFailure}
-                        onFacebookLogin={this._onFacebookLogin}
+            <div className={classes}>
+                <form onSubmit={this._onSubmit}>
+                    {this.state.isNewUser ? (
+                        <>
+                            <p className="form-name">Join TrendNine</p>
+                            <p className="registration-description">Create an account to personalize your shopping experience, follow your favorite influencers, like and wishlist outfits you love, and more.</p>
+                        </>
+                    ) : (
+                        <p className="form-name">Welcome Back</p>
+                    )}
+                    <GoogleLogin
+                        className="google-login button button-primary"
+                        clientId="174930742509-kvp3mkdgdb5c8staoesefgltj377tgsq.apps.googleusercontent.com"
+                        responseType="code"
+                        onSuccess={this._onGoogleSuccess}
+                        onFailure={this._onGoogleFailure}
                     />
-                {/* </BrowserView>
-                <MobileView device={isMobile}>
-                </MobileView> */}
+                    <FacebookLogin
+                        appId="201224070695370"
+                        sdkVersion="v3.0"
+                        fields="name,email,picture"
+                        responseType="code"
+                        onCallback={this._onFacebookLogin}
+                    />
+                    <div className="divider" />
+                    {this.state.isNewUser ? (
+                        <>
+                            <div className="grouped-input">
+                                <Input
+                                    className="auth-input"
+                                    placeholder="First Name"
+                                    value={this.state.firstName}
+                                    onChange={(firstName) => this._handleFormChange({ firstName })}
+                                />
+                                <Input
+                                    className="auth-input"
+                                    placeholder="Last Name"
+                                    value={this.state.lastName}
+                                    onChange={(lastName) => this._handleFormChange({ lastName })}
+                                />
+                            </div>
+                            <Input
+                                className="auth-input"
+                                placeholder="Email Address"
+                                value={this.state.email}
+                                onChange={(email) => this._handleFormChange({ email })}
+                            />
+                            {this.props.errors && this.props.errors["email"] && (
+                                <div className="input-error">
+                                    {this.props.errors["email"]}
+                                </div>
+                            )}
+                            <Input
+                                className="auth-input"
+                                placeholder="Password"
+                                type={InputType.PASSWORD}
+                                value={this.state.password}
+                                onChange={(password) => this._handleFormChange({ password })}
+                            />
+                            {this.props.errors && this.props.errors["password"] && (
+                                <div className="input-error">
+                                    {this.props.errors["password"]}
+                                </div>
+                            )}
+                            <p className="signup-disclaimer">By signing up, you agree to TrendNine's <a href="/terms">Terms of Service</a> & <a href="/privacy">Privacy Policy</a></p>
+                            <input type="submit" style={{ display: "none" }} />
+                            <Button className="submit-button" rounded onClick={this._onSubmit}>Sign up</Button>
+                            <p className="switch">Already on TrendNine?&nbsp;<LinkButton onClick={this._toggleNewUser}>Sign in</LinkButton></p>
+                        </>
+                    ) : (
+                        <>
+                            <Input
+                                className="auth-input"
+                                placeholder="Email Address"
+                                value={this.state.email}
+                                onChange={(email) => this._handleFormChange({ email })}
+                            />
+                            {this.props.errors && this.props.errors["email"] && (
+                                <div className="input-error">
+                                    {this.props.errors["email"]}
+                                </div>
+                            )}
+                            <Input
+                                className="auth-input"
+                                placeholder="Password"
+                                type={InputType.PASSWORD}
+                                value={this.state.password}
+                                onChange={(password) => this._handleFormChange({ password })}
+                            />
+                            {this.props.errors && this.props.errors["password"] && (
+                                <div className="input-error">
+                                    {this.props.errors["password"]}
+                                </div>
+                            )}
+                            <input type="submit" style={{ display: "none" }} />
+                            <Button className="submit-button" rounded onClick={this._onSubmit}>Sign in</Button>
+                            <p className="switch">Don't have an account?&nbsp;<LinkButton onClick={this._toggleNewUser}>Sign up</LinkButton></p>
+                        </>
+                    )}
+                </form>
             </div>
         );
     }
@@ -60,7 +152,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     }
 
 
-    private _handleFormChange = (data: AuthData) => {
+    private _handleFormChange = (data: Partial<AuthData>) => {
         this.setState({
             email: data.email !== undefined ? data.email : this.state.email,
             password: data.password !== undefined ? data.password : this.state.password,
