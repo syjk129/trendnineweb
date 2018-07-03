@@ -222,18 +222,18 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                             ))}
                         </ContentSection>
                     )}
-                    {relatedProducts && (
+                    {relatedPosts && (
                         <ContentSection title="You may also like">
                             <Carousel>
-                                {relatedProducts.map(product => (
+                                {relatedPosts.map(post => (
                                     <div>
                                         <CarouselItem
                                             fit={ImageFitVariant.SCALED}
-                                            imageUrl={product.image && product.image.small_image_url}
-                                            redirectUrl={`/product/${product.id}`}
-                                            title={product.brand && product.brand.name}
-                                            detail={product.title}
-                                            subdetail={ this._renderProductFooter(product) }
+                                            imageUrl={post.cover_image && post.cover_image.small_image_url}
+                                            redirectUrl={`/product/${post.id}`}
+                                            title={post.author && post.author.username}
+                                            detail={post.title}
+                                            subdetail={ this._renderPostFooter(post) }
                                         />
                                     </div>
                                 ))}
@@ -271,8 +271,28 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
         })});
     }
 
-    @autobind
-    private _renderProductFooter(product) {
+    private _renderPostFooter = (post: PostPreview)  => {
+        return (
+            <>
+                <div className="author-date">
+                    <Author author={post.author} />
+                    {formatTime(post.created)}
+                </div>
+                <div className="post-card-footer">
+                    <ActionLinks
+                        iconSize={IconSize.MEDIUM}
+                        variant={ActionLinksVariant.POST}
+                        id={post.id}
+                        wishlisted={post.wishlisted}
+                        liked={post.liked}
+                        likes={post.likes}
+                    />
+                </div>
+            </>
+        );
+    }
+
+    private _renderProductFooter = (product) => {
         return (
         <div className="post-card-hover-footer">
             <p className="post-card-hover-price">

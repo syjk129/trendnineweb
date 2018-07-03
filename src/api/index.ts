@@ -142,8 +142,8 @@ export default class Api {
         return this._GET(`/api/v1/marketplace/products/${productId}`);
     }
 
-    getRelatedProducts(): Promise<any> {
-        return this._GET(`/api/v1/marketplace/products/related?page_size=10`);
+    getRelatedProducts(productId: string): Promise<any> {
+        return this._GET(`/api/v1/marketplace/products/${productId}/related?page_size=10`);
     }
 
     getPostsForProduct(productId: string): Promise<Array<PostPreview>> {

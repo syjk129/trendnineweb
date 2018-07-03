@@ -94,14 +94,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     }
 
     render() {
-        // if (this.state.isLoading) {
-        //     return (
-        //         <SpinnerContainer>
-        //             <Spinner />
-        //         </SpinnerContainer>
-        //     );
-        // }
-
         const user = JSON.parse(localStorage.getItem("user"));
         const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
 

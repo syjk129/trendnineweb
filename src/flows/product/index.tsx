@@ -54,12 +54,10 @@ export default class ProductView extends React.Component<Props, ProductState> {
             reviews,
         ] = await Promise.all([
             this.context.api.getProduct(this._productId),
-            this.context.api.getRelatedProducts(),
+            this.context.api.getRelatedProducts(this._productId),
             this.context.api.getPostsForProduct(this._productId),
             this.context.api.getReviews(this._productId),
         ]);
-
-        window.open(product.url, "_blank");
 
         const wishlisted = product.wishlisted;
 
