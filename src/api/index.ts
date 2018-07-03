@@ -61,8 +61,12 @@ export default class Api {
         return this._GET(url);
     }
 
-    getTags(keyword: string): Promise<Array<Tag>> {
-        return this._GET(`/api/v1/posts/tags?keyword=${keyword}`);
+    getTags(keyword?: string): Promise<Array<Tag>> {
+        let url = "/api/v1/posts/tags";
+        if (keyword) {
+            url += `?keyword=${keyword}`;
+        }
+        return this._GET(url);
     }
 
     getFeatured(type: string): Promise<Array<Featured>> {

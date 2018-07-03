@@ -214,7 +214,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
                 this._onSearchRetailers();
                 break;
             case FilterConstants.TAG:
-                this.setState({searchResult: new Set()});
+                this._onSearchTags();
                 break;
             case FilterConstants.BRAND:
                 this._onSearchBrands();
@@ -226,8 +226,8 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     }
 
     @autobind
-    private async _onSearchTags(value: string) {
-        if (value.length < 1) {
+    private async _onSearchTags(value?: string) {
+        if (value && value.length < 1) {
             return;
         }
 
