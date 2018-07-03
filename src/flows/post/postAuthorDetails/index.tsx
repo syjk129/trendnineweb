@@ -5,10 +5,11 @@ import { withRouter } from "react-router-dom";
 import { Person } from "../../../api/models";
 import { IconButton, LinkButton } from "../../../components/button";
 import { IconSize, IconVariant } from "../../../components/icon";
+import RouteProps from "../../routeProps";
 
 import "./style.scss";
 
-interface PostAuthorDetailsProps {
+interface PostAuthorDetailsProps extends RouteProps {
     author: Person;
     iconSize: IconSize;
     postDate: Date;
