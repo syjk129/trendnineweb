@@ -84,7 +84,7 @@ export default function Welcome({ history, location }: RouteProps) {
                         rounded
                         variant={ButtonVariant.SECONDARY}
                         size={ButtonSize.WIDE}
-                        onClick={() => history.push("/discover?tags=summer")}
+                        onClick={() => history.push("/shop/category/bags")}
                     >
                         Shop Now
                     </Button>
