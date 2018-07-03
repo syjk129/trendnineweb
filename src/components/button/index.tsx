@@ -15,6 +15,7 @@ interface ButtonProps {
     variant?: ButtonVariant;
     size?: ButtonSize;
     children?: React.ReactNode;
+    disabled?: boolean;
     onClick?(event?: React.FormEvent): void;
 }
 
@@ -26,6 +27,7 @@ export default function Button({
     variant,
     size,
     children,
+    disabled,
     onClick,
 }: ButtonProps) {
     let classes = "button";
@@ -70,7 +72,7 @@ export default function Button({
     }
 
     return (
-        <button type="button" className={classes} onClick={onClick}>
+        <button type="button" className={classes} onClick={onClick} disabled={disabled}>
             {children}
         </button>
     );

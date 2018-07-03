@@ -206,6 +206,10 @@ export default class Api {
         return this._PUT("/api/v1/users", request);
     }
 
+    updatePassword(request: any): Promise<Person> {
+        return this._PUT("/api/v1/password", request);
+    }
+
     getUserFollowers(userId: string): Promise<Array<Person>> {
         return this._GET(`/api/v1/users/${userId}/followers`);
     }
