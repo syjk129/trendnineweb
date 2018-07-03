@@ -30,7 +30,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     render() {
         return (
             <div>
-                <BrowserView device={isBrowser}>
+                {/* <BrowserView device={isBrowser}> */}
                     <DesktopAuthForm
                         {...this.state}
                         errors={this.props.errors}
@@ -41,9 +41,9 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
                         onGoogleFailure={this._onGoogleFailure}
                         onFacebookLogin={this._onFacebookLogin}
                     />
-                </BrowserView>
+                {/* </BrowserView>
                 <MobileView device={isMobile}>
-                </MobileView>
+                </MobileView> */}
             </div>
         );
     }

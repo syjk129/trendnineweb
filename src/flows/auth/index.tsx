@@ -1,6 +1,7 @@
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 import { GoogleLoginResponseOffline } from "react-google-login";
 
 import { AppContext } from "../../app";
@@ -51,7 +52,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
 
     render() {
         return (
-            <Modal className="auth-modal" isOpen close={this.props.close}>
+            <Modal className={isMobile ? "mobile-auth-modal" : "auth-modal"} isOpen close={this.props.close}>
                 <AuthForm
                     errors={this.state.errors}
                     authenticate={this._authenticate}
