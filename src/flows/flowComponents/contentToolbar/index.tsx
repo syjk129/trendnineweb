@@ -225,6 +225,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 filterParams += `price_high=${selectedFilter.maxValue}`;
                 filterParams += `&price_low=${selectedFilter.minValue}`;
             } else if (isTreeSelectFilter(selectedFilter)) {
+                console.log(selectedFilter);
                 filterParams = selectedFilter.selectedTree.reduce((param: string, category: string, index: number) => (
                     `${param}${category},`
                 ), filterParams);
@@ -232,7 +233,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                     filterParams = `${FilterQueryParamMap[filterType]}=${filterParams}`;
                 }
             } else {
-                const selectedIds = selectedFilter.selectedIds.join(",");
+                const selectedIds = selectedFilter.selectedIds.filter(id => id !== "").join(",");
                 if (selectedIds.length === 0) return result;
 
                 filterParams = `${FilterQueryParamMap[filterType]}=${selectedFilter.selectedIds.join(",")}`;
@@ -255,7 +256,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     private _selectFilterType(filterType: FilterType | null) {
         this.setState({
             currentFilterType: filterType,
-            currentCategory: filterType === FilterType.CATEGORY ? [this.state.filters[filterType][1]] : null,
+            currentCategory: filterType === FilterType.CATEGORY && this.state.filters[filterType] ? [this.state.filters[filterType][1]] : null,
         });
     }
 

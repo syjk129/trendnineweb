@@ -4,9 +4,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { match, withRouter } from "react-router-dom";
 
-import { Category, Product } from "../../api/models";
 import { AppContext, AppContextTypes } from "../../app";
-import { LinkButton } from "../../components/button";
 import Card, { CardContainer } from "../../components/card";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
@@ -14,15 +12,10 @@ import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import { PostCard, ProductCard } from "../flowComponents/cardView";
-import Featured from "../flowComponents/featured";
-import Filter, { FilterTarget } from "../flowComponents/filter";
-import CategoryTreeFilter from "../flowComponents/filter/filterComponents/categoryTreeFilter";
+import ContentToolbar from "../flowComponents/contentToolbar";
 import MobileFilter from "../flowComponents/filter/mobileFilter";
-import { PostRank } from "../flowComponents/ranking";
-import { SidebarSection } from "../flowComponents/section";
-import Sort from "../flowComponents/sort";
 import ViewMore from "../flowComponents/viewMore";
-import { Filters, PostParam } from "../model";
+import { ContentType, Filters, PostParam } from "../model";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
 interface MobileShopDiscoverState extends ShopDiscoverState {
@@ -44,6 +37,13 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
 
     componentWillMount() {
         this.refreshContent(this.props);
+    }
+
+    componentWillReceiveProps(nextProps: ShopDiscoverProps) {
+        if (!this.state.isLoading && nextProps.location !== this.props.location) {
+            this.setState({ isLoading: true });
+            this.refreshContent(nextProps);
+        }
     }
 
     async componentDidMount() {
@@ -85,33 +85,19 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
                     </div>
                 )}
 
-                <MobileFilter setGridSize={this._setGridSize} />
+                <ContentToolbar
+                    location={this.props.location}
+                    history={this.props.history}
+                    match={this.props.match}
+                    contentType={ContentType.PRODUCT}
+                    setGridSize={this._setGridSize}
+                />
                 <CardContainer gridSize={this.state.gridSize} className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
                     {this._renderProducts()}
                 </CardContainer>
                 {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextProducts} />}
             </div>
         );
-    }
-
-    @autobind
-    private async _filterProducts(filters: Filters) {
-        this.state.productParam.filters = filters;
-        this._push(this.state.productParam);
-    }
-
-    @autobind
-    private async _sortProduct(sortString: string) {
-        this.state.productParam.sort = sortString;
-        this._push(this.state.productParam);
-    }
-
-    @autobind
-    private async _push(postParams: PostParam) {
-        this.props.history.push({
-            pathname: location.pathname,
-            search: `?${postParams.convertToUrlParamString()}`,
-        });
     }
 
     @autobind

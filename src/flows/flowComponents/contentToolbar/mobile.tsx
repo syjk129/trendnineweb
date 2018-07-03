@@ -54,7 +54,6 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
             searchString,
             selectFilterType,
             selectCurrentCategory,
-            selectSortType,
             toggleCategory,
             toggleSelectFilterItem,
             onRangeFilterChange,
@@ -94,7 +93,7 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                     <SortView
                         sortTypes={sortTypes}
                         currentSortType={currentSortType}
-                        selectSortType={selectSortType}
+                        selectSortType={this._selectSortType}
                     />
                 }
                 {activeToolbar === ToolbarType.FILTER &&
@@ -121,6 +120,11 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                 )}
             </Sticky>
         );
+    }
+
+    private _selectSortType = (sortType: SortType) => {
+        document.body.classList.remove("noscroll");
+        this.props.selectSortType(sortType);
     }
 
     @autobind
