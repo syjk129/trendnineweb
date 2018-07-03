@@ -48,7 +48,7 @@ export default class RangeFilter extends React.Component<RangeFilterProps, Range
                                     ${this.state.value[0]}
                                 </span>
                                 <span className="filter-value">
-                                    ${this.state.value[1]}+
+                                    ${this.state.value[1]}{this.state.value[1] === max && "+"}
                                 </span>
                             </div>
                             <Range min={min} max={max} step={step} allowCross={false} value={this.state.value} onChange={this._onSliderChange} />

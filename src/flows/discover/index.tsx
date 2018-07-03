@@ -1,9 +1,7 @@
 import autobind from "autobind-decorator";
-import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
-import { match, withRouter } from "react-router-dom";
 
 import { AppContext, AppContextTypes } from "../../app";
 import PageNavigation from "../flowComponents/pageNavigation";

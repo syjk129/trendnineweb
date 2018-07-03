@@ -40,6 +40,9 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
     componentWillReceiveProps(nextProps: ShopDiscoverProps) {
         if (nextProps.location !== this.props.location) {
+            if (nextProps.location.pathname !== this.props.location.pathname) {
+                this.setState({ selectedTree: new CategoryTree() });
+            }
             this.refreshContent(nextProps);
         }
     }
@@ -59,9 +62,11 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         const productParam = new PostParam(params);
         let queryString = productParam.convertUrlParamToQueryString();
 
-        this._categoryName = props.match.params.categoryName;
-        if (this._categoryName) {
-            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        if (!props.location.search) {
+            this._categoryName = props.match.params.categoryName;
+            if (this._categoryName) {
+                queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+            }
         }
 
         const products = location.pathname === "/shop/feed" ? await this.props.getFeedProducts() : await this.props.getLatestProducts(queryString);

@@ -19,6 +19,7 @@ export default class PostParam {
     keyword: string;
     sort: string;
     filters: Filters;
+    categoryName: string;
 
     constructor(urlParams: URLSearchParams) {
         this.keyword = this._parseStringFromParam(urlParams, PostParamKey.KEYWORD);
