@@ -21,6 +21,17 @@
         color: $brand-color;
     }
 
+    &:disabled {
+        opacity: 0.75;
+
+        &:hover {
+            cursor: auto;
+            background-color: $color-accent;
+            border: $standard-border-width solid transparent;
+            color: $color-white;
+        }
+    }
+
     &.button-inline {
         display: inline-block;
         width: auto;
