@@ -102,7 +102,6 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
             post,
             comments,
             relatedPosts,
-            relatedProducts,
             likeComment,
             unlikeComment,
             submitComment,

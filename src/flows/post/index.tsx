@@ -47,7 +47,9 @@ export default class PostView extends React.Component<Props, PostState> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.location.pathname !== this.props.location.pathname) {
+        if (nextProps.location.pathname !== this.props.location.pathname &&
+            !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login")
+        ) {
             this._fetchData(nextProps);
         }
     }

@@ -1,6 +1,6 @@
-import * as H from "history";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
+import { withRouter } from "react-router-dom";
 
 import { Person } from "../../../api/models";
 import { IconButton, LinkButton } from "../../../components/button";
@@ -24,14 +24,22 @@ function formatDate(date: Date) {
     return `${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`;
 }
 
-export default class PostAuthorDetails extends React.Component<PostAuthorDetailsProps> {
+class PostAuthorDetails extends React.Component<PostAuthorDetailsProps> {
 
     render() {
-        const { author, postDate, toggleLike, toggleWishlist } = this.props;
+        const { author, postId, postDate, toggleLike, toggleWishlist } = this.props;
 
         let classes = "post-author";
         if (isMobile) {
             classes += " mobile";
+        }
+
+        let shareUrl;
+        const pathname = window.location.pathname.split("/").filter(path => path !== "");
+        if (pathname.length === 2) {
+            shareUrl = `${window.location.pathname}/share`;
+        } else {
+            shareUrl = `/share/post/${postId}`;
         }
 
         return (
@@ -59,7 +67,7 @@ export default class PostAuthorDetails extends React.Component<PostAuthorDetails
                     <IconButton
                         icon={IconVariant.SHARE}
                         size={this.props.iconSize}
-                        onClick={() => {}}
+                        onClick={() => this.props.history.push(shareUrl)}
                     />
                     <IconButton
                         icon={IconVariant.BOOKMARK}
@@ -72,3 +80,5 @@ export default class PostAuthorDetails extends React.Component<PostAuthorDetails
         );
     }
 }
+
+export default withRouter(PostAuthorDetails);
