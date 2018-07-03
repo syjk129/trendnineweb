@@ -30,6 +30,14 @@
         margin-top: $base-spacing;
     }
 
+    .grouped-input {
+        display: flex;
+
+        .auth-input:first-of-type {
+            margin-right: $base-spacing;
+        }
+    }
+
     .divider {
         border-bottom: $standard-border-width * 2 solid $standard-border-color;
         margin: $base-spacing 0;

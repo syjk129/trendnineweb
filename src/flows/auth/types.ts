@@ -5,7 +5,14 @@ export interface AuthFormDataProps {
 
 export type AuthFormData = AuthFormDataProps;
 
-export interface AuthDataProps extends AuthFormDataProps {
+export interface RegisterFormDataProps extends AuthFormDataProps {
+    firstName: string;
+    lastName: string;
+}
+
+export type RegisterFormData = RegisterFormDataProps;
+
+export interface AuthDataProps extends RegisterFormData {
     isNewUser: boolean;
 }
 

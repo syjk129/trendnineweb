@@ -4,15 +4,17 @@ import { GoogleLogin, GoogleLoginResponseOffline } from "react-google-login";
 import Button, { LinkButton } from "../../../components/button";
 import Input, { InputType, InputVariant } from "../../../components/input";
 import FacebookLogin, { FacebookLoginResponse } from "../facebookLogin";
-import { AuthFormData } from "../types";
+import { AuthData } from "../types";
 
 interface DesktopAuthFormProps {
     email: string;
     password: string;
+    firstName: string;
+    lastName: string;
     isNewUser: boolean;
     errors: any;
     toggleNewUser(): void;
-    onFormChange(data: Partial<AuthFormData>);
+    onFormChange(data: Partial<AuthData>);
     onSubmit(event: React.FormEvent): void;
     onGoogleSuccess(response: GoogleLoginResponseOffline): void;
     onGoogleFailure(response: GoogleLoginResponseOffline): void;
@@ -23,6 +25,8 @@ export default function DesktopAuthForm({
     email,
     errors,
     password,
+    firstName,
+    lastName,
     isNewUser,
     toggleNewUser,
     onFormChange,
@@ -59,6 +63,20 @@ export default function DesktopAuthForm({
                 <div className="divider" />
                 {isNewUser ? (
                     <>
+                        <div className="grouped-input">
+                            <Input
+                                className="auth-input"
+                                placeholder="First Name"
+                                value={firstName}
+                                onChange={(firstName) => onFormChange({ firstName })}
+                            />
+                            <Input
+                                className="auth-input"
+                                placeholder="Last Name"
+                                value={lastName}
+                                onChange={(lastName) => onFormChange({ lastName })}
+                            />
+                        </div>
                         <Input
                             className="auth-input"
                             placeholder="Email Address"
@@ -95,6 +113,11 @@ export default function DesktopAuthForm({
                             value={email}
                             onChange={(email) => onFormChange({ email })}
                         />
+                        {errors && errors["email"] && (
+                            <div className="input-error">
+                                {errors["email"]}
+                            </div>
+                        )}
                         <Input
                             className="auth-input"
                             placeholder="Password"
@@ -102,6 +125,11 @@ export default function DesktopAuthForm({
                             value={password}
                             onChange={(password) => onFormChange({ password })}
                         />
+                        {errors && errors["password"] && (
+                            <div className="input-error">
+                                {errors["password"]}
+                            </div>
+                        )}
                         <input type="submit" style={{ display: "none" }} />
                         <Button className="submit-button" rounded onClick={onSubmit}>Sign in</Button>
                         <p className="switch">Don't have an account?&nbsp;<LinkButton onClick={toggleNewUser}>Sign up</LinkButton></p>

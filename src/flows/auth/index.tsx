@@ -68,7 +68,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     }
 
     private _authenticate = async (data: AuthData) => {
-        const response = await this.context.api.authenticate(data.email, data.password, data.isNewUser);
+        const response = await this.context.api.authenticate(data.email, data.password, data.isNewUser, data.firstName, data.lastName);
         if (response.token) {
             this._setToken(response);
             // save token.token

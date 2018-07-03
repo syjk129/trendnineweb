@@ -130,8 +130,8 @@ export default class App extends React.Component<Props, AppState> {
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
+                        <Route path="/discover" exact component={Discover} />
                         <Route path="/discover/category/:categoryName" component={Discover} />
-                        <Route path="/discover" component={Discover} />
                         <Route path="/feed" component={Discover} />
                         <Route path="/brands" component={BrandView} />
                         <Route path="/user/:userId/:pageName?" component={User} />

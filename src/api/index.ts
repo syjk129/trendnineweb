@@ -30,10 +30,10 @@ export default class Api {
         this._apiUrl = options.apiUrl;
     }
 
-    authenticate(email: string, password: string, isNewUser: boolean): Promise<void> {
+    authenticate(email: string, password: string, isNewUser: boolean, firstName?: string, lastName?: string): Promise<void> {
         let request;
         if (isNewUser) {
-            request = { email, password, first_name: "First", last_name: "Last" };
+            request = { email, password, first_name: firstName, last_name: lastName };
             return this._POST("/api/v1/users/registration", request);
         } else {
             request = { email, password };

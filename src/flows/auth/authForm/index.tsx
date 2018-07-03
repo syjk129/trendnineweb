@@ -24,6 +24,8 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     state: AuthFormState = {
         email: "",
         password: "",
+        firstName: "",
+        lastName: "",
         isNewUser: true,
     };
 
@@ -71,6 +73,8 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
         this.setState({
             email: data.email !== undefined ? data.email : this.state.email,
             password: data.password !== undefined ? data.password : this.state.password,
+            firstName: data.firstName !== undefined ? data.firstName : this.state.firstName,
+            lastName: data.lastName !== undefined ? data.lastName : this.state.lastName,
         });
     }
 
