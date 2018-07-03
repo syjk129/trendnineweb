@@ -69,14 +69,12 @@ class ActionLinks extends React.Component<ActionLinksProps, ActionLinksState>  {
                             {this.state.likes > 0 && this.state.likes}
                         </span>
                     }
-                    {this.props.variant === ActionLinksVariant.POST && (
-                        <IconButton
-                            icon={IconVariant.SHARE}
-                            size={this.props.iconSize}
-                            selected={this.state.wishlisted}
-                            onClick={() => this.props.history.push(shareUrl)}
-                        />
-                    )}
+                    <IconButton
+                        icon={IconVariant.SHARE}
+                        size={this.props.iconSize}
+                        selected={this.state.wishlisted}
+                        onClick={() => this.props.history.push(shareUrl)}
+                    />
                 </div>
                 <IconButton
                     icon={this.props.variant === ActionLinksVariant.POST ? IconVariant.BOOKMARK : IconVariant.WISHLIST}

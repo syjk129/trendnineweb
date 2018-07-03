@@ -26,26 +26,29 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
 
         const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
         const footerItem = (
-            <div>
-                <p>{product.brand && product.brand.name}</p>
-                <div className="product-action-btns">
-                    <p>${product.price}</p>
-                    <ActionLinks
-                        variant={ActionLinksVariant.PRODUCT}
-                        id={product.id}
-                        wishlisted={product.wishlisted}
-                    />
+            <div className="product-card-footer">
+                <p className="product-card-brand">{product.title}</p>
+                <div>
+                    <p className="product-card-price">${product.price}</p>
+                    <div className="product-action-btns">
+                        <ActionLinks
+                            variant={ActionLinksVariant.PRODUCT}
+                            id={product.id}
+                            wishlisted={product.wishlisted}
+                        />
+                    </div>
                 </div>
             </div>
         );
 
         return (
             <Card
+                className="product-card"
                 gridSize={gridSize || 1}
                 scaleImage
                 imageUrl={product.image && product.image.small_image_url}
                 redirectUrl={isShop ? `/shop/product/${product.id}` : `/product/${product.id}`}
-                title={product.title}
+                title={product.brand && product.brand.name || "Product"}
                 footerItem={footerItem}
             />
         );

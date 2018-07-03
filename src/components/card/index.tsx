@@ -10,6 +10,7 @@ import "./style.scss";
 
 interface CardProps {
     imageUrl: string;
+    className?: string;
     gridSize: number;
     redirectUrl?: string;
     scaleImage?: boolean;
@@ -28,9 +29,13 @@ class Card extends React.Component<CardProps, CardState> {
     componentDidMount() { }
 
     render() {
-        const { imageUrl, scaleImage, redirectUrl, gridSize, title, singleLineTitle, hoverItem, footerItem } = this.props;
+        const { imageUrl, className, scaleImage, redirectUrl, gridSize, title, singleLineTitle, hoverItem, footerItem } = this.props;
 
         let classes = "card";
+
+        if (className) {
+            classes += ` ${className}`;
+        }
 
         if (gridSize) {
             classes += ` grid-size-${gridSize}`;
