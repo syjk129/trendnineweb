@@ -46,6 +46,7 @@
     }
 
     .recommended-trendsetters-container {
+        border-radius: $standard-border-radius;
         background-color: transparent;
         border: solid $standard-border-color $standard-border-width;
         padding: $base-spacing * 2;
