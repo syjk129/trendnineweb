@@ -78,7 +78,7 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
     private _share() {
         let pathname = this.props.variant === ActionLinksVariant.POST ? "/post" : "/product";
         pathname += `/${this.props.id}`;
-        FacebookShare("201224070695370", pathname, () => { console.log("yo"); });
+        FacebookShare("201224070695370", pathname );
     }
 
     @autobind
