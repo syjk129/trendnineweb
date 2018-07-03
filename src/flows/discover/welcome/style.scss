@@ -1,0 +1,51 @@
+@import "../../../styles/variables";
+
+.welcome-carousel {
+    @media (max-width: 1440px) {
+        margin: 0 -#{$page-spacing};
+    }
+}
+
+.welcome-banner {
+    position: relative;
+
+    .button {
+        margin-right: $base-spacing * 2;
+        width: 200px;
+    }
+
+    .button-outline {
+        color: #fff;
+        border-color: #fff;
+    }
+
+    .slide-1-join {
+        position: absolute;
+        bottom: 15%;
+        left: 5%;
+    }
+
+    .slide-1-learn {
+        position: absolute;
+        bottom: 15%;
+        left: calc(5% + 220px);
+    }
+
+    .slide-2-view {
+        position: absolute;
+        bottom: 25%;
+        left: 4%;
+    }
+
+    .slide-2-shop {
+        position: absolute;
+        bottom: 25%;
+        right: 3%;
+    }
+
+    .slide-3-shop {
+        position: absolute;
+        bottom: 25%;
+        right: 10%;
+    }
+}

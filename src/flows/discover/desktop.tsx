@@ -17,7 +17,7 @@ import { SidebarPostProductListSection, SidebarSection } from "../flowComponents
 import Sort from "../flowComponents/sort";
 import ViewMore from "../flowComponents/viewMore";
 import { Filters, MenuCategoryQueryMap, PostParam } from "../model";
-import * as WelcomeImage from "./welcome.png";
+import Welcome from "./welcome";
 
 import "./style.scss";
 import { DiscoverProps, DiscoverState } from "./types";
@@ -99,31 +99,8 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
         return (
             <>
-                {!user && this.props.location.pathname === "/discover" && !this._categoryName && (
-                    <div className="welcome-banner">
-                        <Image src={WelcomeImage} />
-                        <div className="welcome-buttons">
-                            <Button
-                                inline
-                                rounded
-                                variant={ButtonVariant.SECONDARY}
-                                size={ButtonSize.WIDE}
-                                onClick={() => this.props.history.push(`${this.props.location.pathname}/login`)}
-                            >
-                                Join
-                            </Button>
-                            <Button
-                                inline
-                                white
-                                rounded
-                                variant={ButtonVariant.OUTLINE}
-                                size={ButtonSize.WIDE}
-                                onClick={() => this.props.history.push("/about")}
-                            >
-                                Learn More
-                            </Button>
-                        </div>
-                    </div>
+                {!user && this.props.location.search === "" && this.props.location.pathname === "/discover" && !this._categoryName && (
+                    <Welcome location={this.props.location} history={this.props.history} match={this.props.match} />
                 )}
                 <div className="discover">
                     <Sidebar>
