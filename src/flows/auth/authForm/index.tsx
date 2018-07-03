@@ -2,7 +2,6 @@ import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 import { GoogleLoginResponseOffline } from "react-google-login";
 
-import { Person } from "../../../api/models";
 import RouteProps from "../../routeProps";
 import { AuthData, FacebookLoginResponse } from "../types";
 import DesktopAuthForm from "./desktop";
@@ -11,7 +10,6 @@ import "./style.scss";
 
 interface AuthFormProps extends RouteProps {
     errors: any;
-    getUser(): Promise<Person>;
     authenticate(data: AuthData): void;
     authenticateFacebook(response: FacebookLoginResponse): Promise<void>;
     authenticateGoogle(response: GoogleLoginResponseOffline): Promise<void>;
@@ -58,16 +56,9 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     private _onSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         await this.props.authenticate(this.state);
-        await this._setLoggedInUser();
         return false;
     }
 
-    private _setLoggedInUser = async () => {
-        const user = await this.props.getUser();
-        if (user && user.username) {
-            localStorage.setItem("user", JSON.stringify(user));
-        }
-    }
 
     private _handleFormChange = (data: AuthData) => {
         this.setState({
@@ -80,7 +71,6 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
 
     private _onGoogleSuccess = (response: GoogleLoginResponseOffline) => {
         this.props.authenticateGoogle(response);
-        this._setLoggedInUser();
     }
 
     private _onGoogleFailure = (response: GoogleLoginResponseOffline) => {
@@ -89,7 +79,6 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     private _onFacebookLogin = (response: FacebookLoginResponse) => {
         if (!response.error) {
             this.props.authenticateFacebook(response);
-            this._setLoggedInUser();
         }
     }
 }

@@ -54,7 +54,6 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
             <Modal className="auth-modal" isOpen close={this.props.close}>
                 <AuthForm
                     errors={this.state.errors}
-                    getUser={this._getUser}
                     authenticate={this._authenticate}
                     authenticateFacebook={this._authenticateFacebook}
                     authenticateGoogle={this._authenticateGoogle}
@@ -72,6 +71,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         if (response.token) {
             this._setToken(response);
             // save token.token
+            await this._setLoggedInUser();
             this.props.setLoggedState(true);
             if (data.isNewUser) {
                 this.props.close("/onboarding");
@@ -91,14 +91,17 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         this.setState({ errors: null });
     }
 
-    @autobind
-    private _getUser() {
-        return this.context.api.getUser();
+    private _setLoggedInUser = async () => {
+        const user = await this.context.api.getUser();
+        if (user && user.username) {
+            localStorage.setItem("user", JSON.stringify(user));
+        }
     }
 
     private _authenticateGoogle = async (response: GoogleLoginResponseOffline) => {
         const token = await this.context.api.authenticateGoogle(response.code);
         this._setToken(token);
+        await this._setLoggedInUser();
         this.props.setLoggedState(true);
         this.props.close();
     }
@@ -106,6 +109,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     private _authenticateFacebook = async (response: FacebookLoginResponse) => {
         const token = this.context.api.authenticateFacebook(response.code);
         this._setToken(token);
+        await this._setLoggedInUser();
         this.props.setLoggedState(true);
         this.props.close();
     }
@@ -126,9 +130,6 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     private _setToken = (token: any) => {
         if (token.token) {
             localStorage.setItem("tn_auth_token", token.token);
-            // const date = new Date();
-            // date.setDate(new Date(Date.now()).getDate() + 5);
-            // Cookies.setCookie("tn_auth_token", token.token, date);
         }
     }
 }
