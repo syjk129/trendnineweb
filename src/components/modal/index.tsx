@@ -50,7 +50,7 @@ export default class Modal extends React.Component<ModalProps> {
         const { children, className } = this.props;
 
         const style = {
-            display: this.state.open ? "block" : "none",
+            display: this.state.open ? "flex" : "none",
         };
 
         let classes = "modal-content";
