@@ -14,11 +14,11 @@ export default function FacebookShare(appId: string, pathname: string, callBack:
     let url = "https://www.facebook.com/dialog/share?" +
         `app_id=${appId}` +
         `&display=popup` +
-        `&href=beta.trendnine.com/${pathname}` +
-        `&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer`;
+        `&href=https://beta.trendnine.com/${pathname}` +
+        `&redirect_uri=https://beta.trendnine.com`;
 
     let externalWindow = window.open(url, "_blank", `width=${width},height=${height},left=${x},top=${y},status=yes`);
-    this._detectUrlChange(externalWindow, callBack);
+    _detectUrlChange(externalWindow, callBack);
 }
 
 function _detectUrlChange(externalWindow: Window, callbackOnLogin: (response: FacebookLoginResponse) => void) {
