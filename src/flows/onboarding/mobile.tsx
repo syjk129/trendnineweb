@@ -1,10 +1,12 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import { Person, PostPreview } from "../../api/models";
 import Button, { ButtonSize, ButtonVariant } from "../../components/button";
+import Carousel, { CarouselItem } from "../../components/carousel";
 import FollowInfluencer from "./followInfluencer";
 
-interface DesktopOnboardingProps {
+interface MobileOnboardingProps {
     influencers: Array<Person>;
     followed: Set<string>;
     toggleFollowInfluencer(influencer: Person): void;
@@ -13,24 +15,29 @@ interface DesktopOnboardingProps {
     getPostsForUser(userId: string, queryString?: string): Promise<Array<PostPreview>>;
 }
 
-export default function DesktopOnboarding({
-    toggleFollowInfluencer,
+export default function MobileOnboarding({
     followed,
     influencers,
+    toggleFollowInfluencer,
     unfollowAll,
-    getPostsForUser,
     close,
-}: DesktopOnboardingProps) {
+    getPostsForUser,
+}: MobileOnboardingProps) {
+    const settings = {
+        adaptiveHeight: true,
+        arrows: false,
+    };
+
     return (
-        <div className="onboarding">
+        <div className="onboarding mobile">
             <p className="welcome">
                 Welcome!
             </p>
             <p className="get-started">
                 Get started by following featured influencers
             </p>
-            <div className="follow-container">
-                {influencers.map(influencer => (
+            <div className={`follow-container${isMobile && " mobile"}`}>
+                {influencers.slice(0, 4).map(influencer => (
                     <FollowInfluencer
                         followed={followed.has(influencer.id)}
                         influencer={influencer}
@@ -41,12 +48,12 @@ export default function DesktopOnboarding({
             </div>
             <div className="onboarding-actions">
                 <div className="button-container">
-                    <Button rounded size={ButtonSize.WIDE} variant={ButtonVariant.OUTLINE} onClick={unfollowAll}>Unfollow All</Button>
+                    <Button rounded size={ButtonSize.SMALL} variant={ButtonVariant.OUTLINE} onClick={unfollowAll}>Unfollow All</Button>
                 </div>
                 <div className="button-container">
-                    <Button rounded size={ButtonSize.WIDE} variant={ButtonVariant.OUTLINE} onClick={() => close("/")}>Shop Now</Button>
+                    <Button rounded size={ButtonSize.SMALL} variant={ButtonVariant.OUTLINE} onClick={() => close("/")}>Shop Now</Button>
                 </div>
             </div>
         </div>
-    );
+    )
 }

@@ -7,6 +7,7 @@ import { AppContext } from "../../app";
 import Modal from "../../components/modal";
 import RouteProps from "../routeProps";
 import DesktopOnboarding from "./desktop";
+import MobileOnboarding from "./mobile";
 
 import "./style.scss";
 
@@ -16,7 +17,7 @@ interface OnboardingProps extends RouteProps {
 
 interface OnboardingState {
     influencers: Array<Person>;
-    followed: Array<string>;
+    followed: Set<string>;
 }
 
 export default class Onboarding extends React.Component<OnboardingProps, OnboardingState> {
@@ -24,7 +25,7 @@ export default class Onboarding extends React.Component<OnboardingProps, Onboard
 
     state: OnboardingState = {
         influencers: [],
-        followed: [],
+        followed: new Set(),
     };
 
     async componentWillMount() {
@@ -38,28 +39,40 @@ export default class Onboarding extends React.Component<OnboardingProps, Onboard
                 <BrowserView device={isBrowser}>
                     <DesktopOnboarding
                         {...this.state}
-                        followInfluencer={this._followInfluencer}
+                        toggleFollowInfluencer={this._toggleFollowInfluencer}
                         getPostsForUser={this._getPostsForUser}
                         close={this.props.close}
                         unfollowAll={this._unfollowAll}
                     />
                 </BrowserView>
                 <MobileView device={isMobile}>
+                    <MobileOnboarding
+                        {...this.state}
+                        toggleFollowInfluencer={this._toggleFollowInfluencer}
+                        getPostsForUser={this._getPostsForUser}
+                        close={this.props.close}
+                        unfollowAll={this._unfollowAll}
+                    />
                 </MobileView>
             </Modal>
         );
     }
 
     private _unfollowAll = () => {
-        this.setState({ followed: [] });
+        this.setState({ followed: new Set() });
         this.state.followed.forEach(followedInfluencer => this.context.api.unfollowUser(followedInfluencer));
     }
 
-    private _followInfluencer = (influencer: Person) => {
+    private _toggleFollowInfluencer = async (influencer: Person) => {
         let followed = this.state.followed;
-        followed.push(influencer.id);
+        if (followed.has(influencer.id)) {
+            followed.delete(influencer.id);
+            await this.context.api.unfollowUser(influencer.id);
+        } else {
+            followed.add(influencer.id);
+            await this.context.api.followUser(influencer.id);
+        }
         this.setState({ followed });
-        return this.context.api.followUser(influencer.id);
     }
 
     private _getPostsForUser = (userId: string, queryString?: string) => {
