@@ -20,7 +20,7 @@ import PostView from "../flows/post";
 import PrivacyPolicy from "../flows/privacy";
 import ProductView from "../flows/product";
 import RouteProps from "../flows/routeProps";
-import Shop from "../flows/shop";
+import ShareView from "../flows/share";
 import ShopDiscover from "../flows/shopDiscover";
 import Trending from "../flows/trending";
 import User from "../flows/user";
@@ -130,7 +130,7 @@ export default class App extends React.Component<Props, AppState> {
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
-                        <Route path="/discover" exact component={Discover} />
+                        <Route path="/discover" component={Discover} />
                         <Route path="/discover/category/:categoryName" component={Discover} />
                         <Route path="/feed" component={Discover} />
                         <Route path="/brands" component={BrandView} />
@@ -144,6 +144,7 @@ export default class App extends React.Component<Props, AppState> {
                         <Route path="/post/:postId" component={PostView} />
                         <Route path="/product/:productId" component={ProductView} />
                         <Route path="/trending" component={Trending} />
+                        <Route path="/:url*/share/:shareType?/:shareId?" render={(props) => <ShareView {...props} close={this._redirectCloseModal} />} />
                         <Route path="/:url*/about" component={AboutUs} />
                         <Route path="/:url*/contact" component={ContactUs} />
                         <Route path="/:url*/terms" component={TermsAndConditions} />

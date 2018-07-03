@@ -36,6 +36,7 @@ export default class ProductView extends React.Component<Props, ProductState> {
 
     componentWillMount() {
         this.refreshContent(this.props);
+
     }
 
     componentWillReceiveProps(nextProps: Props) {
@@ -45,20 +46,24 @@ export default class ProductView extends React.Component<Props, ProductState> {
     }
 
     async refreshContent(props: Props) {
-        this._productId = props.match.params.productId;
-
+        const productId = props.match.params.productId;
         const [
             product,
             relatedProducts,
             postsForProduct,
             reviews,
         ] = await Promise.all([
-            this.context.api.getProduct(this._productId),
-            this.context.api.getRelatedProducts(this._productId),
-            this.context.api.getPostsForProduct(this._productId),
-            this.context.api.getReviews(this._productId),
+            this.context.api.getProduct(productId),
+            this.context.api.getRelatedProducts(productId),
+            this.context.api.getPostsForProduct(productId),
+            this.context.api.getReviews(productId),
         ]);
 
+        if (this._productId !== productId) {
+            window.open(product.url, "_blank");
+        }
+
+        this._productId = props.match.params.productId;
         const wishlisted = product.wishlisted;
 
         const recentlyViewed = localStorage.getItem("recentlyViewed");

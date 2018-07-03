@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { AppContext, AppContextTypes } from "../../../app";
 import { IconButton, LinkButton } from "../../../components/button";
 import { IconSize, IconVariant } from "../../../components/icon";
+import RouteProps from "../../routeProps";
 import FacebookShare from "../share/facebookShare";
 
 import "./style.scss";
@@ -15,7 +16,12 @@ export enum ActionLinksVariant {
     PRODUCT = "product",
 }
 
-interface ActionLinksProps {
+const ActionLinksVariantMap = {
+    [ActionLinksVariant.POST]: "post",
+    [ActionLinksVariant.PRODUCT]: "product",
+};
+
+interface ActionLinksProps extends RouteProps {
     variant: ActionLinksVariant;
     id: string;
     wishlisted: boolean;
@@ -30,7 +36,7 @@ interface ActionLinksState {
     wishlisted: boolean;
 }
 
-export default class ActionLinks extends React.Component<ActionLinksProps, ActionLinksState>  {
+class ActionLinks extends React.Component<ActionLinksProps, ActionLinksState>  {
     static contextTypes: AppContext;
 
     state: ActionLinksState = {
@@ -40,6 +46,14 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
     };
 
     render() {
+        let shareUrl;
+        const pathname = window.location.pathname.split("/").filter(path => path !== "");
+        if (pathname.length === 2) {
+            shareUrl = `${window.location.pathname}/share`;
+        } else {
+            shareUrl = `/share/${ActionLinksVariantMap[this.props.variant]}/${this.props.id}`;
+        }
+
         return (
             <div className="action-btns">
                 <div className="user-actions">
@@ -60,7 +74,7 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
                             icon={IconVariant.SHARE}
                             size={this.props.iconSize}
                             selected={this.state.wishlisted}
-                            onClick={this._share}
+                            onClick={() => this.props.history.push(shareUrl)}
                         />
                     )}
                 </div>
@@ -72,13 +86,6 @@ export default class ActionLinks extends React.Component<ActionLinksProps, Actio
                 />
             </div>
         );
-    }
-
-    @autobind
-    private _share() {
-        let pathname = this.props.variant === ActionLinksVariant.POST ? "/post" : "/product";
-        pathname += `/${this.props.id}`;
-        FacebookShare("201224070695370", pathname );
     }
 
     @autobind
@@ -109,3 +116,5 @@ ActionLinks.contextTypes = {
     setError: PropTypes.func,
     openModal: PropTypes.func,
 };
+
+export default withRouter(ActionLinks);
