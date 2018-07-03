@@ -16,7 +16,6 @@ interface ErrorBoundaryProps extends RouteProps {
 class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     // React children will trickle their errors up and this will catch them
     componentDidCatch(error, info) {
-        console.log("catching");
         if (isAuthError(error)) {
             this.props.history.push("/login");
         }
@@ -24,7 +23,6 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
 
     componentWillReceiveProps(nextProps: ErrorBoundaryProps) {
         if (this.props.errors.length !== nextProps.errors.length) {
-            console.log("error boundary receiving props");
             this._handleErrors(nextProps);
         }
     }

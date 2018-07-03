@@ -3,7 +3,6 @@ import {
     Category,
     Comment,
     Featured,
-    Pagination,
     Person,
     Post,
     PostPreview,
@@ -145,6 +144,10 @@ export default class Api {
 
     getRelatedProducts(): Promise<any> {
         return this._GET(`/api/v1/marketplace/products/related?page_size=10`);
+    }
+
+    getPostsForProduct(productId: string): Promise<Array<PostPreview>> {
+        return this._GET(`/api/v1/marketplace/products/${productId}/posts`);
     }
 
     getFeaturedTrendnines(pageSize?: number): Promise<Array<Person>> {

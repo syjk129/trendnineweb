@@ -1,14 +1,17 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
-import { Comment, Person, Post, Product } from "../../api/models";
+import { Comment, Person, Post, PostPreview, Product } from "../../api/models";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
 import { IconSize } from "../../components/icon";
 import Image, { ImageFitVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import Sticky from "../../components/sticky";
+import formatTime from "../../util/formatTime";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
+import Author from "../flowComponents/author";
 import Comments from "../flowComponents/comments";
 import { PostRank } from "../flowComponents/ranking";
 import { ContentSection, SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";

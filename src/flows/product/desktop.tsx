@@ -1,21 +1,19 @@
 import autobind from "autobind-decorator";
-import { PropTypes } from "prop-types";
 import * as React from "react";
-import { match } from "react-router-dom";
 
-import { Post } from "../../api/models";
-import { AppContext, AppContextTypes } from "../../app";
+import { PostPreview } from "../../api/models";
+import { AppContext } from "../../app";
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
+import { IconSize } from "../../components/icon";
 import Image, { ImageFitVariant } from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import Sticky from "../../components/sticky";
+import formatTime from "../../util/formatTime";
 import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
-import Comments from "../flowComponents/comments";
-import Featured from "../flowComponents/featured";
-import { ContentSection, SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
-import SidebarGrid from "../flowComponents/sidebarGrid";
+import Author from "../flowComponents/author";
+import { ContentSection, SidebarPostProductListSection } from "../flowComponents/section";
 import { ProductProps } from "./types";
 
 import "./style.scss";
@@ -35,6 +33,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
         const {
             product,
             relatedProducts,
+            postsForProduct,
             reviews,
             wishlisted,
             toggleWishlist,
@@ -105,6 +104,24 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                             </div>
                         </div>
                     )}
+                    {postsForProduct && (
+                        <ContentSection title="How our Trendsetters wear this product">
+                            <Carousel>
+                                {postsForProduct.map(post => (
+                                    <div>
+                                        <CarouselItem
+                                            fit={ImageFitVariant.SCALED}
+                                            imageUrl={post.cover_image && post.cover_image.small_image_url}
+                                            redirectUrl={`/post/${post.id}`}
+                                            title={post.author && post.author.username}
+                                            detail={post.title}
+                                            subdetail={ this._renderPostFooter(post) }
+                                        />
+                                    </div>
+                                ))}
+                            </Carousel>
+                        </ContentSection>
+                    )}
                     {relatedProducts && (
                         <ContentSection title="You may also like">
                             <Carousel slidesToShow={relatedProducts.length >= 5 ? 5 : relatedProducts.length}>
@@ -144,4 +161,27 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
             />
         </div>);
     }
+
+    @autobind
+    private _renderPostFooter(post: PostPreview) {
+        return (
+            <>
+                <div className="author-date">
+                    <Author author={post.author} />
+                    {formatTime(post.created)}
+                </div>
+                <div className="post-card-footer">
+                    <ActionLinks
+                        iconSize={IconSize.MEDIUM}
+                        variant={ActionLinksVariant.POST}
+                        id={post.id}
+                        wishlisted={post.wishlisted}
+                        liked={post.liked}
+                        likes={post.likes}
+                    />
+                </div>
+            </>
+        );
+    }
+
 }
