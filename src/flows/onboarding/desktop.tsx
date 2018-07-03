@@ -29,7 +29,7 @@ export default function DesktopOnboarding({
             <p className="get-started">
                 Get started by following featured influencers
             </p>
-            <div className="follow-container">
+            <div className="onboarding-follow-container">
                 {influencers.map(influencer => (
                     <FollowInfluencer
                         followed={followed.has(influencer.id)}
