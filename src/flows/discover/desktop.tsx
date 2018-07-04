@@ -75,6 +75,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
         this.setState({
             posts: posts.list,
+            postParam,
             nextToken: posts.nextToken,
             trendingPosts: trendingPosts,
             featuredTrendnines: featuredTrendnines,
