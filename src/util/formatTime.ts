@@ -14,7 +14,7 @@ export default function formatTime(date: string) {
         return `${Math.floor(timediff / MONTH)}month`;
     } else if (timediff / WEEK >= 1) {
         return `${Math.floor(timediff / WEEK)}w`;
-    } else if (timediff / DAY >= 2) {
+    } else if (timediff / DAY >= 1) {
         return `${Math.floor(timediff / DAY)}d`;
     } else {
         return "Today";
