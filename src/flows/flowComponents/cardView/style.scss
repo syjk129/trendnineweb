@@ -96,7 +96,7 @@
 .product-card {
     .card-title-container {
         height: auto;
-        margin-bottom: $base-spacing;
+        margin-bottom: 0;
 
         .title {
             font-family: $font-family-serif;
@@ -126,6 +126,8 @@
 
     .product-card-brand {
         font-size: $font-size-2;
+        max-height: $line-height-1 * 2;
+        overflow: hidden;
     }
 
     .product-card-price {

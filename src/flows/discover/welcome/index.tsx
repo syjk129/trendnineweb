@@ -6,6 +6,7 @@ import Image from "../../../components/image";
 import RouteProps from "../../routeProps";
 
 import * as HandBagImage from "./handbags.png";
+import * as InfluencerImage from "./influencer.png";
 import * as SummerImage from "./summer.png";
 import * as WelcomeImage from "./welcome.png";
 
@@ -77,9 +78,22 @@ export default function Welcome({ history, location }: RouteProps) {
                     </Button>
                 </div>
                 <div className="welcome-banner">
+                    <Image src={InfluencerImage} />
+                    <Button
+                        className="slide-3-view"
+                        inline
+                        rounded
+                        variant={ButtonVariant.SECONDARY}
+                        size={ButtonSize.WIDE}
+                        onClick={() => history.push("/discover?tags=summer")}
+                    >
+                        Shop her style
+                    </Button>
+                </div>
+                <div className="welcome-banner">
                     <Image src={HandBagImage} />
                     <Button
-                        className="slide-3-shop"
+                        className="slide-4-shop"
                         inline
                         rounded
                         variant={ButtonVariant.SECONDARY}

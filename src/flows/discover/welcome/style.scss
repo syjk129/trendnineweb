@@ -43,9 +43,18 @@
         right: 3%;
     }
 
-    .slide-3-shop {
+    .slide-3-view {
         position: absolute;
         bottom: 25%;
-        right: 10%;
+        left: 20%;
+        transform: translateX(-50%);
+        width: auto;
+    }
+
+    .slide-4-shop {
+        position: absolute;
+        bottom: 25%;
+        right: 18%;
+        transform: translateX(50%);
     }
 }
