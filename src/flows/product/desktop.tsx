@@ -104,7 +104,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                             </div>
                         </div>
                     )}
-                    {postsForProduct && (
+                    {postsForProduct && postsForProduct.length > 0 && (
                         <ContentSection title="How Influencers wear it">
                             <Carousel>
                                 {postsForProduct.map(post => (
@@ -122,7 +122,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                             </Carousel>
                         </ContentSection>
                     )}
-                    {relatedProducts && (
+                    {relatedProducts && relatedProducts.length > 0 && (
                         <ContentSection title="You may also like">
                             <Carousel slidesToShow={relatedProducts.length >= 5 ? 5 : relatedProducts.length}>
                                 {relatedProducts.map(product => (
