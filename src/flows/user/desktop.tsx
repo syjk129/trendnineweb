@@ -92,6 +92,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                                 {user.id !== influencer.id && (
                                     <div className="follow-container">
                                         <FollowButton
+                                            followed={profile.followed}
                                             user={ influencer }
                                         />
                                     </div>

@@ -25,6 +25,7 @@ export default function UserCard({ user, following }: UserCardProps) {
             </div>
             <div className="post-card-footer">
                 <FollowButton
+                    followed={following}
                     user={ user }
                 />
             </div>

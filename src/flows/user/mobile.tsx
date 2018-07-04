@@ -124,6 +124,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                 </div>
                 <div className="follow-container">
                     <FollowButton
+                        followed={profile.followed}
                         user={ influencer }
                     />
                 </div>

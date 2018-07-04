@@ -9,6 +9,7 @@ import { Person } from "../../api/models";
 
 interface FollowButtonProps {
     user: Person;
+    followed: boolean;
 }
 
 interface FollowButtonState {
@@ -19,7 +20,7 @@ export default class FollowButton extends React.Component<FollowButtonProps, Fol
     static contextTypes: AppContext;
 
     state: FollowButtonState = {
-        followed: this.props.user.followed,
+        followed: this.props.followed,
     };
 
     render() {
@@ -27,7 +28,8 @@ export default class FollowButton extends React.Component<FollowButtonProps, Fol
             <Button
                 rounded
                 variant={this.state.followed ? ButtonVariant.PRIMARY : ButtonVariant.OUTLINE}
-                onClick={this._toggleSubscribe}>
+                onClick={this._toggleSubscribe}
+            >
                 {this.state.followed ? "Unfollow" : "Follow"}
             </Button>
         );
