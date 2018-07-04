@@ -108,7 +108,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     }
 
     private _authenticateFacebook = async (response: FacebookLoginResponse) => {
-        const token = this.context.api.authenticateFacebook(response.code);
+        const token = await this.context.api.authenticateFacebook(response.code);
         this._setToken(token);
         await this._setLoggedInUser();
         this.props.setLoggedState(true);
