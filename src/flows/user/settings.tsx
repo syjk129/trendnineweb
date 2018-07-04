@@ -69,7 +69,6 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         } else {
             return null;
         }
-
         const className = isMobile ? "settings-auth-form mobile-auth-form" : "settings-auth-form";
 
         return (
@@ -161,7 +160,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                         </div>
                         <div className="link-buttons-container">
                             <input type="submit" style={{ display: "none" }} />
-                            <Button rounded onClick={this._onSubmit}>Save Changes</Button>
+                            <Button className="save-changes" rounded onClick={this._onSubmit}>Save Changes</Button>
                             <Button rounded onClick={this._getUserData} variant={ButtonVariant.OUTLINE}>Cancel</Button>
                         </div>
                     </form>

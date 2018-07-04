@@ -79,7 +79,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
             trendingPosts: trendingPosts,
             featuredTrendnines: featuredTrendnines,
             recommendedTrendnines: recommendedTrendnines,
-            postParam: postParam,
             isLoading: false,
         });
     }

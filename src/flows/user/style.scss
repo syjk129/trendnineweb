@@ -81,10 +81,14 @@
 }
 
 .mobile-auth-form {
-    padding: 60px;
-
     button {
         margin-bottom: $base-spacing;
+    }
+
+    .save-changes {
+        &:first-of-type {
+            margin-right: $base-spacing;
+        }
     }
 
     input {
@@ -179,7 +183,6 @@
 
 .mobile-user {
     padding: $mobile-page-spacing;
-    padding-top: $mobile-page-spacing * 2;
     background-color: $base-background-color;
 
     .user-name {

@@ -81,7 +81,6 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     onClick={() => setContent(UserContentType.FOLLOWING)}
                 >
                     <p>FOLLOWING</p>
-                    <p>{profile.following_count || 0}</p>
                 </NavLink>
             }
             {isSelf &&

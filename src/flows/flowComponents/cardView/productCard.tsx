@@ -1,7 +1,8 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import Card from "../../../components/card";
-import { IconVariant } from "../../../components/icon";
+import { IconSize, IconVariant } from "../../../components/icon";
 import ActionLinks, { ActionLinksVariant } from "../actions";
 
 import "./style.scss";
@@ -32,6 +33,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
                     <p className="product-card-price">${product.price}</p>
                     <div className="product-action-btns">
                         <ActionLinks
+                            iconSize={isMobile && gridSize !== 2 ? IconSize.LARGE : IconSize.MEDIUM}
                             variant={ActionLinksVariant.PRODUCT}
                             id={product.id}
                             wishlisted={product.wishlisted}

@@ -55,46 +55,19 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
             fetchNextContent,
         } = this.props;
 
-        const influencer = profile ? profile.user : null;
+        const person = profile ? profile.user : null;
 
-        if (!content || !influencer) {
+        if (!content || !person) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
+        const isSelf = profile.user.id === user.id;
+        const isInfluencer = profile.user.auth_level === 2;
 
         return (
             <div className="mobile-user">
-                <div className="user-name">
-                    {influencer.username}
-                </div>
-                <div className="user-details">
-                    <div className="user-image">
-                        <Image
-                            src={influencer.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
-                            circle
-                            square
-                        />
-                    </div>
-                    <div className="introduction">
-                        {influencer.introduction}
-                    </div>
-                </div>
-                {user.id !== influencer.id && (
-                    <div className="follow-container">
-                        <FollowButton
-                            user={ influencer }
-                        />
-                    </div>
+                {isInfluencer && (
+                    this._renderInfluencerProfile(profile)
                 )}
-                <div className="activity-container">
-                    <div className="activity-item">
-                        <span className="identifier">TODAY</span>
-                        <span className="count">{profile.today_view_count}</span>
-                    </div>
-                    <div className="activity-item">
-                        <span className="identifier">TOTAL</span>
-                        <span className="count">{profile.total_view_count}</span>
-                    </div>
-                </div>
                 <UserTabs
                     userId={userId}
                     isSelf={user.id === userId}
@@ -124,6 +97,57 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
     @autobind
     private _setGridSize(gridSize: number) {
         this.setState({ gridSize });
+    }
+
+    private _renderInfluencerProfile = (profile: any) => {
+        const influencer = profile.user;
+        if (!influencer) {
+            return null;
+        }
+
+        return (
+            <>
+                <div className="user-name">
+                    {influencer.username}
+                </div>
+                <div className="user-details">
+                    <div className="user-image">
+                        <Image
+                            src={influencer.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
+                            circle
+                            square
+                        />
+                    </div>
+                    <div className="introduction">
+                        {influencer.introduction}
+                    </div>
+                </div>
+                <div className="follow-container">
+                    <FollowButton
+                        user={ influencer }
+                    />
+                </div>
+                <div className="activity-container">
+                    <div className="activity-item">
+                        <span className="identifier">TODAY</span>
+                        <span className="count">{profile.today_view_count}</span>
+                    </div>
+                    <div className="activity-item">
+                        <span className="identifier">TOTAL</span>
+                        <span className="count">{profile.total_view_count}</span>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
+    private _renderUserProfile = () => {
+        return (
+            <>
+                <div className="user-name">
+                </div>
+            </>
+        );
     }
 
     @autobind
