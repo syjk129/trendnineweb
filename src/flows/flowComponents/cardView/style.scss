@@ -82,7 +82,8 @@
 
 .card-content {
     .card-title-container {
-        height: $line-height-1 * 2;
+        height: 50px;
+        // height: $line-height-1 * 2;
         overflow: hidden;
         text-overflow: ellipsis;
         margin-bottom: $large-spacing;
