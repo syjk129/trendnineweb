@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 import { LinkButton } from "../../components/button";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
@@ -10,242 +11,285 @@ export default function TermsAndConditions() {
     const isShop = pathname.indexOf("/shop") > -1;
     const prevPage = isShop ? "Shop" : "Discover";
     const prevPageUrl = isShop ? "/shop/home" : "/discover";
+    const renderContent = () => {
+        return (
+            <div>
+                <h3>Terms of Use</h3>
+                <p>
+                    By accessing or using the TrendNine website, the TrendNine service, or any applications (including mobile applications) made available by TrendNine (together, the "Service"), however accessed, you agree to be bound by these terms of use ("Terms of Use"). The Service is owned or controlled by TrendNine, Inc. (”TrendNine"). These Terms of Use affect your legal rights and obligations. If you do not agree to be bound by all of these Terms of Use, do not access or use the Service.
+                </p>
+                <p>
+                    There may be times when we offer a special feature that has its own terms and conditions that apply in addition to these Terms of Use. In those cases, the terms specific to the special feature control to the extent there is a conflict with these Terms of Use.
+                </p>
+                <p>
+                    The TrendNine Terms of Use define how You may use the Service. The TrendNine Terms of Use can be found&nbsp;here&nbsp;and are incorporated into this Policy by reference. Therefore, by agreeing to this Policy, you agree that your engagement with and use of the Service are governed by the Terms of Use in effect at the time of your use.
+                </p>
+                <p>
+                    ARBITRATION NOTICE: EXCEPT IF YOU OPT-OUT AND EXCEPT FOR CERTAIN TYPES OF DISPUTES DESCRIBED IN THE ARBITRATION SECTION BELOW, YOU AGREE THAT DISPUTES BETWEEN YOU AND TrendNine WILL BE RESOLVED BY BINDING, INDIVIDUAL ARBITRATION AND YOU WAIVE YOUR RIGHT TO PARTICIPATE IN A CLASS ACTION LAWSUIT OR CLASS-WIDE ARBITRATION.
+                </p>
+
+                <p>
+                </p><h5>Basic Terms</h5>
+                <ol>
+                    <li>
+                        You must be at least 13 years old to use the Service.
+                        </li>
+                    <li>
+                        You may not post violent, nude, discriminatory, unlawful, infringing, hateful, pornographic, or sexually suggestive photos or other content via the Service.
+                        </li>
+                    <li>
+                        You are responsible for any activity that occurs through your account and you agree you will not sell, transfer, license or assign your account, followers, username, or any account rights. With the exception of people or businesses that are expressly authorized to create accounts on behalf of their employers or clients, TrendNine prohibits the creation of and you agree that you will not create an account for anyone other than yourself. You also represent that all information you provide or provided to TrendNine upon registration and at all other times will be true, accurate, current and complete and you agree to update your information as necessary to maintain its truth and accuracy.
+                        </li>
+                    <li>
+                        You agree that you will not solicit, collect or use the login credentials of other TrendNine users.
+                        </li>
+                    <li>
+                        You are responsible for keeping your password secret and secure.
+                        </li>
+                    <li>
+                        You must not defame, stalk, bully, abuse, harass, threaten, impersonate or intimidate people or entities and you must not post private or confidential information via the Service, including, without limitation, your or any other person's banking, credit card, or other similar financial account information, social security or alternate national identity numbers, non-public phone numbers or non-public email addresses.
+                        </li>
+                    <li>
+                        You may not use the Service for any illegal or unauthorized purpose. You agree to comply with all laws, rules and regulations (for example, federal, state, local and provincial) applicable to your use of the Service and your Content (defined below), including but not limited to, copyright laws.
+                        </li>
+                    <li>
+                        You are solely responsible for your conduct and any data, text, files, information, usernames, images, graphics, photos, profiles, audio and video clips, sounds, musical works, works of authorship, applications, links and other content or materials (collectively, "Content") that you submit, post or display on or via the Service. “Content” also includes all information, data, text, graphics, photographs, content, and other materials on your Instagram account and blog at the URL identified at application, and you are deemed to have submitted such Content for inclusion on our Service. You agree that you are solely responsible for all of your Content and that any such Content is considered both non-confidential and non-proprietary.
+                        </li>
+                    <li>
+                        You must not change, modify, adapt or alter the Service or change, modify or alter another website so as to falsely imply that it is associated with the Service or TrendNine.
+                        </li>
+                    <li>
+                        You must not access TrendNine’s private API by means other than those permitted by TrendNine.
+                        </li>
+                    <li>
+                        You must not create or submit unwanted email, comments, likes or other forms of commercial or harassing communications (also known as "spam") to any TrendNine users.
+                        </li>
+                    <li>
+                        You must not use domain names or web URLs in your username without prior written consent from TrendNine.
+                        </li>
+                    <li>
+                        You must not interfere or disrupt the Service or servers or networks connected to the Service, including by transmitting any worms, viruses, spyware, malware or any other code of a destructive or disruptive nature. You may not inject content or code or otherwise alter or interfere with the way any TrendNine page is rendered or displayed in a user's browser or device.
+                        </li>
+                    <li>
+                        You must not create accounts with the Service through unauthorized means, including but not limited to, by using an automated device, script, bot, spider, crawler or scraper.
+                        </li>
+                    <li>
+                        You must not attempt to restrict another user from using or enjoying the Service and you must not encourage or facilitate violations of these Terms of Use or any other TrendNine terms.
+                        </li>
+                    <li>
+                        Violation of these Terms of Use may, in TrendNine’s sole discretion, result in termination of your TrendNine account. You understand and agree that TrendNine cannot and will not be responsible for the Content posted on the Service and you use the Service at your own risk. If you violate the letter or spirit of these Terms of Use, or otherwise create risk or possible legal exposure for TrendNine, we can stop providing all or part of the Service to you.
+                        </li>
+                </ol>
+                <p></p>
+                <p>
+                </p><h5>General Conditions</h5>
+                <ol>
+                    <li>
+                        We reserve the right to modify or terminate the Service or your access to the Service for any reason, without notice, at any time, and without liability to you. If we terminate your access to the Service or deactivate your account, your photos, comments, likes, friendships, and all other data will no longer be accessible through your account (e.g., users will not be able to navigate to your username and view your photos), but those materials and data may persist and appear within the Service (e.g., if your Content has been reshared by others).
+                            </li>
+                    <li>
+                        Upon termination, all licenses and other rights granted to you in these Terms of Use will immediately cease.
+                            </li>
+                    <li>
+                        We reserve the right, in our sole discretion, to change these Terms of Use ("Updated Terms") from time to time. Unless we make a change for legal or administrative reasons, we will provide reasonable advance notice before the Updated Terms become effective. You agree that we may notify you of the Updated Terms by posting them on the Service, and that your use of the Service after the effective date of the Updated Terms (or engaging in such other conduct as we may reasonably specify) constitutes your agreement to the Updated Terms. Therefore, you should review these Terms of Use and any Updated Terms before using the Service. The Updated Terms will be effective as of the time of posting, or such later date as may be specified in the Updated Terms, and will apply to your use of the Service from that point forward. These Terms of Use will govern any disputes arising before the effective date of the Updated Terms.
+                            </li>
+                    <li>
+                        We reserve the right to refuse access to the Service to anyone for any reason at any time.</li>
+                    <li>
+                        We reserve the right to force forfeiture of any username for any reason.</li>
+                    <li>
+                        We may, but have no obligation to, remove, edit, block, and/or monitor Content or accounts containing Content that we determine in our sole discretion violates these Terms of Use.</li>
+                    <li>
+                        You are solely responsible for your interaction with other users of the Service, whether online or offline. You agree that TrendNine is not responsible or liable for the conduct of any user. TrendNine reserves the right, but has no obligation, to monitor or become involved in disputes between you and other users.</li>
+                    <li>
+                        There may be links from the Service, or from communications you receive from the Service, to third-party web sites or features. There may also be links to third-party web sites or features in images or comments within the Service. The Service also includes third-party content that we do not control, maintain or endorse. Functionality on the Service may also permit interactions between the Service and a third-party web site or feature, including applications that connect the Service or your profile on the Service with a third-party web site or feature. For example, the Service may include a feature that enables you to share Content from the Service or your Content with a third party, which may be publicly posted on that third party's service or application. Using this functionality typically requires you to login to your account on the third-party service and you do so at your own risk. TrendNine does not control any of these third-party web services or any of their content. You expressly acknowledge and agree that TrendNine is in no way responsible or liable for any such third-party services or features. YOUR CORRESPONDENCE AND BUSINESS DEALINGS WITH THIRD PARTIES FOUND THROUGH THE SERVICE ARE SOLELY BETWEEN YOU AND THE THIRD PARTY. You may choose, at your sole and absolute discretion and risk, to use applications that connect the Service or your profile on the Service with a third-party service (each, an "Application") and such Application may interact with, connect to or gather and/or pull information from and to your Service profile. By using such Applications, you acknowledge and agree to the following: (i) if you use an Application to share information, you are consenting to information about your profile on the Service being shared; (ii) your use of an Application may cause personally identifying information to be publicly disclosed and/or associated with you, even if TrendNine has not itself provided such information; and (iii) your use of an Application is at your own option and risk, and you will hold the TrendNine Parties (defined below) harmless for activity related to the Application.</li>
+                    <li>
+                        You agree that you are responsible for all data charges you incur through use of the Service.</li>
+                    <li>
+                        We prohibit crawling, scraping, caching or otherwise accessing any content on the Service via automated means, including but not limited to, user profiles and photos (except as may be the result of standard search engine protocols or technologies used by a search engine with TrendNine’s express consent).</li>
+                </ol>
+                <p></p>
+                <p></p>
+                <p>
+                </p><h5>Account Registration</h5>
+                <p>
+                    In order to register, you are required to provide your username, email address and password. You are also able to add a profile picture and bio, and add user preferences.
+                    </p>
+                <p>All personal details disclosed by you on the Services will be collected and processed in accordance with our <a href="/privacy" target="_blank">Privacy Policy.</a> You warrant that all the information you provide to us is accurate and complete.</p>
+                <p>
+                    You agree to register with TrendNine and use your account solely for personal use. You may not authorize others to use your account.
+                    </p>
+                <p>
+                    You are solely responsible for keeping your registration and other personal details (including your username and password) for your account confidential.
+                    </p>
+                <p>
+                    You shall promptly notify TrendNine of any actual or suspected unauthorized third party access to your account. You shall cooperate with, and assist, us in any action or proceedings by us to prevent or otherwise deal with any unauthorized receipt, access or use of your account by any third party.
+                    </p><p>
+                    You warrant that all registration information and personal details provided to TrendNine is true and accurate.
+                    </p><p>
+                    Facebook Connect
+                    </p><p>
+                    You can also register using Facebook Connect, which allows you to register with TrendNine via your Facebook account. If you decide to do this, you give us permission to access basic information from your Facebook account. This information is collected by Facebook and is provided to us under the terms of Facebook’s privacy policy. We have no control over individual account privacy settings on such services or policies on how your personal information will be used. You and Facebook are in control of these matters, not us. Before using these features, you are encouraged to read all policies and information on Facebook to learn more about how they handle your information.
+                    </p>
+                <p>TrendNine is not responsible for any acts or omissions by Facebook and any connected social media service providers' use of features that come from Facebook's platform.</p>
+                <p>
+                </p><h5>Buying Products Through TrendNine</h5>
+                <p>
+                    TrendNine is an online intermediary which partners with third party brands to give you a wide array of fashion items to purchase.
+                    </p>
+                <p>
+                    When you select a particular product that you wish to buy, you will be taken directly to the third party TrendNine merchant (the "TrendNine Partner") website and asked to provide further personal details, which are likely to include your billing and delivery address, and payment card details. You are being taken here because that TrendNine Partner is not part of our Integrated Checkout service, which may still be in development. The personal details you enter on these TrendNine Partner websites will be collected, stored and processed in accordance with the terms and conditions and privacy policy of these websites. You must read and accept the terms and conditions and privacy and cookie policies of the TrendNine Partner website before purchasing your items from them. TrendNine is not responsible for the terms and conditions, privacy policies of and/or practices on other sites. The TrendNine Partners are solely responsible for any and all issues related to products and services offered on their websites, including but not limited to issues arising from the processing of your transactions on the TrendNine Partner websites. We are only responsible for personal information collected on the Services.
+                    </p>
+                <p>
+                    <h5>Rights Applicable to Content Publishers</h5>
+                </p><ol>
+                    <li>
+                        TrendNine does not claim ownership of any Content that you post on or through the Service. Instead, you hereby grant to TrendNine a non-exclusive, fully paid and royalty-free, transferable, sub-licensable, worldwide license to:
+                                <ul>
+                            <li>
+                                Use, exploit, distribute, reproduce, modify, adapt, tag, publish, translate, publicly perform, and publicly display any Content (or any modification thereto), in whole or in part, in any format or medium now known or later developed;
+                                    </li>
+                            <li>
+                                Use (and permit others to use) Content (either posted on the Service or any other site/blog you own and/or operate) in any manner and for any purpose (including, without limitation, commercial purposes) that we deem appropriate in our sole discretion (including, without limitation, to incorporate Content or any modification thereto, in whole or in part, into any technology, product, or service);
+                                    </li>
+                            <li>
+                                Display advertisements in connection with Content and to use Content for advertising and promotional purposes. The manner, mode and extent of such advertising and promotions are subject to change without specific notice to you;
+                                    </li>
+                            <li>
+                                Have the option, but not the obligation, to pre-screen Content or monitor any area of the Service through which Content may be submitted. We are not required to host, display, or distribute any Content on or through the Service and may remove at any time or refuse any Content for any reason (including, without limitation, filtering objectionable material, removing offensive content, and blocking abusive users from the service). We are not responsible for any loss, theft, or damage of any kind to any Content.
+                                    </li>
+                        </ul>
+                    </li>
+                    <li>
+                        You acknowledge that we may not always identify paid services, sponsored content, or commercial communications as such.
+                            </li>
+                    <li>
+                        You represent and warrant that: (i) you own the Content posted by you on or through the Service or otherwise have the right to grant the rights and licenses set forth in these Terms of Use; (ii) the posting and use of your Content on or through the Service does not violate, misappropriate or infringe on the rights of any third party, including, without limitation, privacy rights, publicity rights, copyrights, trademark and/or other intellectual property rights; (iii) you agree to pay for all royalties, fees, and any other monies owed by reason of Content you post on or through the Service; and (iv) you have the legal right and capacity to enter into these Terms of Use in your jurisdiction.
+                            </li>
+                    <li>
+                        The Service contains content owned or licensed by TrendNine (”TrendNine Content"). TrendNine Content is protected by copyright, trademark, patent, trade secret and other laws, and, as between you and TrendNine, TrendNine owns and retains all rights in the TrendNine Content and the Service. You will not remove, alter or conceal any copyright, trademark, service mark or other proprietary rights notices incorporated in or accompanying the TrendNine Content and you will not reproduce, modify, adapt, prepare derivative works based on, perform, display, publish, distribute, transmit, broadcast, sell, license or otherwise exploit the TrendNine Content.
+                            </li>
+                    <li>
+                        The TrendNine name and logo are trademarks of TrendNine, and may not be copied, imitated or used, in whole or in part, without the prior written permission of TrendNine. In addition, all page headers, custom graphics, button icons and scripts are service marks, trademarks and/or trade dress of TrendNine, and may not be copied, imitated or used, in whole or in part, without prior written permission from TrendNine.
+                            </li>
+                    <li>
+                        Although it is TrendNine’s intention for the Service to be available as much as possible, there will be occasions when the Service may be interrupted, including, without limitation, for scheduled maintenance or upgrades, for emergency repairs, or due to failure of telecommunications links and/or equipment. Also, TrendNine reserves the right to remove any Content from the Service for any reason, without prior notice. Content removed from the Service may continue to be stored by TrendNine, including, without limitation, in order to comply with certain legal obligations, but may not be retrievable without a valid court order. Consequently, TrendNine encourages you to maintain your own backup of your Content. In other words, TrendNine is not a backup service and you agree that you will not rely on the Service for the purposes of Content backup or storage. TrendNine will not be liable to you for any modification, suspension, or discontinuation of the Services, or the loss of any Content. You also acknowledge that the Internet may be subject to breaches of security and that the submission of Content or other information may not be secure.
+                            </li>
+                    <li>
+                        You agree that TrendNine is not responsible for, and does not endorse, Content posted within the Service. TrendNine does not have any obligation to prescreen, monitor, edit, or remove any Content. If your Content violates these Terms of Use, you may bear legal responsibility for that Content.
+                            </li>
+                    <li>
+                        Except as otherwise described in the Service's Privacy Policy, as between you and TrendNine, any Content will be non-confidential and non-proprietary and we will not be liable for any use or disclosure of Content. You acknowledge and agree that your relationship with TrendNine is not a confidential, fiduciary, or other type of special relationship, and that your decision to submit any Content does not place TrendNine in a position that is any different from the position held by members of the general public, including with regard to your Content. None of your Content will be subject to any obligation of confidence on the part of TrendNine, and TrendNine will not be liable for any use or disclosure of any Content you provide.
+                            </li>
+                    <li>
+                        It is TrendNine’s policy not to accept or consider content, information, ideas, suggestions or other materials other than those we have specifically requested and to which certain specific terms, conditions and requirements may apply. This is to avoid any misunderstandings if your ideas are similar to those we have developed or are developing independently. Accordingly, TrendNine does not accept unsolicited materials or ideas, and takes no responsibility for any materials or ideas so transmitted. If, despite our policy, you choose to send us content, information, ideas, suggestions, or other materials, you further agree that TrendNine is free to use any such content, information, ideas, suggestions or other materials, for any purposes whatsoever, including, without limitation, developing and marketing products and services, without any liability or payment of any kind to you.
+                            </li>
+                </ol>
+                <p></p>
+                <p></p>
+                <p>
+                </p><h5>Reporting Copyright and Other IP Violations</h5>
+                <p>
+                    We respect other people's rights, and expect you to do the same. If you repeatedly infringe other people's intellectual property rights, we will disable your account when appropriate.
+                        </p>
+                <p></p>
+                <p>
+                    Please note that the Services covered by this Privacy Policy may offer content (e.g., contests, sweepstakes, promotions, games, applications, or social network integrations) that is sponsored by or co-branded with identified third parties. By virtue of these relationships, the third parties may obtain information from their visitors. We have no control over these third parties' use of this information, which is subject to their own privacy policies.
+                    </p>
+                <p></p>
+                <p>
+                </p><h5>Disclaimer of Warranties</h5>
+                <p>
+                    THE SERVICE, INCLUDING, WITHOUT LIMITATION, TrendNine CONTENT, IS PROVIDED ON AN "AS IS", "AS AVAILABLE" AND "WITH ALL FAULTS" BASIS. TO THE FULLEST EXTENT PERMISSIBLE BY LAW, NEITHER TrendNine NOR ANY OF THEIR EMPLOYEES, MANAGERS, OFFICERS OR AGENTS (COLLECTIVELY, THE " TrendNine PARTIES") MAKE ANY REPRESENTATIONS OR WARRANTIES OR ENDORSEMENTS OF ANY KIND WHATSOEVER, EXPRESS OR IMPLIED, AS TO: (A) THE SERVICE; (B) THE TrendNine CONTENT; (C) USER CONTENT; OR (D) SECURITY ASSOCIATED WITH THE TRANSMISSION OF INFORMATION TO TrendNine OR VIA THE SERVICE. IN ADDITION, THE TrendNine PARTIES HEREBY DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, TITLE, CUSTOM, TRADE, QUIET ENJOYMENT, SYSTEM INTEGRATION AND FREEDOM FROM COMPUTER VIRUS.
+                        </p>
+                <p>THE TrendNine PARTIES DO NOT REPRESENT OR WARRANT THAT THE SERVICE WILL BE ERROR-FREE OR UNINTERRUPTED; THAT DEFECTS WILL BE CORRECTED; OR THAT THE SERVICE OR THE SERVER THAT MAKES THE SERVICE AVAILABLE IS FREE FROM ANY HARMFUL COMPONENTS, INCLUDING, WITHOUT LIMITATION, VIRUSES. THE TrendNine PARTIES DO NOT MAKE ANY REPRESENTATIONS OR WARRANTIES THAT THE INFORMATION (INCLUDING ANY INSTRUCTIONS) ON THE SERVICE IS ACCURATE, COMPLETE, OR USEFUL. YOU ACKNOWLEDGE THAT YOUR USE OF THE SERVICE IS AT YOUR SOLE RISK. THE TrendNine PARTIES DO NOT WARRANT THAT YOUR USE OF THE SERVICE IS LAWFUL IN ANY PARTICULAR JURISDICTION, AND THE TrendNine PARTIES SPECIFICALLY DISCLAIM SUCH WARRANTIES. SOME JURISDICTIONS LIMIT OR DO NOT ALLOW THE DISCLAIMER OF IMPLIED OR OTHER WARRANTIES SO THE ABOVE DISCLAIMER MAY NOT APPLY TO YOU TO THE EXTENT SUCH JURISDICTION'S LAW IS APPLICABLE TO YOU AND THESE TERMS OF USE.</p>
+                <p>
+                    BY ACCESSING OR USING THE SERVICE YOU REPRESENT AND WARRANT THAT YOUR ACTIVITIES ARE LAWFUL IN EVERY JURISDICTION WHERE YOU ACCESS OR USE THE SERVICE.
+                    </p>
+                <p>
+                    THE TrendNine PARTIES DO NOT ENDORSE CONTENT AND SPECIFICALLY DISCLAIM ANY RESPONSIBILITY OR LIABILITY TO ANY PERSON OR ENTITY FOR ANY LOSS, DAMAGE (WHETHER ACTUAL, CONSEQUENTIAL, PUNITIVE OR OTHERWISE), INJURY, CLAIM, LIABILITY OR OTHER CAUSE OF ANY KIND OR CHARACTER BASED UPON OR RESULTING FROM ANY CONTENT.
+                    </p>
+                <p></p>
+                <p>
+                </p><h5>Limitation of Liability; Waiver</h5>
+                <p>
+                    UNDER NO CIRCUMSTANCES WILL THE TrendNine PARTIES BE LIABLE TO YOU FOR ANY LOSS OR DAMAGES OF ANY KIND (INCLUDING, WITHOUT LIMITATION, FOR ANY DIRECT, INDIRECT, ECONOMIC, EXEMPLARY, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL LOSSES OR DAMAGES) THAT ARE DIRECTLY OR INDIRECTLY RELATED TO: (A) THE SERVICE; (B) THE TrendNine CONTENT; (C) USER CONTENT; (D) YOUR USE OF, INABILITY TO USE, OR THE PERFORMANCE OF THE SERVICE; (E) ANY ACTION TAKEN IN CONNECTION WITH AN INVESTIGATION BY THE TrendNine PARTIES OR LAW ENFORCEMENT AUTHORITIES REGARDING YOUR OR ANY OTHER PARTY'S USE OF THE SERVICE; (F) ANY ACTION TAKEN IN CONNECTION WITH COPYRIGHT OR OTHER INTELLECTUAL PROPERTY OWNERS; (G) ANY ERRORS OR OMISSIONS IN THE SERVICE'S OPERATION; OR (H) ANY DAMAGE TO ANY USER'S COMPUTER, MOBILE DEVICE, OR OTHER EQUIPMENT OR TECHNOLOGY INCLUDING, WITHOUT LIMITATION, DAMAGE FROM ANY SECURITY BREACH OR FROM ANY VIRUS, BUGS, TAMPERING, FRAUD, ERROR, OMISSION, INTERRUPTION, DEFECT, DELAY IN OPERATION OR TRANSMISSION, COMPUTER LINE OR NETWORK FAILURE OR ANY OTHER TECHNICAL OR OTHER MALFUNCTION, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOST PROFITS, LOSS OF GOODWILL, LOSS OF DATA, WORK STOPPAGE, ACCURACY OF RESULTS, OR COMPUTER FAILURE OR MALFUNCTION, EVEN IF FORESEEABLE OR EVEN IF THE TrendNine PARTIES HAVE BEEN ADVISED OF OR SHOULD HAVE KNOWN OF THE POSSIBILITY OF SUCH DAMAGES, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE, STRICT LIABILITY OR TORT (INCLUDING, WITHOUT LIMITATION, WHETHER CAUSED IN WHOLE OR IN PART BY NEGLIGENCE, ACTS OF GOD, TELECOMMUNICATIONS FAILURE, OR THEFT OR DESTRUCTION OF THE SERVICE). IN NO EVENT WILL THE TrendNine PARTIES BE LIABLE TO YOU OR ANYONE ELSE FOR LOSS, DAMAGE OR INJURY, INCLUDING, WITHOUT LIMITATION, DEATH OR PERSONAL INJURY. SOME STATES DO NOT ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE LIMITATION OR EXCLUSION MAY NOT APPLY TO YOU. IN NO EVENT WILL THE TrendNine PARTIES TOTAL LIABILITY TO YOU FOR ALL DAMAGES, LOSSES OR CAUSES OR ACTION EXCEED ONE HUNDRED UNITED STATES DOLLARS ($100.00).
+                    </p>
+                <p>THAT ARISE OUT OF TRENDNINE’S ACTS OR OMISSIONS, THE DAMAGES, IF ANY, CAUSED TO YOU ARE NOT IRREPARABLE OR SUFFICIENT TO ENTITLE YOU TO AN INJUNCTION PREVENTING ANY EXPLOITATION OF ANY WEB SITE, SERVICE, PROPERTY, PRODUCT OR OTHER CONTENT OWNED OR CONTROLLED BY THE TrendNine PARTIES, AND YOU WILL HAVE NO RIGHTS TO ENJOIN OR RESTRAIN THE DEVELOPMENT, PRODUCTION, DISTRIBUTION, ADVERTISING, EXHIBITION OR EXPLOITATION OF ANY WEB SITE, PROPERTY, PRODUCT, SERVICE, OR OTHER CONTENT OWNED OR CONTROLLED BY THE TrendNine PARTIES.</p>
+                <p>BY ACCESSING THE SERVICE, YOU UNDERSTAND THAT YOU MAY BE WAIVING RIGHTS WITH RESPECT TO CLAIMS THAT ARE AT THIS TIME UNKNOWN OR UNSUSPECTED, AND IN ACCORDANCE WITH SUCH WAIVER, YOU ACKNOWLEDGE THAT YOU HAVE READ AND UNDERSTAND, AND HEREBY EXPRESSLY WAIVE, THE BENEFITS OF SECTION 1542 OF THE CIVIL CODE OF CALIFORNIA, AND ANY SIMILAR LAW OF ANY STATE OR TERRITORY, WHICH PROVIDES AS FOLLOWS: "A GENERAL RELEASE DOES NOT EXTEND TO CLAIMS WHICH THE CREDITOR DOES NOT KNOW OR SUSPECT TO EXIST IN HIS FAVOR AT THE TIME OF EXECUTING THE RELEASE, WHICH IF KNOWN BY HIM MUST HAVE MATERIALLY AFFECTED HIS SETTLEMENT WITH THE DEBTOR."</p>
+                <p>TrendNine IS NOT RESPONSIBLE FOR THE ACTIONS, CONTENT, INFORMATION, OR DATA OF THIRD PARTIES, AND YOU RELEASE US, OUR DIRECTORS, OFFICERS, EMPLOYEES, AND AGENTS FROM ANY CLAIMS AND DAMAGES, KNOWN AND UNKNOWN, ARISING OUT OF OR IN ANY WAY CONNECTED WITH ANY CLAIM YOU HAVE AGAINST ANY SUCH THIRD PARTIES.</p>
+                <p></p>
+                <p>
+                </p><h5>Indemnification</h5>
+                <p>
+                    You (and also any third party for whom you operate an account or activity on the Service) agree to defend (at TrendNine’s request), indemnify and hold the TrendNine Parties harmless from and against any claims, liabilities, damages, losses, and expenses, including without limitation, reasonable attorney's fees and costs, arising out of or in any way connected with any of the following (including as a result of your direct activities on the Service or those conducted on your behalf): (i) your Content or your access to or use of the Service; (ii) your breach or alleged breach of these Terms of Use; (iii) your violation of any third-party right, including without limitation, any intellectual property right, publicity, confidentiality, property or privacy right; (iv) your violation of any laws, rules, regulations, codes, statutes, ordinances or orders of any governmental and quasi-governmental authorities, including, without limitation, all regulatory, administrative and legislative authorities; or (v) any misrepresentation made by you. You will cooperate as fully required by TrendNine in the defense of any claim. TrendNine reserves the right to assume the exclusive defense and control of any matter subject to indemnification by you, and you will not in any event settle any claim without the prior written consent of TrendNine.
+                    </p>
+                <p></p>
+
+                <p>
+                </p><h5>Arbitration</h5>
+                <p>
+                    Except if you opt-out or for disputes relating to: (1) your or TrendNine’s intellectual property (such as trademarks, trade dress, domain names, trade secrets, copyrights and patents); (2) violations of the API Terms; or (3) violations of provisions 13 or 15 of the Basic Terms, above ("Excluded Disputes"), you agree that all disputes between you and TrendNine (whether or not such dispute involves a third party) with regard to your relationship with TrendNine, including without limitation disputes related to these Terms of Use, your use of the Service, and/or rights of privacy and/or publicity, will be resolved by binding, individual arbitration under the American Arbitration Association's rules for arbitration of consumer-related disputes and you and TrendNine hereby expressly waive trial by jury. As an alternative, you may bring your claim in your local "small claims" court, if permitted by that small claims court's rules. You may bring claims only on your own behalf. Neither you nor TrendNine will participate in a class action or class-wide arbitration for any claims covered by this agreement. You also agree not to participate in claims brought in a private attorney general or representative capacity, or consolidated claims involving another person's account, if TrendNine is a party to the proceeding. This dispute resolution provision will be governed by the Federal Arbitration Act. In the event the American Arbitration Association is unwilling or unable to set a hearing date within one hundred and sixty (160) days of filing the case, then either TrendNine or you can elect to have the arbitration administered instead by the Judicial Arbitration and Mediation Services. Judgment on the award rendered by the arbitrator may be entered in any court having competent jurisdiction. Any provision of applicable law notwithstanding, the arbitrator will not have authority to award damages, remedies or awards that conflict with these Terms of Use.
+                    </p>
+                <p>If the prohibition against class actions and other claims brought on behalf of third parties contained above is found to be unenforceable, then all of the preceding language in this Arbitration section will be null and void. This arbitration agreement will survive the termination of your relationship with TrendNine.</p>
+                <p></p>
+                <p>
+                </p><h5>Time Limitation on Claims</h5>
+                <p>
+                    You agree that any claim you may have arising out of or related to your relationship with TrendNine must be filed within one year after such claim arose; otherwise, your claim is permanently barred.
+                    </p>
+                <p></p>
+                <p>
+                </p><h5>Governing Law &amp; Venue</h5>
+                <p>
+                    These Terms of Use are governed by and construed in accordance with the laws of the State of California, without giving effect to any principles of conflicts of law AND WILL SPECIFICALLY NOT BE GOVERNED BY THE UNITED NATIONS CONVENTIONS ON CONTRACTS FOR THE INTERNATIONAL SALE OF GOODS, IF OTHERWISE APPLICABLE. For any action at law or in equity relating to the arbitration provision of these Terms of Use, the Excluded Disputes or if you opt out of the agreement to arbitrate, you agree to resolve any dispute you have with TrendNine exclusively in a state or federal court located in Santa Clara, California, and to submit to the personal jurisdiction of the courts located in Santa Clara County for the purpose of litigating all such disputes.
+                    </p>
+                <p>
+                    If any provision of these Terms of Use is held to be unlawful, void, or for any reason unenforceable during arbitration or by a court of competent jurisdiction, then that provision will be deemed severable from these Terms of Use and will not affect the validity and enforceability of any remaining provisions. TrendNine’s failure to insist upon or enforce strict performance of any provision of these Terms will not be construed as a waiver of any provision or right. No waiver of any of these Terms will be deemed a further or continuing waiver of such term or condition or any other term or condition. TrendNine reserves the right to change this dispute resolution provision, but any such changes will not apply to disputes arising before the effective date of the amendment. This dispute resolution provision will survive the termination of any or all of your transactions with TrendNine.
+                    </p>
+                <p></p>
+                <p>
+                </p><h5>Entire Agreement</h5>
+                <p>
+                    If you are using the Service on behalf of a legal entity, you represent that you are authorized to enter into an agreement on behalf of that legal entity. These Terms of Use constitute the entire agreement between you and TrendNine and governs your use of the Service, unless any prior agreements were made between you and TrendNine. You will not assign the Terms of Use or assign any rights or delegate any obligations hereunder, in whole or in part, whether voluntarily or by operation of law, without the prior written consent of TrendNine. Any purported assignment or delegation by you without the appropriate prior written consent of TrendNine will be null and void. TrendNine may assign these Terms of Use or any rights hereunder without your consent. If any provision of these Terms of Use is found by a court of competent jurisdiction to be invalid or otherwise unenforceable, the parties nevertheless agree that such portion will be deemed severable from these Terms of Use and will not affect the validity and enforceability of the remaining provisions, and the remaining provisions of the Terms of Use remain in full force and effect. Neither the course of conduct between the parties nor trade practice will act to modify the Terms of Use. These Terms of Use do not confer any third-party beneficiary rights.
+                    </p>
+                <p></p>
+                <p>
+                </p><h5>Territorial Restrictions</h5>
+                <p>
+                    The information provided within the Service is not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law or regulation or which would subject Instagram to any registration requirement within such jurisdiction or country. We reserve the right to limit the availability of the Service or any portion of the Service, to any person, geographic area, or jurisdiction, at any time and in our sole discretion, and to limit the quantities of any content, program, product, service or other feature that Instagram provides.
+                    </p>
+                <p>
+                    Software related to or made available by the Service may be subject to United States export controls. Thus, no software from the Service may be downloaded, exported or re-exported: (a) into (or to a national or resident of) any country to which the United States has embargoed goods; or (b) to anyone on the U.S. Treasury Department's list of Specially Designated Nationals or the U.S. Commerce Department's Table of Deny Orders. By downloading any software related to the Service, you represent and warrant that you are not located in, under the control of, or a national or resident of, any such country or on any such list.
+                    </p>
+                <p>
+                    The effective date of these Terms of Use is June 18, 2018. These Terms of Use were written in English (US). To the extent any translated version of these Terms of Use conflicts with the English version, the English version controls.
+                    </p>
+                <p></p>
+
+                Updated as of: July 4, 2018
+
+            </div>
+        );
+    };
 
     return (
-        <div className="static-content">
-            <Sidebar>
+        <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
+            <PageNavigation />
+            <BrowserView device={isBrowser}>
+                <Sidebar>
+                    <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Terms &amp; Conditions
+                </Sidebar>
+                <Content>
+                    {renderContent()}
+                </Content>
+            </BrowserView>
+            <MobileView device={isMobile}>
+            <div className="mobile-link-button">
                 <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Terms &amp; Conditions
-            </Sidebar>
-            <Content>
-                <PageNavigation />
-                <div>
-                    <h3>Privacy Policy</h3>
-                    <p>
-                        TrendNine Inc. (”TrendNine", "we", “us”, “our”) provides its services through the TrendNine.com website (the "Site"), certain software applications downloadable to supported mobile devices, consumer electronic devices and other mechanisms (collectively, the “Applications”). Our service, the Site Content (defined below), and any other features, tools, materials, products and services we offer through the Portals are collectively referred to as the “Service”.
-                    </p>
-                    <p>
-                        This Privacy Policy (this “Policy”) explains how the Service collects and uses certain personally identifiable information and non-personally identifiable information provided by You or Your computer, mobile device, consumer electronic device or other mechanism. This Policy also explains how TrendNine uses and maintains that information, and with whom it may be shared. Your use of the Service, and/or Your participation in activities and offerings through the Service, represents Your agreement with TrendNine to be bound by this Policy. Please understand that this is a binding legal agreement. If You do not want to comply with this Policy, then You should not use the Service, so please read this Policy carefully.
-                    </p>
-                    <p>
-                        The TrendNine Terms of Use define how You may use the Service. The TrendNine Terms of Use can be found&nbsp;here&nbsp;and are incorporated into this Policy by reference. Therefore, by agreeing to this Policy, you agree that your engagement with and use of the Service are governed by the Terms of Use in effect at the time of your use.
-                    </p>
-                    <p>
-                        This Policy may be modified at any time and from time to time by TrendNine. The current version of this Policy can always be found under the “Privacy Policy” button on the Site. You can tell if there have been changes to this Policy by checking the date at the bottom of the Policy page. Your continued use of the Service after an update to the Policy will constitute Your acceptance of, and agreement to be bound by, the updated version of the Policy.
-                    </p>
-                    <p>
-                        <b>PLEASE NOTE:</b>&nbsp;<u>You must be at least 13 years of age to use the Service and engage in activities through the Service. If You are not at least 13 years old, You should not be accessing Site Content, using the Service or submitting any PII ("Personally Identifiable Information").</u>
-                    </p>
-                    <p>
-                        </p><h5>Types of Information Collected</h5>
-                        <p>
-                            We receive both information that is directly provided to us, such as personal information you provide when you visit the Services, and information that is passively or automatically collected from you, such as anonymous information collected from your browser or device. In this Privacy Policy, we refer to all of this as the “Information”.
-                        </p>
-                        <p>
-                            </p><ol>
-                                <li>
-                                    Information You Provide To Us. One type of Information is the kind that you provide to us that can identify You as a specific individual. We only collect PII when You provide it to us directly in order to register as a member, participate in certain activities on the Service, or communicate with us. In the course of these various offerings, we often seek to collect from you various forms of information, such as: name, address, e-mail address, telephone number, and credit card information.
-                                </li>
-                                <li>
-                                    Information That is Passively or Automatically Collected. Another type of information is the kind of non-personally identifiable information (“NPII”) collected and stored using automated methods. We, and our “Partners” who include affiliates, third party service providers, advertisers, advertising networks and platforms, agencies, and distribution or other partners may use automated means to collect various types of Information about you, your computer or other device used to access our Services. A representative, non-exhaustive list of the types of automatically collected information may include: network or Internet protocol address and type of browser you are using (e.g., Chrome, Safari, Firefox, Internet Explorer), the type of operating system you are using, (e.g., Microsoft Windows or Mac OS), the name of your Internet service provider (e.g., Comcast, Verizon or AT&amp;T) and domains used by such providers, mobile network, device identifiers (such as an Apple IDFA or an Android Advertising ID), device settings, browser settings, the web pages of the Services you have visited, Services visited before and after you visit a Service, the type of handheld or mobile device used to view the Service (e.g., iOS, Android), your geographic location information, and the content and advertisements you have accessed, seen, forwarded and/or clicked on.
-                                </li>
-                                <li>
-                                    Information Collected By and From Social Media Services and Other Third Party Platforms. You also can engage with our content on or through social media services or other third party platforms, such as Facebook, or other third-party social media plug-ins, integrations and applications. When you engage with our content on or through social media services or other third party platforms, plug-ins, integrations or applications, you may allow us to have access to certain Information in your profile. This may include your name, e-mail address, photo, gender, birthday, location, an ID associated with the applicable third party platform or social media account user files, like photos and videos, your list of friends or connections, people you follow and/or who follow you, or your posts or “likes.” For a description on how social media services and other third party platforms, plug-ins, integrations or applications handle your information, please refer to their respective privacy policies and terms of use, which may permit you to modify your privacy settings. When we interact with you through our content on third party websites, applications, integrations or platforms, we may obtain any information regarding your interaction with that content, such as content you have viewed, your game performance, high scores, and information about advertisements within the content you have been shown or may have clicked on.
-                                </li>
-                            </ol>
-                        <p></p>
-                    <p></p>
-                    <p>
-                        </p><h5>Collection of PII</h5>
-                        <p>
-                            TrendNine collects PII in the following ways:
-                            </p><ol>
-                                <li>
-                                    If You register as a member on the Service or participate in certain activities on the Service, You will be asked to provide a limited amount of PII to allow us to establish Your account, personalize Your experience on the Service, and communicate with You in connection with Your use of the Service.&nbsp;<b>You can edit the PII in Your account at any time by logging into the Site and clicking the “My Account” button.</b>
-                                </li>
-                                <li>
-                                    When You notify us of a problem with any Site Content or the operation of the Service, or when You submit a suggestion, complaint, question, request, or any other e-mail correspondence, TrendNine asks for Your e-mail address so that You can receive a response. This information will only be used to notify You that we have received Your communication and to address Your comments or concerns. As used herein, “Site Content” includes the (i) photographs, videos, and other content available on the Service, (ii) any postings, submissions and profiles of registered members of the Service if they elect to make their postings, submissions and profiles public, (iii) any other software provided by or accessed through the Service, and (iv) any other content offered on or through the Service, including images, text, quotations, trademarks, logos, layout, design, interface, audio and video materials and stills.
-                                </li>
-                                <li>
-                                    When You post any PII on the Service, that posting will be stored on the Service. Please also note that if You post Your PII on the Service where it can be viewed by other visitors, Your PII becomes visible and available to those people.
-                                </li>
-                            </ol>
-                        <p></p>
-                        <p>
-                            <b>
-                                By providing us with Your PII, You are representing that You are over 13 years of age and You are authorizing our use and disclosure of Your PII as described in this Policy and any subsequent revisions to this Policy that we may publish on the Service.
-                                Collection of NPII
-                            </b>
-                        </p>
-                    <p></p>
-                    <p>
-                        As is the case with many websites, we gather certain technical and statistical information automatically and store it in log files. This Information is not personally identifiable to You. It may include Your computer’s, mobile device’s, consumer electronic device’s or other mechanism’s IP address or other unique identifier, Your Internet service provider, Your domain server, Your type of computer, mobile device, consumer electronic device or other mechanism, Your type of web browser and operating system, Your geographic location, Your traffic sources, Your activity on the Service, and statistical information regarding the pages that You visit, content usage and software installation. We use this NPII to better understand how the Service is used, to customize Your experience on the Service, and to help us improve the quality of the Service. We may also use this information on an aggregated statistical basis, both to understand general use of and interaction with the Service, as well as to analyze market trends, requirements, interests and similar information.
-                    </p>
-                    <p>
-                        In addition, certain NPII may be collected by TrendNine and our third-party advertising providers to monitor the usage of and to serve advertising to the Service that is targeted to You based on Your visits to the Service and other websites. Such information could include, by way of example, the number of times You view an advertisement but not PII relating to You. Certain of our third-party advertising providers are members of the Network Advertising Initiative (“NAI”), which offers a tool that allows You to “opt-out” of receiving targeted advertising from NAI members on websites using cookies, like ours. Learn more about the NAI and “opting-out” at:&nbsp;<a target="_blank" href="http://www.networkadvertising.org/choices/#completed">http://www.networkadvertising.org/choices/#completed</a>. Please note that opting out does not mean You will no longer receive any online advertising. You will still receive non-targeted ads when You’re online.
-                    </p>
-                    <p>
-                        We may also share aggregated statistical NPII with third-parties, including our distributors, vendors, actual and potential customers and third-parties that offer products or services for use with the Service. This information is not linked to any PII.
-                    </p>
-                    <p>
-                        NPII is typically collected through cookies, web beacons, or similar technologies. Cookies are pieces of information that the Service sends to Your device while You are visiting and using the Service. Web beacons allow us and our business partners to track Your activity on the Service but will not track activity off the Service. The Service does not currently recognize automated web browser tracking method signals, such as “do not track” instructions. You can change Your privacy preferences regarding the use of cookies and other technologies through Your browser, including blocking all cookies and disabling web beacons; however blocking all cookies may affect Your use of certain features of the Service and other websites and services online, and may prevent You from using all the features of our Service and other websites and services.
-                    </p>
-                    <p>
-                        </p><h5>Use of Information</h5>
-                        <p>
-                            We, along with our Partners, may use the Information to:
-                            </p><ol>
-                                <li>
-                                    provide and communicate with you about the Services or your account with us,
-                                </li>
-                                <li>
-                                    fulfill your requests regarding the Services, including without limitation requests for newsletters and notifications,
-                                </li>
-                                <li>
-                                    respond to your inquiries, and notify you if you have won a contest,
-                                </li>
-                                <li>
-                                    communicate with you about other products, programs or services that we believe may be of interest to you,
-                                </li>
-                                <li>
-                                    enforce the legal terms (including without limitation our policies and terms of service) that govern your use of our Services, and/or for the purposes for which you provided the Information,
-                                </li>
-                                <li>
-                                    provide technical support for the Services,
-                                </li>
-                                <li>
-                                    prevent fraud or potentially illegal activities (including, without limitation, copyright infringement) on or through the Services,
-                                </li>
-                                <li>
-                                    protect the safety of our Users,
-                                </li>
-                                <li>
-                                    customize or personalize ads, offers and content made available to you based on your visits to and/or usage of the Services or other online or mobile websites, applications, platforms or services, and analyze the performance of those ads, offers and content, as well as your interaction with them,
-                                </li>
-                                <li>
-                                    perform analysis regarding how you use the Services or any part thereof,
-                                </li>
-                                <li>
-                                    send gifts, cards, invitations or emails if you use these services, to your designated recipients.
-                                </li>
-                            </ol>
-                        <p></p>
-                        <p>
-                            When you provide information from your social media account, it can help enable us to do things like (1) give you exclusive content, (2) personalize your online experience with us within and outside our Services, (3) contact you through the social media service or directly by sending you the latest news, special offerings, and rewards, and (4) enable you to share your experience and content via social media services. When you provide information about yourself to us through an application, through our Services, or on social media services or other third party platforms, it may be publicly viewed by other members of these services and we cannot prevent further use of the information by third parties.
-                        </p>
-                        <p>
-                            We or a Partner may use “cookies” or similar technologies to associate certain of the Information with a unique identifier that then associates the Information with your device or browser. Sometimes, we may associate cookies with the Information, including de-identified, “hashed,” or anonymous versions of Information you have provided (such as during registration), in order to send or help our Partners send ads and offers based on your presumed interests or demographic information.
-                            We may combine any of the Information we collect, for any of the above purposes, and may sometimes enhance the Information with other information that we obtain from third party sources. Please also be aware if you register and create a profile with our Service, the username you select as well as other content you submit to your profile (e.g., photos, comments, video, reviews) will be displayed publicly on the Service, is searchable, can be found by third parties and may be reused and redistributed by us in our sole discretion. See our Terms of Use for details on our use of content you submit.
-                        </p>
-                    <p></p>
-                    <p>
-                        </p><h5>Use of Personally Identifiable Information</h5>
-                        <p>
-                            TrendNine reserves the right to use Your PII: (1) for the specific purpose for which such information was provided; (2) for the purposes disclosed at the time such information is provided; or (3) as disclosed in this Policy. However, please note that, as described above, we may change this Policy at any time. Therefore additional uses of Your PII may be authorized in the future. You should check for updates to this Policy regularly in order to ensure You know how Your PII may be used and with whom it may be shared.
-                        </p>
-                        <p>
-                            TrendNine may use Your PII to notify You about new features and other news and offers You may find valuable. You can opt out of these emails at the time You register or by following the "unsubscribe" instructions in any email. You can also unsubscribe any time You log into Your account by going to Your user profile and selecting the email opt-out button there. But please note that when You request to be notified of upcoming releases, You'll be automatically 'opted back in' so that we can send You the requested information.
-                        </p>
-                        <p>
-                            TrendNine will not share Your PII with third parties (other than third parties we use to help provide and support the Service), except in the following circumstances:
-                            </p><ol>
-                                <li>
-                                    If You participate in certain activities through the Service (such as prize drawings), Your PII may be shared or otherwise disclosed, including when we announce contest winners and award prizes. The rules provided by TrendNine for these activities will inform You about these other uses of Your PII.
-                                </li>
-                                <li>
-                                    If TrendNine, or all or a portion of its business, is acquired by one or more third parties as a result of an acquisition, merger, sale, reorganization, or similar event, Your PII may be transferred to the third party as a result of that event.
-                                </li>
-                                <li>
-                                    TrendNine reserves the right to disclose Your PII when we believe that disclosure is necessary to protect our rights or the rights of other visitors, and/or to comply with a judicial or regulatory proceeding, court order, legal process, government request, or in similar circumstances.
-                                </li>
-                            </ol>
-                        <p></p>
-                    <p></p>
-                    <p>
-                        </p><h5>Information Sharing and Disclosure</h5>
-                        <p>
-                            We may disclose the Information as follows:
-                            </p><ol>
-                                <li>
-                                    To service providers or Partners that we have engaged to perform business-related functions on our behalf. This may include service providers that: (a) conduct research and analytics; (b) create content; (c) provide customer, technical or operational support; (d) conduct or support marketing (such as email or advertising platforms); (e) fulfill orders and user requests; (f) handle payments; (g) host our Services, forums and online communities; (h) administer contests; (i) maintain databases; (j) send or support online or mobile advertising; and (k) otherwise support our Services.
-                                </li>
-                                <li>
-                                    In response to legal process, for example, in response to a court order or a subpoena, a law enforcement or government agency's request or similar request.
-                                </li>
-                                <li>
-                                    With third parties in order to investigate, prevent, or take action (in our sole discretion) regarding potentially illegal activities, suspected fraud, situations involving potential threats to any person, us, or the Services, or violations of our policies, the law or our Terms of Use, to verify or enforce compliance with the policies governing our Services.
-                                    We may transfer some or all of your Information if we, or one of our business units, undergoes a business transition, like a merger, acquisition by another company, or sale of all or part of our assets, or if a substantial portion of our or of a business unit’s assets is sold or merged in this way.
-                                </li>
-                                <li>
-                                    We may share the Information with affiliates, so they can provide, improve and communicate with you about their own, or their marketing partners’ products and services.
-                                </li>
-                                <li>
-                                    We may share the Information with unaffiliated Partners and third parties (e.g., our third party service providers, advertisers, advertising networks and platforms, agencies, other marketers, magazine publishers, retailers, participatory databases, and non-profit organizations) that wish to market products or services to you. If you wish to opt out from such sharing please visit the How to Contact Us/Opting Out of Marketing Communications section below for further instructions.
-                                </li>
-                            </ol>
-                        <p></p>
-                        <p>
-                            Please note that the Services covered by this Privacy Policy may offer content (e.g., contests, sweepstakes, promotions, games, applications, or social network integrations) that is sponsored by or co-branded with identified third parties. By virtue of these relationships, the third parties may obtain information from their visitors. We have no control over these third parties' use of this information, which is subject to their own privacy policies.
-                        </p>
-                    <p></p>
-                    <p>
-                        </p><h5>Cookies and Other User and Ad-Targeting Technologies.</h5>
-                        <p>
-                            We use cookies and other technologies both to provide our Services to you and to advertise to you. We also may work with Partners to help them advertise to you when you visit other websites or mobile applications, and to help them perform user analytics. These technologies may also be used to analyze how our Users interact with advertising on our Services and elsewhere, and more generally, to learn more about our Users and what services or offers you might prefer to receive. We describe some of these technologies below.
-                            </p><ol>
-                                <li>
-                                    Cookies. To enhance your online experience, we and our Partners use "cookies", “web beacons” or other tracking technologies. Cookies are text files placed in your computer's browser to store your preferences. We use cookies or other tracking technologies to understand Service and Internet usage and to improve or customize the products, content, offerings, services or advertisements on our Services. For example, we may use cookies to personalize your experience at our Services (e.g., to recognize you by name when you return to a Service), save your password in password-protected areas, and enable you to use shopping carts on our Services. We also may use cookies or other tracking technologies to help us offer you products, content, offerings or services that may be of interest to you and to deliver relevant advertising when you visit this Service, an affiliate’s service, or when you visit other websites or applications. We or a third party platform with whom we work may place or recognize a unique cookie on your browser to enable you to receive customized content, offers, services or advertisements on our Services or other sites. These cookies contain no information intended to identify you personally. The cookies may be associated with de-identified demographic or other data linked to or derived from data you voluntarily have submitted to us (e.g., your email address) that we may share with a service provider solely in hashed, non-human readable form. We, our third party service providers, advertisers, advertising networks and platforms, agencies, or our Partners also may use cookies or other tracking technologies to manage and measure the performance of advertisements displayed on or delivered by or through our network and/or other networks or Services. This also helps us, our service providers and Partners provide more relevant advertising.
-                                </li>
-                                <li>
-                                    Syncing Cookies and Identifiers. We may work with our Partners (for instance, third party ad platforms) to synchronize unique, anonymous identifiers (such as those associated with cookies) in order to match our Partners’ uniquely coded user identifiers to our own. We may do this, for instance, to enhance data points about a particular unique browser or device, and thus enable us or others to send ads that are more relevant, match Users to their likely product interests, or better synchronize, cap, or optimize advertising.
-                                </li>
-                                <li>
-                                    Locally Stored Objects. Affiliated services may employ locally stored objects (“LSOs”) and other client side storage tracking technologies in certain situations where they help to provide a better user experience, such as to remember settings, preferences and usage similar to browser cookies, or in order to target or help our Partners target ads, analyze ad performance, or perform user, website or market analytics. For LSOs utilized by Adobe Flash you can access Flash management tools from Adobe’s website The words “Adobe’s website”. In addition, some, but not all browsers, provide the ability to remove LSOs, sometimes within cookie and privacy settings.
-                                </li>
-                                <li>
-                                    Disabling Cookies. Most web browsers are set up to accept cookies. You may be able to set your browser to warn you before accepting certain cookies or to refuse certain cookies. However, if you disable the use of cookies in your web browser, some features of the Services may be difficult to use or inoperable. We may work with certain third-party companies that use techniques other than HTTP cookies to recognize your computer or device and/or to collect and record information about your web surfing activity, including those integrated with our Services. Please keep in mind that your web browser may not permit you to block the use of these techniques, and those browser settings that block conventional cookies may have no effect on such techniques.
-                                </li>
-                                <li>
-                                    Web Beacons. We and our Partners may also use "web beacons" or clear GIFs, or similar technologies, which are small pieces of code placed on a Service or in an email, to monitor the behavior and collect data about the visitors viewing a Service or email. For example, web beacons may be used to count the users who visit a web page or to deliver a cookie to the browser of a visitor viewing that Service. Web beacons may also be used to provide information on the effectiveness of our email campaigns (e.g., open rates, clicks, forwards, etc.).
-                                </li>
-                                <li>
-                                    Mobile Device Identifiers and SDKs. We also sometimes use, or partner with publishers, publisher-facing, or app developer platforms that use mobile Software Development Kits (“SDKs”), or use an SDK with a mobile app that we offer, to collect Information, such as mobile identifiers (e.g., IDFAs and Android Advertising IDs), and Information connected to how mobile devices interact with our Services and those using our Services. A mobile SDK is the mobile app version of a web beacon (see “Web Beacons” above). The SDK is a bit of computer code that app developers can include in their apps to enable ads to be shown, data to be collected, and related services or analytics to be performed. We may use this technology to deliver or help our Partners deliver certain advertising through mobile applications and browsers based on information associated with your mobile device. If you’d like to opt-out from having ads tailored to you in this way on your mobile device, please follow the instructions in the “Your Ad Choices” section below.
-                                </li>
-                            </ol>
-                        <p></p>
-                        <p>
-                            By visiting the Service, whether as a registered user or otherwise, you acknowledge, and agree that you are giving us your consent to track your activities and your use of the Service through the technologies described above, as well as similar technologies developed in the future, and that we may use such tracking technologies in the emails we send to you.
-                        </p>
-                        <p>
-                            Our unaffiliated Partners and third parties may themselves set and access their own tracking technologies when you visit our Services and they may have access to information about you and your online activities over time and across different websites or applications when you use the Service. Their use of such tracking technologies is not in our control and is subject to their own privacy policies.
-                        </p>
-                    <p></p>
-                    <p>
-                        </p><h5>Other Important Information About Your Privacy</h5>
-                        <p>
-                            </p><ol>
-                                <li>
-                                    Linked Services. TrendNine may provide links or pointers to the websites, services and software of certain third parties, such as Facebook, Instagram, Twitter, LinkedIn, and other media services and platforms whose information practices may be different than ours. Visitors should consult these other services' privacy notices as we have no control over information that is submitted to, or collected by, these third parties.&nbsp;<b>If You link to any of these third party websites, services or software, this Policy and the User Terms will not apply to Your use of those websites, services and software. We encourage You to read the legal notices posted on those websites and/or provided in connection with the third party products and services, including their privacy policies.</b>&nbsp;TrendNine shall have no responsibility or liability for Your experience with, and the data collection and use practices of, such third party websites, services and software. All inquiries concerning the privacy policies and terms of use of any third party website, service or software provider should be communicated to that third party. In addition, TrendNine makes no representation as to the quality, performance or content of (a) any such third party websites, services or software, or (b) any third party advertisements displayed on or through the Service. You acknowledge and agree that any access or use that You make of the same is at Your own risk and TrendNine has no responsibility or liability for damages or other costs, expenses or claims, of any kind and based on any theory of law or equity, including negligence, arising out of such access or use. Nothing in the fact that TrendNine provides links or pointers to any third party website, service or software, or allows You to access such websites, services or software from the Service, should be construed as an endorsement or representation by TrendNine with respect to such websites, services or software. Likewise, nothing in the fact that TrendNine displays third party advertising on the Service should be construed as an endorsement or representation by TrendNine with respect to the third party advertiser or the advertised products or services.
-                                </li>
-                                <li>
-                                    International Transfer, and Notice for Users Outside of the United States. You should be aware that the United States and other countries have not harmonized their privacy regulations. We have written this Policy to satisfy United States regulations. By using the Service, You agree to the level of privacy protection set out in this Policy.
-                                </li>
-                                <li>
-                                    Data Security. We have implemented technical, administrative and physical security measures to protect the information we collect, both PII and NPII, from unauthorized access and improper use. We keep that information on servers that are protected by firewalls and which we maintain or which are maintained by third parties under contract with us. From time to time, we review our security procedures in order to consider appropriate new technology and methods. Please be aware though, that, despite our reasonable efforts, no security measures are impenetrable and any connection You make with the Service or information You transmit to the Service will be at Your own risk.
-                                </li>
-                                <li>
-                                    How You Can Access or Correct Information. Access to certain personal Information that is collected from our Services and that we maintain may be available to you. For example, if you created a password-protected account within our Service, you can access that account to review the Information you provided.
-                                </li>
-                                <li>
-                                    Questions or Concerns. If you have any questions or concerns regarding TrendNine's policies or practices relating to privacy, or if you would like to opt out from our sharing of your personal Information with unaffiliated third parties for the third parties' direct marketing purposes you may contact our Privacy Policy Coordinator at privacy@TrendNine.com and request that we opt you out of such sharing. We may ask you to provide additional information for identity verification purposes, or to verify that you are in possession of an applicable email account.
-                                </li>
-                            </ol>
-                        <p></p>
-                    <p></p>
-
-                    Updated as of: July 1, 2018
-
-                </div>
-            </Content>
+            </div>
+            {renderContent()}
+            </MobileView>
         </div>
     );
 }

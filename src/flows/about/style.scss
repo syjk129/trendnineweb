@@ -7,10 +7,6 @@
     border-bottom: solid $standard-border-width $standard-border-color;
 
     .about-header-title {
-        font-family: $font-family-serif;
-        font-size: $font-size-5;
-        line-height: $line-height-5;
-        font-weight: $font-weight-bold;
         margin-bottom: $base-spacing * 2;
     }
 }
@@ -60,6 +56,7 @@
 
         .image-container {
             width: calc(50% - #{$base-spacing});
+            margin: auto;
         }
 
         .findout-section {
@@ -98,10 +95,6 @@
         padding-top: 125px;
 
         .about-get-title {
-            font-family: $font-family-serif;
-            font-size: $font-size-5;
-            line-height: $line-height-5;
-            font-weight: $font-weight-bold;
             margin-bottom: 3 * $base-spacing;
         }
 

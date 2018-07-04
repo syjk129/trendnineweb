@@ -25,6 +25,29 @@
     }
 }
 
+.mobile-static-content {
+    padding: $mobile-page-spacing;
+    margin-bottom: 0 !important;
+
+    h3 {
+        font-size: $font-size-4 !important;
+        line-height: $line-height-4 !important;
+    }
+
+    .mobile-link-button {
+        display: flex;
+        color: $color-grey-2;
+        display: flex;
+        padding-bottom: 2 * $base-spacing;
+
+        a {
+            color: $color-grey-2;
+            font-size: $font-size-2;
+            line-height: $line-height-2;
+        }
+    }
+}
+
 .static-content {
     display: flex;
     margin-top: $navbar-height;

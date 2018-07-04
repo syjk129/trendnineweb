@@ -1,4 +1,5 @@
 import * as React from "react";
+import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 
 import { LinkButton } from "../../components/button";
 import Content from "../../components/content";
@@ -13,19 +14,14 @@ export default function AboutUs() {
     const isShop = pathname.indexOf("/shop") > -1;
     const prevPage = isShop ? "Shop" : "Discover";
     const prevPageUrl = isShop ? "/shop/home" : "/discover";
-
-    return (
-        <div className="static-content">
-            <Sidebar>
-                <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About
-            </Sidebar>
-            <Content>
-                <PageNavigation />
+    const renderContent = () => {
+        return (
+            <div>
                 <div className="about-header">
-                    <p className="about-header-title">
+                    <h3 className="about-header-title">
                         Welcome to TrendNine <br />
                         <i>Shop in Style</i>
-                    </p>
+                    </h3>
                     <p>Discover and shop your favorite looks from thousands of fashion influencers.</p>
                 </div>
                 <div className="about-information-section">
@@ -71,12 +67,32 @@ export default function AboutUs() {
                 </div>
                 <div className="about-get-section">
                     <div className="about-get-content">
-                        <p className="about-get-title">Get it before it's gone.</p>
+                        <h3 className="about-get-title">Get it before it's gone.</h3>
                         <p>You’ll be the first to know what your favorite influencers wear.</p>
                         <LinkButton className="button rounded button-outline" to={prevPageUrl}>SHOP NOW</LinkButton>
                     </div>
                 </div>
-            </Content>
+            </div>
+        );
+    };
+
+    return (
+        <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
+            <PageNavigation />
+            <BrowserView device={isBrowser}>
+                <Sidebar>
+                    <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About
+                </Sidebar>
+                <Content>
+                { renderContent() }
+                </Content>
+            </BrowserView>
+            <MobileView device={isMobile}>
+                <div className="mobile-link-button">
+                <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About
+                </div>
+                { renderContent() }
+            </MobileView>
         </div>
     );
 }

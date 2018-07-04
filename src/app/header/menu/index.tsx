@@ -71,10 +71,10 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </LinkButton>
                     <LinkButton
                         className="menu-link"
-                        to={isShop ? "/shop/new" : "/new"}
+                        to={isShop ? "/shop/brands" : "/brands"}
                         onClick={this.props.toggleMenu}
                     >
-                       New Arrivals
+                       Brands
                     </LinkButton>
                     <div className="menu-divider" />
                     <LinkButton
@@ -96,6 +96,49 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     <div className="menu-divider" />
                     <LinkButton className="menu-link" onClick={this._logout}>
                         Sign Out
+                    </LinkButton>
+                    <div className="menu-divider" />
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/about" : "/about"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        About Us
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/opportunities" : "/opportunities"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        I'm an Influencer
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/terms" : "/terms"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        Terms &amp; Conditions
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/terms" : "/terms"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        Terms &amp; Conditions
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/privacy" : "/privacy"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        Privacy Policy
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        to={isShop ? "/shop/contact" : "/contact"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        Contact Us
                     </LinkButton>
                 </div>
             </div>

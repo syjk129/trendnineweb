@@ -7,10 +7,6 @@
     border-bottom: solid $standard-border-width $standard-border-color;
 
     .opportunities-header-title {
-        font-family: $font-family-serif;
-        font-size: $font-size-5;
-        line-height: $line-height-5;
-        font-weight: $font-weight-bold;
         margin-bottom: $base-spacing * 2;
     }
 
@@ -109,5 +105,34 @@
     .link-button {
         text-decoration: underline;
         font-size: $font-size-2;
+    }
+}
+
+.mobile-static-content {
+    .opportunities-header {
+        .link-button {
+            width: auto;
+        }
+    }
+
+    .opportunities-apply-section {
+        margin-bottom: 5 * $base-spacing;
+
+        .rounded {
+            width: 100%;
+        }
+    }
+
+    .influencer-benefits {
+        display: block;
+        padding-top: 3 * $base-spacing;
+
+        .benefit-content {
+            margin-bottom: 5 * $base-spacing;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
     }
 }
