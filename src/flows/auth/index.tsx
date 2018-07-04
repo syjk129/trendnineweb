@@ -42,7 +42,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                 const current = (new Date()).getTime() / 1000;
 
                 if (exp > current) {
-                    this.props.history.push("/");
+                    // this.props.history.push("/");
                 } else {
                     localStorage.removeItem("tn_auth_token");
                 }

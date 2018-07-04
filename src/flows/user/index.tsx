@@ -1,9 +1,7 @@
 import autobind from "autobind-decorator";
-import * as H from "history";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
-import { match } from "react-router";
 
 import { Person } from "../../api/models";
 import { AppContext } from "../../app";
@@ -11,7 +9,6 @@ import PageNavigation from "../flowComponents/pageNavigation";
 import { Filters, PostParam } from "../model";
 import RouteProps from "../routeProps";
 import DesktopUser from "./desktop";
-import FollowButton from "./followButton";
 import MobileUser from "./mobile";
 import { UserContentType } from "./types";
 
@@ -39,6 +36,13 @@ export default class User extends React.Component<Props, UserState> {
         postParam: null,
         loadingNext: false,
     };
+
+    componentWillReceiveProps(nextProps: Props) {
+        if (nextProps.location.pathname.split("/")[2] !== this.props.location.pathname.split("/")[2]) {
+            console.log("receive props");
+            this._updateContent(nextProps);
+        }
+    }
 
     componentWillMount() {
         const userName = this.props.match.params.userId;
@@ -85,6 +89,7 @@ export default class User extends React.Component<Props, UserState> {
                 <MobileView device={isMobile}>
                     <MobileUser
                         {...this.state}
+                        {...this.props}
                         user={this._user}
                         userId={this._userId}
                         pathname={location.pathname}
@@ -152,10 +157,10 @@ export default class User extends React.Component<Props, UserState> {
             case UserContentType.FOLLOWER:
                 return this.context.api.getUserFollowers(this._userId, queryString, nextToken);
             case UserContentType.FOLLOWING:
-                return this._user.username === this._userId ? this.context.api.getUserFollowing(this._userId, queryString, nextToken) : null;
+                return (this._user.username === this._userId || this._user.id === this._userId) ? this.context.api.getUserFollowing(this._userId, queryString, nextToken) : null;
             case UserContentType.POST_WISHLIST:
             case UserContentType.PRODUCT_WISHLIST:
-                if (this._user.username !== this._userId) return null;
+                if (this._user.username !== this._userId && this._user.id !== this._userId) return null;
                 const wishlistItems = await this.context.api.getWishlist();
                 if (contentType === UserContentType.POST_WISHLIST) {
                     return wishlistItems.post_items;

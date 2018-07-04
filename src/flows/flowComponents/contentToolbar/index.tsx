@@ -7,6 +7,7 @@ import { Category, FilterSearchResult } from "../../../api/models";
 import { AppContext } from "../../../app";
 import { ContentType } from "../../model";
 import RouteProps from "../../routeProps";
+import { UserContentType } from "../../user/types";
 import MobileContentToolbar from "./mobile";
 import {
     Filter,
@@ -29,7 +30,7 @@ import "./style.scss";
 interface ContentToolbarProps extends RouteProps {
     className?: string;
     // sortType: SortType;
-    contentType: ContentType;
+    contentType: ContentType | UserContentType;
     setGridSize?(size: number): void;
     // setSortType(sortType: SortType): void;
 }
@@ -308,7 +309,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         this.setState({ currentSortType: sortType }, () => this._applyFilters());
     }
 
-    private _getFilterTypes(contentType: ContentType) {
+    private _getFilterTypes(contentType: ContentType | UserContentType) {
         // The goal here is to make this service driven so that we don't need to make changes here if we want to add new filter categories
         switch (contentType) {
             case ContentType.POST:

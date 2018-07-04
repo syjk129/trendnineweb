@@ -29,7 +29,10 @@ export function isAuthError(error: any): error is AuthError {
 }
 
 export async function createErrorFromResponse(responseJson: any) {
-    if (responseJson.status === 401 || responseJson.result === "Unauthorized") {
+    if (responseJson.status === 401 ||
+        responseJson.result === "Unauthorized" ||
+        responseJson.result.indexOf("Permission denied") !== -1
+    ) {
         return new AuthError(new Error(responseJson.statusText));
     }
 

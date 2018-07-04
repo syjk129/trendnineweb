@@ -49,6 +49,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);
         const queryString = location.search;
+        this.setState({ loadingNext: true });
 
         const [
             trendingPosts,
@@ -70,6 +71,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
             recommendedTrendnines: recommendedTrendnines,
             postParam: postParam,
             isLoading: false,
+            loadingNext: false,
         });
     }
 
@@ -141,6 +143,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         if (this.state.nextToken == null) {
             return;
         }
+        this.setState({ loadingNext: true });
 
         const queryString = this.state.postParam.convertUrlParamToQueryString();
         const newPosts = await Promise.resolve(
@@ -152,6 +155,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                 return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
             }),
             nextToken: newPosts.nextToken,
+            loadingNext: false,
         });
     }
 

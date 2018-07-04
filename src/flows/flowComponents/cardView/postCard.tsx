@@ -23,7 +23,7 @@ export default class PostCard extends React.Component<PostCardProps> {
 
         const hoverItem = (
             <div className="card-hover">
-                {post.products.map(product => (
+                {post.products && post.products.map(product => (
                     <div className="post-card-hover-item">
                         <LinkButton
                             className="post-card-hover-btn"
@@ -79,7 +79,7 @@ export default class PostCard extends React.Component<PostCardProps> {
                 imageUrl={post.cover_image && post.cover_image.small_image_url}
                 redirectUrl={`/post/${post.id}`}
                 title={post.title}
-                hoverItem={post.products.length > 0 && hoverItem}
+                hoverItem={post.products && post.products.length > 0 && hoverItem}
                 footerItem={footerItem}
             />
         );

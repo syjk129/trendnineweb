@@ -9,4 +9,10 @@
         margin-bottom: $base-spacing * 10;
         padding: 10px $base-spacing * 5;
     }
+
+    &.mobile {
+        button {
+            margin: $large-spacing * 2 0;
+        }
+    }
 }

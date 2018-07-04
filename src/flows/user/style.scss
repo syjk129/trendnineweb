@@ -112,12 +112,15 @@
     }
 }
 
+.user-nav {
+    border-bottom: $standard-border-width solid $standard-border-color;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+}
+
 .user {
     display: flex;
-
-    .user-nav {
-        border-bottom: $standard-border-width solid $standard-border-color;
-    }
 
     .user-image {
         padding: $base-spacing;

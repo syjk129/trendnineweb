@@ -51,7 +51,6 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
             pathname,
             postParam,
             filterContent,
-            sortContent,
             setContentType,
             fetchNextContent,
         } = this.props;

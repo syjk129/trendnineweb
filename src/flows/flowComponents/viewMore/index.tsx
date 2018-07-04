@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import Button from "../../../components/button";
 import Spinner from "../../../components/spinner";
@@ -11,8 +12,13 @@ interface ViewMoreProps {
 }
 
 export default function ViewMore({ isLoading, onClick }: ViewMoreProps) {
+    let classes = "view-more-container";
+    if (isMobile) {
+        classes += " mobile";
+    }
+
     return (
-        <div className="view-more-container">
+        <div className={classes}>
             {isLoading ? (
                 <Spinner />
             ) : (

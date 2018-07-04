@@ -3,27 +3,20 @@ import * as React from "react";
 
 import { Person } from "../../api/models";
 import Card, { CardContainer } from "../../components/card";
-import Content from "../../components/content";
 import Image from "../../components/image";
-import NavLink from "../../components/navLink";
-import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
-import Sticky from "../../components/sticky";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
-import Filter, { FilterTarget } from "../flowComponents/filter";
-import MobileFilter from "../flowComponents/filter/mobileFilter";
-import { PostRank } from "../flowComponents/ranking";
-import { SidebarSection } from "../flowComponents/section";
-import Tag from "../flowComponents/tag";
+import ContentToolbar from "../flowComponents/contentToolbar";
 import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
+import RouteProps from "../routeProps";
 import FollowButton from "./followButton";
 import UserTabs from "./userTabs";
 
 import Settings from "./settings";
 import { UserContentType } from "./types";
 
-interface MobileUserProps {
+interface MobileUserProps extends RouteProps {
    user: Person;
    userId: string;
    profile: any;
@@ -54,20 +47,17 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
             userId,
             profile,
             content,
+            pathname,
             contentType,
             loadingNext,
             nextToken,
-            pathname,
-            postParam,
-            filterContent,
-            sortContent,
             setContentType,
             fetchNextContent,
         } = this.props;
 
         const influencer = profile ? profile.user : null;
 
-        if (!profile || !content) {
+        if (!content || !influencer) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
@@ -105,9 +95,21 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                         <span className="count">{profile.total_view_count}</span>
                     </div>
                 </div>
-
+                <UserTabs
+                    userId={userId}
+                    isSelf={user.id === userId}
+                    profile={profile}
+                    pathname={pathname}
+                    setContent={setContentType}
+                />
                 {(contentType === UserContentType.POST || contentType === UserContentType.PRODUCT) && (
-                    <MobileFilter setGridSize={this._setGridSize} />
+                    <ContentToolbar
+                        location={this.props.location}
+                        history={this.props.history}
+                        match={this.props.match}
+                        contentType={contentType}
+                        setGridSize={this._setGridSize}
+                    />
                 )}
 
                 {this._renderSettings()}

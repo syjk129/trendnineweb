@@ -3,6 +3,8 @@ import * as React from "react";
 import NavLink from "../../components/navLink";
 import { UserContentType } from "./types";
 
+import "./style.scss";
+
 interface UserTabsProps {
     userId: string;
     isSelf: boolean;
@@ -15,25 +17,25 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
     return (
         <div className="user-nav">
             {profile.blog_post_count > 0 &&
-            <NavLink
-                url={`/user/${userId}/${UserContentType.POST}`}
-                pathname={pathname}
-                selected={pathname === `/user/${userId}`}
-                onClick={() => setContent(UserContentType.POST)}
-            >
-                <p>POSTS</p>
-                <p>{profile.blog_post_count}</p>
-            </NavLink>
+                <NavLink
+                    url={`/user/${userId}/${UserContentType.POST}`}
+                    pathname={pathname}
+                    selected={pathname === `/user/${userId}`}
+                    onClick={() => setContent(UserContentType.POST)}
+                >
+                    <p>POSTS</p>
+                    <p>{profile.blog_post_count}</p>
+                </NavLink>
             }
             {profile.product_count > 0 &&
-            <NavLink
-                url={`/user/${userId}/${UserContentType.PRODUCT}`}
-                pathname={pathname}
-                onClick={() => setContent(UserContentType.PRODUCT)}
-            >
-                <p>PRODUCTS</p>
-                <p>{profile.product_count}</p>
-            </NavLink>
+                <NavLink
+                    url={`/user/${userId}/${UserContentType.PRODUCT}`}
+                    pathname={pathname}
+                    onClick={() => setContent(UserContentType.PRODUCT)}
+                >
+                    <p>PRODUCTS</p>
+                    <p>{profile.product_count}</p>
+                </NavLink>
             }
             {isSelf &&
                 <NavLink

@@ -2,6 +2,7 @@ import * as H from "history";
 import { match } from "react-router-dom";
 
 import { Person } from "../../api/models";
+import { ContentType } from "../model";
 
 export interface UserProps {
     history: H.History;
