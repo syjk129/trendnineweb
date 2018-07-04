@@ -228,7 +228,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                         <CarouselItem
                                             fit={ImageFitVariant.SCALED}
                                             imageUrl={post.cover_image && post.cover_image.small_image_url}
-                                            redirectUrl={`/product/${post.id}`}
+                                            redirectUrl={`/post/${post.id}`}
                                             title={post.author && post.author.username}
                                             detail={post.title}
                                             subdetail={ this._renderPostFooter(post) }

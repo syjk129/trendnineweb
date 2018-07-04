@@ -105,7 +105,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                         </div>
                     )}
                     {postsForProduct && (
-                        <ContentSection title="How our Trendsetters wear this product">
+                        <ContentSection title="How Influencers wear it">
                             <Carousel>
                                 {postsForProduct.map(post => (
                                     <div>
@@ -130,7 +130,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                                         <CarouselItem
                                             fit={ImageFitVariant.SCALED}
                                             imageUrl={product.image && product.image.small_image_url}
-                                            redirectUrl={`/product/${product.id}`}
+                                            redirectUrl={`/post/${product.id}`}
                                             title={product.brand && product.brand.name}
                                             detail={product.title}
                                             subdetail={this._renderProductFooter(product)}
