@@ -139,7 +139,7 @@ export default class Api {
     }
 
     getRelatedPosts(postId: string): Promise<Post> {
-        return this._GET(`/api/v1/posts/${postId}/related?page_size=5`);
+        return this._GET(`/api/v1/posts/${postId}/related?page_size=10`);
     }
 
     getProduct(productId: string): Promise<any> {

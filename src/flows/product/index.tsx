@@ -127,21 +127,6 @@ export default class ProductView extends React.Component<Props, ProductState> {
             this.setState({ wishlisted: true });
         }
     }
-
-    @autobind
-    private _renderProductFooter(product) {
-        return (
-        <div className="post-card-hover-footer">
-            <p className="post-card-hover-price">
-                {`$${product.price}`}
-            </p>
-            <ActionLinks
-                variant={ActionLinksVariant.PRODUCT}
-                id={product.id}
-                wishlisted={product.wishlisted}
-            />
-        </div>);
-    }
 }
 
 ProductView.contextTypes = {

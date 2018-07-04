@@ -48,6 +48,10 @@
     }
 }
 
+.carousel-subdetail {
+    margin-right: $base-spacing * 2;
+}
+
 .mobile-carousel-item {
     width: calc(100% - 60px);
     // width: 120%;

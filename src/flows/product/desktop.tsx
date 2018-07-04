@@ -128,7 +128,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                                 {relatedProducts.map(product => (
                                     <div>
                                         <CarouselItem
-                                            fit={ImageFitVariant.SCALED}
+                                            fit={ImageFitVariant.COVER}
                                             imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/post/${product.id}`}
                                             title={product.brand && product.brand.name}
@@ -158,6 +158,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                 variant={ActionLinksVariant.PRODUCT}
                 id={product.id}
                 wishlisted={product.wishlisted}
+                hideShare
             />
         </div>);
     }

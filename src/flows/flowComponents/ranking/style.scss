@@ -5,18 +5,27 @@
     box-sizing: border-box;
 }
 
-.post-rank-img {
+.post-rank-img,
+.product-rank-img {
     height: $ranking-img-height;
     width: $ranking-img-width;
     flex-shrink: 0;
     display: inline-block;
+}
+
+.post-rank-img {
     object-fit: cover;
+}
+
+.product-rank-img {
+    object-fit: contain;
 }
 
 .post-rank {
     padding: 0;
 
-    .post-rank-img {
+    .post-rank-img,
+    .product-rank-img {
         padding-top: $base-spacing;
         padding-bottom: $base-spacing;
     }
@@ -34,6 +43,10 @@
     .post-rank-footer {
         margin-left: $ranking-img-width + $base-spacing;
         width: calc(100% - (#{$ranking-img-width} + 3 * #{$base-spacing}));
+
+        .action-btns {
+            width: auto;
+        }
     }
 
     .post-rank-detail {

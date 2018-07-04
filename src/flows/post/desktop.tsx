@@ -226,7 +226,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                 {relatedPosts.map(post => (
                                     <div>
                                         <CarouselItem
-                                            fit={ImageFitVariant.SCALED}
+                                            fit={ImageFitVariant.COVER}
                                             imageUrl={post.cover_image && post.cover_image.small_image_url}
                                             redirectUrl={`/post/${post.id}`}
                                             title={post.author && post.author.username}
@@ -301,6 +301,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                 variant={ActionLinksVariant.PRODUCT}
                 id={product.id}
                 wishlisted={product.wishlisted}
+                hideShare
             />
         </div>);
     }

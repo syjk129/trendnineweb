@@ -49,6 +49,7 @@ export default function MobileProduct({
                                             variant={ActionLinksVariant.PRODUCT}
                                             id={product.id}
                                             wishlisted={product.wishlisted}
+                                            hideShare
                                         />
                                     </div>
                                 }

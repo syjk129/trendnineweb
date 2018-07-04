@@ -47,6 +47,7 @@ export default class PostCard extends React.Component<PostCardProps> {
                                 variant={ActionLinksVariant.PRODUCT}
                                 id={product.id}
                                 wishlisted={product.wishlisted}
+                                hideShare
                             />
                         </div>
                     </div>

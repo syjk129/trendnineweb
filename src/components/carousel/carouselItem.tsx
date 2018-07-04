@@ -54,7 +54,7 @@ class CarouselItem extends React.Component<CarouselItemProps> {
                     <p className="carousel-item-title">{title}</p>
                     <p>{detail}</p>
                 </div>
-                <div>{subdetail}</div>
+                <div className="carousel-subdetail">{subdetail}</div>
             </div>
         );
     }

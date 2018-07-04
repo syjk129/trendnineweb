@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { ButtonVariant, LinkButton } from "../../../components/button";
+import { LinkButton } from "../../../components/button";
 import ActionLinks, { ActionLinksVariant } from "../actions";
 
 import "./style.scss";
@@ -61,12 +61,12 @@ export class SidebarPostProductListSection extends React.Component<SidebarPostPr
     }
     private _renderProduct(product) {
         return (
-            <div className="post-card-hover-item post-rank ">
+            <div className="post-card-hover-item post-rank">
                 <LinkButton
                     className="post-card-hover-btn"
                     to={`/product/${product.id}`}
                 >
-                    <img className="post-rank-img" src={product.image && product.image.small_image_url} />
+                    <img className="product-rank-img" src={product.image && product.image.small_image_url} />
                     <div className="post-card-hover-content post-rank-detail">
                         <p className="post-card-hover-name">
                             {product.brand && product.brand.name}
@@ -84,6 +84,7 @@ export class SidebarPostProductListSection extends React.Component<SidebarPostPr
                         variant={ActionLinksVariant.PRODUCT}
                         id={product.id}
                         wishlisted={product.wishlisted}
+                        hideShare
                     />
                 </div>
             </div>

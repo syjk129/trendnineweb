@@ -7,7 +7,6 @@ import { AppContext, AppContextTypes } from "../../../app";
 import { IconButton, LinkButton } from "../../../components/button";
 import { IconSize, IconVariant } from "../../../components/icon";
 import RouteProps from "../../routeProps";
-import FacebookShare from "../share/facebookShare";
 
 import "./style.scss";
 
@@ -28,6 +27,7 @@ interface ActionLinksProps extends RouteProps {
     likes?: number;
     liked?: boolean;
     iconSize?: IconSize;
+    hideShare?: boolean;
 }
 
 interface ActionLinksState {
@@ -56,33 +56,62 @@ class ActionLinks extends React.Component<ActionLinksProps, ActionLinksState>  {
 
         return (
             <div className="action-btns">
-                <div className="user-actions">
-                    {this.props.variant === ActionLinksVariant.POST &&
-                        <span className="likes">
-                            <IconButton
-                                icon={IconVariant.LIKE}
-                                size={this.props.iconSize}
-                                selected={this.state.liked}
-                                onClick={this._likeUnlikePost}
-                            >
-                            </IconButton>
-                            {this.state.likes > 0 && this.state.likes}
-                        </span>
-                    }
+                {this.props.variant === ActionLinksVariant.POST ? (
+                    this._renderPostActions(shareUrl)
+                ) : (
+                    this._renderProductActions(shareUrl)
+                )}
+            </div>
+        );
+    }
+
+    private _renderProductActions = (shareUrl: string) => {
+        return (
+            <>
+                {!this.props.hideShare && (
                     <IconButton
                         icon={IconVariant.SHARE}
                         size={this.props.iconSize}
-                        selected={this.state.wishlisted}
                         onClick={() => this.props.history.push(shareUrl)}
                     />
-                </div>
+                )}
                 <IconButton
-                    icon={this.props.variant === ActionLinksVariant.POST ? IconVariant.BOOKMARK : IconVariant.WISHLIST}
+                    icon={IconVariant.WISHLIST}
                     size={this.props.iconSize}
                     selected={this.state.wishlisted}
                     onClick={this._wishlistUnwishlist}
                 />
-            </div>
+            </>
+        );
+    }
+
+    private _renderPostActions = (shareUrl: string) => {
+        return (
+            <>
+                <div className="user-actions">
+                    <span className="likes">
+                        <IconButton
+                            icon={IconVariant.LIKE}
+                            size={this.props.iconSize}
+                            selected={this.state.liked}
+                            onClick={this._likeUnlikePost}
+                        >
+                        </IconButton>
+                        {this.state.likes > 0 && this.state.likes}
+                    </span>
+                    <IconButton
+                        icon={IconVariant.SHARE}
+                        size={this.props.iconSize}
+                        onClick={() => this.props.history.push(shareUrl)}
+                    />
+                </div>
+                <IconButton
+                    icon={IconVariant.BOOKMARK}
+                    size={this.props.iconSize}
+                    selected={this.state.wishlisted}
+                    onClick={this._wishlistUnwishlist}
+                />
+            </>
         );
     }
 

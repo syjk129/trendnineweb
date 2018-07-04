@@ -15,6 +15,10 @@
     font-family: $font-family-serif;
     color: $color-grey-4;
     font-weight: $font-weight-bold;
+
+    .action-btns {
+        width: auto;
+    }
 }
 
 .post-card-hover-item {

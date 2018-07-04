@@ -122,6 +122,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 variant={ActionLinksVariant.PRODUCT}
                 id={product.id}
                 wishlisted={product.wishlisted}
+                hideShare
             />
         </div>);
     }
