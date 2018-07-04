@@ -27,14 +27,12 @@ export default class MobileBrands extends React.Component<BrandsProps, MobileBra
 
         return (
             <div className="mobile-brands">
-                <Content>
-                    <div className="mobile-brands-header">
-                        Brands
-                    </div>
+                <div className="mobile-brands-header">
+                    Brands
+                </div>
 
-                    {this._renderAlphabet()}
-                    {this._renderBrands()}
-                </Content>
+                {this._renderAlphabet()}
+                {this._renderBrands()}
             </div>
         );
     }
@@ -104,30 +102,18 @@ export default class MobileBrands extends React.Component<BrandsProps, MobileBra
 
             if (brand && brand.name) {
                 output.push((
-                <div>
-                    <MobileCarouselItem>
-                        <LinkButton onClick={() => this._scrollTo(`section_${i}`)}>
-                            {this._getHeader(brand.name)}
-                        </LinkButton>
-                    </MobileCarouselItem>
-                </div>));
+                    <LinkButton onClick={() => this._scrollTo(`section_${i}`)}>
+                        {this._getHeader(brand.name)}
+                    </LinkButton>
+                ));
             }
         });
 
-        const carouselAttributes = {
-            infinite: false,
-            arrows: true,
-            dots: false,
-            slidesToShow: 5,
-            slidesToScroll: 10,
-            variableWidth: false,
-            centerMode: false,
-        };
         return (
-            <Sticky  id="alphabet-list" stickyClassName="sticky-alphabet-list" isSticked={this._isSticked}>
-                <Carousel attributes={carouselAttributes}>
+            <Sticky id="alphabet-list" stickyClassName="sticky-alphabet-list" isSticked={this._isSticked}>
+                <div className="alphabet-list">
                     {output}
-                </Carousel>
+                </div>
             </Sticky>
         );
     }

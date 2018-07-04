@@ -1,5 +1,15 @@
 @import "../../styles/variables";
 
+.alphabet-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+
+    .link-button {
+        margin-right: $base-spacing;
+    }
+}
+
 .brands-content {
     display: flex;
     padding: 0 $page-spacing;
