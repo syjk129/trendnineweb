@@ -65,6 +65,10 @@ $min-card-width-3: 98px;
                 font-size: $mobile-font-size-1;
             }
         }
+
+        &.product-card.mobile .card-title-container {
+            height: $line-height-4;
+        }
     }
 
     &.grid-size-3 {
