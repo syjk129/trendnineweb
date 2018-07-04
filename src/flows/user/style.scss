@@ -114,9 +114,13 @@
 
 .user-nav {
     border-bottom: $standard-border-width solid $standard-border-color;
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
+
+    &.mobile {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        margin-bottom: $base-spacing;
+    }
 }
 
 .user {
@@ -219,6 +223,18 @@
                 font-weight: $font-weight-bold;
                 margin-left: $base-spacing;
                 margin-right: $base-spacing * 2;
+            }
+        }
+    }
+
+    .user-nav {
+        .nav-link a {
+            display: flex;
+
+            p {
+                &:first-of-type {
+                    margin-right: $base-spacing;
+                }
             }
         }
     }

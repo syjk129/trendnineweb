@@ -38,34 +38,31 @@ export default class User extends React.Component<Props, UserState> {
     };
 
     componentWillReceiveProps(nextProps: Props) {
+        const userName = nextProps.match.params.userId;
+        this._user = JSON.parse(localStorage.getItem("user")) || {};
+        let contentType;
+        if (this._user && (this._user.username === userName || this._user.id === userName) && !nextProps.match.params.pageName) {
+            contentType = UserContentType.POST_WISHLIST;
+            this._updateContent(nextProps, contentType);
+        } else {
+            contentType = nextProps.match.params.pageName || UserContentType.POST;
+        }
+
         if (nextProps.location.pathname.split("/")[2] !== this.props.location.pathname.split("/")[2]) {
-            console.log("receive props");
-            this._updateContent(nextProps);
+            this._updateContent(nextProps, contentType);
         }
     }
 
     componentWillMount() {
         const userName = this.props.match.params.userId;
         this._user = JSON.parse(localStorage.getItem("user")) || {};
-        let contentType = this.props.match.params.pageName ? this.props.match.params.pageName : UserContentType.POST;
-
-        if (this._user && this._user.username === userName && !this.props.match.params.pageName) {
-            this.props.history.push(`/user/${this.props.match.params.userId}/bookmarks`);
+        let contentType;
+        if (this._user && (this._user.username === userName || this._user.id === userName) && !this.props.match.params.pageName) {
             contentType = UserContentType.POST_WISHLIST;
+        } else {
+            contentType = this.props.match.params.pageName || UserContentType.POST;
         }
-
-        this._updateContent(this.props, contentType);
-    }
-
-    async getDerivedStateFromProps() {
-        const userName = this.props.match.params.userId;
-        this._user = JSON.parse(localStorage.getItem("user")) || {};
-        let contentType = this.props.match.params.pageName ? this.props.match.params.pageName : UserContentType.POST;
-
-        if (this._user && this._user.username === userName && !this.props.match.params.pageName) {
-            this.props.history.push(`/user/${this.props.match.params.userId}/bookmarks`);
-            contentType = UserContentType.POST_WISHLIST;
-        }
+        this.setState({ contentType });
 
         this._updateContent(this.props, contentType);
     }

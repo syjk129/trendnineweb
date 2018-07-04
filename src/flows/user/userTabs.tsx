@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import NavLink from "../../components/navLink";
 import { UserContentType } from "./types";
@@ -14,8 +15,13 @@ interface UserTabsProps {
 }
 
 export default function UserTabs({ userId, isSelf, profile, pathname, setContent }: UserTabsProps) {
+    let classes = "user-nav";
+    if (isMobile) {
+        classes += " mobile";
+    }
+
     return (
-        <div className="user-nav">
+        <div className={classes}>
             {profile.blog_post_count > 0 &&
                 <NavLink
                     url={`/user/${userId}/${UserContentType.POST}`}
@@ -39,8 +45,9 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
             }
             {isSelf &&
                 <NavLink
-                    url={`/user/${userId}/${UserContentType.POST_WISHLIST}`}
+                    url={`/user/${userId}/`}
                     pathname={pathname}
+                    selected={pathname === `/user/${userId}` || pathname === `/user/${userId}/bookmarks`}
                     onClick={() => setContent(UserContentType.POST_WISHLIST)}
                 >
                     <p>BOOKMARKS</p>
@@ -57,7 +64,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     <p>&nbsp;</p>
                 </NavLink>
             }
-            {!isSelf &&
+            {/* {!isSelf &&
                 <NavLink
                     url={`/user/${userId}/${UserContentType.FOLLOWER}`}
                     pathname={pathname}
@@ -66,7 +73,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     <p>FOLLOWERS</p>
                     <p>{profile.follower_count || 0}</p>
                 </NavLink>
-            }
+            } */}
             {isSelf &&
                 <NavLink
                     url={`/user/${userId}/${UserContentType.FOLLOWING}`}
