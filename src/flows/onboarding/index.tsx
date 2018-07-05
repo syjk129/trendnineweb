@@ -30,7 +30,12 @@ export default class Onboarding extends React.Component<OnboardingProps, Onboard
 
     async componentWillMount() {
         const influencers = await this.context.api.getTodaysTrendnines();
-        this.setState({ influencers });
+        let followed = new Set();
+        influencers.forEach(influencer => {
+            this.context.api.followUser(influencer.user.id);
+            followed.add(influencer.user.id);
+        });
+        this.setState({ influencers, followed });
     }
 
     render() {
