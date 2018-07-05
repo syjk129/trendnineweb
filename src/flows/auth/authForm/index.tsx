@@ -50,6 +50,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
                         className="google-login button button-primary"
                         clientId="174930742509-kvp3mkdgdb5c8staoesefgltj377tgsq.apps.googleusercontent.com"
                         responseType="code"
+                        buttonText={this.state.isNewUser ? "Sign up with Google" : "Sign in with Google"}
                         onSuccess={this._onGoogleSuccess}
                         onFailure={this._onGoogleFailure}
                     />
@@ -58,6 +59,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
                         sdkVersion="v3.0"
                         fields="name,email,picture"
                         responseType="code"
+                        buttonText={this.state.isNewUser ? "Sign up with Facebook" : "Sign in with Facebook"}
                         onCallback={this._onFacebookLogin}
                     />
                     <div className="divider" />

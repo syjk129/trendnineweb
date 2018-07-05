@@ -40,7 +40,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                                     variant={ButtonVariant.OUTLINE}
                                     onClick={() => history.push(`${location.pathname}/login`)}
                                 >
-                                    Login / Join
+                                    Sign In / Join
                                 </Button>
                             }
                             {loggedIn && user &&
@@ -67,7 +67,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                                 <NavLink url={isShop ? "/shop/category/accessories" : "/discover/category/accessories"} pathname={pathname} large>accessories</NavLink>
                             </div>
                             <div className="search">
-                                <Input variant={InputVariant.BLANK} placeholder="SEARCH" onEnterPress={ onSearch }/>
+                                <Input variant={InputVariant.BLANK} placeholder="Search" onEnterPress={ onSearch }/>
                                 <Icon size={IconSize.LARGE} variant={IconVariant.SEARCH}></Icon>
                             </div>
                         </div>

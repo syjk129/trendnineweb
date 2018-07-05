@@ -27,7 +27,7 @@ export default function DesktopOnboarding({
                 Welcome!
             </p>
             <p className="get-started">
-                Get started by following featured influencers
+                Get started by following featured influencers.
             </p>
             <div className="onboarding-follow-container">
                 {influencers.map(influencer => (

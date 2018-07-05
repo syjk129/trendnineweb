@@ -19,7 +19,7 @@ export default function Welcome({ history, location }: RouteProps) {
         arrows: false,
         dots: true,
         infinite: true,
-        autoplaySpeed: 5000,
+        autoplaySpeed: 4000,
         autoplay: true,
         slidesToShow: 1,
         slidesToScroll: 1,

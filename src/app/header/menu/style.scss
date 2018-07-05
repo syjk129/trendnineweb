@@ -42,7 +42,7 @@
         .link-button {
             font-weight: $font-weight-light;
             text-transform: uppercase;
-            font-size: $font-size-3;
+            font-size: $mobile-font-size-1;
             padding: $large-spacing 0;
 
             &.selected {
@@ -59,7 +59,7 @@
     align-items: center;
 
     input {
-        font-size: $font-size-3;
+        font-size: $mobile-font-size-1;
         padding-left: 0;
     }
 }

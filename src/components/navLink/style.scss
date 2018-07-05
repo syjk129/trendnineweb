@@ -7,7 +7,7 @@
 
     a {
         font-size: $font-size-1;
-        color: $text-primary;
+        color: $color-grey-5;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         text-decoration: none;
@@ -31,7 +31,17 @@
         }
     }
 
+    &:hover {
+        a {
+            color: $text-primary;
+        }
+    }
+
     &.selected {
+        a {
+            color: $text-primary;
+        }
+
         margin-bottom: $standard-border-width * -2;
         border-bottom: ($standard-border-width * 3) solid $color-accent;
     }

@@ -16,7 +16,7 @@
             font-size: $font-size-4;
             font-weight: $font-weight-bold;
             max-width: 860px;
-            color: $color-grey-5;
+            color: $text-primary;
             border-bottom: solid $standard-border-width #000;
         }
     }
@@ -33,13 +33,14 @@
             font-size: $font-size-4;
             font-family: $font-family-serif;
             font-weight: $font-weight-bold;
-            padding-bottom: $base-spacing * 2;
+            margin-bottom: $base-spacing * 6;
         }
 
         .recommended-trendsetters {
             grid-template-columns: repeat(3, 1fr);
             grid-auto-rows: 120px;
             display: grid;
+            grid-gap: $base-spacing * 4 $base-spacing * 2;
         }
     }
 
@@ -48,8 +49,8 @@
 
         img {
             border-radius: 100%;
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
             display: inline-block;
             object-fit: cover;
         }

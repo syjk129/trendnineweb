@@ -353,7 +353,7 @@ export default class Api {
             if (!response.ok) {
                 if (!retry) {
                     await this._refreshToken();
-                    this._GET(path, true);
+                    return this._GET(path, true);
                 }
                 const err = await createErrorFromResponse(responseJson);
                 this._apiOptions.setError(err);
@@ -386,7 +386,7 @@ export default class Api {
             if (!response.ok) {
                 if (!retry) {
                     await this._refreshToken();
-                    this._GET_PAGINATION(path, nextToken, true);
+                    return this._GET_PAGINATION(path, nextToken, true);
                 }
                 const err = await createErrorFromResponse(responseJson);
                 this._apiOptions.setError(err);
@@ -431,10 +431,9 @@ export default class Api {
 
             const responseJson = await response.json();
             if (!response.ok) {
-                console.log("yo");
                 if (!retry) {
                     await this._refreshToken();
-                    this._update(path, method, request, true);
+                    return this._update(path, method, request, true);
                 }
                 const err = await createErrorFromResponse(responseJson);
                 this._apiOptions.setError(err);
@@ -442,7 +441,6 @@ export default class Api {
 
             return responseJson;
         } catch (err) {
-            console.log("catch");
             this._apiOptions.setError(err);
         }
     }

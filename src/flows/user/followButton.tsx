@@ -30,7 +30,7 @@ export default class FollowButton extends React.Component<FollowButtonProps, Fol
                 variant={this.state.followed ? ButtonVariant.PRIMARY : ButtonVariant.OUTLINE}
                 onClick={this._toggleSubscribe}
             >
-                {this.state.followed ? "Unfollow" : "Follow"}
+                {this.state.followed ? "Following" : "Follow"}
             </Button>
         );
     }

@@ -34,7 +34,7 @@ export default function MobileOnboarding({
                 Welcome!
             </p>
             <p className="get-started">
-                Get started by following featured influencers
+                Get started by following featured influencers.
             </p>
             <div className={`onboarding-follow-container${isMobile && " mobile"}`}>
                 {influencers.slice(0, 4).map(influencer => (
