@@ -29,7 +29,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
         const footerItem = (
             <div className="product-card-footer">
                 <p className="product-card-brand">{product.title}</p>
-                <div>
+                <div className="product-card-bottom">
                     <p className="product-card-price">${product.price}</p>
                     <div className="product-action-btns">
                         <ActionLinks

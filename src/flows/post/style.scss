@@ -88,3 +88,11 @@
 .tag-list {
     margin-bottom: $section-spacing;
 }
+
+.tabbed-content-carousel-item-container {
+    margin-bottom: $base-spacing * 2;
+
+    .tabbed-content-carousel-item {
+        height: 250px;
+    }
+}

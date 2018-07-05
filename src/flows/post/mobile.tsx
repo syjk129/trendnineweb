@@ -2,10 +2,13 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
+import { PostPreview } from "../../api/models";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
 import Image, { ImageRatioVariant } from "../../components/image";
+import formatTime from "../../util/formatTime";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
+import Author from "../flowComponents/author";
 import Comments from "../flowComponents/comments";
 import { ContentSection, SidebarSection, TabbedSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
@@ -67,15 +70,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 />
                 <Carousel>
                     {this.state.tabbedContent.map(content => (
-                        <div>
-                            <CarouselItem
-                                imageUrl={content.image && content.image.small_image_url}
-                                redirectUrl={`/product/${content.id}`}
-                                title={(content.brand && content.brand.name) || (content.author && content.author.username)}
-                                detail={content.title}
-                                subdetail={ this._renderProductFooter(content) }
-                            />
-                        </div>
+                        this._renderTabbedContent(content)
                     ))}
                 </Carousel>
                 {post.tags.length > 0 && (
@@ -97,6 +92,36 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
         );
     }
 
+    private _renderTabbedContent = (content: any) => {
+        switch (this.state.section) {
+            case TabbedSectionTypes.PRODUCTS_IN_THIS_POST:
+                return (
+                    <div>
+                        <CarouselItem
+                            imageUrl={content.image && content.image.small_image_url}
+                            redirectUrl={`/product/${content.id}`}
+                            title={(content.brand && content.brand.name) || (content.author && content.author.username)}
+                            detail={content.title}
+                            subdetail={ this._renderProductFooter(content) }
+                        />
+                    </div>
+                );
+            case TabbedSectionTypes.YOU_MAY_ALSO_LIKE:
+                return (
+                    <div className="tabbed-content-carousel-item-container">
+                        <CarouselItem
+                            className="tabbed-content-carousel-item"
+                            imageUrl={content.cover_image && content.cover_image.small_image_url}
+                            redirectUrl={`/post/${content.id}`}
+                            title={(content.username) || (content.author && content.author.username)}
+                            detail={content.title}
+                            subdetail={ this._renderPostFooter(content) }
+                        />
+                    </div>
+                );
+        }
+    }
+
     @autobind
     private _onSectionChange(section: TabbedSectionTypes) {
         let tabbedContent;
@@ -109,6 +134,27 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 break;
         }
         this.setState({ tabbedContent, section });
+    }
+
+    private _renderPostFooter = (post: PostPreview) => {
+        return (
+            <>
+                <div className="author-date">
+                    <Author author={post.author} />
+                    {formatTime(post.created)}
+                </div>
+                <div className="post-card-footer">
+                    <ActionLinks
+                        iconSize={IconSize.MEDIUM}
+                        variant={ActionLinksVariant.POST}
+                        id={post.id}
+                        wishlisted={post.wishlisted}
+                        liked={post.liked}
+                        likes={post.likes}
+                    />
+                </div>
+            </>
+        );
     }
 
     @autobind
