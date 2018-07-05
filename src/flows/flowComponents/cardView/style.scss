@@ -180,6 +180,11 @@
         max-width: $button-width-sm;
         height: $button-height-sm;
     }
+
+    .action-btns {
+        border-top: $standard-border-width solid $color-grey-0;
+        padding-top: $base-spacing;
+    }
 }
 
 .product-action-btns {

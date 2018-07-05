@@ -120,7 +120,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
             <div className="post">
                 <Sidebar>
                     {post.products.length > 0 && (
-                        <SidebarPostProductListSection title="Products in this post" items={postProducts} />
+                        <SidebarPostProductListSection title="Products in This Post" items={postProducts} />
                     )}
                     {post.tags.length > 0 && (
                         <SidebarSection title="Tags">
@@ -132,7 +132,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                         </SidebarSection>
                     )}
                     {relatedPosts.length > 0 && (
-                        <SidebarSection title="You may also like">
+                        <SidebarSection title="You May Also Like">
                             <PostRank posts={relatedPosts.slice(0, 4)} hideRanks />
                         </SidebarSection>
                     )}
@@ -196,7 +196,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                         </div>
                     )}
                     {post.products.length > 0 && (
-                        <ContentSection title="Products in this post">
+                        <ContentSection title="Products in This Post">
                             <Carousel>
                                 {post.products.map(product => (
                                     <div>
@@ -221,7 +221,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                         </ContentSection>
                     )}
                     {relatedPosts && (
-                        <ContentSection title="You may also like">
+                        <ContentSection title="You May Also Like">
                             <Carousel>
                                 {relatedPosts.map(post => (
                                     <div>
