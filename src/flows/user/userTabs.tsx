@@ -29,8 +29,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     selected={pathname === `/user/${userId}`}
                     onClick={() => setContent(UserContentType.POST)}
                 >
-                    <p>POSTS</p>
-                    <p>{profile.blog_post_count}</p>
+                    <p>POSTS{` (${profile.blog_post_count})`}</p>
                 </NavLink>
             }
             {profile && profile.product_count > 0 &&
@@ -39,8 +38,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     pathname={pathname}
                     onClick={() => setContent(UserContentType.PRODUCT)}
                 >
-                    <p>PRODUCTS</p>
-                    <p>{profile.product_count}</p>
+                    <p>PRODUCTS{` (${profile.product_count})`}</p>
                 </NavLink>
             }
             {isSelf &&
@@ -51,7 +49,6 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     onClick={() => setContent(UserContentType.POST_WISHLIST)}
                 >
                     <p>BOOKMARKS</p>
-                    <p>&nbsp;</p>
                 </NavLink>
             }
             {isSelf &&
@@ -61,7 +58,6 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     onClick={() => setContent(UserContentType.PRODUCT_WISHLIST)}
                 >
                     <p>WISHLIST</p>
-                    <p>&nbsp;</p>
                 </NavLink>
             }
             {/* {!isSelf &&
@@ -80,7 +76,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     pathname={pathname}
                     onClick={() => setContent(UserContentType.FOLLOWING)}
                 >
-                    <p>FOLLOWING</p>
+                    <p>FOLLOWING{profile && ` (${profile.following_count})`}</p>
                 </NavLink>
             }
             {isSelf &&
@@ -90,7 +86,6 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     onClick={() => setContent(UserContentType.SETTINGS)}
                 >
                     <p>Settings</p>
-                    <p>&nbsp;</p>
                 </NavLink>
             }
         </div>

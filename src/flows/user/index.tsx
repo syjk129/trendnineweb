@@ -5,6 +5,7 @@ import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detec
 
 import { Person } from "../../api/models";
 import { AppContext } from "../../app";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import PageNavigation from "../flowComponents/pageNavigation";
 import { Filters, PostParam } from "../model";
 import RouteProps from "../routeProps";
@@ -20,6 +21,7 @@ interface UserState {
     contentType: UserContentType;
     nextToken: string | null;
     postParam: PostParam;
+    isLoading: boolean;
     loadingNext: boolean;
 }
 
@@ -34,6 +36,7 @@ export default class User extends React.Component<Props, UserState> {
         contentType: UserContentType.POST,
         nextToken: null,
         postParam: null,
+        isLoading: true,
         loadingNext: false,
     };
 
@@ -68,6 +71,13 @@ export default class User extends React.Component<Props, UserState> {
     }
 
     render() {
+        if (this.state.isLoading) {
+            return (
+                <SpinnerContainer>
+                    <Spinner />
+                </SpinnerContainer>
+            );
+        }
         return (
             <div>
                 <PageNavigation />
@@ -131,9 +141,9 @@ export default class User extends React.Component<Props, UserState> {
 
     @autobind
     private async _updateContent(props: Props, contentType?: UserContentType) {
+        this.setState({ isLoading: true });
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);
-        const queryString = postParam.convertUrlParamToQueryString();
         this._userId = props.match.params.userId;
 
         const [ profile, content ] = await Promise.all([
@@ -141,7 +151,13 @@ export default class User extends React.Component<Props, UserState> {
             this._fetchContent(contentType || this.state.contentType),
         ]);
 
-        this.setState({ profile, content, contentType: contentType || this.state.contentType, postParam });
+        this.setState({
+            profile,
+            content,
+            contentType: contentType || this.state.contentType,
+            postParam,
+            isLoading: false,
+        });
     }
 
     @autobind

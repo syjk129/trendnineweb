@@ -129,6 +129,7 @@
 
 .user {
     display: flex;
+    margin-bottom: $base-spacing * 2;
 
     .user-image {
         padding: $base-spacing;
