@@ -463,11 +463,15 @@ export default class Api {
                 jwtToken = `JWT ${token}`;
             }
         }
-
+        if (jwtToken && token) {
+            return {
+                "Accept": "application/json",
+                "Authorization": jwtToken,
+                "Content-Type": "application/json",
+            };
+        }
         return {
             "Accept": "application/json",
-            // "Access-Control-Allow-Origin": "*",
-            "Authorization": jwtToken,
             "Content-Type": "application/json",
         };
     }
