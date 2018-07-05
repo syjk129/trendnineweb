@@ -73,7 +73,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                     pathname={pathname}
                     setContent={setContentType}
                 />
-                {(contentType === UserContentType.POST || contentType === UserContentType.PRODUCT) && (
+                {/* {(contentType === UserContentType.POST || contentType === UserContentType.PRODUCT) && (
                     <ContentToolbar
                         location={this.props.location}
                         history={this.props.history}
@@ -81,7 +81,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                         contentType={contentType}
                         setGridSize={this._setGridSize}
                     />
-                )}
+                )} */}
 
                 {this._renderSettings()}
                 <CardContainer gridSize={this.state.gridSize}>

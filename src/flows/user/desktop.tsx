@@ -131,7 +131,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                         pathname={pathname}
                         setContent={setContentType}
                     />
-                    {(contentType === UserContentType.POST || contentType === UserContentType.PRODUCT) && (
+                    {/* {(contentType === UserContentType.POST || contentType === UserContentType.PRODUCT) && (
                         <Sticky id="filter-container" stickyClassName="sticky-filter-container">
                             <div className="filter-container">
                             {contentType === UserContentType.POST &&
@@ -150,7 +150,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                             }
                             </div>
                         </Sticky>
-                    )}
+                    )} */}
                     {this._renderSettings()}
                     <CardContainer>
                         {this._renderContent()}
