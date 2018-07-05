@@ -51,7 +51,7 @@ export default class Discover extends React.Component<Props> {
 
     @autobind
     private _getFeedPosts(queryString?: string, nextToken?: string) {
-        return this.context.api.getFeedPosts();
+        return this.context.api.getFeedPosts(queryString, nextToken);
     }
 
     @autobind
