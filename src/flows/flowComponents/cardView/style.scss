@@ -12,9 +12,7 @@
     justify-content: space-between;
     width: calc(100% - 3 * #{$base-spacing});
     font-size: $font-size-2;
-    font-family: $font-family-serif;
     color: $color-grey-4;
-    font-weight: $font-weight-bold;
 
     .action-btns {
         width: auto;
@@ -27,9 +25,7 @@
     position: relative;
 
     .post-card-hover-price {
-        font-family: $font-family-serif;
         color: $color-grey-4;
-        font-weight: $font-weight-bold;
         font-size: $font-size-1;
         margin-bottom: $base-spacing / 2;
     }
@@ -138,9 +134,8 @@
     }
 
     .product-card-price {
-        font-family: $font-family-serif;
-        font-weight: $font-weight-bold;
         font-size: $font-size-2;
+        color: $color-grey-4;
     }
 }
 

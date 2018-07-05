@@ -22,7 +22,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
 
     return (
         <div className={classes}>
-            {profile.blog_post_count > 0 &&
+            {profile && profile.blog_post_count > 0 &&
                 <NavLink
                     url={`/user/${userId}/${UserContentType.POST}`}
                     pathname={pathname}
@@ -33,7 +33,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     <p>{profile.blog_post_count}</p>
                 </NavLink>
             }
-            {profile.product_count > 0 &&
+            {profile && profile.product_count > 0 &&
                 <NavLink
                     url={`/user/${userId}/${UserContentType.PRODUCT}`}
                     pathname={pathname}

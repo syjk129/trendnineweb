@@ -55,13 +55,11 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
             fetchNextContent,
         } = this.props;
 
-        const person = profile ? profile.user : null;
-
-        if (!content || !person) {
+        if (!content) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
-        const isSelf = profile.user.id === user.id;
-        const isInfluencer = profile.user.auth_level === 2;
+        console.log(user);
+        const isInfluencer = profile && profile.user.auth_level === 2;
 
         return (
             <div className="mobile-user">

@@ -80,6 +80,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                 this.props.close();
             }
         } else {
+            console.log("yo");
             if (response["non_field_errors"]) {
                 alert(response["non_field_errors"]);
             } else {
