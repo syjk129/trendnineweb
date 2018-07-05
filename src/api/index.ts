@@ -321,7 +321,7 @@ export default class Api {
             const token = localStorage.getItem("refresh_token");
             const response = await fetch(url, {
                 method: "POST",
-                body: JSON.stringify({ token }),
+                body: JSON.stringify({ refresh: token }),
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
