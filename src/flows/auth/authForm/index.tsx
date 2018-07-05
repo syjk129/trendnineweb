@@ -13,8 +13,8 @@ import "./style.scss";
 interface AuthFormProps extends RouteProps {
     errors: any;
     authenticate(data: AuthData): void;
-    authenticateFacebook(response: FacebookLoginResponse): Promise<void>;
-    authenticateGoogle(response: GoogleLoginResponseOffline): Promise<void>;
+    authenticateFacebook(response: FacebookLoginResponse, isNewUser: boolean): Promise<void>;
+    authenticateGoogle(response: GoogleLoginResponseOffline, isNewUser: boolean): Promise<void>;
     clearErrors(): void;
 }
 
@@ -178,7 +178,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
     }
 
     private _onGoogleSuccess = (response: GoogleLoginResponseOffline) => {
-        this.props.authenticateGoogle(response);
+        this.props.authenticateGoogle(response, this.state.isNewUser);
     }
 
     private _onGoogleFailure = (response: GoogleLoginResponseOffline) => {
@@ -186,7 +186,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
 
     private _onFacebookLogin = (response: FacebookLoginResponse) => {
         if (!response.error) {
-            this.props.authenticateFacebook(response);
+            this.props.authenticateFacebook(response, this.state.isNewUser);
         }
     }
 }

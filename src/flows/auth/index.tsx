@@ -45,7 +45,6 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                     // this.props.history.push("/");
                 } else {
                     localStorage.removeItem("tn_auth_token");
-                    localStorage.removeItem("refresh_token");
                 }
             }
         }
@@ -70,22 +69,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
 
     private _authenticate = async (data: AuthData) => {
         const response = await this.context.api.authenticate(data.email, data.password, data.isNewUser, data.firstName, data.lastName);
-        if (response.result.access) {
-            this._setToken(response.result);
-            await this._setLoggedInUser();
-            this.props.setLoggedState(true);
-            if (data.isNewUser) {
-                this.props.close("/onboarding");
-            } else {
-                this.props.close();
-            }
-        } else {
-            if (response["non_field_errors"]) {
-                alert(response["non_field_errors"]);
-            } else {
-                this.setState({ errors: response });
-            }
-        }
+        await this._handleAuth(response, data.isNewUser);
     }
 
     private _clearErrors = () => {
@@ -99,20 +83,33 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         }
     }
 
-    private _authenticateGoogle = async (response: GoogleLoginResponseOffline) => {
-        const token = await this.context.api.authenticateGoogle(response.code);
-        this._setToken(token.result);
-        await this._setLoggedInUser();
-        this.props.setLoggedState(true);
-        this.props.close();
+    private _authenticateGoogle = async (googleResponse: GoogleLoginResponseOffline, isNewUser: boolean) => {
+        const response = await this.context.api.authenticateGoogle(googleResponse.code);
+        await this._handleAuth(response, isNewUser);
     }
 
-    private _authenticateFacebook = async (response: FacebookLoginResponse) => {
-        const token = await this.context.api.authenticateFacebook(response.code);
-        this._setToken(token.result);
-        await this._setLoggedInUser();
-        this.props.setLoggedState(true);
-        this.props.close();
+    private _authenticateFacebook = async (facebookResponse: FacebookLoginResponse, isNewUser: boolean) => {
+        const response = await this.context.api.authenticateFacebook(facebookResponse.code);
+        this._handleAuth(response, isNewUser);
+    }
+
+    private _handleAuth = async (response: any, isNewUser: boolean) => {
+        if (response.result.access) {
+            this._setToken(response.result);
+            await this._setLoggedInUser();
+            this.props.setLoggedState(true);
+            if (isNewUser) {
+                this.props.close("/onboarding");
+            } else {
+                this.props.close();
+            }
+        } else {
+            if (response["non_field_errors"]) {
+                alert(response["non_field_errors"]);
+            } else {
+                this.setState({ errors: response });
+            }
+        }
     }
 
     @autobind
