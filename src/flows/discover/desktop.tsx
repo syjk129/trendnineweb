@@ -5,7 +5,6 @@ import * as React from "react";
 import Button, { ButtonSize, ButtonVariant, LinkButton } from "../../components/button";
 import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
-import Image from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
@@ -21,6 +20,7 @@ import Welcome from "./welcome";
 
 import "./style.scss";
 import { DiscoverProps, DiscoverState } from "./types";
+import { SortConstants } from "../flowComponents/sort/types";
 
 interface DesktopDiscoverState extends DiscoverState {
     numCardsPerRow: number;
@@ -54,6 +54,11 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     async refreshContent(props: DiscoverProps) {
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user && !postParam.sort) {
+            postParam.sort = SortConstants.LATEST_ID;
+        }
+
         let queryString = postParam.convertUrlParamToQueryString();
         this._categoryName = props.match.params.categoryName;
         if (this._categoryName) {
@@ -141,6 +146,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
                                         <Sort
                                             name="Sort by"
+                                            loggedIn={!!user}
                                             default={this.state.postParam.sort}
                                             onSelect={this._sortPosts}
                                         />

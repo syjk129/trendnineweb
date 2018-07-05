@@ -73,23 +73,24 @@ class AppProvider extends React.Component<AppProviderProps, AppProviderState> {
     async componentWillMount() {
         const user = localStorage.getItem("user");
         const token = localStorage.getItem("tn_auth_token");
-        this.setState({ isLoading: true });
 
         if (user !== null && user !== "undefined" && token && token !== "undefined") {
             const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
             const current = (new Date()).getTime() / 1000;
+            this.setState({ isLoading: true });
 
             if (exp > current) {
+                this.setState({ isLoading: false });
                 this.props.setLoggedState(true);
             } else {
                 const response = await this._api.refreshToken();
+                this.setState({ isLoading: false });
                 if (response && response.access) {
                     this.props.setLoggedState(true);
                 } else {
                     this.props.setLoggedState(false);
                 }
             }
-            this.setState({ isLoading: false });
         }
     }
 
@@ -138,7 +139,9 @@ export default class App extends React.Component<Props, AppState> {
         const footer = document.getElementById("footer");
         const headerHeight = header ? header.getBoundingClientRect().height : 0;
         const footerHeight = footer ? footer.getBoundingClientRect().height : 0;
-        this._mainContentRef.current.style.minHeight = `${window.innerHeight - headerHeight - footerHeight}px`;
+        if (this._mainContentRef.current) {
+            this._mainContentRef.current.style.minHeight = `${window.innerHeight - headerHeight - footerHeight}px`;
+        }
     }
 
     componentWillReceiveProps(nextProps: Props) {

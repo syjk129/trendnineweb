@@ -112,8 +112,10 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                                 className={this.state.productParam.keyword !== "" && this.state.products.length < 1  ? "hide" : ""} />
 
                             <Sort
-                            name="Sort by"
-                            onSelect={this._sortProduct}
+                                loggedIn={false}
+                                name="Sort by"
+                                default={this.state.productParam.sort}
+                                onSelect={this._sortProduct}
                             />
 
                         </div>

@@ -6,6 +6,7 @@ import { SortConstants } from "./types";
 import "./style.scss";
 
 interface SortProps {
+    loggedIn?: boolean;
     name: string;
     default?: string;
     onSelect(queryString: string): void;
@@ -26,6 +27,9 @@ export default class Sort extends React.Component<SortProps, SortState> {
 
     @autobind
     private _getSortList() {
+        if (!this.props.loggedIn) {
+            return SortConstants.SORT_LIST.filter(c => c !== SortConstants.RELEVANCE);
+        }
         return SortConstants.SORT_LIST;
     }
 
