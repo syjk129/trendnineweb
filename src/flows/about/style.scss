@@ -1,7 +1,6 @@
 @import "../../styles/variables";
 
 .about-header {
-    max-width: 860px;
     padding-bottom: 5 * $base-spacing;
     margin-bottom: 4 * $base-spacing;
     border-bottom: solid $standard-border-width $standard-border-color;
@@ -12,7 +11,6 @@
 }
 
 .about-information-section {
-    max-width: 860px;
     padding-bottom: $base-spacing;
     margin-bottom: 4 * $base-spacing;
     border-bottom: solid $standard-border-width $standard-border-color;
@@ -43,7 +41,6 @@
 
     .about-findout-content {
         display: flex;
-        max-width: 860px;
         padding-bottom: 2 * $base-spacing;
 
         &:last-child {

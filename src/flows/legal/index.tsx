@@ -141,7 +141,7 @@ export default function TermsAndConditions() {
                     When you select a particular product that you wish to buy, you will be taken directly to the third party TrendNine merchant (the "TrendNine Partner") website and asked to provide further personal details, which are likely to include your billing and delivery address, and payment card details. You are being taken here because that TrendNine Partner is not part of our Integrated Checkout service, which may still be in development. The personal details you enter on these TrendNine Partner websites will be collected, stored and processed in accordance with the terms and conditions and privacy policy of these websites. You must read and accept the terms and conditions and privacy and cookie policies of the TrendNine Partner website before purchasing your items from them. TrendNine is not responsible for the terms and conditions, privacy policies of and/or practices on other sites. The TrendNine Partners are solely responsible for any and all issues related to products and services offered on their websites, including but not limited to issues arising from the processing of your transactions on the TrendNine Partner websites. We are only responsible for personal information collected on the Services.
                     </p>
                 <p>
-                    <h5>Rights Applicable to Content Publishers</h5>
+                    <h5>Rights Applicable to TrendNine Influencers</h5>
                 </p><ol>
                     <li>
                         TrendNine does not claim ownership of any Content that you post on or through the Service. Instead, you hereby grant to TrendNine a non-exclusive, fully paid and royalty-free, transferable, sub-licensable, worldwide license to:
@@ -276,7 +276,7 @@ export default function TermsAndConditions() {
     return (
         <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
             <PageNavigation />
-            <BrowserView device={isBrowser}>
+            <BrowserView viewClassName="full-width" device={isBrowser}>
                 <Sidebar>
                     <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Terms &amp; Conditions
                 </Sidebar>

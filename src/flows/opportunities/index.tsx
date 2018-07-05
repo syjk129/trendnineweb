@@ -47,13 +47,11 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
         return (
             <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
                 <PageNavigation />
-                <BrowserView device={isBrowser}>
+                <BrowserView viewClassName="full-width" device={isBrowser}>
                     <Sidebar>
                         <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;I'm an Influencer
-                </Sidebar>
-                    <Content>
-                        {this._renderContent()}
-                    </Content>
+                    </Sidebar>
+                    {this._renderContent()}
                 </BrowserView>
                 <MobileView device={isMobile}>
                     <div className="mobile-link-button">
@@ -71,7 +69,7 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
         const isShop = pathname.indexOf("/shop") > -1;
 
         return (
-            <div>
+            <div className="full-width">
                 <div className="opportunities-header">
                     <h3 className="opportunities-header-title">
                         Are you a fashion blogger, <br />
@@ -124,7 +122,7 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
                 </div>
                 <div className="opportunities-apply-section">
                     <form id="applyNow" onSubmit={this._submit}>
-                        <p className="form-header">Apply now to be a trendnine influencer</p>
+                        <p className="form-header">Apply now to be a Trendnine Influencer.</p>
                         <Input
                             value={this.state.full_name}
                             onChange={(full_name) => this._onInputChange({ full_name })}

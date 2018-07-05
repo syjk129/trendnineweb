@@ -12,9 +12,11 @@ import * as WelcomeImage from "./welcome.png";
 
 import "./style.scss";
 
-type Props = RouteProps;
+interface WelcomeProps extends RouteProps {
+    loggedIn: boolean;
+}
 
-export default function Welcome({ history, location }: RouteProps) {
+export default function Welcome({ loggedIn, history, location }: WelcomeProps) {
     const settings = {
         arrows: false,
         dots: true,
@@ -29,30 +31,32 @@ export default function Welcome({ history, location }: RouteProps) {
     return (
         <div className="welcome-carousel">
             <Slider {...settings}>
-                <div className="welcome-banner">
-                    <Image src={WelcomeImage} />
-                    <Button
-                        className="slide-1-join"
-                        inline
-                        rounded
-                        variant={ButtonVariant.SECONDARY}
-                        size={ButtonSize.WIDE}
-                        onClick={() => history.push(`${location.pathname}/login`)}
-                    >
-                        Join
-                    </Button>
-                    <Button
-                        className="slide-1-learn"
-                        inline
-                        white
-                        rounded
-                        variant={ButtonVariant.OUTLINE}
-                        size={ButtonSize.WIDE}
-                        onClick={() => history.push("/about")}
-                    >
-                        Learn More
-                    </Button>
-                </div>
+                {!loggedIn && (
+                    <div className="welcome-banner">
+                        <Image src={WelcomeImage} />
+                        <Button
+                            className="slide-1-join"
+                            inline
+                            rounded
+                            variant={ButtonVariant.SECONDARY}
+                            size={ButtonSize.WIDE}
+                            onClick={() => history.push(`${location.pathname}/login`)}
+                        >
+                            Join
+                        </Button>
+                        <Button
+                            className="slide-1-learn"
+                            inline
+                            white
+                            rounded
+                            variant={ButtonVariant.OUTLINE}
+                            size={ButtonSize.WIDE}
+                            onClick={() => history.push("/about")}
+                        >
+                            Learn More
+                        </Button>
+                    </div>
+                )}
                 <div className="welcome-banner">
                     <Image src={SummerImage} />
                     <Button
