@@ -35,7 +35,7 @@ export default class Onboarding extends React.Component<OnboardingProps, Onboard
 
     render() {
         return (
-            <Modal className="onboarding-modal" isOpen close={this.props.close}>
+            <Modal className="onboarding-modal" isOpen close={() => this.props.close("/")}>
                 <BrowserView device={isBrowser}>
                     <DesktopOnboarding
                         {...this.state}
