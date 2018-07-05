@@ -44,6 +44,7 @@ interface AppProviderProps extends RouteProps {
     children: React.ReactNode;
     setError(error: Error): void;
     openModal(component: React.ReactNode): void;
+    setLoggedState(loggedIn: boolean): void;
 }
 
 class AppProvider extends React.Component<AppProviderProps, never> {
@@ -59,6 +60,27 @@ class AppProvider extends React.Component<AppProviderProps, never> {
     }
 
     static childContextTypes: AppContext;
+
+    async componentWillMount() {
+        const user = localStorage.getItem("user");
+        const token = localStorage.getItem("tn_auth_token");
+
+        if (user !== null && user !== "undefined" && token && token !== "undefined") {
+            const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
+            const current = (new Date()).getTime() / 1000;
+
+            if (exp > current) {
+                this.props.setLoggedState(true);
+            } else {
+                const response = await this._api.refreshToken();
+                if (response && response.access) {
+                    this.props.setLoggedState(true);
+                } else {
+                    this.props.setLoggedState(false);
+                }
+            }
+        }
+    }
 
     getChildContext(): AppContext {
         return {
@@ -92,22 +114,6 @@ export default class App extends React.Component<Props, AppState> {
         this._mainContentRef = React.createRef();
     }
 
-    componentWillMount() {
-        const user = localStorage.getItem("user");
-        const token = localStorage.getItem("tn_auth_token");
-
-        if (user !== null && user !== "undefined" && token && token !== "undefined") {
-            const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
-            const current = (new Date()).getTime() / 1000;
-
-            if (exp > current) {
-                this.setState({ loggedIn: true });
-            } else {
-                this.setState({ loggedIn: false });
-            }
-        }
-    }
-
     componentDidMount() {
         const header = document.getElementById("main-header");
         const footer = document.getElementById("footer");
@@ -126,7 +132,7 @@ export default class App extends React.Component<Props, AppState> {
     render() {
         return (
             <ErrorBoundary setLoggedState={this._setLoggedState} removeError={this._removeError} errors={this.state.errors}>
-                <AppProvider {...this.props} setError={this._setError} openModal={this._openModal}>
+                <AppProvider {...this.props} setError={this._setError} openModal={this._openModal} setLoggedState={this._setLoggedState}>
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
