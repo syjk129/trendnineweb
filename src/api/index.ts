@@ -372,7 +372,11 @@ export default class Api {
     private async _GET_PAGINATION(path: string, nextToken: string, retry?: boolean): Promise<any> {
         let url = `${this._apiUrl}${path}`;
         if (nextToken != null) {
-            url += `?next_token=${nextToken}`;
+            if (path.indexOf("?") !== -1) {
+                url += `&next_token=${nextToken}`;
+            } else {
+                url += `?next_token=${nextToken}`;
+            }
         }
 
         try {
