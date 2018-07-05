@@ -14,6 +14,7 @@ import {
 
 import {
     createErrorFromResponse,
+    isAuthError,
 } from "./errors";
 
 export interface ApiOptions {
@@ -312,7 +313,34 @@ export default class Api {
     private _apiUrl: string;
     private _apiOptions: ApiOptions;
 
-    private async _GET(path: string): Promise<any> {
+    private _refreshToken = async () => {
+        const url = `${this._apiUrl}/api/v1/users/token_refresh`;
+
+        try {
+            const token = localStorage.getItem(tokenName);
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify({ token }),
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok || response.status === 204) {
+                return null;
+            }
+
+            const responseJson = await response.json();
+
+            localStorage.setItem("tn_auth_token", responseJson.token);
+            return responseJson.result;
+        } catch (err) {
+            return null;
+        }
+    }
+
+    private async _GET(path: string, retry?: boolean): Promise<any> {
         const url = `${this._apiUrl}${path}`;
 
         try {
@@ -323,6 +351,10 @@ export default class Api {
 
             const responseJson = await response.json();
             if (!response.ok) {
+                if (!retry) {
+                    await this._refreshToken();
+                    this._GET(path, true);
+                }
                 const err = await createErrorFromResponse(responseJson);
                 this._apiOptions.setError(err);
             }
@@ -337,7 +369,7 @@ export default class Api {
         }
     }
 
-    private async _GET_PAGINATION(path: string, nextToken: string): Promise<any> {
+    private async _GET_PAGINATION(path: string, nextToken: string, retry?: boolean): Promise<any> {
         let url = `${this._apiUrl}${path}`;
         if (nextToken != null) {
             url += `?next_token=${nextToken}`;
@@ -352,6 +384,10 @@ export default class Api {
 
             const responseJson = await response.json();
             if (!response.ok) {
+                if (!retry) {
+                    await this._refreshToken();
+                    this._GET_PAGINATION(path, nextToken, true);
+                }
                 const err = await createErrorFromResponse(responseJson);
                 this._apiOptions.setError(err);
             }
@@ -369,19 +405,19 @@ export default class Api {
         }
     }
 
-    private async _POST(path: string, request?: any): Promise<any> {
-        return this._update(path, "POST", request);
+    private async _POST(path: string, request?: any, retry?: boolean): Promise<any> {
+        return this._update(path, "POST", request, retry);
     }
 
-    private async _PUT(path: string, request?: any): Promise<any> {
-        return this._update(path, "PUT", request);
+    private async _PUT(path: string, request?: any, retry?: boolean): Promise<any> {
+        return this._update(path, "PUT", request, retry);
     }
 
-    private async _DELETE(path: string, request?: any): Promise<any> {
-        return this._update(path, "DELETE", request);
+    private async _DELETE(path: string, request?: any, retry?: boolean): Promise<any> {
+        return this._update(path, "DELETE", request, retry);
     }
 
-    private async _update(path: string, method: string, request?: any) {
+    private async _update(path: string, method: string, request?: any, retry?: boolean) {
         const url = `${this._apiUrl}${path}`;
 
         try {
@@ -395,12 +431,18 @@ export default class Api {
 
             const responseJson = await response.json();
             if (!response.ok) {
+                console.log("yo");
+                if (!retry) {
+                    await this._refreshToken();
+                    this._update(path, method, request, true);
+                }
                 const err = await createErrorFromResponse(responseJson);
                 this._apiOptions.setError(err);
             }
 
             return responseJson;
         } catch (err) {
+            console.log("catch");
             this._apiOptions.setError(err);
         }
     }
