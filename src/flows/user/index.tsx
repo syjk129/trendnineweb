@@ -137,7 +137,7 @@ export default class User extends React.Component<Props, UserState> {
         this._userId = props.match.params.userId;
 
         const [ profile, content ] = await Promise.all([
-            this._userId === this._user.id ? null : this.context.api.getInfluencer(this._userId),
+            (this._userId === this._user.id || this._userId === this._user.username) ? null : this.context.api.getInfluencer(this._userId),
             this._fetchContent(contentType || this.state.contentType),
         ]);
 
