@@ -45,6 +45,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                     // this.props.history.push("/");
                 } else {
                     localStorage.removeItem("tn_auth_token");
+                    localStorage.removeItem("refresh_token");
                 }
             }
         }
@@ -69,9 +70,8 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
 
     private _authenticate = async (data: AuthData) => {
         const response = await this.context.api.authenticate(data.email, data.password, data.isNewUser, data.firstName, data.lastName);
-        if (response.token) {
-            this._setToken(response);
-            // save token.token
+        if (response.result.access) {
+            this._setToken(response.result);
             await this._setLoggedInUser();
             this.props.setLoggedState(true);
             if (data.isNewUser) {
@@ -101,7 +101,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
 
     private _authenticateGoogle = async (response: GoogleLoginResponseOffline) => {
         const token = await this.context.api.authenticateGoogle(response.code);
-        this._setToken(token);
+        this._setToken(token.result);
         await this._setLoggedInUser();
         this.props.setLoggedState(true);
         this.props.close();
@@ -109,7 +109,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
 
     private _authenticateFacebook = async (response: FacebookLoginResponse) => {
         const token = await this.context.api.authenticateFacebook(response.code);
-        this._setToken(token);
+        this._setToken(token.result);
         await this._setLoggedInUser();
         this.props.setLoggedState(true);
         this.props.close();
@@ -125,12 +125,16 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         this.props.setLoggedState(false);
         localStorage.removeItem("user");
         localStorage.removeItem("tn_auth_token");
+        localStorage.removeItem("refresh_token");
         this.props.history.push("/");
     }
 
     private _setToken = (token: any) => {
-        if (token.token) {
-            localStorage.setItem("tn_auth_token", token.token);
+        if (token.access) {
+            localStorage.setItem("tn_auth_token", token.access);
+        }
+        if (token.refresh) {
+            localStorage.setItem("refresh_token", token.refresh);
         }
     }
 }

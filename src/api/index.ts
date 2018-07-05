@@ -318,7 +318,7 @@ export default class Api {
         const url = `${this._apiUrl}/api/v1/users/token_refresh`;
 
         try {
-            const token = localStorage.getItem(tokenName);
+            const token = localStorage.getItem("refresh_token");
             const response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify({ token }),
@@ -334,7 +334,8 @@ export default class Api {
 
             const responseJson = await response.json();
 
-            localStorage.setItem("tn_auth_token", responseJson.token);
+            localStorage.setItem("tn_auth_token", responseJson.access);
+            localStorage.setItem("refresh_token", responseJson.refresh);
             return responseJson.result;
         } catch (err) {
             return null;
