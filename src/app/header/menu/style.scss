@@ -38,6 +38,9 @@
 
     .menu-content {
         padding: $mobile-page-spacing $mobile-icon-large + $mobile-page-spacing;
+        height: calc(100% - 60px);
+        overflow: scroll;
+        box-sizing: border-box;
 
         .link-button {
             font-weight: $font-weight-light;

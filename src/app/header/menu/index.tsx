@@ -121,13 +121,6 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </LinkButton>
                     <LinkButton
                         className="menu-link"
-                        to={isShop ? "/shop/terms" : "/terms"}
-                        onClick={this.props.toggleMenu}
-                    >
-                        Terms &amp; Conditions
-                    </LinkButton>
-                    <LinkButton
-                        className="menu-link"
                         to={isShop ? "/shop/privacy" : "/privacy"}
                         onClick={this.props.toggleMenu}
                     >
