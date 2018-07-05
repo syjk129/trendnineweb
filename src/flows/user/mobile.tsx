@@ -58,7 +58,6 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
         if (!content) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
-        console.log(user);
         const isInfluencer = profile && profile.user.auth_level === 2;
 
         return (

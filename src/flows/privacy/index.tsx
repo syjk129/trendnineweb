@@ -288,7 +288,7 @@ export default function PrivacyPolicy() {
     return (
         <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
             <PageNavigation />
-            <BrowserView device={isBrowser}>
+            <BrowserView viewClassName="flex" device={isBrowser}>
                 <Sidebar>
                     <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;Privacy Policy
                 </Sidebar>

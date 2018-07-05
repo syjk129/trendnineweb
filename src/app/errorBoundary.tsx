@@ -34,7 +34,6 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     @autobind
     private _handleErrors(props: ErrorBoundaryProps) {
         props.errors.forEach(error => {
-            console.log(error);
             if (isAuthError(error)) {
                 this.props.history.push("/login");
             }

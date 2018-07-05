@@ -58,7 +58,6 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
         const influencer = profile ? profile.user : null;
 
         const isInfluencer = user.auth_level === 2;
-        console.log(user);
 
         if (!content && !(isInfluencer && influencer)) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;

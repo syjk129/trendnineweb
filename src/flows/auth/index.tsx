@@ -94,8 +94,8 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
     }
 
     private _handleAuth = async (response: any, isNewUser: boolean) => {
-        if (response && response.access) {
-            this._setToken(response);
+        if (response.result && response.result.access) {
+            this._setToken(response.result);
             await this._setLoggedInUser();
             this.props.setLoggedState(true);
             if (isNewUser) {
