@@ -8,6 +8,7 @@ import {
 
 import Api from "../api";
 import Modal from "../components/modal";
+import Spinner, { SpinnerContainer } from "../components/spinner";
 import AboutUs from "../flows/about";
 import Auth from "../flows/auth";
 import BrandView from "../flows/brands";
@@ -47,7 +48,15 @@ interface AppProviderProps extends RouteProps {
     setLoggedState(loggedIn: boolean): void;
 }
 
-class AppProvider extends React.Component<AppProviderProps, never> {
+interface AppProviderState {
+    isLoading: boolean;
+}
+
+class AppProvider extends React.Component<AppProviderProps, AppProviderState> {
+    state: AppProviderState = {
+        isLoading: false,
+    };
+
     constructor(props: AppProviderProps) {
         super(props);
 
@@ -64,6 +73,7 @@ class AppProvider extends React.Component<AppProviderProps, never> {
     async componentWillMount() {
         const user = localStorage.getItem("user");
         const token = localStorage.getItem("tn_auth_token");
+        this.setState({ isLoading: true });
 
         if (user !== null && user !== "undefined" && token && token !== "undefined") {
             const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
@@ -79,6 +89,7 @@ class AppProvider extends React.Component<AppProviderProps, never> {
                     this.props.setLoggedState(false);
                 }
             }
+            this.setState({ isLoading: false });
         }
     }
 
@@ -91,6 +102,14 @@ class AppProvider extends React.Component<AppProviderProps, never> {
     }
 
     render() {
+        if (this.state.isLoading) {
+            return (
+                <SpinnerContainer>
+                    <Spinner />
+                </SpinnerContainer>
+            );
+        }
+
         return this.props.children;
     }
 
