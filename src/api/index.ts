@@ -3,6 +3,7 @@ import {
     Category,
     Comment,
     Featured,
+    FeaturedInfluencer,
     Person,
     Post,
     PostPreview,
@@ -155,7 +156,7 @@ export default class Api {
         return this._GET(`/api/v1/marketplace/products/${productId}/posts`);
     }
 
-    getFeaturedTrendnines(pageSize?: number): Promise<Array<Person>> {
+    getFeaturedTrendnines(pageSize?: number): Promise<Array<FeaturedInfluencer>> {
         let url = "/api/v1/influencers";
         if (pageSize) {
             url += `?page_size=${pageSize}`;
@@ -164,7 +165,7 @@ export default class Api {
     }
 
     getTodaysTrendnines(): Promise<Array<Person>> {
-        return this._GET("/api/v1/influencers/today");
+        return this._GET("/api/v1/influencers/today?page_size=10");
     }
 
     getCart(): Promise<any> {

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
-import { Person, PostPreview } from "../../api/models";
+import { FeaturedInfluencer, Person, PostPreview } from "../../api/models";
 import Button, { ButtonSize, ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import FollowInfluencer from "./followInfluencer";
 
 interface MobileOnboardingProps {
-    influencers: Array<Person>;
+    influencers: Array<FeaturedInfluencer>;
     followed: Set<string>;
     toggleFollowInfluencer(influencer: Person): void;
     unfollowAll(): void;
@@ -39,9 +39,9 @@ export default function MobileOnboarding({
             <div className={`onboarding-follow-container${isMobile && " mobile"}`}>
                 {influencers.slice(0, 4).map(influencer => (
                     <FollowInfluencer
-                        followed={followed.has(influencer.id)}
-                        influencer={influencer}
-                        toggleFollow={() => toggleFollowInfluencer(influencer)}
+                        followed={followed.has(influencer.user.id)}
+                        influencer={influencer.user}
+                        toggleFollow={() => toggleFollowInfluencer(influencer.user)}
                         getPostsForUser={getPostsForUser}
                     />
                 ))}

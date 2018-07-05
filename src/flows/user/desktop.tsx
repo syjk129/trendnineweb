@@ -57,7 +57,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
 
         const influencer = profile ? profile.user : null;
 
-        if (!profile || !content) {
+        if (!content) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 

@@ -2,7 +2,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 
-import { Person } from "../../api/models";
+import { FeaturedInfluencer, Person } from "../../api/models";
 import { AppContext } from "../../app";
 import Modal from "../../components/modal";
 import RouteProps from "../routeProps";
@@ -16,7 +16,7 @@ interface OnboardingProps extends RouteProps {
 }
 
 interface OnboardingState {
-    influencers: Array<Person>;
+    influencers: Array<FeaturedInfluencer>;
     followed: Set<string>;
 }
 
@@ -29,7 +29,7 @@ export default class Onboarding extends React.Component<OnboardingProps, Onboard
     };
 
     async componentWillMount() {
-        const influencers = await this.context.api.getFeaturedTrendnines();
+        const influencers = await this.context.api.getTodaysTrendnines();
         this.setState({ influencers });
     }
 

@@ -66,18 +66,32 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
                     {this.state.isNewUser ? (
                         <>
                             <div className="grouped-input">
-                                <Input
-                                    className="auth-input"
-                                    placeholder="First Name"
-                                    value={this.state.firstName}
-                                    onChange={(firstName) => this._handleFormChange({ firstName })}
-                                />
-                                <Input
-                                    className="auth-input"
-                                    placeholder="Last Name"
-                                    value={this.state.lastName}
-                                    onChange={(lastName) => this._handleFormChange({ lastName })}
-                                />
+                                <div>
+                                    <Input
+                                        className="auth-input"
+                                        placeholder="First Name"
+                                        value={this.state.firstName}
+                                        onChange={(firstName) => this._handleFormChange({ firstName })}
+                                    />
+                                    {this.props.errors && this.props.errors["first_name"] && (
+                                        <div className="input-error">
+                                            {this.props.errors["first_name"]}
+                                        </div>
+                                    )}
+                                </div>
+                                <div>
+                                    <Input
+                                        className="auth-input"
+                                        placeholder="Last Name"
+                                        value={this.state.lastName}
+                                        onChange={(lastName) => this._handleFormChange({ lastName })}
+                                    />
+                                    {this.props.errors && this.props.errors["last_name"] && (
+                                        <div className="input-error">
+                                            {this.props.errors["last_name"]}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <Input
                                 className="auth-input"

@@ -33,8 +33,12 @@
     .grouped-input {
         display: flex;
 
-        .auth-input:first-of-type {
-            margin-right: $base-spacing;
+        & > div {
+            width: 50%;
+
+            &:first-of-type {
+                margin-right: $base-spacing;
+            }
         }
     }
 

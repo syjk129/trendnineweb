@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import { Person, PostPreview } from "../../api/models";
+import { FeaturedInfluencer, Person, PostPreview } from "../../api/models";
 import Button, { ButtonSize, ButtonVariant } from "../../components/button";
 import FollowInfluencer from "./followInfluencer";
 
 interface DesktopOnboardingProps {
-    influencers: Array<Person>;
+    influencers: Array<FeaturedInfluencer>;
     followed: Set<string>;
     toggleFollowInfluencer(influencer: Person): void;
     unfollowAll(): void;
@@ -32,9 +32,9 @@ export default function DesktopOnboarding({
             <div className="onboarding-follow-container">
                 {influencers.map(influencer => (
                     <FollowInfluencer
-                        followed={followed.has(influencer.id)}
-                        influencer={influencer}
-                        toggleFollow={() => toggleFollowInfluencer(influencer)}
+                        followed={followed.has(influencer.user.id)}
+                        influencer={influencer.user}
+                        toggleFollow={() => toggleFollowInfluencer(influencer.user)}
                         getPostsForUser={getPostsForUser}
                     />
                 ))}

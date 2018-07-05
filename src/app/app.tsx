@@ -194,14 +194,13 @@ export default class App extends React.Component<Props, AppState> {
     }
 
     private _redirectCloseModal = (redirect?: string) => {
-        let location;
-        if (this._previousLocation) {
-            location = `${this._previousLocation.pathname}`;
-        }
         if (redirect) {
-            location += redirect;
+            this.props.history.push(redirect);
+        } else if (this._previousLocation && this._previousLocation.pathname) {
+            this.props.history.push(`${this._previousLocation.pathname}`);
+        } else {
+            this.props.history.push("/");
         }
-        this.props.history.push(location || "/");
     }
 
     private _closeModal = () => {
