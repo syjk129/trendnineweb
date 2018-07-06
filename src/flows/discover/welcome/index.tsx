@@ -65,7 +65,7 @@ export default function Welcome({ loggedIn, history, location }: WelcomeProps) {
                         rounded
                         variant={ButtonVariant.SECONDARY}
                         size={ButtonSize.WIDE}
-                        onClick={() => history.push("/discover?tags=summer?sort=latest")}
+                        onClick={() => history.push("/discover?tags=summer&sort=latest")}
                     >
                         View Posts
                     </Button>
@@ -76,7 +76,7 @@ export default function Welcome({ loggedIn, history, location }: WelcomeProps) {
                         rounded
                         variant={ButtonVariant.PRIMARY}
                         size={ButtonSize.WIDE}
-                        onClick={() => history.push("/shop/discover?categories=Women%27S%20Swimwear?sort=price_asc")}
+                        onClick={() => history.push("/shop/discover?categories=Women%27S%20Swimwear&sort=price_asc")}
                     >
                         Shop Now
                     </Button>
