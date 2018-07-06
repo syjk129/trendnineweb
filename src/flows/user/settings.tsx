@@ -134,7 +134,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                                 />
                             </div>
                         </div>
-                        <div className="input-container">
+                        {/* <div className="input-container">
                             <GoogleLogin
                                 className="google-login button"
                                 clientId="174930742509-kvp3mkdgdb5c8staoesefgltj377tgsq.apps.googleusercontent.com"
@@ -153,7 +153,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                                 onCallback={this._authenticateFacebook}
                                 disabled = {this.state.is_facebook_linked}
                             />
-                        </div>
+                        </div> */}
                         <div className="link-buttons-container">
                             <LinkButton onClick={() => this.setState({showPasswordChange: true})}>Change Password</LinkButton>
                             <LinkButton onClick={() => this.props.history.push("/logout")}>Sign out</LinkButton>
