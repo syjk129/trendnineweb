@@ -28,7 +28,7 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
 
        return (
             <div className="header">
-                <Menu open={this.state.showMenu} toggleMenu={this._toggleMenu} isShop={isShop} />
+                <Menu open={this.state.showMenu} loggedIn={!!user} toggleMenu={this._toggleMenu} isShop={isShop} />
                 <div className="mobile-header">
                     <IconButton icon={IconVariant.MENU} size={IconSize.LARGE} onClick={this._toggleMenu} selected={false} />
                     <Link className="nav-logo-container" to={isShop ? "/shop/discover" : "/discover"}>

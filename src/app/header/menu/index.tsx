@@ -13,6 +13,7 @@ import "./style.scss";
 interface MenuProps {
     open: boolean;
     isShop: boolean;
+    loggedIn: boolean;
     location: any;
     history: H.History;
     toggleMenu(): void;
@@ -28,7 +29,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
     };
 
     render() {
-        const { isShop, location } = this.props;
+        const { isShop, loggedIn, location } = this.props;
 
         return (
             <div className={`menu ${this.props.open && "open"}`}>
@@ -94,10 +95,14 @@ class Menu extends React.Component<MenuProps, MenuState> {
                         Discover
                     </LinkButton>
                     <div className="menu-divider" />
-                    <LinkButton className="menu-link" onClick={this._logout}>
-                        Sign Out
-                    </LinkButton>
-                    <div className="menu-divider" />
+                    {loggedIn && (
+                        <>
+                            <LinkButton className="menu-link" onClick={this._logout}>
+                                Sign Out
+                            </LinkButton>
+                            <div className="menu-divider" />
+                        </>
+                    )}
                     <LinkButton
                         className="menu-link"
                         to={isShop ? "/shop/about" : "/about"}
