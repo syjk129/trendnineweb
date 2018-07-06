@@ -61,7 +61,8 @@ class AppProvider extends React.Component<AppProviderProps, AppProviderState> {
         super(props);
 
         const api = new Api({
-            apiUrl: "https://backend-alpha.trendnine.com",
+            // apiUrl: "https://api.trendnine.com",
+            apiUrl: "https://trendnine-backend-prod-alb-212528783.us-east-1.elb.amazonaws.com",
             setError: props.setError,
         });
 
