@@ -15,6 +15,7 @@ import BrandView from "../flows/brands";
 import ContactUs from "../flows/contact";
 import Discover from "../flows/discover";
 import TermsAndConditions from "../flows/legal";
+import NotFound from "../flows/notFound";
 import OnboardingView from "../flows/onboarding";
 import Opportunities from "../flows/opportunities";
 import PostView from "../flows/post";
@@ -61,8 +62,8 @@ class AppProvider extends React.Component<AppProviderProps, AppProviderState> {
         super(props);
 
         const api = new Api({
-            // apiUrl: "https://api.trendnine.com",
-            apiUrl: "https://trendnine-backend-prod-alb-212528783.us-east-1.elb.amazonaws.com",
+            apiUrl: "https://api.trendnine.com",
+            // apiUrl: "https://trendnine-backend-prod-alb-212528783.us-east-1.elb.amazonaws.com",
             setError: props.setError,
         });
 
