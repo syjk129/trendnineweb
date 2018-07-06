@@ -182,7 +182,6 @@ export default class App extends React.Component<Props, AppState> {
                         <Route path="/:url*/onboarding" render={(props) => <OnboardingView {...props} close={this._redirectCloseModal} />}/>
                         <Route path="/logout" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                         <Route path="/register" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
-                        <Route path="*" component={null} />
                     </div>
                     <Footer {...this.props} />
                     <Modal isOpen={this.state.modalContent !== null} close={this._closeModal}>
