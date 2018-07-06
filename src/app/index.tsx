@@ -1,6 +1,7 @@
 import { polyfill } from "es6-promise";
 import * as React from "react";
 import { browserHistory, BrowserRouter, Route } from "react-router-dom";
+import "whatwg-fetch";
 
 import App from "./app";
 
