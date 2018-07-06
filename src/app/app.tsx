@@ -15,7 +15,6 @@ import BrandView from "../flows/brands";
 import ContactUs from "../flows/contact";
 import Discover from "../flows/discover";
 import TermsAndConditions from "../flows/legal";
-import NotFound from "../flows/notFound";
 import OnboardingView from "../flows/onboarding";
 import Opportunities from "../flows/opportunities";
 import PostView from "../flows/post";
