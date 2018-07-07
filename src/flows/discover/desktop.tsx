@@ -175,8 +175,8 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
     private _categoryName: string | null;
 
-    private _staggerPopulatePosts = async (queryString: string, nextToken: string, isFeed: boolean, index: number) => {
-        if (index < 4) {
+    private _staggerPopulatePosts = async (queryString: string, nextToken: string | null, isFeed: boolean, index: number) => {
+        if (index < 4 && nextToken) {
             const posts = isFeed ? await this.props.getFeedPosts(queryString, nextToken) : await this.props.getLatestPosts(queryString, nextToken);
             this.setState({
                 posts: this.state.posts.concat(posts.list),
