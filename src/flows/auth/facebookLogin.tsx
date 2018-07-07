@@ -3,8 +3,6 @@ import * as React from "react";
 import { ChangeEvent } from "react";
 
 import Button, { IconButton } from "../../components/button";
-import Input, { InputType } from "../../components/input";
-import { AuthData, AuthFormProps } from "./types";
 
 import "./style.scss";
 
