@@ -142,6 +142,10 @@
 
     .link-button {
         margin: auto;
+
+        &:first-of-type {
+            margin-right: $base-spacing;
+        }
     }
 
     .icon {

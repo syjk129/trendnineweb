@@ -45,6 +45,9 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                             }
                             {loggedIn && user &&
                                 <div className="user-logged-in-buttons">
+                                    <LinkButton to={`/user/${user.username}/wishlist`}>
+                                        <Icon variant={IconVariant.WISHLIST} size={IconSize.LARGE} />
+                                    </LinkButton>
                                     <LinkButton to={`/user/${user.username}`}>
                                         <Icon variant={IconVariant.PROFILE} size={IconSize.LARGE} />
                                     </LinkButton>

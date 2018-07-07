@@ -75,6 +75,10 @@
     padding: $base-spacing;
     border-radius: $base-spacing;
 
+    &:hover {
+        cursor: pointer;
+    }
+
     .product-dot {
         position: absolute;
         margin-left: -30px;
