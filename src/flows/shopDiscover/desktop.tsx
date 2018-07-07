@@ -69,6 +69,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
             }
         }
 
+        queryString += `&page_size=10`;
         const products = location.pathname === "/shop/feed" ? await this.props.getFeedProducts() : await this.props.getLatestProducts(queryString);
 
         this.setState({
@@ -77,6 +78,8 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
             productParam: productParam,
             isLoading: false,
         });
+
+        this._staggerPopulateProducts(queryString, products.nextToken, this.props.location.pathname === "/feed", 0);
     }
 
     render() {
@@ -141,6 +144,18 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
     }
 
     private _categoryName: MenuCategory | null;
+
+    private _staggerPopulateProducts = async (queryString: string, nextToken: string | null, isFeed: boolean, index: number) => {
+        if (index < 4 && nextToken) {
+            const products = isFeed ? await this.props.getFeedProducts(queryString, nextToken) : await this.props.getLatestProducts(queryString, nextToken);
+            this.setState({
+                products: this.state.products.concat(products.list),
+                nextToken: products.nextToken,
+            }, () => {
+                this._staggerPopulateProducts(queryString, products.nextToken, isFeed, ++index);
+            });
+        }
+    }
 
     @autobind
     private async _filterProducts(filters: Filters) {
