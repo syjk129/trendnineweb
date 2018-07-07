@@ -15,13 +15,11 @@ export default function DesktopCarousel({
     React.Children.forEach(children, () => childrenCount ++);
     let settings = {
         adaptiveHeight: false,
-        // dots: true,
         infinite: true,
         prevArrow: <IconButton icon={IconVariant.ARROW_LEFT} />,
         nextArrow: <IconButton icon={IconVariant.ARROW_RIGHT} />,
-        slidesToScroll: 1,
+        slidesToScroll: 2,
         slidesToShow: 5,
-        variableWidth: true,
         responsive: [{
             breakpoint: 1543,
             settings: {
