@@ -176,16 +176,29 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
     private _renderContent() {
         if (this.props.content && this.props.content.length > 0) {
             switch (this.props.contentType) {
-            case UserContentType.POST:
             case UserContentType.POST_WISHLIST:
+            case UserContentType.POST:
                 return this.props.content.map(item => <PostCard post={item} gridSize={1} />);
-            case UserContentType.PRODUCT:
             case UserContentType.PRODUCT_WISHLIST:
+            case UserContentType.PRODUCT:
                 return this.props.content.map(item => <ProductCard product={item} />);
-            case UserContentType.FOLLOWER:
             case UserContentType.FOLLOWING:
+            case UserContentType.FOLLOWER:
                 return this.props.content.map(item => <UserCard user={item} following={item.followed} />);
             }
+        }
+
+        switch (this.props.contentType) {
+        case UserContentType.POST_WISHLIST:
+            return "You have no bookmarked posts";
+        case UserContentType.POST:
+            return "There are no posts for this user";
+        case UserContentType.PRODUCT_WISHLIST:
+            return "You have no wishlisted products";
+        case UserContentType.PRODUCT:
+            return "There are no products for this user";
+        case UserContentType.FOLLOWING:
+            return "You are not following anyone";
         }
         return null;
     }
