@@ -2,7 +2,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import Button, { ButtonSize, ButtonVariant, LinkButton } from "../../components/button";
+import { LinkButton } from "../../components/button";
 import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
@@ -14,13 +14,13 @@ import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
+import { SortConstants } from "../flowComponents/sort/types";
 import ViewMore from "../flowComponents/viewMore";
 import { Filters, MenuCategoryQueryMap, PostParam } from "../model";
 import Welcome from "./welcome";
 
 import "./style.scss";
 import { DiscoverProps, DiscoverState } from "./types";
-import { SortConstants } from "../flowComponents/sort/types";
 
 interface DesktopDiscoverState extends DiscoverState {
     numCardsPerRow: number;
@@ -64,6 +64,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         if (this._categoryName) {
             queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
         }
+        queryString += `&page_size=10`;
         this.setState({ isLoading: true });
 
         const [
@@ -87,6 +88,8 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
             recommendedTrendnines: recommendedTrendnines,
             isLoading: false,
         });
+
+        this._staggerPopulatePosts(queryString, posts.nextToken, this.props.location.pathname === "/feed", 0);
     }
 
     updateWindowWidth = () => {
@@ -172,6 +175,18 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
     private _categoryName: string | null;
 
+    private _staggerPopulatePosts = async (queryString: string, nextToken: string, isFeed: boolean, index: number) => {
+        if (index < 4) {
+            const posts = isFeed ? await this.props.getFeedPosts(queryString, nextToken) : await this.props.getLatestPosts(queryString, nextToken);
+            this.setState({
+                posts: this.state.posts.concat(posts.list),
+                nextToken: posts.nextToken,
+            }, () => {
+                this._staggerPopulatePosts(queryString, posts.nextToken, isFeed, ++index);
+            });
+        }
+    }
+
     private _renderPosts() {
         const posts = this.state.posts;
         const postCards = posts.map(post => <PostCard post={post} />);
@@ -188,18 +203,12 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         }
         this.setState({ loadingNext: true });
 
-        const queryString = this.state.postParam.convertUrlParamToQueryString();
-        const newPosts = await Promise.resolve(
-            this.props.location.pathname === "/feed" ?
-                this.props.getFeedPosts(queryString, this.state.nextToken)
-                : this.props.getLatestPosts(queryString, this.state.nextToken));
-        this.setState({
-            posts: this.state.posts.concat(newPosts.list).filter((post, index, arr) => {
-                return arr.map(mapPost => mapPost["id"]).indexOf(post["id"]) === index;
-            }),
-            nextToken: newPosts.nextToken,
-            loadingNext: false,
-        });
+        let queryString = this.state.postParam.convertUrlParamToQueryString();
+        queryString += "&page_size=10";
+
+        const isFeed = this.props.location.pathname === "/feed";
+        await this._staggerPopulatePosts(queryString, this.state.nextToken, isFeed, 0);
+        this.setState({ loadingNext: false });
     }
 
     @autobind
@@ -226,7 +235,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         return (
             <div className="recommended-trendsetters-container">
                 <p className="title">Influencers you might like</p>
-
                 <div className="recommended-trendsetters">
                     {this.state.recommendedTrendnines.slice(0, 6).map(trendsetter => (
                         <LinkButton className="trendsetter" to={`/user/${trendsetter.id}`}>

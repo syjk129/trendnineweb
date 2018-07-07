@@ -102,7 +102,7 @@ export default function Welcome({ loggedIn, history, location }: WelcomeProps) {
                         rounded
                         variant={ButtonVariant.SECONDARY}
                         size={ButtonSize.WIDE}
-                        onClick={() => history.push("/shop/category/bags?sort=latest")}
+                        onClick={() => history.push("/shop/category/bags")}
                     >
                         Shop Now
                     </Button>

@@ -86,9 +86,9 @@ export default class Api {
     }
 
     getBrands(keyword?: string, nextToken?: string): Promise<Array<Brand>> {
-        let url = "/api/v1/marketplace/products/brands?";
+        let url = "/api/v1/marketplace/products/brands";
         if (keyword) {
-            url = `${url}keyword=${keyword}`;
+            url += `?keyword=${keyword}`;
         }
         return this._GET_PAGINATION(url, nextToken);
     }
