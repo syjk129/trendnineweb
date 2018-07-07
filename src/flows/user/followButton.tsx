@@ -2,10 +2,11 @@ import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 
-import { AppContext, AppContextTypes } from "../../app";
+import { Person } from "../../api/models";
+import { AppContext } from "../../app";
 import Button, { ButtonVariant } from "../../components/button";
 
-import { Person } from "../../api/models";
+import "./style.scss";
 
 interface FollowButtonProps {
     user: Person;
@@ -26,6 +27,7 @@ export default class FollowButton extends React.Component<FollowButtonProps, Fol
     render() {
         return (
             <Button
+                className="follow-button"
                 rounded
                 variant={this.state.followed ? ButtonVariant.PRIMARY : ButtonVariant.OUTLINE}
                 onClick={this._toggleSubscribe}
