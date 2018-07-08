@@ -24,9 +24,21 @@
         padding: $mobile-page-spacing;
         text-align: center;
 
-        .link-button {
+        .close {
+            color: #fff;
             position: absolute;
             float: left;
+            top: $mobile-page-spacing + 4;
+            left: $mobile-page-spacing;
+            font-size: 35px;
+            font-weight: 200;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     }
 
