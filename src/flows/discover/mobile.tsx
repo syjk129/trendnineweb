@@ -11,8 +11,9 @@ import ContentToolbar from "../flowComponents/contentToolbar";
 import Featured from "../flowComponents/featured";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarSection } from "../flowComponents/section";
+import { SortConstants } from "../flowComponents/sort/types";
 import ViewMore from "../flowComponents/viewMore";
-import { ContentType, Filters, PostParam } from "../model";
+import { ContentType, PostParam } from "../model";
 
 import "./style.scss";
 import { DiscoverProps, DiscoverState } from "./types";
@@ -48,6 +49,10 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
     async refreshContent(props: DiscoverProps) {
         const params = new URLSearchParams(props.location.search);
         const postParam = new PostParam(params);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (!user && !postParam.sort) {
+            postParam.sort = SortConstants.LATEST_ID;
+        }
         let queryString = postParam.convertUrlParamToQueryString();
         queryString += "&page_size=15";
         this.setState({ loadingNext: true });
@@ -80,6 +85,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         if (this.state.isLoading) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
+        const user = JSON.parse(localStorage.getItem("user"));
 
         const carouselAttributes = {
             infinite: false,
@@ -116,6 +122,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                     location={this.props.location}
                     history={this.props.history}
                     match={this.props.match}
+                    loggedIn={!!user}
                     contentType={ContentType.POST}
                     setGridSize={this._setGridSize}
                 />

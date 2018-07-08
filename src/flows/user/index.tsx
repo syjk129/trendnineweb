@@ -153,8 +153,8 @@ export default class User extends React.Component<Props, UserState> {
 
         this.setState({
             profile,
-            content: content.list,
-            nextToken: content.nextToken,
+            content: content && content.list || [],
+            nextToken: content && content.nextToken || null,
             contentType: contentType || this.state.contentType,
             postParam,
             isLoading: false,
@@ -196,7 +196,7 @@ export default class User extends React.Component<Props, UserState> {
         const queryString = this.state.postParam ? this.state.postParam.convertUrlParamToQueryString() : "";
         const newContent = await this._fetchContent(this.state.contentType, queryString, this.state.nextToken);
         this.setState({
-            content: this.state.content.concat(newContent.list),
+            content: this.state.content.concat(newContent && newContent.list),
             nextToken: newContent.nextToken,
             loadingNext: false,
         });

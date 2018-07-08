@@ -29,6 +29,7 @@ import "./style.scss";
 
 interface ContentToolbarProps extends RouteProps {
     className?: string;
+    loggedIn: boolean;
     // sortType: SortType;
     contentType: ContentType | UserContentType;
     setGridSize?(size: number): void;
@@ -346,10 +347,20 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         }
     }
 
+    @autobind
     private _getSortTypes() {
         // Update once we have different sort types by context
+        if (this.props.loggedIn) {
+            return [
+                SortType.RELEVANCE,
+                SortType.LATEST,
+                SortType.POPULARITY,
+                SortType.PRICE_HIGH_TO_LOW,
+                SortType.PRICE_LOW_TO_HIGH,
+            ];
+        }
+
         return [
-            SortType.RELEVANCE,
             SortType.LATEST,
             SortType.POPULARITY,
             SortType.PRICE_HIGH_TO_LOW,
