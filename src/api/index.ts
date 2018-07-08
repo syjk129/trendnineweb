@@ -185,24 +185,24 @@ export default class Api {
         return this._GET(`/api/v1/influencers/${userId}`);
     }
 
-    getPostsForUser(userId: string, queryString?: string): Promise<Array<PostPreview>> {
+    getPostsForUser(userId: string, queryString?: string, nextToken?: string): Promise<Array<PostPreview>> {
         let url = `/api/v1/users/${userId}/posts`;
         if (queryString) {
             url += `?${queryString}`;
         }
-        return this._GET(url);
+        return this._GET_PAGINATION(url, nextToken);
     }
 
-    getWishlist(): Promise<Array<any>> {
-        return this._GET(`/api/v1/wishlist`);
+    getWishlist(nextToken?: string): Promise<Array<any>> {
+        return this._GET_PAGINATION(`/api/v1/wishlist`, nextToken);
     }
 
-    getProductsForUser(userId: string, queryString?: string): Promise<Array<PostPreview>> {
+    getProductsForUser(userId: string, queryString?: string, nextToken?: string): Promise<Array<PostPreview>> {
         let url = `/api/v1/users/${userId}/products`;
         if (queryString) {
             url += `?${queryString}`;
         }
-        return this._GET(url);
+        return this._GET_PAGINATION(url, nextToken);
     }
 
     getUser(): Promise<Person> {
@@ -217,8 +217,8 @@ export default class Api {
         return this._PUT("/api/v1/password", request);
     }
 
-    getUserFollowers(userId: string): Promise<Array<Person>> {
-        return this._GET(`/api/v1/users/${userId}/followers`);
+    getUserFollowers(userId: string, nextToken?: string): Promise<Array<Person>> {
+        return this._GET_PAGINATION(`/api/v1/users/${userId}/followers`, nextToken);
     }
 
     getUserFollowing(userId: string): Promise<Array<Person>> {
@@ -372,7 +372,7 @@ export default class Api {
         }
     }
 
-    private async _GET_PAGINATION(path: string, nextToken: string, retry?: boolean): Promise<any> {
+    private async _GET_PAGINATION(path: string, nextToken?: string, retry?: boolean): Promise<any> {
         let url = `${this._apiUrl}${path}`;
         if (nextToken != null) {
             if (path.indexOf("?") !== -1) {
