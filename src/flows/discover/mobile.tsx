@@ -141,6 +141,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
             <PostCard
                 gridSize={this.state.gridSize}
                 post={post}
+                isMobile
             />));
 
         return postCards;

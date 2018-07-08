@@ -34,7 +34,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
         return (
             <div className={`menu ${this.props.open && "open"}`}>
                 <div className="menu-header">
-                    <IconButton className="close" icon={IconVariant.MENU} size={IconSize.LARGE} onClick={this.props.toggleMenu} selected />
+                    <span className="close" onClick={this.props.toggleMenu}>&times;</span>
                     <Link to={isShop ? "/shop/discover" : "/discover"}>
                         <img
                             className="nav-logo"
@@ -42,6 +42,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                             onClick={this.props.toggleMenu}
                         />
                     </Link>
+                    <span />
                 </div>
                 <div className="menu-content">
                     <div className="mobile-search">

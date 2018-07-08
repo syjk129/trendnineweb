@@ -13,13 +13,14 @@ import "./style.scss";
 
 interface PostCardProps {
     post: PostPreview;
+    isMobile?: boolean;
     gridSize?: number;
 }
 
 export default class PostCard extends React.Component<PostCardProps> {
 
     render() {
-        const { post, gridSize } = this.props;
+        const { post, gridSize, isMobile } = this.props;
 
         const hoverItem = (
             <div className="card-hover">
@@ -77,7 +78,7 @@ export default class PostCard extends React.Component<PostCardProps> {
         return (
             <Card
                 gridSize={gridSize || 1}
-                imageUrl={post.cover_image && post.cover_image.thumbnail_image_url}
+                imageUrl={post.cover_image && (isMobile ? post.cover_image.small_image_url : post.cover_image.thumbnail_image_url)}
                 redirectUrl={`/post/${post.id}`}
                 title={post.title}
                 hoverItem={post.products && post.products.length > 0 && hoverItem}

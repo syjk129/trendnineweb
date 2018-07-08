@@ -9,6 +9,7 @@ import "./style.scss";
 
 interface ProductCardProps {
     product: any;
+    isMobile?: boolean;
     gridSize?: number;
     isShop?: boolean;
 }
@@ -23,7 +24,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
     };
 
     render() {
-        const { product, gridSize, isShop } = this.props;
+        const { product, gridSize, isMobile, isShop } = this.props;
 
         const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
         const footerItem = (
@@ -48,7 +49,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
                 className="product-card"
                 gridSize={gridSize || 1}
                 scaleImage
-                imageUrl={product.image && product.image.thumbnail_image_url}
+                imageUrl={product.image && (isMobile ? product.image.small_image_url : product.image.thumbnail_image_url)}
                 redirectUrl={isShop ? `/shop/product/${product.id}` : `/product/${product.id}`}
                 title={product.brand && product.brand.name || "Product"}
                 footerItem={footerItem}
