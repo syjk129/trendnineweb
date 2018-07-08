@@ -62,12 +62,12 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         const productParam = new PostParam(params);
         let queryString = productParam.convertUrlParamToQueryString();
 
-        if (!props.location.search) {
-            this._categoryName = props.match.params.categoryName;
-            if (this._categoryName) {
-                queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
-            }
+        // if (!props.location.search) {
+        this._categoryName = props.match.params.categoryName;
+        if (this._categoryName) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
         }
+        // }
 
         queryString += `&page_size=10`;
         const products = location.pathname === "/shop/feed" ? await this.props.getFeedProducts() : await this.props.getLatestProducts(queryString);

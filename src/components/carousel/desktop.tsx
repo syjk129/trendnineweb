@@ -9,12 +9,11 @@ export default function DesktopCarousel({
     className,
     attributes,
     children,
-    slidesToShow,
 }: CarouselProps) {
     let childrenCount = 0;
     React.Children.forEach(children, () => childrenCount ++);
     let settings = {
-        adaptiveHeight: false,
+        variableWidth: true,
         infinite: true,
         prevArrow: <IconButton icon={IconVariant.ARROW_LEFT} />,
         nextArrow: <IconButton icon={IconVariant.ARROW_RIGHT} />,

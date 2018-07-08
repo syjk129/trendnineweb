@@ -128,7 +128,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                                 {relatedProducts.map(product => (
                                     <div>
                                         <CarouselItem
-                                            fit={ImageFitVariant.COVER}
+                                            fit={ImageFitVariant.SCALED}
                                             imageUrl={product.image && product.image.small_image_url}
                                             redirectUrl={`/product/${product.id}`}
                                             title={product.brand && product.brand.name}
