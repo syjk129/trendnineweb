@@ -2,6 +2,7 @@ import { Range } from "rc-slider";
 import * as React from "react";
 
 import { Category, FilterSearchResult } from "../../../../api/models";
+import { LinkButton } from "../../../../components/button";
 import Checkbox from "../../../../components/checkbox";
 import Input from "../../../../components/input";
 import { ListContainer, ListItem } from "../list";
@@ -23,6 +24,7 @@ interface FilterViewProps {
     toggleFilterActive(): void;
     onRangeFilterChange(min: number, max: number): void;
     onSearchStringChange(searchString: string): void;
+    clearFilters(): void;
 }
 
 export default class FilterView extends React.Component<FilterViewProps> {
@@ -31,6 +33,7 @@ export default class FilterView extends React.Component<FilterViewProps> {
             currentFilterType,
             filterOptions,
             selectFilterType,
+            clearFilters,
         } = this.props;
 
         return (
@@ -39,6 +42,7 @@ export default class FilterView extends React.Component<FilterViewProps> {
                     <ListItem label={filterOption.type} onClick={() => selectFilterType(filterOption.type)} />
                 ))}
                 {currentFilterType && this._renderFilterSearch()}
+                <LinkButton className="clear-filter" onClick={clearFilters}>Clear all filters</LinkButton>
             </ListContainer>
         );
     }

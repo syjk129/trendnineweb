@@ -94,6 +94,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                         onRangeFilterChange={this._onRangeFilterChange}
                         removeFilterItem={this._removeFilterItem}
                         setGridSize={setGridSize}
+                        clearFilters={this._clearFilters}
                     />
                 </MobileView>
             </div>
@@ -101,6 +102,19 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     }
 
     private _searchTimeout: any;
+
+    private _clearFilters = () => {
+        switch (this.props.contentType) {
+            case ContentType.POST:
+                this.props.history.push("/");
+                break;
+            case ContentType.PRODUCT:
+            case ContentType.SHOP:
+                this.props.history.push("/shop/discover");
+                break;
+        }
+        this.setState({ activeToolbar: null });
+    }
 
     private _onRangeFilterChange = (min: number, max: number) => {
         const selectedFilters = this.state.selectedFilters;
@@ -230,13 +244,13 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                     `${param}${category},`
                 ), filterParams);
                 if (filterParams.length > 0) {
-                    filterParams = `${FilterQueryParamMap[filterType]}=${filterParams}`;
+                    filterParams = `${filterType.toLowerCase()}=${filterParams}`;
                 }
             } else {
                 const selectedIds = selectedFilter.selectedIds.filter(id => id !== "").join(",");
                 if (selectedIds.length === 0) return result;
 
-                filterParams = `${FilterQueryParamMap[filterType]}=${selectedFilter.selectedIds.join(",")}`;
+                filterParams = `${filterType.toLowerCase()}=${selectedFilter.selectedIds.join(",")}`;
             }
             return `${result}${result.length !== 0 ? "&" : ""}${filterParams}`;
         }, "");

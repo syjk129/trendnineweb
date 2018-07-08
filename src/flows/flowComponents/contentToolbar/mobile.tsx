@@ -30,6 +30,7 @@ interface MobileContentToolbarProps {
     removeFilterItem(filterId: string): void;
     onRangeFilterChange(min: number, max: number): void;
     onSearchStringChange(searchString: string): void;
+    clearFilters(): void;
 }
 
 interface MobileContentToolbarState {
@@ -58,6 +59,7 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
             toggleSelectFilterItem,
             onRangeFilterChange,
             onSearchStringChange,
+            clearFilters,
         } = this.props;
 
         return (
@@ -111,6 +113,7 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                         toggleFilterActive={() => this._toggleFilterActive(ToolbarType.FILTER)}
                         onRangeFilterChange={onRangeFilterChange}
                         onSearchStringChange={onSearchStringChange}
+                        clearFilters={clearFilters}
                     />
                 }
                 {filters && Object.keys(filters).length > 0 && (

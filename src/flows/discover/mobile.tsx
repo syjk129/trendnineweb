@@ -46,9 +46,9 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
     }
 
     async refreshContent(props: DiscoverProps) {
-        const params = new URLSearchParams(location.search);
+        const params = new URLSearchParams(props.location.search);
         const postParam = new PostParam(params);
-        let queryString = location.search;
+        let queryString = postParam.convertUrlParamToQueryString();
         queryString += "&page_size=15";
         this.setState({ loadingNext: true });
 
