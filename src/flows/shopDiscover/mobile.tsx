@@ -76,6 +76,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
         if (this.state.isLoading) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
+        const user = JSON.parse(localStorage.getItem("user"));
 
         return (
             <div className="mobile-discover">
@@ -89,6 +90,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
                     location={this.props.location}
                     history={this.props.history}
                     match={this.props.match}
+                    loggedIn={!!user}
                     contentType={ContentType.PRODUCT}
                     setGridSize={this._setGridSize}
                 />
