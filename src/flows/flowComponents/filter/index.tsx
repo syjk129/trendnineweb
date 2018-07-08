@@ -57,6 +57,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
         document.removeEventListener("mousedown", this._handleClickOutside);
         try {
             const categories = await this.context.api.getCategories();
+            this._toggleSubFilter(this._getFilterList()[0]);
             this.setState({
                 categories: categories[1].subcategories,
             });
