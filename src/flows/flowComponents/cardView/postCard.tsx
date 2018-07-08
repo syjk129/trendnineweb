@@ -29,7 +29,7 @@ export default class PostCard extends React.Component<PostCardProps> {
                             className="post-card-hover-btn"
                             to={`/product/${product.id}`}
                         >
-                            <img className="post-card-hover-image" src={product.image && product.image.small_image_url} />
+                            <img className="post-card-hover-image" src={product.image && product.image.thumbnail_image_url} />
                             <div className="post-card-hover-content">
                                 <p className="post-card-hover-name">
                                     {product.brand && product.brand.name}
@@ -77,7 +77,7 @@ export default class PostCard extends React.Component<PostCardProps> {
         return (
             <Card
                 gridSize={gridSize || 1}
-                imageUrl={post.cover_image && post.cover_image.small_image_url}
+                imageUrl={post.cover_image && post.cover_image.thumbnail_image_url}
                 redirectUrl={`/post/${post.id}`}
                 title={post.title}
                 hoverItem={post.products && post.products.length > 0 && hoverItem}

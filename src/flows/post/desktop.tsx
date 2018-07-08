@@ -202,7 +202,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                     <div>
                                         <CarouselItem
                                             fit={ImageFitVariant.SCALED}
-                                            imageUrl={product.image && product.image.small_image_url}
+                                            imageUrl={product.image && product.image.thumbnail_image_url}
                                             redirectUrl={`/product/${product.id}`}
                                             title={product.brand && product.brand.name}
                                             detail={product.title}
@@ -227,7 +227,7 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                     <div>
                                         <CarouselItem
                                             fit={ImageFitVariant.COVER}
-                                            imageUrl={post.cover_image && post.cover_image.small_image_url}
+                                            imageUrl={post.cover_image && post.cover_image.thumbnail_image_url}
                                             redirectUrl={`/post/${post.id}`}
                                             title={post.author && post.author.username}
                                             detail={post.title}

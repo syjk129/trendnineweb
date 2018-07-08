@@ -5,4 +5,5 @@ export default class CoverImage {
     original_image_md5: string;
     original_image_url: string;
     small_image_url: string;
+    thumbnail_image_url: string;
 }

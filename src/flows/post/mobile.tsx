@@ -98,7 +98,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 return (
                     <div>
                         <CarouselItem
-                            imageUrl={content.image && content.image.small_image_url}
+                            imageUrl={content.image && content.image.thumbnail_image_url}
                             redirectUrl={`/product/${content.id}`}
                             title={(content.brand && content.brand.name) || (content.author && content.author.username)}
                             detail={content.title}
@@ -111,7 +111,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                     <div className="tabbed-content-carousel-item-container">
                         <CarouselItem
                             className="tabbed-content-carousel-item"
-                            imageUrl={content.cover_image && content.cover_image.small_image_url}
+                            imageUrl={content.cover_image && content.cover_image.thumbnail_image_url}
                             redirectUrl={`/post/${content.id}`}
                             title={(content.username) || (content.author && content.author.username)}
                             detail={content.title}

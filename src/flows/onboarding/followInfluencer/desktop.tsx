@@ -39,7 +39,7 @@ export default function DesktopFollowInfluencer({ influencer, followed, posts, t
             </div>
             <div className="influencer-content">
                 {posts.map(post => (
-                    <Image className="influencer-post-preview" square src={post.cover_image.small_image_url} />
+                    <Image className="influencer-post-preview" square src={post.cover_image.thumbnail_image_url} />
                 ))}
             </div>
         </div>

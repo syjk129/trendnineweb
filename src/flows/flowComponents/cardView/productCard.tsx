@@ -48,7 +48,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
                 className="product-card"
                 gridSize={gridSize || 1}
                 scaleImage
-                imageUrl={product.image && product.image.small_image_url}
+                imageUrl={product.image && product.image.thumbnail_image_url}
                 redirectUrl={isShop ? `/shop/product/${product.id}` : `/product/${product.id}`}
                 title={product.brand && product.brand.name || "Product"}
                 footerItem={footerItem}

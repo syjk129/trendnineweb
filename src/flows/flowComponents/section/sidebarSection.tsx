@@ -45,7 +45,7 @@ export class SidebarPostProductListSection extends React.Component<SidebarPostPr
                 className="post-rank"
                 to={`/post/${post.id}`}
             >
-                <img className="post-rank-img" src={post.cover_image && post.cover_image.small_image_url} />
+                <img className="post-rank-img" src={post.cover_image && post.cover_image.thumbnail_image_url} />
                 <div className="post-rank-detail">
                     <p className="post-rank-name">
                         Post
@@ -66,7 +66,7 @@ export class SidebarPostProductListSection extends React.Component<SidebarPostPr
                     className="post-card-hover-btn"
                     to={`/product/${product.id}`}
                 >
-                    <img className="product-rank-img" src={product.image && product.image.small_image_url} />
+                    <img className="product-rank-img" src={product.image && product.image.thumbnail_image_url} />
                     <div className="post-card-hover-content post-rank-detail">
                         <p className="post-card-hover-name">
                             {product.brand && product.brand.name}
