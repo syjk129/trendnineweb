@@ -9,7 +9,6 @@ import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import { PostCard } from "../flowComponents/cardView";
-import NewPostCard from "../flowComponents/cardView/newPostCard";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
@@ -193,12 +192,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     private _renderPosts() {
         const posts = this.state.posts;
         const postCards = posts.map(post => (
-            <NewPostCard
-                post={post}
-                history={this.props.history}
-                match={this.props.match}
-                location={this.props.location}
-            />
+            <PostCard post={post}/>
         ));
 
         // update the logic to add recommended trendsetters whenever

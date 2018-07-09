@@ -2,15 +2,13 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import { Person } from "../../api/models";
-import Card, { CardContainer } from "../../components/card";
+import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import Image from "../../components/image";
-import NavLink from "../../components/navLink";
 import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
-import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
@@ -178,7 +176,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
             switch (this.props.contentType) {
             case UserContentType.POST_WISHLIST:
             case UserContentType.POST:
-                return this.props.content.map(item => <PostCard post={item} gridSize={1} />);
+                return this.props.content.map(item => <PostCard post={item} />);
             case UserContentType.PRODUCT_WISHLIST:
             case UserContentType.PRODUCT:
                 return this.props.content.map(item => <ProductCard product={item} />);

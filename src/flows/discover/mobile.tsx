@@ -2,7 +2,7 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
 
-import Card, { CardContainer } from "../../components/card";
+import { CardContainer } from "../../components/card";
 import Carousel from "../../components/carousel";
 import MobileCarouselItem from "../../components/carousel/mobileCarouselItem";
 import Spinner, { SpinnerContainer } from "../../components/spinner";

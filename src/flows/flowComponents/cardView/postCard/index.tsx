@@ -1,7 +1,7 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Slider from "react-slick";
 
 import { PostPreview, Product } from "../../../../api/models";
@@ -27,7 +27,7 @@ interface PostCardState {
     wishlistedProducts: Set<string>;
 }
 
-export default class PostCard extends React.Component<PostCardProps, PostCardState> {
+class PostCard extends React.Component<PostCardProps, PostCardState> {
     static contextTypes: AppContext;
 
     state: PostCardState = {
@@ -38,10 +38,20 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
 
     render() {
         const { post, gridSize } = this.props;
+
+        let classes = "post-card";
+        if (gridSize) {
+            classes += ` grid-size-${gridSize}`;
+        }
+
+        if (isMobile) {
+            classes += " mobile";
+        }
+
         const imageUrl = post.cover_image && (isMobile ? post.cover_image.small_image_url : post.cover_image.thumbnail_image_url);
 
         return (
-            <div className="post-card" onMouseEnter={this._onCardMouseEnter} onMouseLeave={this._onCardMouseLeave}>
+            <div className={classes} onMouseEnter={this._onCardMouseEnter} onMouseLeave={this._onCardMouseLeave}>
                 <Link to={`/post/${post.id}`} className="post-card-image">
                     <Image
                         className="post-image"
@@ -169,3 +179,5 @@ PostCard.contextTypes = {
     setError: PropTypes.func,
     openModal: PropTypes.func,
 };
+
+export default withRouter(PostCard);

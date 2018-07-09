@@ -28,6 +28,7 @@
         display: flex;
         justify-content: center;
         height: 60px;
+        overflow: hidden;
 
         .product-image {
             width: 52px;
@@ -46,6 +47,7 @@
         padding: $base-spacing / 2 0;
         width: 100%;
         height: 60px;
+        overflow: hidden;
 
         .product-image-container {
             padding: 4px;
@@ -79,6 +81,7 @@
 
     .post-product-details {
         height: 35px;
+        overflow: hidden;
         margin-bottom: $base-spacing / 2;
 
         &:hover {
@@ -112,6 +115,7 @@
 
         .title-container {
             height: 50px;
+            overflow: hidden;
             margin-bottom: $base-spacing;
 
             .title {
@@ -125,6 +129,25 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: $base-spacing;
+        }
+    }
+
+    &.mobile {
+        .title-container {
+            height: 60px;
+
+            .title {
+                font-size: $mobile-font-size-2;
+                line-height: $mobile-font-size-3;
+            }
+        }
+
+        &.grid-size-2 {
+            .title-container {
+                .title {
+                    font-size: $mobile-font-size-1;
+                }
+            }
         }
     }
 
@@ -142,5 +165,13 @@
             position: absolute;
             width: calc(100% - #{$hover-spacing * 2 - $standard-border-width * 2});
         }
+    }
+
+    &.grid-size-2 {
+        min-width: $min-card-width-2;
+    }
+
+    &.grid-size-3 {
+        min-width: $min-card-width-3;
     }
 }
