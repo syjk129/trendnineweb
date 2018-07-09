@@ -1,7 +1,12 @@
 import { polyfill } from "es6-promise";
+import Promise from "promise-polyfill";
 import * as React from "react";
 import { browserHistory, BrowserRouter, Route } from "react-router-dom";
-import "whatwg-fetch";
+
+// To add to window
+if (!(window as any).Promise) {
+  (window as any).Promise = Promise;
+}
 
 import App from "./app";
 
