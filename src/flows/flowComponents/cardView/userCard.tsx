@@ -34,7 +34,7 @@ export default function UserCard({ user, following }: UserCardProps) {
 
     return (
         <Card
-            imageUrl={user.profile_image_url}
+            imageUrl={user.profile_small_image_url}
             redirectUrl={`/user/${user.username}`}
             title={user.username}
             footerItem={footerItem}

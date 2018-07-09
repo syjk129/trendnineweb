@@ -25,7 +25,7 @@ class Featured extends React.Component<FeaturedProps> {
                             to={`/user/${trendnine.user.username}`}
                         >
                             <div className="trendnine-image">
-                                <img src={trendnine.user.profile_image_url} />
+                                <img src={trendnine.user.profile_small_image_url} />
                             </div>
                             <div className="trendnine-details">
                                 <p className="trendnine-name">

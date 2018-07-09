@@ -23,7 +23,7 @@ export default function Author({ author, date }: AuthorProps) {
     return (
         <div className={classes}>
             <LinkButton to={`/user/${author.username}`}>
-                <Image className="author-image" inline circle src={author.profile_image_url} />
+                <Image className="author-image" inline circle src={author.profile_thumbnail_image_url} />
                 <TextContent className="author-name">
                     {author.username}
                 </TextContent>

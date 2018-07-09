@@ -8,8 +8,8 @@ import { CommentInputProps } from "./types";
 export default function DesktopCommentInput({ comment, placeholder, user, onChange, submitComment }: CommentInputProps) {
     return (
         <div className="comment-input-container">
-            {user && user.profile_image_url ? (
-                <img src={user.profile_image_url} />
+            {user && user.profile_small_image_url ? (
+                <img src={user.profile_small_image_url} />
             ) : (
                 <Icon variant={IconVariant.PROFILE} />
             )}

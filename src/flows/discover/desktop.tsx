@@ -238,7 +238,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                 <div className="recommended-trendsetters">
                     {this.state.recommendedTrendnines.slice(0, 6).map(trendsetter => (
                         <LinkButton className="trendsetter" to={`/user/${trendsetter.id}`}>
-                            <img src={trendsetter.profile_image_url} />
+                            <img src={trendsetter.profile_small_image_url} />
                             <div>{trendsetter.first_name} {trendsetter.last_name}</div>
                         </LinkButton>
                     ))}

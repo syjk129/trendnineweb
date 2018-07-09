@@ -16,7 +16,7 @@ export default function DesktopFollowInfluencer({ influencer, followed, posts, t
         <div className="follow-influencer">
             <div className="influencer">
                 <div className="influencer-details">
-                    <Image className="influencer-image" src={influencer.profile_image_url} circle />
+                    <Image className="influencer-image" src={influencer.profile_small_image_url} circle />
                     <div className="description">
                         <p className="name">
                             {`${influencer.first_name} ${influencer.last_name}`}

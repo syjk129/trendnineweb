@@ -7,6 +7,8 @@ export default class Person {
     first_name: string;
     last_name: string;
     profile_image_url: string;
+    profile_small_image_url: string | null;
+    profile_thumbnail_image_url: string | null;
     introduction: string;
     blog_post_count: number;
     product_count: number;

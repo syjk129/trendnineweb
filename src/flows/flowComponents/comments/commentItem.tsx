@@ -37,8 +37,8 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
         return (
             <div className="comment-item">
                 <div className="comment-author-img">
-                    {this.props.comment.author && this.props.comment.author.profile_image_url ? (
-                        <img src={this.props.comment.author.profile_image_url} />
+                    {this.props.comment.author && this.props.comment.author.profile_small_image_url ? (
+                        <img src={this.props.comment.author.profile_small_image_url} />
                     ) : (
                         <Icon variant={IconVariant.PROFILE} />
                     )}

@@ -60,7 +60,7 @@ export default class Trending extends React.Component<TrendingProps, TrendingSta
                             {this.state.featuredTrendnines.slice(0, 10).map(trendnine => (
                                 <div className="featured-trendnine">
                                     <CarouselItem
-                                        imageUrl={trendnine.profile_image_url}
+                                        imageUrl={trendnine.profile_small_image_url}
                                         title={`${trendnine.first_name} ${trendnine.last_name}`}
                                         detail={trendnine.introduction || "Hello!"}
                                     />

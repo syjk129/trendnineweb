@@ -8,7 +8,7 @@ export default function MobileCommentInput({ comment, placeholder, user, onChang
     return (
         <div className="mobile-comment-input-container">
             <div className="comment-user">
-                {user && <img src={user.profile_image_url} />}
+                {user && <img src={user.profile_small_image_url} />}
                 <TextArea
                     rounded
                     value={comment}

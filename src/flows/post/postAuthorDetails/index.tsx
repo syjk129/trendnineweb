@@ -47,7 +47,7 @@ class PostAuthorDetails extends React.Component<PostAuthorDetailsProps> {
             <div className={classes}>
                 <div className="post-author-details">
                     <LinkButton to={`/user/${author.id}`}>
-                        <img src={author.profile_image_url} />
+                        <img src={author.profile_thumbnail_image_url} />
                         <span>{author.username}</span>
                     </LinkButton>
                     <span className="separator">|</span>
