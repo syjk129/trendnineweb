@@ -9,6 +9,8 @@
     height: 100%;
     transition: transform ease 250ms;
     background-color: #000;
+    color: #fff;
+    font-weight: $font-weight-light;
     left: -100%;
 
     &.open {
@@ -48,6 +50,16 @@
         height: $mobile-icon-large;
     }
 
+    .social-icons {
+        display: flex;
+
+        .social-icon {
+            width: $mobile-icon-large;
+            height: $mobile-icon-large;
+            margin-right: $base-spacing * 2;
+        }
+    }
+
     .menu-content {
         padding: $mobile-page-spacing $mobile-icon-large + $mobile-page-spacing;
         height: calc(100% - 60px);
@@ -63,6 +75,29 @@
             &.selected {
                 font-weight: $font-weight-bold;
             }
+        }
+    }
+
+    .subscribe-form {
+        width: 100%;
+        display: inline-flex;
+        margin-bottom: $base-spacing;
+
+        input[type="email"] {
+            border-radius: $standard-border-radius 0 0 $standard-border-radius;
+            border-right: none;
+            background-color: transparent;
+            color: #fff;
+            font-weight: $font-weight-light;
+        }
+
+        input[type="submit"] {
+            background-color: #fff;
+            color: $text-primary;
+            font-weight: $font-weight-light;
+            font-size: $font-size-2;
+            width: 150px;
+            border-radius: 0 $standard-border-radius $standard-border-radius 0;
         }
     }
 }

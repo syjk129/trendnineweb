@@ -260,7 +260,7 @@ export default class Api {
         return this._POST(`/api/v1/posts/${postId}/comments`, request);
     }
 
-    submitReview(productId: string, comment: string, parentCommentId?: string): Promise<void> {
+    submitReview(productId: string, comment: string, parentCommentId?: string): Promise<any> {
         const request = {
             content: comment,
             rating: 5,
@@ -269,7 +269,7 @@ export default class Api {
         return this._POST(`/api/v1/marketplace/products/${productId}/reviews`, request);
     }
 
-    subscribe(request): Promise<void> {
+    subscribe(request): Promise<any> {
         return this._POST(`/api/v1/subscribe`, request);
     }
 

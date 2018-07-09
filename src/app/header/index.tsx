@@ -24,4 +24,4 @@ class Header extends React.Component<HeaderProps> {
     }
 }
 
-export default withRouter(WithUserSession(Header));
+export default withRouter(Header);

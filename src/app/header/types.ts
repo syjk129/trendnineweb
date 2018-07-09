@@ -6,5 +6,4 @@ export interface HeaderProps {
     loggedIn: boolean;
     history: H.History;
     location: any;
-    user: Person;
 }

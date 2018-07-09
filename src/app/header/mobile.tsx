@@ -1,12 +1,12 @@
 import autobind from "autobind-decorator";
-import * as H from "history";
+import { PropTypes } from "prop-types";
 import * as React from "react";
 import { Link } from "react-router-dom";
 
+import { AppContext } from "../../app";
 import { IconButton } from "../../components/button";
-import Icon, { IconSize, IconVariant } from "../../components/icon";
+import { IconSize, IconVariant } from "../../components/icon";
 import * as Logo from "../logo.png";
-import WithUserSession from "../withUserSession";
 import Menu from "./menu";
 import { HeaderProps } from "./types";
 
@@ -16,19 +16,27 @@ interface MobileHeaderState {
     showMenu: boolean;
 }
 
-class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
+export default class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
+    static contextTypes: AppContext;
+
     state: MobileHeaderState = {
         showMenu: false,
     };
 
     render() {
-        const { user } = this.props;
+        const user = JSON.parse(localStorage.getItem("user"));
         const pathname = this.props.location.pathname;
         const isShop = pathname.indexOf("/shop") > -1;
 
        return (
             <div className="header">
-                <Menu open={this.state.showMenu} loggedIn={!!user} toggleMenu={this._toggleMenu} isShop={isShop} />
+                <Menu
+                    open={this.state.showMenu}
+                    loggedIn={!!user}
+                    toggleMenu={this._toggleMenu}
+                    isShop={isShop}
+                    subscribe={this._subscribe}
+                />
                 <div className="mobile-header">
                     <IconButton icon={IconVariant.MENU} size={IconSize.LARGE} onClick={this._toggleMenu} selected={false} />
                     <Link className="nav-logo-container" to={isShop ? "/shop/discover" : "/discover"}>
@@ -43,6 +51,10 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
         );
     }
 
+    private _subscribe = (email: any) => {
+        return this.context.api.subscribe(email);
+    }
+
     @autobind
     private _toggleMenu() {
         if (!this.state.showMenu) {
@@ -55,4 +67,8 @@ class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
     }
 }
 
-export default WithUserSession(MobileHeader);
+MobileHeader.contextTypes = {
+    api: PropTypes.any,
+    setError: PropTypes.func,
+    openModal: PropTypes.func,
+};

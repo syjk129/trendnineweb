@@ -3,9 +3,9 @@ import * as H from "history";
 import * as React from "react";
 import { Link, withRouter } from "react-router-dom";
 
-import { IconButton, LinkButton } from "../../../components/button";
-import Icon, { IconSize, IconVariant } from "../../../components/icon";
-import Input, { InputTheme, InputVariant } from "../../../components/input";
+import { LinkButton } from "../../../components/button";
+import Icon, { IconVariant, SocialIcon, SocialIconType } from "../../../components/icon";
+import Input, { InputTheme, InputType, InputVariant } from "../../../components/input";
 import * as LogoWhite from "../../logo_white.png";
 
 import "./style.scss";
@@ -17,15 +17,20 @@ interface MenuProps {
     location: any;
     history: H.History;
     toggleMenu(): void;
+    subscribe(email: any): Promise<any>;
 }
 
 interface MenuState {
     searchString: string;
+    subscribeEmail: string;
+    success: boolean;
 }
 
 class Menu extends React.Component<MenuProps, MenuState> {
     state: MenuState = {
         searchString: "",
+        subscribeEmail: "",
+        success: false,
     };
 
     render() {
@@ -139,9 +144,47 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     >
                         Contact Us
                     </LinkButton>
+                    <div className="menu-divider" />
+                    <div className="social-icons">
+                        <LinkButton href="https://www.instagram.com/trendnine/" target="_blank"><SocialIcon icon={SocialIconType.INSTAGRAM} white /></LinkButton>
+                        <LinkButton href="https://www.facebook.com/trendnine" target="_blank"><SocialIcon icon={SocialIconType.FACEBOOK} white /></LinkButton>
+                        <LinkButton href="https://twitter.com/trendnine" target="_blank"><SocialIcon icon={SocialIconType.TWITTER} white /></LinkButton>
+                        <LinkButton href="https://www.pinterest.com/trendnine/" target="_blank"><SocialIcon icon={SocialIconType.PINTEREST} white/></LinkButton>
+                    </div>
+                    <div className="menu-divider" />
+                    <p>Get exclusive offers, inspiration, and trend updates delivered right to your inbox.</p>
+                    <form onSubmit={this._subscribe} className="subscribe-form">
+                        <Input
+                            variant={InputVariant.OUTLINE}
+                            placeholder="Email"
+                            value={this.state.subscribeEmail}
+                            onChange={this._onSubscribeEmailChange}
+                            type={InputType.EMAIL} required={true} />
+                        <Input type={InputType.SUBMIT} value="SUBSCRIBE"></Input>
+                    </form>
+                    {this.state.success && <p>Subscribed!</p>}
+                    <p className="disclaimer">© 2018 TrendNine, Inc. All rights reserved.</p>
                 </div>
             </div>
         );
+    }
+
+    private _subscribe = async (event) => {
+        event.preventDefault();
+        const response = await this.props.subscribe({ email: this.state.subscribeEmail });
+        console.log(response);
+        if (response.email) {
+            console.log("yo");
+            this.setState({subscribeEmail: "", success: true});
+            setTimeout(function() {
+                this.setState({success: false});
+            }.bind(this), 5000);
+        }
+        return false;
+    }
+
+    private _onSubscribeEmailChange = (subscribeEmail: string) => {
+        this.setState({ subscribeEmail });
     }
 
     @autobind
