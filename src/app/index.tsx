@@ -2,6 +2,7 @@ import { polyfill } from "es6-promise";
 import Promise from "promise-polyfill";
 import * as React from "react";
 import { browserHistory, BrowserRouter, Route } from "react-router-dom";
+import "url-search-params-polyfill";
 
 // To add to window
 if (!(window as any).Promise) {

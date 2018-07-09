@@ -1,4 +1,4 @@
-require("whatwg-fetch");
+import "whatwg-fetch";
 
 import {
     Brand,
