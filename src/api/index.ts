@@ -1,4 +1,5 @@
-import { fetch } from "whatwg-fetch";
+require("whatwg-fetch");
+
 import {
     Brand,
     Category,
