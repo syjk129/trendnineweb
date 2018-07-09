@@ -50,7 +50,7 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                         square
                     />
                 </Link>
-                {/* {this.state.showDetails && ( */}
+                {this.state.showDetails && (
                     <div className="post-product">
                         {this._renderProductCarousel()}
                         {this.state.focusedProduct && (
@@ -68,7 +68,7 @@ export default class PostCard extends React.Component<PostCardProps, PostCardSta
                             </div>
                         )}
                     </div>
-                {/* )} */}
+                )}
                 <div className="post-card-content">
                     <div className="title-container" onClick={() => this.props.history.push(`/post/${post.id}`)}>
                         <p className="title">{post.title}</p>
