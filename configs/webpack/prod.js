@@ -5,7 +5,7 @@ const {resolve} = require('path');
 const commonConfig = require('./common');
 
 module.exports = merge(commonConfig, {
-  entry: './index.tsx',
+  entry: ['whatwg-fetch', './index.tsx'],
   output: {
     filename: 'js/bundle.[hash].min.js',
     path: resolve(__dirname, '../../dist'),
