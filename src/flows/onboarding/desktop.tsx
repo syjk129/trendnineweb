@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { FeaturedInfluencer, Person, PostPreview } from "../../api/models";
+import { FeaturedInfluencer, Pagination, Person, PostPreview } from "../../api/models";
 import Button, { ButtonSize, ButtonVariant } from "../../components/button";
 import FollowInfluencer from "./followInfluencer";
 
@@ -10,7 +10,7 @@ interface DesktopOnboardingProps {
     toggleFollowInfluencer(influencer: Person): void;
     unfollowAll(): void;
     close(redirect?: string): void;
-    getPostsForUser(userId: string, queryString?: string): Promise<Array<PostPreview>>;
+    getPostsForUser(userId: string, queryString?: string): Promise<Pagination<PostPreview>>;
 }
 
 export default function DesktopOnboarding({

@@ -146,10 +146,12 @@ export default class App extends React.Component<Props, AppState> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.location !== this.props.location) {
+        if (nextProps.location !== this.props.location &&
+            !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
+        ) {
             window.scrollTo(0, 0);
-            this._previousLocation = this.props.location;
         }
+        this._previousLocation = this.props.location;
     }
 
     render() {

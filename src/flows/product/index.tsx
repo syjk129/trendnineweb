@@ -40,7 +40,9 @@ export default class ProductView extends React.Component<Props, ProductState> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.location !== this.props.location) {
+        if (nextProps.location !== this.props.location &&
+            !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
+        ) {
             this.refreshContent(nextProps);
         }
     }

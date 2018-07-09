@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 
-import { Person, PostPreview } from "../../../api/models";
+import { Pagination, Person, PostPreview } from "../../../api/models";
 import DesktopFollowInfluencer from "./desktop";
 import MobileFollowInfluencer from "./mobile";
 
@@ -11,7 +11,7 @@ interface FollowInfluencerProps {
     influencer: Person;
     followed: boolean;
     toggleFollow(): void;
-    getPostsForUser(userId: string, queryString?: string): Promise<Array<PostPreview>>;
+    getPostsForUser(userId: string, queryString?: string): Promise<Pagination<PostPreview>>;
 }
 
 interface FollowInfluencerState {
@@ -25,7 +25,7 @@ export default class FollowInfluencer extends React.Component<FollowInfluencerPr
 
     async componentWillMount() {
         const posts = await this.props.getPostsForUser(this.props.influencer.id, "page_size=4");
-        this.setState({ posts: posts.slice(0, 4) });
+        this.setState({ posts: posts.list.slice(0, 4) });
     }
 
     render() {

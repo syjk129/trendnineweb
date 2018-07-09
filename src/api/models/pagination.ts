@@ -1,4 +1,4 @@
-export default class Pagination {
-    list: Array<any>;
+export default class Pagination<T> {
+    list: Array<T>;
     nextToken: string;
 }

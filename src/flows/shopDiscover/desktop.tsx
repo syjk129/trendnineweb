@@ -39,7 +39,9 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
     }
 
     componentWillReceiveProps(nextProps: ShopDiscoverProps) {
-        if (nextProps.location !== this.props.location) {
+        if (nextProps.location !== this.props.location &&
+            !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
+        ) {
             if (nextProps.location.pathname !== this.props.location.pathname) {
                 this.setState({ selectedTree: new CategoryTree() });
             }

@@ -40,7 +40,9 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
     }
 
     componentWillReceiveProps(nextProps: ShopDiscoverProps) {
-        if (!this.state.isLoading && nextProps.location !== this.props.location) {
+        if (!this.state.isLoading && nextProps.location !== this.props.location &&
+            !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
+        ) {
             this.setState({ isLoading: true });
             this.refreshContent(nextProps);
         }

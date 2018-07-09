@@ -6,6 +6,7 @@ import {
     Comment,
     Featured,
     FeaturedInfluencer,
+    Pagination,
     Person,
     Post,
     PostPreview,
@@ -186,7 +187,7 @@ export default class Api {
         return this._GET(`/api/v1/influencers/${userId}`);
     }
 
-    getPostsForUser(userId: string, queryString?: string, nextToken?: string): Promise<Array<PostPreview>> {
+    getPostsForUser(userId: string, queryString?: string, nextToken?: string): Promise<Pagination<PostPreview>> {
         let url = `/api/v1/users/${userId}/posts`;
         if (queryString) {
             url += `?${queryString}`;

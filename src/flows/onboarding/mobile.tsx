@@ -1,9 +1,8 @@
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
-import { FeaturedInfluencer, Person, PostPreview } from "../../api/models";
+import { FeaturedInfluencer, Pagination, Person, PostPreview } from "../../api/models";
 import Button, { ButtonSize, ButtonVariant } from "../../components/button";
-import Carousel, { CarouselItem } from "../../components/carousel";
 import FollowInfluencer from "./followInfluencer";
 
 interface MobileOnboardingProps {
@@ -12,7 +11,7 @@ interface MobileOnboardingProps {
     toggleFollowInfluencer(influencer: Person): void;
     unfollowAll(): void;
     close(redirect?: string): void;
-    getPostsForUser(userId: string, queryString?: string): Promise<Array<PostPreview>>;
+    getPostsForUser(userId: string, queryString?: string): Promise<Pagination<PostPreview>>;
 }
 
 export default function MobileOnboarding({

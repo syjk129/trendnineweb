@@ -103,7 +103,11 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
             await this._setLoggedInUser();
             this.props.setLoggedState(true);
             if (isNewUser) {
-                this.props.close("/onboarding");
+                let pathname = this.props.location.pathname;
+                if (pathname.includes("login")) {
+                    pathname = pathname.replace("login", "onboarding");
+                }
+                this.props.close(pathname);
             } else {
                 this.props.close();
             }
