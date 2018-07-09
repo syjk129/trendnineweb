@@ -27,6 +27,7 @@
 
     .sticky-alphabet-list {
         position: fixed;
+        transform: translate3d(0, 0, 0);
         width: 100%;
         background-color: $base-background-color;
         z-index: 2;

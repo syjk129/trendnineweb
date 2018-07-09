@@ -46,6 +46,7 @@
 
 .sticky-filter-container {
     position: fixed;
+    transform: translate3d(0, 0, 0);
     width: calc(min(100%, 1440px) - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2 + 2 * #{$base-spacing});
     background-color: $base-background-color;
     padding-bottom: $base-spacing * 2;
