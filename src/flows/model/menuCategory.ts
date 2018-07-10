@@ -11,5 +11,5 @@ export const MenuCategoryQueryMap = {
     [MenuCategory.BAGS]: "Handbags",
     [MenuCategory.CLOTHING]:  "Women'S Clothes",
     [MenuCategory.SHOES]: "Women'S Shoes",
-    [MenuCategory.WOMENS_FASHION]: "Women'S Fashion",
+    [MenuCategory.WOMENS_FASHION]: "Women's Fashion",
 };

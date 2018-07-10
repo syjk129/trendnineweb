@@ -29,7 +29,7 @@ class Featured extends React.Component<FeaturedProps> {
                             </div>
                             <div className="trendnine-details">
                                 <p className="trendnine-name">
-                                    {trendnine.user.first_name} {trendnine.user.last_name}
+                                    @{trendnine.user.username}
                                 </p>
                                 <p className="trendnine-introduction">
                                     {trendnine.user.introduction || "Hello!"}

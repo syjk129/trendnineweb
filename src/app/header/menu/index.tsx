@@ -24,6 +24,7 @@ interface MenuState {
     searchString: string;
     subscribeEmail: string;
     success: boolean;
+    fail: boolean;
 }
 
 class Menu extends React.Component<MenuProps, MenuState> {
@@ -31,6 +32,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
         searchString: "",
         subscribeEmail: "",
         success: false,
+        fail: false,
     };
 
     render() {
@@ -163,6 +165,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                         <Input type={InputType.SUBMIT} value="SUBSCRIBE"></Input>
                     </form>
                     {this.state.success && <p>Subscribed!</p>}
+                    {/* {this.state.fail && <p className="error">Sorry, we had trouble subscribing to the email. Please check the email address or try again later.</p>} */}
                     <p className="disclaimer">© 2018 TrendNine, Inc. All rights reserved.</p>
                 </div>
             </div>
@@ -171,11 +174,16 @@ class Menu extends React.Component<MenuProps, MenuState> {
 
     private _subscribe = async (event) => {
         event.preventDefault();
-        const response = await this.props.subscribe({ email: this.state.subscribeEmail });
-        console.log(response);
-        if (response.email) {
-            console.log("yo");
-            this.setState({subscribeEmail: "", success: true});
+        try {
+            const response = await this.props.subscribe({ email: this.state.subscribeEmail });
+            if (response.email) {
+                this.setState({subscribeEmail: "", success: true});
+                setTimeout(function() {
+                    this.setState({success: false});
+                }.bind(this), 5000);
+            }
+        } catch (err) {
+            this.setState({ subscribeEmail: "", success: true });
             setTimeout(function() {
                 this.setState({success: false});
             }.bind(this), 5000);

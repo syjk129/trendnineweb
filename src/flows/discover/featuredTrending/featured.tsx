@@ -20,7 +20,7 @@ export default function Featured({ featuredTrendnines }: FeaturedProps) {
                     </div>
                     <div className="trendnine-details">
                         <div className="name">
-                            {trendnine.user.first_name} {trendnine.user.last_name}
+                            @{trendnine.user.username}
                         </div>
                         <div className="intro">
                             {trendnine.user.introduction || "Hello!"}

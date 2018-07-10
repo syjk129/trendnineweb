@@ -74,7 +74,7 @@ export default function AboutUs() {
                     <div className="about-get-content">
                         <h3 className="about-get-title">Get it before it's gone.</h3>
                         <p>You’ll be the first to know what your favorite influencers wear.</p>
-                        <LinkButton className="button rounded button-outline" to={prevPageUrl}>SHOP NOW</LinkButton>
+                        <LinkButton className="button rounded button-outline" to={prevPageUrl}>GET STARTED</LinkButton>
                     </div>
                 </div>
             </div>
