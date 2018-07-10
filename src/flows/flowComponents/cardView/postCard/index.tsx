@@ -79,23 +79,25 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                         )}
                     </div>
                 )}
-                <div className="post-card-content">
-                    <div className="title-container" onClick={() => this.props.history.push(`/post/${post.id}`)}>
-                        <p className="title">{post.title}</p>
+                {gridSize !== 3 && (
+                    <div className="post-card-content">
+                        <div className="title-container" onClick={() => this.props.history.push(`/post/${post.id}`)}>
+                            <p className="title">{post.title}</p>
+                        </div>
+                        <div className="author-container">
+                            <Author author={post.author} />
+                            {gridSize !== 2 && formatTime(post.created)}
+                        </div>
+                        <ActionLinks
+                            iconSize={isMobile && gridSize !== 2 ? IconSize.LARGE : IconSize.MEDIUM}
+                            variant={ActionLinksVariant.POST}
+                            id={post.id}
+                            wishlisted={post.wishlisted}
+                            liked={post.liked}
+                            likes={post.likes}
+                        />
                     </div>
-                    <div className="author-container">
-                        <Author author={post.author} />
-                        {gridSize !== 2 && formatTime(post.created)}
-                    </div>
-                    <ActionLinks
-                        iconSize={isMobile && gridSize !== 2 ? IconSize.LARGE : IconSize.MEDIUM}
-                        variant={ActionLinksVariant.POST}
-                        id={post.id}
-                        wishlisted={post.wishlisted}
-                        liked={post.liked}
-                        likes={post.likes}
-                    />
-                </div>
+                )}
             </div>
         );
     }
