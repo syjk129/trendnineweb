@@ -83,9 +83,9 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                 )}
                 {gridSize !== 3 && (
                     <div className="post-card-content">
-                        <div className="title-container" onClick={() => this.props.history.push(`/post/${post.id}`)}>
+                        <Link to={`/post/${post.id}`} className="title-container">
                             <p className="title">{post.title}</p>
-                        </div>
+                        </Link>
                         <div className="author-container">
                             <Author author={post.author} />
                             {gridSize !== 2 && formatTime(post.created)}
