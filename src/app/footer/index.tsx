@@ -83,9 +83,16 @@ export default class Footer extends React.Component<Props, FooterState> {
     @autobind
     private async _onSubmit(event) {
         event.preventDefault();
-        const response = await this.context.api.subscribe(this.state);
-        if (response.email) {
-            this.setState({email: "", success: true});
+        try {
+            const response = await this.context.api.subscribe(this.state);
+            if (response.result.email) {
+                this.setState({email: "", success: true});
+                setTimeout(function() {
+                    this.setState({success: false});
+                }.bind(this), 5000);
+            }
+        } catch (err) {
+            this.setState({ email: "", success: true});
             setTimeout(function() {
                 this.setState({success: false});
             }.bind(this), 5000);
