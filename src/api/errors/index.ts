@@ -28,13 +28,31 @@ export function isAuthError(error: any): error is AuthError {
     return error.isAuthError;
 }
 
+export class PermissionError extends Error {
+    readonly isPermissionError = true;
+
+    readonly error: Error;
+
+    constructor(err: Error) {
+        super(err.message);
+
+        this.error = err;
+    }
+}
+
+export function isPermissionError(error: any): error is PermissionError {
+    return error.isPermissionError;
+}
+
 export async function createErrorFromResponse(responseJson: any) {
     if (responseJson.status === 401 || (responseJson.result && (
-        responseJson.result === "Unauthorized" ||
-        responseJson.result.indexOf("Permission denied") !== -1
+        responseJson.result === "Unauthorized"
     ))
     ) {
         return new AuthError(new Error(responseJson.statusText));
+    }
+    if (responseJson.result.indexOf("Permission denied") !== -1) {
+        return new PermissionError(new Error(responseJson.statusText));
     }
 
     return new NetworkError(new Error(responseJson.statusText));

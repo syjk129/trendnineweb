@@ -2,7 +2,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 
-import { isAuthError } from "../api/errors";
+import { isAuthError, isPermissionError } from "../api/errors";
 import RouteProps from "../flows/routeProps";
 
 interface ErrorBoundaryProps extends RouteProps {
@@ -18,6 +18,8 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     componentDidCatch(error, info) {
         if (isAuthError(error)) {
             this.props.history.push("/login");
+        } else if (isPermissionError(error)) {
+            this.props.history.push("/");
         }
     }
 
@@ -36,6 +38,8 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
         props.errors.forEach(error => {
             if (isAuthError(error)) {
                 this.props.history.push("/login");
+            } else if (isPermissionError(error)) {
+                this.props.history.push("/");
             }
             // for now, remove all errors
             this.props.removeError(error);
