@@ -52,6 +52,11 @@
         letter-spacing: $letter-spacing-1;
         display: table-cell;
         line-height: $font-size-2 + 6px;
+
+        .tab-name {
+            display: inline-block;
+            padding-bottom: $base-spacing;
+        }
     }
 
     .selected {

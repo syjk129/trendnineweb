@@ -32,11 +32,11 @@ export default function MobileProduct({
                 <Button rounded variant={ButtonVariant.PRIMARY} onClick={() => window.open(product.url)}>Buy Now</Button>
                 <Button rounded variant={ButtonVariant.OUTLINE} onClick={toggleWishlist}>{wishlistBtnText}</Button>
             </div>
-            <ExpandableSection title="Product Details">
+            <ExpandableSection expanded title="Product Details">
                 <div dangerouslySetInnerHTML={{ __html: product.description }} />
             </ExpandableSection>
-            <ExpandableSection title="Size & Fit" />
-            <ExpandableSection title="Shipping & Returns" />
+            {/* <ExpandableSection title="Size & Fit" />
+            <ExpandableSection title="Shipping & Returns" /> */}
             <ContentSection title="How Influencers Wear It">
                 <Carousel>
                     {postsForProduct.map(post => (

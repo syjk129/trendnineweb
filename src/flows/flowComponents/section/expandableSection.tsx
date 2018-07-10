@@ -7,6 +7,7 @@ import "./style.scss";
 
 interface ExpandableSectionProps {
     title: string;
+    expanded?: boolean;
     children?: React.ReactNode;
 }
 
@@ -16,7 +17,7 @@ interface ExpandableSectionState {
 
 export default class ExpandableSection extends React.Component<ExpandableSectionProps, ExpandableSectionState> {
     state: ExpandableSectionState = {
-        isOpen: false,
+        isOpen: this.props.expanded || false,
     };
 
     render() {
@@ -24,7 +25,7 @@ export default class ExpandableSection extends React.Component<ExpandableSection
             <div className="expandable-section">
                 <div className="section-header" onClick={this._toggleOpen}>
                     <p>{this.props.title}</p>
-                    <IconButton icon={IconVariant.PLUS_OPEN} size={IconSize.MEDIUM} selected={this.state.isOpen} />
+                    <IconButton icon={IconVariant.ARROW_DOWN} size={IconSize.MEDIUM} selected={this.state.isOpen} />
                 </div>
                 {this.state.isOpen && this.props.children}
             </div>

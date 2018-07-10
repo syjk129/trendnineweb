@@ -68,9 +68,12 @@ export default class Image extends React.Component<ImageProps> {
                 classes += " post-cover-ratio";
                 break;
         }
-        const style = {
-            paddingBottom: `${height / width * 100}%`,
-        };
+        let style;
+        if (height && width) {
+            style = {
+                paddingBottom: `${height / width * 100}%`,
+            };
+        }
 
         return (
             <div className={classes} onClick={onClick} style={style} ref={setRef}>

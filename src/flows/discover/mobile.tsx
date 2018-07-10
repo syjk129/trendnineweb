@@ -14,6 +14,7 @@ import { SidebarSection } from "../flowComponents/section";
 import { SortConstants } from "../flowComponents/sort/types";
 import ViewMore from "../flowComponents/viewMore";
 import { ContentType, PostParam } from "../model";
+import FeaturedTrending from "./featuredTrending";
 import Welcome from "./welcome";
 
 import "./style.scss";
@@ -102,7 +103,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
             <>
                 <Welcome loggedIn={!!user} {...this.props} />
                 <div className="mobile-discover" id="mobile-discover">
-                    <Carousel attributes={carouselAttributes}>
+                    {/* <Carousel attributes={carouselAttributes}>
                         <div>
                             <MobileCarouselItem>
                                 {this.state.featuredTrendnines && this.state.featuredTrendnines.length > 0 &&
@@ -117,7 +118,12 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                                 </SidebarSection>
                             </MobileCarouselItem>
                         </div>
-                    </Carousel>
+                    </Carousel> */}
+                    <FeaturedTrending
+                        {...this.props}
+                        featuredTrendnines={this.state.featuredTrendnines}
+                        trendingPosts={this.state.trendingPosts}
+                    />
                     {this.state.postParam.keyword !== "" && this.state.posts.length < 1 && (
                         <div className="no-search-result-text">
                             No results for "{ this.state.postParam.keyword }"

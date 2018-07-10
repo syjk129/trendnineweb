@@ -13,7 +13,7 @@ export default function MobileWelcome({ loggedIn, location, match, history }: We
 
     return (
         <div className="mobile-welcome">
-            <Image src={MobileWelcomeImage} />
+            <Image square src={MobileWelcomeImage} />
             <div className="welcome-text">
                 Welcome to TrendNine,<br/>Shop in Style.
             </div>
