@@ -5,7 +5,6 @@
     "at-rule-empty-line-before": null,
     "declaration-block-no-duplicate-properties": true,
     "declaration-colon-newline-after": null,
-    "property-no-vendor-prefix": true,
     "value-list-comma-newline-after": "always-multi-line",
   }
 }

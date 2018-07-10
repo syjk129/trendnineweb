@@ -29,5 +29,7 @@ input {
 }
 
 input[type="submit"] {
+    -moz-appearance: none;
+    -webkit-appearance: none;
     text-align: center;
 }
