@@ -224,7 +224,7 @@ export default class Api {
     }
 
     getUserFollowing(userId: string): Promise<Array<Person>> {
-        return this._GET(`/api/v1/users/${userId}/followings`);
+        return this._GET_PAGINATION(`/api/v1/users/${userId}/followings`);
     }
 
     followUser(userId: string): Promise<any> {

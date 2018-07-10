@@ -172,10 +172,11 @@ export default class User extends React.Component<Props, UserState> {
                 content = await this.context.api.getProductsForUser(this._userId, queryString, nextToken);
                 return content && content.list || [];
             case UserContentType.FOLLOWER:
-                content = this.context.api.getUserFollowers(this._userId, queryString, nextToken);
+                content = await this.context.api.getUserFollowers(this._userId, queryString, nextToken);
                 return content && content.list || [];
             case UserContentType.FOLLOWING:
-                content = (this._user.username === this._userId || this._user.id === this._userId) ? this.context.api.getUserFollowing(this._userId, queryString, nextToken) : null;
+                content = (this._user.username === this._userId || this._user.id === this._userId) ? await this.context.api.getUserFollowing(this._userId, queryString, nextToken) : null;
+                console.log(content);
                 return content && content.list || [];
             case UserContentType.POST_WISHLIST:
             case UserContentType.PRODUCT_WISHLIST:
