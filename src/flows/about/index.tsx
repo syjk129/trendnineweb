@@ -86,7 +86,7 @@ export default function AboutUs() {
             <PageNavigation />
             <BrowserView viewClassName="flex" device={isBrowser}>
                 <Sidebar>
-                    <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About
+                    <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About Us
                 </Sidebar>
                 <Content>
                 { renderContent() }
@@ -94,7 +94,7 @@ export default function AboutUs() {
             </BrowserView>
             <MobileView device={isMobile}>
                 <div className="mobile-link-button">
-                <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About
+                <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About Us
                 </div>
                 { renderContent() }
             </MobileView>
