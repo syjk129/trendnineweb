@@ -10,6 +10,10 @@
         position: absolute;
     }
 
+    .welcome-image img {
+        max-height: 400px;
+    }
+
     .welcome-text {
         left: $mobile-page-spacing;
         top: $mobile-page-spacing * 2;

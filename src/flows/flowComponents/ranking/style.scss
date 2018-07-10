@@ -28,6 +28,16 @@
         display: flex;
     }
 
+    .post-card-hover-name {
+        overflow: hidden;
+        flex-wrap: nowrap;
+    }
+
+    .post-card-hover-title {
+        max-height: 35px;
+        overflow: hidden;
+    }
+
     .post-rank-img,
     .product-rank-img {
         padding-top: $base-spacing;

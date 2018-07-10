@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isTablet } from "react-device-detect":
 
 import Button, { ButtonSize, ButtonVariant } from "../../../components/button";
 import Image from "../../../components/image";
@@ -13,7 +14,7 @@ export default function MobileWelcome({ loggedIn, location, match, history }: We
 
     return (
         <div className="mobile-welcome">
-            <Image square src={MobileWelcomeImage} />
+            <Image className="welcome-image" square={!isTablet} src={MobileWelcomeImage} />
             <div className="welcome-text">
                 Welcome to TrendNine,<br/>Shop in Style.
             </div>

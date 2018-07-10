@@ -6,9 +6,6 @@ import MobileWelcome from "./mobile";
 import WelcomeProps from "./types";
 
 export default function Welcome(props: WelcomeProps) {
-    if (isTablet) {
-        return null;
-    }
     if (isMobile) {
         return <MobileWelcome {...props} />;
     } else {
