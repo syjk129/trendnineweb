@@ -133,6 +133,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                             <div
                                 className={`product-image-container${this.state.focusedProduct.id === product.id ? " selected" : ""}`}
                                 onMouseEnter={() => this._onProductMouseEnter(product)}
+                                onClick={() => this.props.history.push(`/product/${product.id}`)}
                             >
                                 <Image
                                     className="product-image"
@@ -153,10 +154,10 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
         const product = this.state.focusedProduct;
         if (wishlistedProducts.has(product.id)) {
             wishlistedProducts.delete(product.id);
-            this.context.api.wishlistProduct(product.id);
+            this.context.api.unwishlistProduct(product.id);
         } else {
             wishlistedProducts.add(product.id);
-            this.context.api.unwishlistProduct(product.id);
+            this.context.api.wishlistProduct(product.id);
         }
         this.setState({ wishlistedProducts });
     }
