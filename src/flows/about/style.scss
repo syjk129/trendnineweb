@@ -1,38 +1,55 @@
 @import "../../styles/variables";
 
 .about-header {
-    padding-bottom: 5 * $base-spacing;
-    margin-bottom: 4 * $base-spacing;
-    border-bottom: solid $standard-border-width $standard-border-color;
-
     .about-header-title {
-        margin-bottom: $base-spacing * 2;
+        padding-top: 5 * $base-spacing;
+        margin-bottom: 5 * $base-spacing;
+        text-align: center;
     }
 }
 
 .about-information-section {
     padding-bottom: $base-spacing;
-    margin-bottom: 4 * $base-spacing;
-    border-bottom: solid $standard-border-width $standard-border-color;
+    margin-bottom: 5 * $base-spacing;
+    background-color: $color-grey-0;
 
     .about-section {
-        max-width: 640px;
-        margin-bottom: $base-spacing * 9;
         font-size: $font-size-2;
         line-height: $line-height-2;
+        display: flex;
+        margin-bottom: -7px;
 
-        .about-section-title {
-            font-family: $font-family-serif;
-            font-size: $font-size-4;
-            line-height: $line-height-4;
-            font-weight: $font-weight-bold;
-            margin-bottom: $base-spacing * 2;
+        &:last-child {
+            margin-bottom: -16px;
+        }
+
+        .image-container {
+            width: 50%;
+            margin: auto;
+        }
+
+        .about-section-content {
+            margin: auto;
+            width: calc(50% - 10 * #{$base-spacing});
+            padding-right: 5 * $base-spacing;
+            padding-left: 5 * $base-spacing;
+
+            .about-section-title {
+                font-family: $font-family-serif;
+                font-size: $font-size-4;
+                line-height: $line-height-4;
+                font-weight: $font-weight-bold;
+                margin-bottom: $base-spacing * 2;
+            }
         }
     }
 }
 
 .about-findout-section {
+    padding-bottom: $base-spacing * 10;
+
     .about-findout-title {
+        text-align: center;
         font-size: $font-size-4;
         line-height: $line-height-3;
         font-weight: $font-weight-bold;
@@ -43,31 +60,20 @@
         display: flex;
         padding-bottom: 2 * $base-spacing;
 
-        &:last-child {
-            margin-bottom: $base-spacing * 10;
-        }
-
-        div:last-child {
-            padding-left: 4 * $base-spacing;
-        }
-
-        .image-container {
-            width: calc(50% - #{$base-spacing});
-            margin: auto;
-        }
-
         .findout-section {
-            width: calc(50% - #{$base-spacing});
+            width: 33.33%;
             margin-top: auto;
             margin-bottom: auto;
+            padding-right: 2 * $base-spacing;
+            padding-left: 2 * $base-spacing;
+            text-align: center;
 
             .findout-number {
                 font-family: $font-family-serif;
-                font-size: 120px;
-                line-height: 120px;
+                font-size: $font-size-5;
+                line-height: $line-height-5;
                 color: $color-grey-2;
                 font-weight: $font-weight-bold;
-                font-style: italic;
             }
 
             .findout-title {
@@ -81,10 +87,44 @@
     }
 }
 
+.mobile-static-content {
+    .about-information-section {
+        .about-section {
+            display: block;
+            margin-bottom: 0;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .image-container {
+                width: 100%;
+            }
+
+            .about-section-content {
+                width: calc(100% - 4 * #{$base-spacing});
+                padding: 0;
+                margin: $base-spacing * 2;
+            }
+        }
+    }
+
+    .about-findout-section {
+        .about-findout-content {
+            display: block;
+
+            .findout-section {
+                width: 100%;
+                padding: $base-spacing 0;
+            }
+        }
+    }
+}
+
 .about-get-section {
-    background-image: url("https://s3.amazonaws.com/trendnine-static/images/get_it.png");
+    background-image: url("https://s3.amazonaws.com/trendnine-static/images/about_us_footer.png");
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
     height: 400px;
 
     .about-get-content {

@@ -47,11 +47,13 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
         return (
             <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
                 <PageNavigation />
-                <BrowserView viewClassName="full-width" device={isBrowser}>
+                <BrowserView viewClassName="flex" device={isBrowser}>
                     <Sidebar>
                         <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;I'm an Influencer
                     </Sidebar>
-                    {this._renderContent()}
+                    <Content>
+                        {this._renderContent()}
+                    </Content>
                 </BrowserView>
                 <MobileView device={isMobile}>
                     <div className="mobile-link-button">
@@ -69,7 +71,7 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
         const isShop = pathname.indexOf("/shop") > -1;
 
         return (
-            <div className="full-width">
+            <div>
                 <div className="opportunities-header">
                     <h3 className="opportunities-header-title">
                         Are you a fashion blogger, <br />
