@@ -1,13 +1,13 @@
 import * as React from "react";
-import { isTablet } from "react-device-detect":
+import { isTablet } from "react-device-detect";
 
-import Button, { ButtonSize, ButtonVariant } from "../../../components/button";
+import Button, { ButtonVariant } from "../../../components/button";
 import Image from "../../../components/image";
 import WelcomeProps from "./types";
 
 import * as MobileWelcomeImage from "./mobile_welcome.png";
 
-export default function MobileWelcome({ loggedIn, location, match, history }: WelcomeProps) {
+export default function MobileWelcome({ loggedIn, history }: WelcomeProps) {
     if (loggedIn) {
         return null;
     }
