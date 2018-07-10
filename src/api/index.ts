@@ -38,10 +38,10 @@ export default class Api {
         let request;
         if (isNewUser) {
             request = { email, password, first_name: firstName, last_name: lastName };
-            return this._POST("/api/v1/users/registration", request);
+            return this._POST("/api/v1/users/registration", request, false);
         } else {
             request = { email, password };
-            return this._POST("/api/v1/users/authenticate", request);
+            return this._POST("/api/v1/users/authenticate", request, false);
         }
     }
 
@@ -440,14 +440,15 @@ export default class Api {
 
             const responseJson = await response.json();
             if (!response.ok) {
-                if (!retry) {
+                if (retry === undefined) {
                     await this.refreshToken();
                     return this._update(path, method, request, true);
                 }
-                const err = await createErrorFromResponse(responseJson);
-                this._apiOptions.setError(err);
+                if (retry !== false) {
+                    const err = await createErrorFromResponse(responseJson);
+                    this._apiOptions.setError(err);
+                }
             }
-
             return responseJson;
         } catch (err) {
             this._apiOptions.setError(err);
