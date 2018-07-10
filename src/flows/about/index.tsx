@@ -38,7 +38,7 @@ export default function AboutUs() {
                         <Image src="https://s3.amazonaws.com/trendnine-static/images/about_us_our_mission.png" />
                         <div className="about-section-content">
                             <p className="about-section-title">Our Mission</p>
-                            <p>At TrendNine, our goal is twofold: We want to provide you with an all-in-one shopping experience, from inspiration, discovery, to purchase, while curating the best style inspirations from top fashion influencers from around the world. Through these efforts, we seek to unlock the value for you as well as influencers and brands. TrendNine was founded in 2017 by a team of millennials who wanted a quick and simple way to keep their wardrobes up to date on the latest influencer fashion trends.</p>
+                            <p>At TrendNine, we want to provide you with an all-in-one shopping experience, from inspiration, discovery, to purchase, while curating the best style inspirations from top fashion influencers. Through these efforts, we seek to unlock the value for you as well as influencers and brands. TrendNine was founded in 2017 by a team of millennials who wanted a quick and simple way to keep their wardrobes up to date on the latest influencer fashion trends.</p>
                         </div>
                     </div>
                     <div className="about-section">
