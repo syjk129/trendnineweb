@@ -59,6 +59,9 @@
         }
 
         &.white {
+            color: #fff;
+            border-color: #fff;
+
             &:hover {
                 background-color: #fff;
                 color: $color-accent;

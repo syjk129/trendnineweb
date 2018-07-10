@@ -1,5 +1,48 @@
 @import "../../../styles/variables";
 
+.mobile-welcome {
+    position: relative;
+
+    .welcome-text,
+    .welcome-details,
+    .welcome-buttons {
+        color: #fff;
+        position: absolute;
+    }
+
+    .welcome-text {
+        left: $mobile-page-spacing;
+        top: $mobile-page-spacing * 2;
+        font-family: $font-family-serif;
+        font-size: $mobile-font-size-4;
+        line-height: $mobile-line-height-4;
+    }
+
+    .welcome-details {
+        padding-right: $mobile-page-spacing * 2;
+        top: 50%;
+        left: $mobile-page-spacing;
+        font-size: $mobile-font-size-1;
+        font-weight: $font-weight-light;
+        line-height: $mobile-line-height-3;
+    }
+
+    .welcome-buttons {
+        width: calc(100% - #{$mobile-page-spacing * 2});
+        top: 75%;
+        left: $mobile-page-spacing;
+        display: flex;
+
+        button {
+            width: 200px;
+
+            &:first-of-type {
+                margin-right: $mobile-page-spacing;
+            }
+        }
+    }
+}
+
 .welcome-carousel {
     @media (max-width: 1440px) {
         margin: 0 -#{$page-spacing};
