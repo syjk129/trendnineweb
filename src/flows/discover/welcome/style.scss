@@ -26,8 +26,8 @@
         padding-right: $mobile-page-spacing * 2;
         top: calc(50% + 1vh);
         left: $mobile-page-spacing;
-        font-size: 2.5vh;
-        line-height: 4vh;
+        font-size: calc(1.5vh + 1.5vw);
+        line-height: calc(3vh + 3vw);
         font-weight: $font-weight-light;
     }
 
