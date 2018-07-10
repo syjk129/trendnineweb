@@ -18,8 +18,8 @@
         left: $mobile-page-spacing;
         top: $mobile-page-spacing * 2;
         font-family: $font-family-serif;
-        font-size: 6vh;
-        line-height: 8vh;
+        font-size: calc(4vh + 3vw);
+        line-height: calc(5vh + 4vw);
     }
 
     .welcome-details {
