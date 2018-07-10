@@ -46,6 +46,8 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
 
         if (isMobile) {
             classes += " mobile";
+        } else {
+            classes += " desktop";
         }
 
         const imageUrl = post.cover_image && (isMobile ? post.cover_image.small_image_url : post.cover_image.thumbnail_image_url);
@@ -60,7 +62,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                         square
                     />
                 </Link>
-                {this.state.showDetails && (
+                {this.state.showDetails && !isMobile && (
                     <div className="post-product">
                         {this._renderProductCarousel()}
                         {this.state.focusedProduct && (

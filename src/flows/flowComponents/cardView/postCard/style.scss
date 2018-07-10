@@ -163,19 +163,21 @@
         }
     }
 
-    &:hover {
-        border: $standard-border-width solid $color-grey-2;
-        z-index: 1;
-        margin-left: -$hover-spacing;
-        margin-top: -$hover-spacing;
-        padding: $hover-spacing - $standard-border-width;
-        box-sizing: border-box;
-        width: calc(100% + #{$hover-spacing * 2});
-        height: calc(100% + 105px + #{$hover-spacing} * 2);
+    &.desktop {
+        &:hover {
+            border: $standard-border-width solid $color-grey-2;
+            z-index: 1;
+            margin-left: -$hover-spacing;
+            margin-top: -$hover-spacing;
+            padding: $hover-spacing - $standard-border-width;
+            box-sizing: border-box;
+            width: calc(100% + #{$hover-spacing * 2});
+            height: calc(100% + 105px + #{$hover-spacing} * 2);
 
-        .post-card-content {
-            position: absolute;
-            width: calc(100% - #{$hover-spacing * 2 - $standard-border-width * 2});
+            .post-card-content {
+                position: absolute;
+                width: calc(100% - #{$hover-spacing * 2 - $standard-border-width * 2});
+            }
         }
     }
 
