@@ -74,12 +74,12 @@ export class SidebarPostProductListSection extends React.Component<SidebarPostPr
                         <p className="post-card-hover-title">
                             {product.title}
                         </p>
+                        <p className="post-card-hover-price">
+                            {`$${product.price}`}
+                        </p>
                     </div>
                 </LinkButton>
                 <div className="post-card-hover-footer post-rank-footer">
-                    <p className="post-card-hover-price">
-                        {`$${product.price}`}
-                    </p>
                     <ActionLinks
                         variant={ActionLinksVariant.PRODUCT}
                         id={product.id}

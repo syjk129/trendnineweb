@@ -2,15 +2,18 @@ import * as React from "react";
 
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
-import Image from "../../components/image";
+import { IconSize } from "../../components/icon";
+import formatTime from "../../util/formatTime";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
+import Author from "../flowComponents/author";
 import { ContentSection, ExpandableSection } from "../flowComponents/section";
 import { ProductProps } from "./types";
 
+import "./style.scss";
+
 export default function MobileProduct({
     product,
-    relatedProducts,
-    reviews,
+    postsForProduct,
     wishlisted,
     toggleWishlist,
 }: ProductProps) {
@@ -34,25 +37,29 @@ export default function MobileProduct({
             </ExpandableSection>
             <ExpandableSection title="Size & Fit" />
             <ExpandableSection title="Shipping & Returns" />
-            <ContentSection title="How Our Influencers wear this Product">
+            <ContentSection title="How Influencers Wear It">
                 <Carousel>
-                    {relatedProducts.map(content => (
+                    {postsForProduct.map(post => (
                         <div>
                             <CarouselItem
-                                imageUrl={content.image && content.image.thumbnail_image_url}
-                                redirectUrl={`/product/${content.id}`}
-                                title={content.brand && content.brand.name}
-                                detail={content.title}
-                                subdetail={
-                                    <div>
-                                        <ActionLinks
-                                            variant={ActionLinksVariant.PRODUCT}
-                                            id={product.id}
-                                            wishlisted={product.wishlisted}
-                                            hideShare
-                                        />
-                                    </div>
-                                }
+                                imageUrl={post.cover_image && post.cover_image.thumbnail_image_url}
+                                redirectUrl={`/post/${post.id}`}
+                                title={post.author && post.author.username}
+                                detail={post.title}
+                                subdetail={(
+                                    <>
+                                        <div className="post-card-footer">
+                                            <ActionLinks
+                                                iconSize={IconSize.MEDIUM}
+                                                variant={ActionLinksVariant.POST}
+                                                id={post.id}
+                                                wishlisted={post.wishlisted}
+                                                liked={post.liked}
+                                                likes={post.likes}
+                                            />
+                                        </div>
+                                    </>
+                                )}
                             />
                         </div>
                     ))}

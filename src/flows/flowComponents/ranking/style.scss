@@ -24,6 +24,10 @@
 .post-rank {
     padding: 0;
 
+    .post-card-hover-btn {
+        display: flex;
+    }
+
     .post-rank-img,
     .product-rank-img {
         padding-top: $base-spacing;
@@ -41,10 +45,12 @@
     }
 
     .post-rank-footer {
-        margin-left: $ranking-img-width + $base-spacing;
+        position: relative;
         width: calc(100% - (#{$ranking-img-width} + 3 * #{$base-spacing}));
 
         .action-btns {
+            position: absolute;
+            bottom: $base-spacing;
             width: auto;
         }
     }

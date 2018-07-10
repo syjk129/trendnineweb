@@ -139,10 +139,6 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
     private _renderPostFooter = (post: PostPreview) => {
         return (
             <>
-                <div className="author-date">
-                    <Author author={post.author} />
-                    {formatTime(post.created)}
-                </div>
                 <div className="post-card-footer">
                     <ActionLinks
                         iconSize={IconSize.MEDIUM}

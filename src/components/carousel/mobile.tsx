@@ -11,7 +11,6 @@ export default function MobileCarousel({
     slidesToShow,
 }: CarouselProps) {
     let settings = {
-        adaptiveHeight: false,
         arrows: false,
         dots: true,
         slidesToShow: slidesToShow || 2,
