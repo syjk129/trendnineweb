@@ -16,10 +16,10 @@ export default function MobileWelcome({ loggedIn, history }: WelcomeProps) {
         <div className="mobile-welcome">
             <Image className="welcome-image" square={!isTablet} src={MobileWelcomeImage} />
             <div className="welcome-text">
-                Welcome to TrendNine,<br/>Shop in Style.
+                Welcome to TrendNine<br/><i>Shop in Style</i>
             </div>
             <div className="welcome-details">
-                Shop the best looks from fashion influencers you love most right from your homepage, social media, or inbox.
+                Follow all your favorite fashion influencers here on TrendNine, and never miss out on the next hottest outfits.
             </div>
             <div className="welcome-buttons">
                 <Button
