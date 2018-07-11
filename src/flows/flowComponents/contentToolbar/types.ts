@@ -1,4 +1,5 @@
 import { Category } from "../../../api/models";
+import CategoryTree from "../../shopDiscover/category-tree";
 
 export enum FilterType {
     CATEGORY = "Category",
@@ -77,7 +78,7 @@ export class SortFilter {
 export class TreeSelectFilter {
     isTreeSelectFilter: boolean = true;
 
-    selectedTree: Array<string> = [];
+    selectedTree: CategoryTree = new CategoryTree();
 }
 
 export type Filter = SelectFilter | RangeValueFilter | SortFilter | TreeSelectFilter;

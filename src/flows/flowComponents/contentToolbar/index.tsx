@@ -7,6 +7,7 @@ import { Category, FilterSearchResult } from "../../../api/models";
 import { AppContext } from "../../../app";
 import { ContentType } from "../../model";
 import RouteProps from "../../routeProps";
+import CategoryTree from "../../shopDiscover/category-tree";
 import { UserContentType } from "../../user/types";
 import MobileContentToolbar from "./mobile";
 import {
@@ -165,7 +166,8 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                     selectedFilters[FilterType.PRICE_RANGE] = rangeFilter;
                 } else if (filterType.toLowerCase() === FilterQueryParamMap[FilterType.CATEGORY]) {
                     const treeFilter = selectedFilters[FilterType.CATEGORY] || new TreeSelectFilter;
-                    treeFilter.selectedTree = sanitizedValues.split(",");
+                    treeFilter.selectedTree.categories = filters[FilterType.CATEGORY];
+                    treeFilter.selectedTree.populateSelectedCategories(sanitizedValues.split(","));
                     selectedFilters[FilterQueryParamMap[filterType]] = treeFilter;
                 } else {
                     selectedFilters[FilterQueryParamMap[filterType]] = { selectedIds: sanitizedValues.split(",") } as SelectFilter;
@@ -241,12 +243,8 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 filterParams += `price_high=${selectedFilter.maxValue}`;
                 filterParams += `&price_low=${selectedFilter.minValue}`;
             } else if (isTreeSelectFilter(selectedFilter)) {
-                filterParams = selectedFilter.selectedTree.reduce((param: string, category: string, index: number) => (
-                    `${param}${category},`
-                ), filterParams);
-                if (filterParams.length > 0) {
-                    filterParams = `${filterType.toLowerCase()}=${filterParams}`;
-                }
+                selectedFilter.selectedTree.categories = this.state.filters[FilterType.CATEGORY];
+                filterParams = `categories=${selectedFilter.selectedTree.getQueryString()}`;
             } else {
                 const selectedIds = selectedFilter.selectedIds.filter(id => id !== "").join(",");
                 if (selectedIds.length === 0) return result;
@@ -278,30 +276,9 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     private _toggleCategory = (category: Category) => {
         let selectedFilters = this.state.selectedFilters;
         let tree = selectedFilters[this.state.currentFilterType] || new TreeSelectFilter;
-        const currentCategory = tree.selectedTree.find(selectedCategory => selectedCategory === category.full_name);
-        if (currentCategory) {
-            tree.selectedTree = this._removeCategory(category, tree.selectedTree);
-        } else {
-            tree.selectedTree = this._addCategory(category, tree.selectedTree);
-        }
+        tree.selectedTree.toggleCategory(category);
         selectedFilters[this.state.currentFilterType] = tree;
         this.setState({ selectedFilters, hasChanged: true });
-    }
-
-    private _removeCategory = (category: Category, selectedTree: Array<string>) => {
-        let newTree = selectedTree;
-        newTree = newTree.filter(t => t !== category.full_name);
-        return category.subcategories.reduce((tree: Array<string>, subcategory: Category) => {
-            return this._removeCategory(subcategory, tree);
-        }, newTree);
-    }
-
-    private _addCategory = (category: Category, selectedTree: Array<string>) => {
-        let newTree = selectedTree;
-        newTree.push(category.full_name);
-        return category.subcategories.reduce((tree: Array<string>, subcategory: Category) => {
-            return this._addCategory(subcategory, tree);
-        }, newTree);
     }
 
     private _selectCurrentCategory = (category: Category | null) => {
