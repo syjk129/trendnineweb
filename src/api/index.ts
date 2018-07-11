@@ -320,6 +320,9 @@ export default class Api {
     refreshToken = async () => {
         // Don't refresh token if not expired
         const token = localStorage.getItem("tn_auth_token");
+        if (!token) {
+            return;
+        }
         const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
         const current = (new Date()).getTime() / 1000;
         if (exp > current) {
