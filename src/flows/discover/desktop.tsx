@@ -109,7 +109,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
         return (
             <>
-                {this.props.location.search.indexOf("keyword") === -1 && this.props.location.pathname === "/discover" && !this._categoryName && (
+                {this.props.location.search.indexOf("keyword") === -1 && this.props.location.pathname !== "/feed" && !this._categoryName && (
                     <Welcome loggedIn={!!user} location={this.props.location} history={this.props.history} match={this.props.match} />
                 )}
                 <div className="discover">
