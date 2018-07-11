@@ -69,11 +69,7 @@
 }
 
 .product-tag {
-    background-color: black;
-    color: white;
     position: absolute;
-    padding: $base-spacing;
-    border-radius: $base-spacing;
 
     &:hover {
         cursor: pointer;
@@ -81,11 +77,44 @@
 
     .product-dot {
         position: absolute;
+        opacity: 0.8;
         margin-left: -30px;
-        width: 10px;
-        height: 10px;
+        width: 15px;
+        height: 15px;
         border-radius: 100%;
         background-color: white;
+    }
+
+    .tag-name {
+        position: relative;
+        display: block;
+        background-color: #fff;
+        border: $standard-border-width solid #000;
+        border-radius: 3px;
+        padding: $base-spacing / 2 $base-spacing;
+        bottom: 40px;
+        left: calc(-50% - 20px);
+        min-width: 50px;
+        max-width: 200px;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: $font-size-2;
+
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 20px solid transparent;
+            border-top-color: black;
+            border-bottom: 0;
+            margin-left: -20px;
+            margin-bottom: -20px;
+        }
     }
 }
 

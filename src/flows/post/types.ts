@@ -23,4 +23,5 @@ export enum TabbedSectionTypes {
 export interface MobilePostState {
     section: TabbedSectionTypes;
     tabbedContent: Array<any>;
+    productTags: Array<any>;
 }

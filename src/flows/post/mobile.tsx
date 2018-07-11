@@ -11,13 +11,23 @@ import Comments from "../flowComponents/comments";
 import { ContentSection, TabbedSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
 import PostAuthorDetails from "./postAuthorDetails";
+import ProductTag from "./productTag";
 import { MobilePostProps, MobilePostState, TabbedSectionTypes } from "./types";
 
 export default class MobilePost extends React.Component<MobilePostProps, MobilePostState> {
     state: MobilePostState = {
         section: TabbedSectionTypes.PRODUCTS_IN_THIS_POST,
         tabbedContent: this.props.post.products,
+        productTags: [],
     };
+
+    componentWillMount() {
+        this._coverImageRef = React.createRef();
+    }
+
+    componentDidMount() {
+        this._updateImageTags(this.props);
+    }
 
     render() {
         const {
@@ -38,8 +48,14 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 <div className="post-content">
                     <Image
                         className="post-cover"
+                        width={post.cover_image.original_image_width}
+                        height={post.cover_image.original_image_height}
                         src={post.cover_image.original_image_url}
+                        setRef={this._coverImageRef}
                     />
+                    {this.state.productTags.length > 0 && this.state.productTags.map(tag => (
+                        <ProductTag tag={tag} />
+                    ))}
                     <p className="post-title">
                         {post.title}
                     </p>
@@ -87,6 +103,27 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 </ContentSection>
             </div>
         );
+    }
+
+    private _coverImageRef: React.RefObject<HTMLDivElement>;
+
+    private _updateImageTags = (props: MobilePostProps) => {
+        const current = this._coverImageRef.current;
+        if (current) {
+            const rect = current.getBoundingClientRect();
+
+            this.setState({ productTags: props.post.product_tags.map(tag => {
+                const product = props.post.products.find(product => product.id === tag.product_id);
+                return {
+                    product_id: tag.product_id,
+                    name: product && product.title || "",
+                    style: {
+                        left: current.offsetLeft + rect.width * tag.x_axis + 15,
+                        top: current.offsetTop + rect.height * tag.y_axis - 17,
+                    },
+                };
+            })});
+        }
     }
 
     private _renderTabbedContent = (content: any) => {
