@@ -14,7 +14,7 @@ export default function MobileCarousel({
         arrows: false,
         dots: true,
         slidesToShow: slidesToShow || 2,
-        slidesToScroll: 1,
+        slidesToScroll: 2,
     };
 
     if (attributes) {

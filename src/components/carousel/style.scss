@@ -58,10 +58,6 @@
     // display:
 }
 
-.mobile-carousel-container {
-    margin-bottom: calc(22px + #{$base-spacing}); // Compensate for dots
-}
-
 .slick-prev,
 .slick-next {
     width: $icon-size-2;
@@ -92,4 +88,16 @@
 
 .slick-prev + .slick-list {
     margin: 0 45px + $base-spacing * 2;
+}
+
+.mobile-carousel-container {
+    margin-bottom: calc(22px + #{$base-spacing}); // Compensate for dots
+
+    .slick-slide {
+        &:only-of-type {
+            .carousel-item {
+                max-width: 50%;
+            }
+        }
+    }
 }
