@@ -255,19 +255,21 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
 
     private _updateImageTags = (props: DesktopPostProps) => {
         const current = this._coverImageRef.current;
-        const rect = current.getBoundingClientRect();
+        if (current) {
+            const rect = current.getBoundingClientRect();
 
-        this.setState({ productTags: props.post.product_tags.map(tag => {
-            const product = props.post.products.find(product => product.id === tag.product_id);
-            return {
-                product_id: tag.product_id,
-                name: product && product.title || "",
-                style: {
-                    left: current.offsetLeft + rect.width * tag.x_axis + 15,
-                    top: current.offsetTop + rect.height * tag.y_axis - 17,
-                },
-            };
-        })});
+            this.setState({ productTags: props.post.product_tags.map(tag => {
+                const product = props.post.products.find(product => product.id === tag.product_id);
+                return {
+                    product_id: tag.product_id,
+                    name: product && product.title || "",
+                    style: {
+                        left: current.offsetLeft + rect.width * tag.x_axis + 15,
+                        top: current.offsetTop + rect.height * tag.y_axis - 17,
+                    },
+                };
+            })});
+        }
     }
 
     private _renderPostFooter = (post: PostPreview)  => {

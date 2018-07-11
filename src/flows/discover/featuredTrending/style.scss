@@ -78,25 +78,3 @@
         }
     }
 }
-
-.tab-dots {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-
-    .section-dot {
-        margin: $base-spacing;
-        width: 10px;
-        height: 10px;
-        border-radius: 100%;
-        border: $standard-border-width solid $standard-border-color;
-
-        &::before {
-            content: "";
-        }
-
-        &.selected {
-            background-color: $standard-border-color;
-        }
-    }
-}

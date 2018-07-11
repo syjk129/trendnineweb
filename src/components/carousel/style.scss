@@ -4,7 +4,6 @@
     margin: 0 $base-spacing * 2;
     display: flex;
     flex-direction: column;
-    height: 290px;
 
     &:first-child {
         margin-left: 0;
@@ -92,12 +91,4 @@
 
 .mobile-carousel-container {
     margin-bottom: calc(22px + #{$base-spacing}); // Compensate for dots
-
-    .slick-slide {
-        &:only-of-type {
-            .carousel-item {
-                max-width: 50%;
-            }
-        }
-    }
 }

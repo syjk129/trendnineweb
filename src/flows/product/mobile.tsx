@@ -3,9 +3,7 @@ import * as React from "react";
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import { IconSize } from "../../components/icon";
-import formatTime from "../../util/formatTime";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
-import Author from "../flowComponents/author";
 import { ContentSection, ExpandableSection } from "../flowComponents/section";
 import { ProductProps } from "./types";
 
@@ -18,10 +16,13 @@ export default function MobileProduct({
     toggleWishlist,
 }: ProductProps) {
     let wishlistBtnText = wishlisted ? "Remove from wishlist" : "Add to wishlist";
+    const attributes = {
+        slidesToScroll: 1,
+    };
 
     return (
         <div className="mobile-product">
-            <Carousel slidesToShow={1}>
+            <Carousel attributes={attributes} slidesToShow={1}>
                 {product.alt_images.map(image => <div><CarouselItem imageUrl={image.url} /></div>)}
             </Carousel>
             <div className="product-details">

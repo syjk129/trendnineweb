@@ -50,25 +50,19 @@ export default class FeaturedTrending extends React.Component<FeaturedTrendingPr
         return (
             <div className="featured-trending">
                 <TabbedSection
+                    showDots
                     sections={sections}
                     selected={this.state.selectedTab}
                     onSectionChange={this._onSectionChange}
-                />
-                <div className="featured-trending-section">
-                    {this.state.selectedTab === FeaturedTrendingSection.FEATURED ? (
-                        <Featured featuredTrendnines={this.props.featuredTrendnines} />
-                    ) : (
-                        <Trending trendingPosts={this.props.trendingPosts}  />
-                    )}
-                </div>
-                <div className="tab-dots">
-                    {sections.map(section => (
-                        <div
-                            className={`section-dot ${this.state.selectedTab === section ? "selected" : ""}`}
-                            onClick={() => this._onSectionChange(section)}
-                        />
-                    ))}
-                </div>
+                >
+                    <div className="featured-trending-section">
+                        {this.state.selectedTab === FeaturedTrendingSection.FEATURED ? (
+                            <Featured featuredTrendnines={this.props.featuredTrendnines} />
+                        ) : (
+                            <Trending trendingPosts={this.props.trendingPosts}  />
+                        )}
+                    </div>
+                </TabbedSection>
             </div>
         );
     }
