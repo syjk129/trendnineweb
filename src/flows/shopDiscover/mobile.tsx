@@ -58,7 +58,8 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
     async refreshContent() {
         const params = new URLSearchParams(location.search);
         const productParam = new PostParam(params);
-        const queryString = productParam.convertUrlParamToQueryString();
+        let queryString = productParam.convertUrlParamToQueryString();
+        queryString += "&page_size=18";
 
         const [
             products,
@@ -120,7 +121,8 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
 
         this.setState({ loadingNext: true });
 
-        const queryString = this.state.productParam.convertUrlParamToQueryString();
+        let queryString = this.state.productParam.convertUrlParamToQueryString();
+        queryString += "&page_size=18";
         const newProducts = await Promise.resolve(
             location.pathname === "/feed" ?
                 this.props.getFeedProducts(queryString, this.state.nextToken)
