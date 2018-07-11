@@ -52,7 +52,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
 
         // For Admin
         const user = JSON.parse(localStorage.getItem("user"));
-        const isManager = user["auth_level"] >= 3;
+        const isManager = user && user["auth_level"] >= 3;
         const isUnpublished = !post.published_date || new Date(post.published_date) > new Date(Date.now());
 
         const imageUrl = post.cover_image && (isMobile ? post.cover_image.small_image_url : post.cover_image.thumbnail_image_url);
