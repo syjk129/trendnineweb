@@ -38,20 +38,20 @@ export default class Api {
         let request;
         if (isNewUser) {
             request = { email, password, first_name: firstName, last_name: lastName };
-            return this._POST("/api/v1/users/registration", request, false);
+            return this._POST_UNAUTHORIZED("/api/v1/users/registration", request, false);
         } else {
             request = { email, password };
-            return this._POST("/api/v1/users/authenticate", request, false);
+            return this._POST_UNAUTHORIZED("/api/v1/users/authenticate", request, false);
         }
     }
 
     authenticateGoogle(code: string) {
-        return this._POST("/api/v1/users/google", { code });
+        return this._POST_UNAUTHORIZED("/api/v1/users/google", { code });
     }
 
     // TODO - Change it to pass token instead of access token
     authenticateFacebook(code: string) {
-        return this._POST("/api/v1/users/facebook", { code });
+        return this._POST_UNAUTHORIZED("/api/v1/users/facebook", { code });
     }
 
     verifyToken(token: string): Promise<void> {
@@ -318,6 +318,14 @@ export default class Api {
     private _apiOptions: ApiOptions;
 
     refreshToken = async () => {
+        // Don't refresh token if not expired
+        const token = localStorage.getItem("tn_auth_token");
+        const exp = JSON.parse(atob(token.split(".")[1]))["exp"];
+        const current = (new Date()).getTime() / 1000;
+        if (exp > current) {
+            return;
+        }
+
         const url = `${this._apiUrl}/api/v1/users/token_refresh`;
 
         try {
@@ -418,6 +426,10 @@ export default class Api {
         return this._update(path, "POST", request, retry);
     }
 
+    private async _POST_UNAUTHORIZED(path: string, request?: any, retry?: boolean): Promise<any> {
+        return this._update(path, "POST", request, retry, true);
+    }
+
     private async _PUT(path: string, request?: any, retry?: boolean): Promise<any> {
         return this._update(path, "PUT", request, retry);
     }
@@ -426,14 +438,14 @@ export default class Api {
         return this._update(path, "DELETE", request, retry);
     }
 
-    private async _update(path: string, method: string, request?: any, retry?: boolean) {
+    private async _update(path: string, method: string, request?: any, retry?: boolean, noAuth?: boolean) {
         const url = `${this._apiUrl}${path}`;
 
         try {
-            const requestObject = request ? Object.assign(request, this._getRequestHeader()) : this._getRequestHeader();
+            const requestObject = request ? Object.assign(request, this._getRequestHeader(noAuth)) : this._getRequestHeader(noAuth);
             const response = await fetch(url, {
                 method,
-                headers: this._getRequestHeader(),
+                headers: this._getRequestHeader(noAuth),
                 body: JSON.stringify(requestObject),
                 mode: "cors",
             });
@@ -455,7 +467,7 @@ export default class Api {
         }
     }
 
-    private _getRequestHeader() {
+    private _getRequestHeader(noAuth?: boolean) {
         const user = localStorage.getItem("user");
         const token = localStorage.getItem(tokenName);
         let jwtToken = "";
@@ -467,7 +479,7 @@ export default class Api {
                 jwtToken = `JWT ${token}`;
             }
         }
-        if (jwtToken && token) {
+        if (jwtToken && token && !noAuth) {
             return {
                 "Accept": "application/json",
                 "Authorization": jwtToken,

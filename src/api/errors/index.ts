@@ -47,11 +47,11 @@ export function isPermissionError(error: any): error is PermissionError {
 export async function createErrorFromResponse(responseJson: any) {
     if (responseJson.status === 401 || (responseJson.result && (
         responseJson.result === "Unauthorized"
-    ))
+    ) || responseJson.code === "user_not_found")
     ) {
         return new AuthError(new Error(responseJson.statusText));
     }
-    if (responseJson.result.indexOf("Permission denied") !== -1) {
+    if (responseJson.result && responseJson.result.indexOf("Permission denied") !== -1) {
         return new PermissionError(new Error(responseJson.statusText));
     }
 
