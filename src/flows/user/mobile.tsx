@@ -41,6 +41,20 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
         gridSize: 1,
     };
 
+    componentWillMount() {
+        this._pageRef = React.createRef();
+    }
+
+    componentDidMount() {
+        document.addEventListener("scroll", this._fetchNextContent);
+        document.addEventListener("touchmove", this._fetchNextContent);
+    }
+
+    componentDidUnmount() {
+        document.removeEventListener("scroll", this._fetchNextContent);
+        document.removeEventListener("touchmove", this._fetchNextContent);
+    }
+
     render() {
         const {
             user,
@@ -48,11 +62,8 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
             profile,
             content,
             pathname,
-            contentType,
             loadingNext,
-            nextToken,
             setContentType,
-            fetchNextContent,
         } = this.props;
 
         if (!content) {
@@ -61,7 +72,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
         const isInfluencer = profile && profile.user.auth_level === 2;
 
         return (
-            <div className="mobile-user">
+            <div className="mobile-user" ref={this._pageRef}>
                 {isInfluencer && (
                     this._renderInfluencerProfile(profile)
                 )}
@@ -72,28 +83,25 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                     pathname={pathname}
                     setContent={setContentType}
                 />
-                {/* {(contentType === UserContentType.POST || contentType === UserContentType.PRODUCT) && (
-                    <ContentToolbar
-                        location={this.props.location}
-                        history={this.props.history}
-                        match={this.props.match}
-                        contentType={contentType}
-                        setGridSize={this._setGridSize}
-                    />
-                )} */}
-
                 {this._renderSettings()}
                 <CardContainer gridSize={this.state.gridSize}>
                     {this._renderContent()}
                 </CardContainer>
-                {nextToken && <ViewMore isLoading={loadingNext} onClick={fetchNextContent} />}
+                {loadingNext && <Spinner />}
             </div>
         );
     }
 
-    @autobind
-    private _setGridSize(gridSize: number) {
-        this.setState({ gridSize });
+    private _pageRef: React.RefObject<HTMLDivElement>;
+
+    private _fetchNextContent = () => {
+        // Infinite Scroll
+        const page = this._pageRef.current;
+        if (!page || page.getBoundingClientRect().bottom > window.innerHeight) {
+            return;
+        }
+
+        this.props.fetchNextContent();
     }
 
     private _renderInfluencerProfile = (profile: any) => {
