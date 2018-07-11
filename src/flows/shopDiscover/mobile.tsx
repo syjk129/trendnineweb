@@ -1,20 +1,11 @@
 import autobind from "autobind-decorator";
-import * as H from "history";
-import { PropTypes } from "prop-types";
 import * as React from "react";
-import { match, withRouter } from "react-router-dom";
 
-import { AppContext, AppContextTypes } from "../../app";
-import Card, { CardContainer } from "../../components/card";
-import Carousel, { CarouselItem } from "../../components/carousel";
-import Content from "../../components/content";
-import Sidebar from "../../components/sidebar";
+import { AppContext } from "../../app";
+import { CardContainer } from "../../components/card";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
-import Sticky from "../../components/sticky";
-import { PostCard, ProductCard } from "../flowComponents/cardView";
+import { ProductCard } from "../flowComponents/cardView";
 import ContentToolbar from "../flowComponents/contentToolbar";
-import MobileFilter from "../flowComponents/filter/mobileFilter";
-import ViewMore from "../flowComponents/viewMore";
 import { ContentType, Filters, PostParam } from "../model";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
@@ -32,11 +23,12 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
         isLoading: true,
         loadingNext: false,
         productParam: null,
-        gridSize: 1,
+        gridSize: 2,
     };
 
     componentWillMount() {
-        this.refreshContent(this.props);
+        this._pageRef = React.createRef();
+        this.refreshContent();
     }
 
     componentWillReceiveProps(nextProps: ShopDiscoverProps) {
@@ -44,18 +36,26 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
             !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
         ) {
             this.setState({ isLoading: true });
-            this.refreshContent(nextProps);
+            this.refreshContent();
         }
     }
 
     async componentDidMount() {
+        document.addEventListener("scroll", this._paginateNextProducts);
+        document.addEventListener("touchmove", this._paginateNextProducts);
+
         const categories = await this.props.getCategories();
         this.setState({
             categories: categories,
         });
     }
 
-    async refreshContent(props: ShopDiscoverProps) {
+    componentWillUnmount() {
+        document.removeEventListener("scroll", this._paginateNextProducts);
+        document.removeEventListener("touchmove", this._paginateNextProducts);
+    }
+
+    async refreshContent() {
         const params = new URLSearchParams(location.search);
         const productParam = new PostParam(params);
         const queryString = productParam.convertUrlParamToQueryString();
@@ -81,7 +81,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
         const user = JSON.parse(localStorage.getItem("user"));
 
         return (
-            <div className="mobile-discover">
+            <div className="mobile-discover" ref={this._pageRef}>
                 {this.state.productParam.keyword !== "" && this.state.products.length < 1 && (
                     <div className="no-search-result-text">
                         No results for "{ this.state.productParam.keyword }"
@@ -99,16 +99,25 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
                 <CardContainer gridSize={this.state.gridSize} className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
                     {this._renderProducts()}
                 </CardContainer>
-                {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextProducts} />}
+                {this.state.loadingNext && <Spinner />}
             </div>
         );
     }
+
+    private _pageRef: React.RefObject<HTMLDivElement>;
 
     @autobind
     private async _paginateNextProducts() {
         if (!this.state.nextToken) {
             return;
         }
+
+        // Infinite Scroll
+        const page = this._pageRef.current;
+        if (!page || page.getBoundingClientRect().bottom > window.innerHeight) {
+            return;
+        }
+
         this.setState({ loadingNext: true });
 
         const queryString = this.state.productParam.convertUrlParamToQueryString();

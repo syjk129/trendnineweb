@@ -33,7 +33,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
     };
 
     componentWillMount() {
-        this._mobileDiscoverRef = React.createRef();
+        this._pageRef = React.createRef();
         this.refreshContent(this.props);
     }
 
@@ -101,7 +101,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         return (
             <>
                 <Welcome loggedIn={!!user} {...this.props} />
-                <div className="mobile-discover" id="mobile-discover" ref={this._mobileDiscoverRef}>
+                <div className="mobile-discover" id="mobile-discover" ref={this._pageRef}>
                     <FeaturedTrending
                         {...this.props}
                         featuredTrendnines={this.state.featuredTrendnines}
@@ -129,7 +129,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         );
     }
 
-    private _mobileDiscoverRef: React.RefObject<HTMLDivElement>;
+    private _pageRef: React.RefObject<HTMLDivElement>;
 
     @autobind
     private _renderPosts() {
@@ -151,7 +151,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         }
 
         // Infinite Scroll
-        const page = this._mobileDiscoverRef.current;
+        const page = this._pageRef.current;
         if (!page || page.getBoundingClientRect().bottom > window.innerHeight) {
             return;
         }
