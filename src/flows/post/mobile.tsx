@@ -4,13 +4,11 @@ import { isMobile } from "react-device-detect";
 
 import { PostPreview } from "../../api/models";
 import Carousel, { CarouselItem } from "../../components/carousel";
-import Icon, { IconSize, IconVariant } from "../../components/icon";
-import Image, { ImageRatioVariant } from "../../components/image";
-import formatTime from "../../util/formatTime";
+import { IconSize } from "../../components/icon";
+import Image from "../../components/image";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
-import Author from "../flowComponents/author";
 import Comments from "../flowComponents/comments";
-import { ContentSection, SidebarSection, TabbedSection } from "../flowComponents/section";
+import { ContentSection, TabbedSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
 import PostAuthorDetails from "./postAuthorDetails";
 import { MobilePostProps, MobilePostState, TabbedSectionTypes } from "./types";
@@ -59,7 +57,6 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                         />
                     </div>
                     <div className="post-details">
-                        {/* TODO: Don't use dangerouslySetInnerHTML. Make this safer */}
                         <div dangerouslySetInnerHTML={{ __html: post.content }} />
                     </div>
                 </div>
