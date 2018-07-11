@@ -247,7 +247,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
             return false;
         }
 
-        if (this.state.password !== this.state.old_password) {
+        if (this.state.password === this.state.old_password) {
             this.setState({
                 passwordErrorMsg: "You need to use a different password!",
             });

@@ -3,14 +3,9 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import { CardContainer } from "../../components/card";
-import Carousel from "../../components/carousel";
-import MobileCarouselItem from "../../components/carousel/mobileCarouselItem";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { PostCard } from "../flowComponents/cardView";
 import ContentToolbar from "../flowComponents/contentToolbar";
-import Featured from "../flowComponents/featured";
-import { PostRank } from "../flowComponents/ranking";
-import { SidebarSection } from "../flowComponents/section";
 import { SortConstants } from "../flowComponents/sort/types";
 import ViewMore from "../flowComponents/viewMore";
 import { ContentType, PostParam } from "../model";
@@ -91,34 +86,10 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         }
         const user = JSON.parse(localStorage.getItem("user"));
 
-        const carouselAttributes = {
-            infinite: false,
-            arrows: false,
-            slidesToShow: 1,
-            variableWidth: false,
-            centerMode: true,
-        };
-
         return (
             <>
                 <Welcome loggedIn={!!user} {...this.props} />
                 <div className="mobile-discover" id="mobile-discover">
-                    {/* <Carousel attributes={carouselAttributes}>
-                        <div>
-                            <MobileCarouselItem>
-                                {this.state.featuredTrendnines && this.state.featuredTrendnines.length > 0 &&
-                                    <Featured featuredTrendnines={this.state.featuredTrendnines} />
-                                }
-                            </MobileCarouselItem>
-                        </div>
-                        <div>
-                            <MobileCarouselItem>
-                                <SidebarSection title="Trending Now">
-                                    <PostRank posts={this.state.trendingPosts} />
-                                </SidebarSection>
-                            </MobileCarouselItem>
-                        </div>
-                    </Carousel> */}
                     <FeaturedTrending
                         {...this.props}
                         featuredTrendnines={this.state.featuredTrendnines}

@@ -2,9 +2,9 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import { Category } from "../../api/models";
-import Button, { ButtonVariant, IconButton, LinkButton } from "../../components/button";
+import { IconButton, LinkButton } from "../../components/button";
 import Checkbox from "../../components/checkbox";
-import Icon, { IconVariant } from "../../components/icon";
+import { IconVariant } from "../../components/icon";
 import { MenuCategory, MenuCategoryQueryMap } from "../model";
 import { findCategory } from "./category-tree";
 
