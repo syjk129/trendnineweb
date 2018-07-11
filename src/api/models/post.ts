@@ -9,6 +9,7 @@ export default class Post {
     modified: string; // TODO: use date
     products: Array<any>; // TODO: create product model
     product_tags: Array<any>;
+    published_date: string;
     wishlisted: boolean;
     liked: boolean;
     likes: number;

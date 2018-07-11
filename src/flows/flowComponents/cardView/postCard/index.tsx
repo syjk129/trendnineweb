@@ -50,6 +50,11 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
             classes += " desktop";
         }
 
+        // For Admin
+        const user = JSON.parse(localStorage.getItem("user"));
+        const isManager = user["auth_level"] >= 3;
+        const isUnpublished = !post.published_date || new Date(post.published_date) > new Date(Date.now());
+
         const imageUrl = post.cover_image && (isMobile ? post.cover_image.small_image_url : post.cover_image.thumbnail_image_url);
 
         return (
@@ -84,7 +89,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                 {gridSize !== 3 && (
                     <div className="post-card-content">
                         <Link to={`/post/${post.id}`} className="title-container">
-                            <p className="title">{post.title}</p>
+                            <p className={`title${isManager && isUnpublished ? " unpublished" : ""}`}>{post.title}</p>
                         </Link>
                         <div className="author-container">
                             <Author author={post.author} />

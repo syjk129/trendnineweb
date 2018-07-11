@@ -153,7 +153,7 @@ export default class User extends React.Component<Props, UserState> {
 
         this.setState({
             profile,
-            content: content,
+            content: content && content.list || [],
             nextToken: content && content.nextToken || null,
             contentType: contentType || this.state.contentType,
             postParam,
@@ -163,29 +163,29 @@ export default class User extends React.Component<Props, UserState> {
 
     @autobind
     private async _fetchContent(contentType: UserContentType, queryString?: string, nextToken?: string) {
-        let content;
         switch (contentType) {
             case UserContentType.POST:
-                content = await this.context.api.getPostsForUser(this._userId, queryString, nextToken);
-                return content && content.list || [];
+                return await this.context.api.getPostsForUser(this._userId, queryString, nextToken);
             case UserContentType.PRODUCT:
-                content = await this.context.api.getProductsForUser(this._userId, queryString, nextToken);
-                return content && content.list || [];
+                return await this.context.api.getProductsForUser(this._userId, queryString, nextToken);
             case UserContentType.FOLLOWER:
-                content = await this.context.api.getUserFollowers(this._userId, queryString, nextToken);
-                return content && content.list || [];
+                return await this.context.api.getUserFollowers(this._userId, queryString, nextToken);
             case UserContentType.FOLLOWING:
-                content = (this._user.username === this._userId || this._user.id === this._userId) ? await this.context.api.getUserFollowing(this._userId, queryString, nextToken) : null;
-                console.log(content);
-                return content && content.list || [];
+                return (this._user.username === this._userId || this._user.id === this._userId) ? await this.context.api.getUserFollowing(this._userId, queryString, nextToken) : null;
             case UserContentType.POST_WISHLIST:
             case UserContentType.PRODUCT_WISHLIST:
                 if (this._user.username !== this._userId && this._user.id !== this._userId) return null;
                 const wishlistItems = await this.context.api.getWishlist(nextToken);
                 if (contentType === UserContentType.POST_WISHLIST) {
-                    return wishlistItems.list.post_items;
+                    return {
+                        list: wishlistItems.list.post_items,
+                        nextToken: wishlistItems.nextToken,
+                    };
                 } else {
-                    return wishlistItems.list.product_items;
+                    return {
+                        list: wishlistItems.list.product_items,
+                        nextToken: wishlistItems.nextToken,
+                    };
                 }
             case UserContentType.SETTINGS:
                 return [];
@@ -202,7 +202,7 @@ export default class User extends React.Component<Props, UserState> {
         const queryString = this.state.postParam ? this.state.postParam.convertUrlParamToQueryString() : "";
         const newContent = await this._fetchContent(this.state.contentType, queryString, this.state.nextToken);
         this.setState({
-            content: this.state.content.concat(newContent),
+            content: this.state.content.concat(newContent && newContent.list || []),
             nextToken: newContent.nextToken,
             loadingNext: false,
         });
