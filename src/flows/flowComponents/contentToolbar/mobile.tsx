@@ -76,17 +76,17 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                     <div className="grid-sizes">
                         <IconButton
                             icon={IconVariant.GRID_SIZE_1}
-                            size={IconSize.MEDIUM}
+                            size={IconSize.SMALL}
                             onClick={() => this.props.setGridSize(1)}
                         />
                         <IconButton
                             icon={IconVariant.GRID_SIZE_2}
-                            size={IconSize.MEDIUM}
+                            size={IconSize.SMALL}
                             onClick={() => this.props.setGridSize(2)}
                         />
                         <IconButton
                             icon={IconVariant.GRID_SIZE_3}
-                            size={IconSize.MEDIUM}
+                            size={IconSize.SMALL}
                             onClick={() => this.props.setGridSize(3)}
                         />
                    </div>
@@ -113,7 +113,7 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                         toggleFilterActive={() => this._toggleFilterActive(ToolbarType.FILTER)}
                         onRangeFilterChange={onRangeFilterChange}
                         onSearchStringChange={onSearchStringChange}
-                        clearFilters={clearFilters}
+                        clearFilters={this._clearFilters}
                     />
                 }
                 {filters && Object.keys(filters).length > 0 && (
@@ -123,6 +123,11 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                 )}
             </Sticky>
         );
+    }
+
+    private _clearFilters = () => {
+        document.body.classList.remove("noscroll");
+        this.props.clearFilters();
     }
 
     private _selectSortType = (sortType: SortType) => {
