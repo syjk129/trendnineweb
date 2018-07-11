@@ -166,6 +166,12 @@
         padding-left: $base-spacing * 2;
         line-height: $line-height-3;
 
+        .activity-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         .identifier {
             display: inline-block;
             margin-right: $base-spacing;
@@ -221,10 +227,11 @@
         border-bottom: $standard-border-width solid $standard-border-color;
         margin: $base-spacing (-$mobile-page-spacing);
         padding: $mobile-page-spacing;
+        display: flex;
+        justify-content: space-between;
 
         .activity-item {
             display: inline-block;
-            width: 50%;
             font-size: $font-size-2;
 
             .identifier {

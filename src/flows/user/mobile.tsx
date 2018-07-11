@@ -110,7 +110,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                 <div className="user-details">
                     <div className="user-image">
                         <Image
-                            src={influencer.profile_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
+                            src={influencer.profile_small_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
                             circle
                             square
                         />
@@ -126,6 +126,10 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                     />
                 </div>
                 <div className="activity-container">
+                    <div className="activity-item">
+                        <span className="identifier">FOLLOWERS</span>
+                        <span className="count">{profile.follower_count}</span>
+                    </div>
                     <div className="activity-item">
                         <span className="identifier">TODAY</span>
                         <span className="count">{profile.today_view_count}</span>
