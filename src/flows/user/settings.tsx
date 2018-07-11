@@ -2,14 +2,12 @@ import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
-import { GoogleLogin, GoogleLoginResponseOffline } from "react-google-login";
 import { withRouter } from "react-router-dom";
 
 import { Person } from "../../api/models";
 import { AppContext } from "../../app";
 import Button, { ButtonVariant, LinkButton } from "../../components/button";
 import Input, { InputType, InputVariant } from "../../components/input";
-import FacebookLogin, { FacebookLoginResponse } from "../auth/facebookLogin";
 import { AuthFormDataProps } from "../auth/types";
 import RouteProps from "../routeProps";
 
@@ -44,7 +42,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
         email: "",
         username: "",
         usernameErrorMsg: "",
-        profile_image_url: "https://www.trendnine.com/profile.png",
+        profile_image_url: null,
         is_facebook_linked: false,
         is_google_linked: false,
         is_instagram_linked: false,
@@ -133,27 +131,18 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                                     required={true}
                                 />
                             </div>
+                            <div>
+                                <p>Profile Image Url (Optional)</p>
+                                <Input
+                                    placeholder=""
+                                    value={this.state.profile_image_url}
+                                    type={InputType.TEXT}
+                                    variant={InputVariant.OUTLINE}
+                                    onChange={(profile_image_url) => this._handleFormChange({ profile_image_url })}
+                                    required={true}
+                                />
+                            </div>
                         </div>
-                        {/* <div className="input-container">
-                            <GoogleLogin
-                                className="google-login button"
-                                clientId="174930742509-kvp3mkdgdb5c8staoesefgltj377tgsq.apps.googleusercontent.com"
-                                responseType="code"
-                                buttonText={this.state.is_google_linked ? "Linked Google" : "Link Google"}
-                                onSuccess={this._authenticateGoogle}
-                                onFailure={this._onGoogleFailure}
-                                disabled={this.state.is_google_linked}
-                            />
-                            <FacebookLogin
-                                appId="201224070695370"
-                                sdkVersion="v3.0"
-                                fields="name,email,picture"
-                                buttonText={this.state.is_facebook_linked ? "Linked Facebook" : "Link Facebook"}
-                                responseType="code"
-                                onCallback={this._authenticateFacebook}
-                                disabled = {this.state.is_facebook_linked}
-                            />
-                        </div> */}
                         <div className="link-buttons-container">
                             <LinkButton onClick={() => this.setState({showPasswordChange: true})}>Change Password</LinkButton>
                             <LinkButton onClick={() => this.props.history.push("/logout")}>Sign out</LinkButton>
@@ -231,10 +220,16 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                 usernameErrorMsg: "",
             });
 
+            const user = await this.context.api.getUser();
+            if (user) {
+                localStorage.setItem("user", JSON.stringify(user));
+                this.props.history.push(`/user/${user.username}/settings`);
+            }
+
             return false;
-        } else {
-            this.setState({usernameErrorMsg: data.result.username});
         }
+
+        this.setState({usernameErrorMsg: data.result.username});
         return false;
     }
 
@@ -277,18 +272,11 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                 last_name: user.last_name,
                 email: user.email,
                 username: user.username,
-                profile_image_url: user.profile_image_url || this.state.profile_image_url,
                 is_facebook_linked: user.is_facebook_linked,
                 is_google_linked: user.is_google_linked,
                 is_instagram_linked: user.is_instagram_linked,
+                profile_image_url: user.profile_image_url,
                 showPasswordChange: false,
-                password: "",
-                passwordErrorMsg: "",
-                old_password: "",
-                oldPasswordErrorMsg: "",
-                confirm_password: "",
-                confirmPasswordErrorMsg: "",
-                usernameErrorMsg: "",
             });
         } else {
             this.props.history.push(`${this.props.location.pathname}/login`);
@@ -297,17 +285,6 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
 
     private _handleFormChange = (data) => {
         this.setState(data);
-    }
-
-    private _authenticateGoogle = async (response: GoogleLoginResponseOffline) => {
-        const token = await this.context.api.authenticateGoogle(response.code);
-    }
-
-    private _authenticateFacebook = async (response: FacebookLoginResponse) => {
-        const token = this.context.api.authenticateFacebook(response.code);
-    }
-
-    private _onGoogleFailure = (response: GoogleLoginResponseOffline) => {
     }
 }
 
