@@ -29,11 +29,22 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         postParam: null,
         isLoading: true,
         loadingNext: false,
-        gridSize: 1,
+        gridSize: 2,
     };
 
     componentWillMount() {
+        this._mobileDiscoverRef = React.createRef();
         this.refreshContent(this.props);
+    }
+
+    componentDidMount() {
+        document.addEventListener("scroll", this._paginateNextPosts);
+        document.addEventListener("touchmove", this._paginateNextPosts);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("scroll", this._paginateNextPosts);
+        document.removeEventListener("touchmove", this._paginateNextPosts);
     }
 
     componentWillReceiveProps(nextProps: DiscoverProps) {
@@ -53,7 +64,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
             postParam.sort = SortConstants.LATEST_ID;
         }
         let queryString = postParam.convertUrlParamToQueryString();
-        queryString += "&page_size=15";
+        queryString += "&page_size=18";
         this.setState({ loadingNext: true });
 
         const [
@@ -84,12 +95,13 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         if (this.state.isLoading) {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
+
         const user = JSON.parse(localStorage.getItem("user"));
 
         return (
             <>
                 <Welcome loggedIn={!!user} {...this.props} />
-                <div className="mobile-discover" id="mobile-discover">
+                <div className="mobile-discover" id="mobile-discover" ref={this._mobileDiscoverRef}>
                     <FeaturedTrending
                         {...this.props}
                         featuredTrendnines={this.state.featuredTrendnines}
@@ -111,11 +123,13 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                     <CardContainer gridSize={this.state.gridSize}>
                         {this._renderPosts()}
                     </CardContainer>
-                    {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextPosts} />}
+                    {this.state.loadingNext && <Spinner />}
                 </div>
             </>
         );
     }
+
+    private _mobileDiscoverRef: React.RefObject<HTMLDivElement>;
 
     @autobind
     private _renderPosts() {
@@ -135,9 +149,16 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         if (this.state.nextToken == null) {
             return;
         }
-        this.setState({ loadingNext: true });
 
-        const queryString = this.state.postParam.convertUrlParamToQueryString();
+        // Infinite Scroll
+        const page = this._mobileDiscoverRef.current;
+        if (!page || page.getBoundingClientRect().bottom > window.innerHeight) {
+            return;
+        }
+
+        this.setState({ loadingNext: true });
+        let queryString = this.state.postParam.convertUrlParamToQueryString();
+        queryString += "&page_size=18";
         const newPosts = await Promise.resolve(
             location.pathname === "/feed" ?
                 this.props.getFeedPosts(queryString, this.state.nextToken)
