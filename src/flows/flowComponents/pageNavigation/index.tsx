@@ -40,7 +40,7 @@ export default class PageNavigation extends React.Component<PageNavigationProps,
 
     render() {
         return (
-            <div className={isMobile ? "mobile-page-navigation" : ""}>
+            <div className={isMobile ? "mobile-page-navigation" : ""} id="page-navigation">
             {
                 this.state.show && <Button rounded className="page-navigation" onClick={() => ScrollTo({})}>
                     <Icon variant={IconVariant.ARROW_UP_WHITE} size={isMobile ? IconSize.MEDIUM : IconSize.LARGE} />

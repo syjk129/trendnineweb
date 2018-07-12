@@ -153,16 +153,23 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
 
     private _toggleSearch = () => {
         const contentToolbar = document.getElementById("mobile-content-toolbar");
+        const pageNavigation = document.getElementById("page-navigation");
 
         if (!this.state.showSearch) {
             document.body.classList.add("noscroll");
             if (contentToolbar) {
                 contentToolbar.style.visibility = "hidden";
             }
+            if (pageNavigation) {
+                pageNavigation.style.visibility = "hidden";
+            }
         } else {
             document.body.classList.remove("noscroll");
             if (contentToolbar) {
                 contentToolbar.style.visibility = "visible";
+            }
+            if (pageNavigation) {
+                pageNavigation.style.visibility = "visible";
             }
         }
 
