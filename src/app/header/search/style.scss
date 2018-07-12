@@ -1,0 +1,20 @@
+@import "../../../styles/variables";
+
+.mobile-search-container {
+    position: fixed;
+    padding: $mobile-page-spacing;
+    padding-top: $mobile-page-spacing * 3;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #fff;
+    bottom: 0;
+
+    .mobile-search {
+        display: flex;
+        border-bottom: $standard-border-width solid $standard-border-color;
+    }
+
+    .search-input {
+        font-size: $mobile-font-size-1;
+    }
+}

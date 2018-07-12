@@ -35,6 +35,7 @@ interface InputProps {
     disabled?: boolean;
     checked?: boolean;
     required?: boolean;
+    autofocus?: boolean;
     onChange?(value: any): void;
     onEnterPress?(value: any): void;
 }
@@ -45,7 +46,7 @@ export default class Input extends React.Component<InputProps, never> {
     };
 
     render() {
-        const { className, variant, theme } = this.props;
+        const { className, variant, theme, autofocus } = this.props;
 
         let classes = "";
 
@@ -87,6 +88,7 @@ export default class Input extends React.Component<InputProps, never> {
                 checked={this.props.checked}
                 type={this.props.type}
                 required={this.props.required}
+                autoFocus={autofocus}
             />
         );
     }

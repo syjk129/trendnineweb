@@ -31,10 +31,17 @@
         }
 
         .mobile-right-header {
+            display: flex;
             padding: $base-spacing 0;
 
             .mobile-login-button {
                 padding: 5px 10px;
+            }
+
+            .icon-button {
+                &:first-child {
+                    margin-right: $base-spacing;
+                }
             }
         }
 
@@ -60,6 +67,25 @@
         padding: $mobile-page-spacing;
         justify-content: space-between;
         background-color: $base-background-color;
+
+        .close {
+            display: flex;
+            align-items: center;
+            color: #000;
+            float: left;
+            width: $mobile-icon-large;
+            top: $mobile-page-spacing + 4;
+            left: $mobile-page-spacing;
+            font-size: $mobile-font-size-4;
+            font-weight: 200;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     }
 }
 

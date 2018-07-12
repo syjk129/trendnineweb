@@ -9,12 +9,15 @@ import { IconSize, IconVariant } from "../../components/icon";
 import NavLink from "../../components/navLink";
 import * as Logo from "../logo.png";
 import Menu from "./menu";
+import Search from "./search";
 import { HeaderProps } from "./types";
 
 import "./style.scss";
 
 interface MobileHeaderState {
     showMenu: boolean;
+    searchString: string;
+    showSearch: boolean;
 }
 
 export default class MobileHeader extends React.Component<HeaderProps, MobileHeaderState> {
@@ -22,6 +25,8 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
 
     state: MobileHeaderState = {
         showMenu: false,
+        searchString: "",
+        showSearch: false,
     };
 
     componentWillMount() {
@@ -61,25 +66,43 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                             </NavLink>
                         </div>
                         <div className="mobile-right-header">
-                            <Button
-                                className="mobile-login-button"
-                                variant={ButtonVariant.OUTLINE}
-                                onClick={() => this.props.history.push(`${this.props.location.pathname}/login`)}
-                            >
-                                Sign In / Join
-                            </Button>
+                            {user ? (
+                                <>
+                                    <IconButton icon={IconVariant.WISHLIST} size={IconSize.LARGE} url={`/user/${user.id}/wishlist`}/>
+                                    <IconButton icon={IconVariant.PROFILE} size={IconSize.LARGE} url={`/user/${user.id}`}/>
+                                </>
+                            ) : (
+                                <Button
+                                    className="mobile-login-button"
+                                    variant={ButtonVariant.OUTLINE}
+                                    onClick={() => this.props.history.push(`${this.props.location.pathname}/login`)}
+                                >
+                                    Sign In / Join
+                                </Button>
+                            )}
                         </div>
                     </div>
                     <div className="mobile-app-header">
                         <IconButton icon={IconVariant.MENU} size={IconSize.LARGE} onClick={this._toggleMenu} selected={false} />
-                        <Link className="nav-logo-container" to={isShop ? "/shop/discover" : "/discover"}>
+                        <Link className="nav-logo-container" to={isShop ? "/shop/discover" : "/discover"} onClick={this._close}>
                             <img
                                 className="nav-logo"
                                 src={Logo}
                             />
                         </Link>
-                        <IconButton icon={IconVariant.PROFILE} size={IconSize.LARGE} url={user ? `/user/${user.id}` : "/login"}/>
+                        {this.state.showSearch ? (
+                            <span className="close" onClick={this._toggleSearch}>&times;</span>
+                        ) : (
+                            <IconButton icon={IconVariant.SEARCH} size={IconSize.LARGE} onClick={this._toggleSearch} />
+                        )}
                     </div>
+                    {this.state.showSearch && (
+                        <Search
+                            searchString={this.state.searchString}
+                            onSearchStringChange={this._onSearchStringChange}
+                            search={this._onSearch}
+                        />
+                    )}
                 </div>
             </div>
         );
@@ -107,15 +130,46 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
 
             this._lastScrollTop = scrollTop;
         }
+    }
 
+    private _close = () => {
+        this.setState({ showMenu: false, showSearch: false });
+        document.body.classList.remove("noscroll");
     }
 
     private _subscribe = (email: any) => {
         return this.context.api.subscribe(email);
     }
 
-    @autobind
-    private _toggleMenu() {
+    private _onSearchStringChange = (searchString: string) => {
+        this.setState({ searchString });
+    }
+
+    private _onSearch = () => {
+        const isShop = this.props.location.pathname.indexOf("/shop") > -1;
+        this.props.history.push(`${isShop ? "shop/" : ""}/discover?keyword=${this.state.searchString}`);
+        this._toggleSearch();
+    }
+
+    private _toggleSearch = () => {
+        const contentToolbar = document.getElementById("mobile-content-toolbar");
+
+        if (!this.state.showSearch) {
+            document.body.classList.add("noscroll");
+            if (contentToolbar) {
+                contentToolbar.style.visibility = "hidden";
+            }
+        } else {
+            document.body.classList.remove("noscroll");
+            if (contentToolbar) {
+                contentToolbar.style.visibility = "visible";
+            }
+        }
+
+        this.setState({ showSearch: !this.state.showSearch });
+    }
+
+    private _toggleMenu = () => {
         if (!this.state.showMenu) {
             document.body.classList.add("noscroll");
         } else {

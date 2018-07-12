@@ -102,18 +102,6 @@
     }
 }
 
-.mobile-search {
-    display: flex;
-    border-bottom: $standard-border-width solid #fff;
-    margin-bottom: $large-spacing;
-    align-items: center;
-
-    input {
-        font-size: $mobile-font-size-1;
-        padding-left: 0;
-    }
-}
-
 .menu-divider {
     margin: $base-spacing * 2 0;
     border-bottom: $standard-border-width solid #fff;

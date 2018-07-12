@@ -52,17 +52,6 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     <span />
                 </div>
                 <div className="menu-content">
-                    <div className="mobile-search">
-                        <Input
-                            value={this.state.searchString}
-                            placeholder="Search"
-                            theme={InputTheme.LIGHT}
-                            variant={InputVariant.BLANK}
-                            onChange={this._onInputChange}
-                            onEnterPress={this._onSearch}
-                        />
-                        <Icon variant={IconVariant.SEARCH} />
-                    </div>
                     <LinkButton
                         className="menu-link"
                         selected={location.pathname === "/discover" || location.pathname === "/shop/discover"}
