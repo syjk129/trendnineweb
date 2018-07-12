@@ -97,7 +97,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
     private _fetchNextContent = () => {
         // Infinite Scroll
         const page = this._pageRef.current;
-        if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 20) {
+        if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 50) {
             return;
         }
 

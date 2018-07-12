@@ -156,7 +156,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
 
         // Infinite Scroll
         const page = this._pageRef.current;
-        if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 20) {
+        if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 50) {
             return;
         }
 
