@@ -127,7 +127,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                             onMouseEnter={() => this._onProductMouseEnter(product)}
                             className={`product-image${this.state.focusedProduct.id === product.id ? " selected" : ""}`}
                             src={product.image && product.image.thumbnail_image_url}
-                            onClick={() => this.props.history.push(`/product/${product.id}`)}
+                            onClick={this._redirectProduct(product)}
                         />
                     ))}
                 </div>
@@ -142,7 +142,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                             <div
                                 className={`product-image-container${this.state.focusedProduct.id === product.id ? " selected" : ""}`}
                                 onMouseEnter={() => this._onProductMouseEnter(product)}
-                                onClick={() => this.props.history.push(`/product/${product.id}`)}
+                                onClick={this._redirectProduct(product)}
                             >
                                 <Image
                                     className="product-image"
@@ -156,6 +156,13 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                 </Slider>
             </div>
         );
+    }
+
+    private _redirectProduct = (product) => {
+        return () => {
+            this.props.history.push(`/product/${product.id}`);
+            window.open(product.url);
+        };
     }
 
     private _toggleWishlist = () => {

@@ -13,6 +13,7 @@ interface CardProps {
     className?: string;
     gridSize: number;
     redirectUrl?: string;
+    newWindowUrl?: string;
     scaleImage?: boolean;
     title: string;
     singleLineTitle?: boolean;
@@ -52,7 +53,7 @@ class Card extends React.Component<CardProps, CardState> {
                         {hoverItem}
                     </div>
                 )}
-                <Link to={redirectUrl}>
+                <Link to={redirectUrl} onClick={this._onClick}>
                     <Image
                         className="card-image"
                         src={imageUrl}
@@ -63,7 +64,7 @@ class Card extends React.Component<CardProps, CardState> {
                 {gridSize < 3 && (
                     <div className="card-content">
                         <div className="card-title-container">
-                            <Link className="title" htmlTag="p" to={redirectUrl} maxLines={singleLineTitle ? 1 : 2}>
+                            <Link className="title" htmlTag="p" to={redirectUrl} onClick={this._onClick} maxLines={singleLineTitle ? 1 : 2}>
                                 {title}
                             </Link>
                         </div>
@@ -76,6 +77,12 @@ class Card extends React.Component<CardProps, CardState> {
                 )}
             </div>
         );
+    }
+
+    private _onClick = () => {
+        if (this.props.newWindowUrl) {
+            window.open(this.props.newWindowUrl);
+        }
     }
 }
 

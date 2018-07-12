@@ -61,10 +61,6 @@ export default class ProductView extends React.Component<Props, ProductState> {
             this.context.api.getReviews(productId),
         ]);
 
-        if (this._productId !== productId) {
-            window.open(product.url);
-        }
-
         this._productId = props.match.params.productId;
         const wishlisted = product.wishlisted;
 

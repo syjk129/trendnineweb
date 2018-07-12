@@ -11,6 +11,7 @@ interface InteractableProps {
 interface LinkButtonProps extends InteractableProps {
     selected?: boolean;
     to?: string;
+    newWindowUrl?: string;
     className?: string;
     inline?: boolean;
     children: React.ReactNode;
@@ -27,7 +28,6 @@ export default class LinkButton extends React.Component<LinkButtonProps> {
             className,
             inline,
             children,
-            onClick,
             onMouseEnter,
             onMouseLeave,
             target,
@@ -54,7 +54,7 @@ export default class LinkButton extends React.Component<LinkButtonProps> {
                 className={classes}
                 to={to}
                 href={href}
-                onClick={onClick}
+                onClick={this._onClick}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
                 target={target}
@@ -62,5 +62,12 @@ export default class LinkButton extends React.Component<LinkButtonProps> {
                 {children}
             </LinkEl>
         );
+    }
+
+    private _onClick = () => {
+        this.props.onClick();
+        if (this.props.newWindowUrl) {
+            window.open(this.props.newWindowUrl);
+        }
     }
 }

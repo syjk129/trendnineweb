@@ -12,6 +12,7 @@ interface CarouselItemProps {
     className?: string;
     fit?: ImageFitVariant;
     redirectUrl?: string;
+    newWindowUrl?: string;
     large?: boolean;
     title?: string;
     detail?: string;
@@ -23,7 +24,7 @@ interface CarouselItemProps {
 
 class CarouselItem extends React.Component<CarouselItemProps> {
     render() {
-        const { imageUrl, className, fit, imageClass, redirectUrl, large, title, detail, subdetail, selected, onClick, history } = this.props;
+        const { imageUrl, className, fit, imageClass, redirectUrl, newWindowUrl, large, title, detail, subdetail, selected, onClick, history } = this.props;
 
         let imageClasses = "carousel-item-cover";
 
@@ -45,11 +46,9 @@ class CarouselItem extends React.Component<CarouselItemProps> {
             classes += " selected";
         }
 
-        const clickHandler = redirectUrl ? () => history.push(redirectUrl) : onClick;
-
         return (
             <div>
-                <div className={classes} onClick={clickHandler}>
+                <div className={classes} onClick={this._onClick}>
                     <Image className={imageClasses} src={imageUrl} fit={fit || ImageFitVariant.COVER} square />
                     <p className="carousel-item-title">{title}</p>
                     <p>{detail}</p>
@@ -57,6 +56,17 @@ class CarouselItem extends React.Component<CarouselItemProps> {
                 <div className="carousel-subdetail">{subdetail}</div>
             </div>
         );
+    }
+
+    private _onClick = () => {
+        if (this.props.redirectUrl) {
+            this.props.history.push(this.props.redirectUrl);
+            if (this.props.newWindowUrl) {
+                window.open(this.props.newWindowUrl);
+            }
+        } else {
+            this.props.onClick();
+        }
     }
 }
 
