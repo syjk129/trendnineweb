@@ -48,7 +48,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         if (nextProps.location !== this.props.location &&
             !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
         ) {
-            this._categoryName = nextProps.match.params.categoryName;
             this.refreshContent(nextProps);
         }
     }

@@ -54,7 +54,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                 <div className="menu-content">
                     <LinkButton
                         className="menu-link"
-                        selected={location.pathname === "/discover" || location.pathname === "/shop/discover"}
+                        showSelected
                         to={isShop ? "/shop/discover" : "/discover"}
                         onClick={this.props.toggleMenu}
                     >
@@ -62,6 +62,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </LinkButton>
                     <LinkButton
                         className="menu-link"
+                        showSelected
                         to={isShop ? "/shop/feed" : "/feed"}
                         onClick={this.props.toggleMenu}
                     >
@@ -69,6 +70,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </LinkButton>
                     <LinkButton
                         className="menu-link"
+                        showSelected
                         to={isShop ? "/shop/brands" : "/brands"}
                         onClick={this.props.toggleMenu}
                     >
@@ -77,19 +79,35 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     <div className="menu-divider" />
                     <LinkButton
                         className="menu-link"
-                        to="/shop/discover"
+                        showSelected
+                        to={isShop ? "/shop/category/clothing" : "/discover/category/clothing"}
                         onClick={this.props.toggleMenu}
-                        selected={isShop}
                     >
-                        Shop
+                        Clothing
                     </LinkButton>
                     <LinkButton
                         className="menu-link"
-                        to="/discover"
+                        showSelected
+                        to={isShop ? "/shop/category/shoes" : "/discover/category/shoes"}
                         onClick={this.props.toggleMenu}
-                        selected={!isShop}
                     >
-                        Discover
+                        Shoes
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        showSelected
+                        to={isShop ? "/shop/category/bags" : "/discover/category/bags"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        Bags
+                    </LinkButton>
+                    <LinkButton
+                        className="menu-link"
+                        showSelected
+                        to={isShop ? "/shop/category/accessories" : "/discover/category/accessories"}
+                        onClick={this.props.toggleMenu}
+                    >
+                        Accessories
                     </LinkButton>
                     <div className="menu-divider" />
                     {loggedIn && (
@@ -102,6 +120,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     )}
                     <LinkButton
                         className="menu-link"
+                        showSelected
                         to={isShop ? "/shop/about" : "/about"}
                         onClick={this.props.toggleMenu}
                     >
@@ -109,6 +128,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </LinkButton>
                     <LinkButton
                         className="menu-link"
+                        showSelected
                         to={isShop ? "/shop/opportunities" : "/opportunities"}
                         onClick={this.props.toggleMenu}
                     >
@@ -116,6 +136,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </LinkButton>
                     <LinkButton
                         className="menu-link"
+                        showSelected
                         to={isShop ? "/shop/terms" : "/terms"}
                         onClick={this.props.toggleMenu}
                     >
@@ -123,6 +144,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </LinkButton>
                     <LinkButton
                         className="menu-link"
+                        showSelected
                         to={isShop ? "/shop/privacy" : "/privacy"}
                         onClick={this.props.toggleMenu}
                     >
@@ -130,6 +152,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </LinkButton>
                     <LinkButton
                         className="menu-link"
+                        showSelected
                         to={isShop ? "/shop/contact" : "/contact"}
                         onClick={this.props.toggleMenu}
                     >

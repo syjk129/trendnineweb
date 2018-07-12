@@ -1,16 +1,12 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-import { ButtonProps, ButtonVariant } from "./types";
+import RouteProps from "../../flows/routeProps";
 
-interface InteractableProps {
-    onMouseEnter?(): void;
-    onMouseLeave?(): void;
-}
-
-interface LinkButtonProps extends InteractableProps {
+interface LinkButtonProps extends RouteProps {
     selected?: boolean;
     to?: string;
+    showSelected?: boolean;
     newWindowUrl?: string;
     className?: string;
     inline?: boolean;
@@ -18,12 +14,15 @@ interface LinkButtonProps extends InteractableProps {
     onClick?(): void;
     target?: string;
     href?: string;
+    onMouseEnter?(): void;
+    onMouseLeave?(): void;
 }
 
-export default class LinkButton extends React.Component<LinkButtonProps> {
+class LinkButton extends React.Component<LinkButtonProps> {
     render() {
         const {
             selected,
+            showSelected,
             to,
             className,
             inline,
@@ -39,7 +38,7 @@ export default class LinkButton extends React.Component<LinkButtonProps> {
             classes += ` ${className}`;
         }
 
-        if (selected) {
+        if (selected || (showSelected && this.props.location.pathname === to)) {
             classes += " selected";
         }
 
@@ -71,3 +70,5 @@ export default class LinkButton extends React.Component<LinkButtonProps> {
         }
     }
 }
+
+export default withRouter(LinkButton);

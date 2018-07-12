@@ -7,8 +7,7 @@ import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { PostCard } from "../flowComponents/cardView";
 import ContentToolbar from "../flowComponents/contentToolbar";
 import { SortConstants } from "../flowComponents/sort/types";
-import ViewMore from "../flowComponents/viewMore";
-import { ContentType, PostParam } from "../model";
+import { ContentType, MenuCategoryQueryMap, PostParam } from "../model";
 import FeaturedTrending from "./featuredTrending";
 import Welcome from "./welcome";
 
@@ -64,6 +63,10 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
             postParam.sort = SortConstants.LATEST_ID;
         }
         let queryString = postParam.convertUrlParamToQueryString();
+        this._categoryName = props.match.params.categoryName;
+        if (this._categoryName) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
         queryString += "&page_size=18";
         this.setState({ loadingNext: true });
 
@@ -130,6 +133,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
     }
 
     private _pageRef: React.RefObject<HTMLDivElement>;
+    private _categoryName: string | null;
 
     @autobind
     private _renderPosts() {
