@@ -62,7 +62,7 @@ export default class ProductView extends React.Component<Props, ProductState> {
         ]);
 
         if (this._productId !== productId) {
-            window.open(product.url, "_blank");
+            window.open(product.url);
         }
 
         this._productId = props.match.params.productId;
