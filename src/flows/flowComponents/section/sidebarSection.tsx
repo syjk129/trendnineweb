@@ -65,6 +65,7 @@ export class SidebarPostProductListSection extends React.Component<SidebarPostPr
                 <LinkButton
                     className="post-card-hover-btn"
                     to={`/product/${product.id}`}
+                    onClick={() => window.open(product.url)}
                 >
                     <img className="product-rank-img" src={product.image && product.image.thumbnail_image_url} />
                     <div className="post-card-hover-content post-rank-detail">
