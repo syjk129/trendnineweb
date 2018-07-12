@@ -20,6 +20,11 @@ class ProductTag extends React.Component<ProductTagProps, ProductTagState> {
         open: this.props.open || false,
     };
 
+    componentWillMount() {
+        this._tagNameRef = React.createRef();
+        this._arrowRef = React.createRef();
+    }
+
     render() {
         const { tag, history, toggleTag } = this.props;
 
@@ -30,20 +35,34 @@ class ProductTag extends React.Component<ProductTagProps, ProductTagState> {
                 onClick={toggleTag}
             >
                 <span className="product-dot" onClick={this._toggleTag}/>
-                {this.state.open && (
-                    <span
-                        className="tag-name"
-                        onClick={() => history.push(`/product/${tag.product_id}`)}
-                    >
-                        {tag.name}
-                    </span>
-                )}
+                <span
+                    className={`tag-name${!this.state.open ? " hidden" : ""}`}
+                    ref={this._tagNameRef}
+                    onClick={() => history.push(`/product/${tag.product_id}`)}
+                >
+                    {tag.name}
+                </span>
+                <div className={`arrow ${!this.state.open ? " hidden" : ""}`} ref={this._arrowRef} />
             </div>
         );
     }
 
+    private _arrowRef: React.RefObject<HTMLDivElement>;
+    private _tagNameRef: React.RefObject<HTMLSpanElement>;
+
     private _toggleTag = () => {
-        this.setState({ open: !this.state.open });
+        this.setState({ open: !this.state.open }, () => {
+            const tagName = this._tagNameRef.current;
+            const arrow = this._arrowRef.current;
+            if (tagName) {
+                tagName.style.left = `-${tagName.getBoundingClientRect().width / 2 + 25}px`;
+                tagName.style.bottom = `${tagName.getBoundingClientRect().height / 2}px`;
+            }
+
+            if (arrow && tagName) {
+                arrow.style.left = "-30px";
+            }
+        });
     }
 }
 

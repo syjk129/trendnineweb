@@ -83,37 +83,62 @@
         height: 15px;
         border-radius: 100%;
         background-color: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    $arrow-size: 9px;
+
+    .arrow {
+        z-index: 2;
+        border-style: solid;
+        position: absolute;
+        bottom: 6.5px;
+        border-color: #000 transparent transparent transparent;
+        border-width: $arrow-size $arrow-size 0 $arrow-size;
+
+        &.hidden {
+            visibility: hidden;
+        }
+
+        &::after {
+            opacity: 1;
+            border-color: #fff transparent transparent transparent;
+            border-style: solid;
+            border-width: ($arrow-size - 1px) ($arrow-size - 1px) 0 ($arrow-size - 1px);
+            bottom: 1px;
+            content: "";
+            position: absolute;
+            left: -($arrow-size - 1px);
+        }
     }
 
     .tag-name {
-        position: relative;
         display: block;
+        position: absolute;
         background-color: #fff;
         border: $standard-border-width solid #000;
         border-radius: 3px;
         padding: $base-spacing / 2 $base-spacing;
-        bottom: 40px;
-        left: calc(-50% - 20px);
         min-width: 50px;
-        max-width: 200px;
+        max-width: 250px;
         text-align: center;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
         font-size: $font-size-2;
 
-        &::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border: 20px solid transparent;
-            border-top-color: black;
-            border-bottom: 0;
-            margin-left: -20px;
-            margin-bottom: -20px;
+        &.hidden {
+            visibility: hidden;
+        }
+
+        &:hover {
+            background-color: #ddd;
+
+            & + .arrow {
+                &::after {
+                    border-color: #ddd transparent transparent transparent;
+                }
+            }
         }
     }
 }
