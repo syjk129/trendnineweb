@@ -117,6 +117,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 const product = props.post.products.find(product => product.id === tag.product_id);
                 return {
                     product_id: tag.product_id,
+                    product_url: product.url,
                     name: product && product.title || "",
                     style: {
                         left: current.offsetLeft + rect.width * tag.x_axis + 15,

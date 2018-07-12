@@ -38,7 +38,7 @@ class ProductTag extends React.Component<ProductTagProps, ProductTagState> {
                 <span
                     className={`tag-name${!this.state.open ? " hidden" : ""}`}
                     ref={this._tagNameRef}
-                    onClick={() => history.push(`/product/${tag.product_id}`)}
+                    onClick={this._onClick}
                 >
                     {tag.name}
                 </span>
@@ -49,6 +49,11 @@ class ProductTag extends React.Component<ProductTagProps, ProductTagState> {
 
     private _arrowRef: React.RefObject<HTMLDivElement>;
     private _tagNameRef: React.RefObject<HTMLSpanElement>;
+
+    private _onClick = () => {
+        this.props.history.push(`/product/${this.props.tag.product_id}`);
+        window.open(this.props.tag.product_url);
+    }
 
     private _toggleTag = () => {
         this.setState({ open: !this.state.open }, () => {
