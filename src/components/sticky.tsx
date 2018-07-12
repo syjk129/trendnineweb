@@ -10,29 +10,43 @@ interface StickyProps {
 
 export default class Sticky extends React.Component<StickyProps, never>  {
     private stickOffset = 0;
-    private sticky;
+
+    componentWillMount() {
+        this._stickyRef = React.createRef();
+    }
 
     componentDidMount() {
-        this.sticky = document.getElementById(this.props.id);
-        this.stickOffset = this.sticky.offsetTop;
-        window.addEventListener("scroll", this.onScroll, false);
+        this.stickOffset = this._stickyRef.current.offsetTop;
+        document.addEventListener("scroll", this.onScroll, false);
+        document.addEventListener("touchmove", this.onScroll, false);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("scroll", this.onScroll);
+        document.removeEventListener("touchmove", this.onScroll);
     }
 
     onScroll = () => {
-        const navbarHeight = isMobile ? 60 : 100;
-        if (window.pageYOffset + navbarHeight >= this.stickOffset) {
-            this.sticky.classList.add(this.props.stickyClassName);
-            if (this.props.id === "filter-container") {
-                this.sticky.style.width = `${document.getElementById("content").offsetWidth + 20}px`;
-            }
-            if (this.props.isSticked) {
-                this.props.isSticked(true);
-            }
-        } else {
-            this.sticky.classList.remove(this.props.stickyClassName);
-            this.sticky.removeAttribute("style");
-            if (this.props.isSticked) {
-                this.props.isSticked(false);
+        const header = document.getElementById("header");
+        const navbarHeight = header.offsetTop + header.getBoundingClientRect().height;
+        const sticky = this._stickyRef.current;
+
+        if (sticky) {
+            if (window.pageYOffset + navbarHeight >= this.stickOffset) {
+                sticky.classList.add(this.props.stickyClassName);
+                sticky.style.top = `${navbarHeight}px`;
+                if (this.props.id === "filter-container") {
+                    sticky.style.width = `${document.getElementById("content").offsetWidth + 20}px`;
+                }
+                if (this.props.isSticked) {
+                    this.props.isSticked(true);
+                }
+            } else {
+                sticky.classList.remove(this.props.stickyClassName);
+                sticky.removeAttribute("style");
+                if (this.props.isSticked) {
+                    this.props.isSticked(false);
+                }
             }
         }
     }
@@ -40,9 +54,11 @@ export default class Sticky extends React.Component<StickyProps, never>  {
     render() {
         const { id, children } = this.props;
         return (
-            <div id={id}>
+            <div id={id} ref={this._stickyRef}>
                 {children}
             </div>
         );
     }
+
+    private _stickyRef: React.RefObject<HTMLDivElement>;
 }

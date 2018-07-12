@@ -1,23 +1,66 @@
 @import "../../styles/variables.scss";
 
-.mobile-header {
+.mobile-header-container {
     position: fixed;
     width: 100%;
-    height: 60px;
     top: 0;
     z-index: 2;
-    box-sizing: border-box;
-    padding: $mobile-page-spacing;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: $standard-border-width solid $standard-border-color;
-    background-color: $base-background-color;
+    transition: top 0.2s ease-in-out;
 
-    // .nav-logo {
-    //     width: 150px;
-    //     max-height: 30px;
-    //     object-fit: contain;
-    // }
+    &.nav-hidden {
+        top: -50px;
+    }
+
+    .mobile-header,
+    .mobile-app-header {
+        box-sizing: border-box;
+        border-bottom: $standard-border-width solid $standard-border-color;
+        height: 60px;
+    }
+
+    .mobile-header {
+        height: 50px;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 $mobile-page-spacing;
+        background-color: #fff;
+
+        .mobile-left-header {
+            display: flex;
+        }
+
+        .mobile-right-header {
+            padding: $base-spacing 0;
+
+            .mobile-login-button {
+                padding: 5px 10px;
+            }
+        }
+
+        .nav-link {
+            padding: 0;
+            display: flex;
+            align-items: center;
+            margin-right: $mobile-page-spacing / 2;
+
+            &.selected {
+                margin-top: $standard-border-width * 3;
+                margin-bottom: 0;
+            }
+
+            a {
+                font-size: $mobile-font-size-1;
+            }
+        }
+    }
+
+    .mobile-app-header {
+        display: flex;
+        padding: $mobile-page-spacing;
+        justify-content: space-between;
+        background-color: $base-background-color;
+    }
 }
 
 .nav-logo-container {
