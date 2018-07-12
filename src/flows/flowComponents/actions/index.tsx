@@ -127,13 +127,17 @@ class ActionLinks extends React.Component<ActionLinksProps, ActionLinksState>  {
     }
 
     @autobind
-    private _likeUnlikePost() {
+    private async _likeUnlikePost() {
         if (this.state.liked) {
-            this.context.api.unlikePost(this.props.id);
-            this.setState({ liked: false, likes: this.state.likes - 1 });
+            const response = await this.context.api.unlikePost(this.props.id);
+            if (response.code === 0) {
+                this.setState({ liked: false, likes: this.state.likes - 1 });
+            }
         } else {
-            this.context.api.likePost(this.props.id);
-            this.setState({ liked: true, likes: this.state.likes + 1 });
+            const response = await this.context.api.likePost(this.props.id);
+            if (response.code === 0) {
+                this.setState({ liked: true, likes: this.state.likes + 1 });
+            }
         }
     }
 }

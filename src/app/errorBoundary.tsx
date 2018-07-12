@@ -17,7 +17,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     // React children will trickle their errors up and this will catch them
     componentDidCatch(error, info) {
         if (isAuthError(error)) {
-            this.props.history.push("/login");
+            this.props.history.push(`${this.props.location.pathname}/login`);
         } else if (isPermissionError(error)) {
             this.props.history.push("/");
         }
@@ -37,7 +37,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     private _handleErrors(props: ErrorBoundaryProps) {
         props.errors.forEach(error => {
             if (isAuthError(error)) {
-                this.props.history.push("/login");
+                this.props.history.push(`${this.props.location.pathname}/login`);
             } else if (isPermissionError(error)) {
                 this.props.history.push("/");
             }
