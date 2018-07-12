@@ -91,7 +91,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
     private _onScroll = () => {
         const header = this._headerRef.current;
         const rect = header.getBoundingClientRect();
-        const scrollDelta = 10;
+        const scrollDelta = 5;
 
         if (header) {
             const scrollTop = document.documentElement.scrollTop;
