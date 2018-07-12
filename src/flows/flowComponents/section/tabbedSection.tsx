@@ -12,7 +12,7 @@ interface TabbedSectionProps {
 
 export default function TabbedSection({ selected, showDots, sections, children, onSectionChange }: TabbedSectionProps) {
     return (
-        <>
+        <div className="tabbed-section-container">
             <div className="tabbed-section">
                 {sections.map(section => (
                     <div className="tab" onClick={() => onSectionChange(section)}>
@@ -31,6 +31,6 @@ export default function TabbedSection({ selected, showDots, sections, children, 
                     ))}
                 </div>
             )}
-        </>
+        </div>
     );
 }

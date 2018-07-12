@@ -80,12 +80,13 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                     selected={this.state.section}
                     sections={[TabbedSectionTypes.PRODUCTS_IN_THIS_POST, TabbedSectionTypes.YOU_MAY_ALSO_LIKE]}
                     onSectionChange={this._onSectionChange}
-                />
-                <Carousel>
-                    {this.state.tabbedContent.map(content => (
-                        this._renderTabbedContent(content)
-                    ))}
-                </Carousel>
+                >
+                    <Carousel>
+                        {this.state.tabbedContent.map(content => (
+                            this._renderTabbedContent(content)
+                        ))}
+                    </Carousel>
+                </TabbedSection>
                 {post.tags.length > 0 && (
                     <ContentSection title="Tags">
                         {post.tags.map(tag => (
