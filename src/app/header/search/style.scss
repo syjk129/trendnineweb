@@ -12,6 +12,11 @@
     .mobile-search {
         display: flex;
         border-bottom: $standard-border-width solid $standard-border-color;
+
+        .icon-button {
+            display: flex;
+            padding-right: $mobile-page-spacing;
+        }
     }
 
     .search-input {
