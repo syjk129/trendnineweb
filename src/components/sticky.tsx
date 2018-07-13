@@ -32,7 +32,7 @@ export default class Sticky extends React.Component<StickyProps, never>  {
         const sticky = this._stickyRef.current;
 
         if (sticky) {
-            if (document.documentElement.scrollTop + navbarHeight >= this.stickOffset) {
+            if (window.scrollY + navbarHeight >= this.stickOffset) {
                 sticky.classList.add(this.props.stickyClassName);
                 sticky.style.top = `${navbarHeight}px`;
                 if (this.props.id === "filter-container") {

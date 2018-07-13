@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isIOS } from "react-device-detect";
 
 import { IconButton } from "../../../components/button";
 import { IconSize, IconVariant } from "../../../components/icon";
@@ -22,7 +23,11 @@ export default class Search extends React.Component<SearchProps> {
         const header = document.getElementById("header");
 
         if (searchEl && header) {
-            searchEl.style.top = `${header.offsetTop + header.getBoundingClientRect().height}px`;
+            if (isIOS) {
+                searchEl.style.top = `${header.getBoundingClientRect().height}px`;
+            } else {
+                searchEl.style.top = `${header.offsetTop + header.getBoundingClientRect().height}px`;
+            }
         }
     }
 
@@ -39,7 +44,7 @@ export default class Search extends React.Component<SearchProps> {
                         variant={InputVariant.BLANK}
                         onChange={onSearchStringChange}
                         onEnterPress={search}
-                        autofocus
+                        autofocus={!isIOS}
                     />
                     <IconButton size={IconSize.MEDIUM} icon={IconVariant.SEARCH} onClick={search} />
                 </div>

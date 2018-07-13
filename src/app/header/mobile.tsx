@@ -7,6 +7,7 @@ import { AppContext } from "../../app";
 import Button, { ButtonVariant, IconButton } from "../../components/button";
 import { IconSize, IconVariant } from "../../components/icon";
 import NavLink from "../../components/navLink";
+import { noScroll, removeNoScroll } from "../../util/scroll";
 import * as Logo from "../logo.png";
 import Menu from "./menu";
 import Search from "./search";
@@ -44,6 +45,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
     componentWillReceiveProps(nextProps: HeaderProps) {
         if (this.props.location.pathname !== nextProps.location.pathname) {
             this._lastScrollTop = 0;
+            this._close();
         }
     }
 
@@ -123,7 +125,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
         const scrollDelta = 5;
 
         if (header) {
-            const scrollTop = document.documentElement.scrollTop;
+            const scrollTop = window.scrollY;
             if (Math.abs(this._lastScrollTop - scrollTop) <= scrollDelta) {
                 return;
             }
@@ -140,7 +142,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
 
     private _close = () => {
         this.setState({ showMenu: false, showSearch: false });
-        document.body.classList.remove("noscroll");
+        removeNoScroll();
     }
 
     private _subscribe = (email: any) => {
@@ -162,7 +164,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
         const pageNavigation = document.getElementById("page-navigation");
 
         if (!this.state.showSearch) {
-            document.body.classList.add("noscroll");
+            noScroll();
             if (contentToolbar) {
                 contentToolbar.style.visibility = "hidden";
             }
@@ -170,7 +172,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                 pageNavigation.style.visibility = "hidden";
             }
         } else {
-            document.body.classList.remove("noscroll");
+            removeNoScroll();
             if (contentToolbar) {
                 contentToolbar.style.visibility = "visible";
             }
@@ -184,9 +186,9 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
 
     private _toggleMenu = () => {
         if (!this.state.showMenu) {
-            document.body.classList.add("noscroll");
+            noScroll();
         } else {
-            document.body.classList.remove("noscroll");
+            removeNoScroll();
         }
 
         this.setState({ showMenu: !this.state.showMenu });

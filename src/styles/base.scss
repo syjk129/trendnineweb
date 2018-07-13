@@ -44,6 +44,12 @@ a {
     overflow: hidden;
 }
 
+.noscroll-ios {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+
 .full-width {
     width: 100%;
 }

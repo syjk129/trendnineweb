@@ -1,8 +1,8 @@
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
-import { IconButton } from "../button";
-import { IconSize, IconVariant } from "../icon";
+import { noScroll, removeNoScroll } from "../../util/scroll";
+
 import "./style.scss";
 
 interface ModalProps {
@@ -34,6 +34,11 @@ export default class Modal extends React.Component<ModalProps> {
                 this._close();
             }
         };
+        noScroll();
+    }
+
+    componentWillUnmount() {
+        removeNoScroll();
     }
 
     componentWillReceiveProps(nextProps: ModalProps) {

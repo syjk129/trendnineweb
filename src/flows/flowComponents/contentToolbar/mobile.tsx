@@ -6,6 +6,7 @@ import { IconButton } from "../../../components/button";
 import Checkbox from "../../../components/checkbox";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
 import Sticky from "../../../components/sticky";
+import { noScroll, removeNoScroll } from "../../../util/scroll";
 import FilterView from "./filter";
 import SortView from "./sort";
 import { Filter, FilterOption, FilterType, isSelectFilter, SortType, ToolbarType } from "./types";
@@ -126,12 +127,12 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
     }
 
     private _clearFilters = () => {
-        document.body.classList.remove("noscroll");
+        removeNoScroll();
         this.props.clearFilters();
     }
 
     private _selectSortType = (sortType: SortType) => {
-        document.body.classList.remove("noscroll");
+        removeNoScroll();
         this.props.selectSortType(sortType);
     }
 
@@ -169,9 +170,9 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
 
         // Make html and body not scrollable while filter is open
         if (!this.props.activeToolbar) {
-            document.body.classList.add("noscroll");
+            noScroll();
         } else {
-            document.body.classList.remove("noscroll");
+            removeNoScroll();
         }
 
         return this.props.toggleActiveToolbar(toolbarType);
