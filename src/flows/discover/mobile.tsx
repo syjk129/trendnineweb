@@ -103,7 +103,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
 
         return (
             <>
-                {/* <Welcome loggedIn={!!user} {...this.props} /> */}
+                <Welcome loggedIn={!!user} {...this.props} />
                 <div className="mobile-discover" id="mobile-discover" ref={this._pageRef}>
                     {/* <FeaturedTrending
                         {...this.props}
