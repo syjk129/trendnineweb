@@ -103,13 +103,13 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
 
         return (
             <>
-                <Welcome loggedIn={!!user} {...this.props} />
+                {/* <Welcome loggedIn={!!user} {...this.props} /> */}
                 <div className="mobile-discover" id="mobile-discover" ref={this._pageRef}>
-                    <FeaturedTrending
+                    {/* <FeaturedTrending
                         {...this.props}
                         featuredTrendnines={this.state.featuredTrendnines}
                         trendingPosts={this.state.trendingPosts}
-                    />
+                    /> */}
                     {this.state.postParam.keyword !== "" && this.state.posts.length < 1 && (
                         <div className="no-search-result-text">
                             No results for "{ this.state.postParam.keyword }"

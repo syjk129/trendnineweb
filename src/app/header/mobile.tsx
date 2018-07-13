@@ -33,13 +33,13 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
     componentWillMount() {
         this._headerRef = React.createRef();
 
-        document.addEventListener("scroll", this._onScroll);
-        document.addEventListener("touchmove", this._onScroll);
+        window.addEventListener("scroll", this._onScroll);
+        window.addEventListener("touchmove", this._onScroll);
     }
 
     componentWillUnmount() {
-        document.removeEventListener("scroll", this._onScroll);
-        document.removeEventListener("touchmove", this._onScroll);
+        window.removeEventListener("scroll", this._onScroll);
+        window.removeEventListener("touchmove", this._onScroll);
     }
 
     componentWillReceiveProps(nextProps: HeaderProps) {
@@ -130,10 +130,11 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                 return;
             }
 
-            if (scrollTop > this._lastScrollTop && scrollTop > rect.height) {
+            if (Math.abs(scrollTop - this._lastScrollTop) < 300 && scrollTop > rect.height) {
                 header.classList.add("nav-hidden");
             } else if (scrollTop + window.innerHeight < document.body.scrollHeight) {
                 header.classList.remove("nav-hidden");
+                header.classList.remove("no-animation");
             }
 
             this._lastScrollTop = scrollTop;

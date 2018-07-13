@@ -19,11 +19,18 @@ export default function MobileProduct({
     const attributes = {
         slidesToScroll: 1,
     };
+    const images = [];
+    if (product) {
+        images.push(product.image.original_image_url);
+        product.alt_images.forEach(image => {
+            images.push(image.url);
+        });
+    }
 
     return (
         <div className="mobile-product">
             <Carousel attributes={attributes} slidesToShow={1}>
-                {product.alt_images.map(image => <div><CarouselItem imageUrl={image.url} /></div>)}
+                {images.map(imageUrl => <div><CarouselItem imageUrl={imageUrl} /></div>)}
             </Carousel>
             <div className="product-details">
                 <p className="product-brand">{product.brand && product.brand.name}</p>

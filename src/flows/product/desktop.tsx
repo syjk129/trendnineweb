@@ -46,22 +46,15 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
         const productSizes = new Set<string>();
         const images = [];
         if (product) {
+            images.push(product.image.original_image_url);
             product.alt_images.forEach(image => {
                 images.push(image.url);
             });
-            images.push(product.image.original_image_url);
         }
 
         if (product && product.productItems) {
             product.productItems.forEach(productItem => productSizes.add(productItem.size));
         }
-
-        const carouselSettings = {
-            vertical: true,
-            focusOnSelect: true,
-            verticalSwiping: true,
-            arrows: false,
-        };
 
         let wishlistBtnText = wishlisted ? "Remove from wishlist" : "Add to wishlist";
         const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
