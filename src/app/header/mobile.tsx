@@ -41,6 +41,12 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
         document.removeEventListener("touchmove", this._onScroll);
     }
 
+    componentWillReceiveProps(nextProps: HeaderProps) {
+        if (this.props.location.pathname !== nextProps.location.pathname) {
+            this._lastScrollTop = 0;
+        }
+    }
+
     render() {
         const user = JSON.parse(localStorage.getItem("user"));
         const pathname = this.props.location.pathname;

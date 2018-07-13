@@ -62,7 +62,6 @@ class AppProvider extends React.Component<AppProviderProps, AppProviderState> {
 
         const api = new Api({
             apiUrl: "https://api.trendnine.com",
-            // apiUrl: "https://trendnine-backend-prod-alb-212528783.us-east-1.elb.amazonaws.com",
             setError: props.setError,
         });
 
@@ -146,12 +145,27 @@ export default class App extends React.Component<Props, AppState> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.location !== this.props.location &&
-            !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
-        ) {
-            window.scrollTo(0, 0);
+        if (nextProps.location.pathname !== this.props.location.pathname) {
+            this._previousLocation = this.props.location;
+            if (!nextProps.location.pathname.includes("share") &&
+                !nextProps.location.pathname.includes("login") &&
+                !nextProps.location.pathname.includes("onboarding")
+            ) {
+                // Don't scroll to top if it's a pop action (meaning user pressed back button)
+                if (nextProps.location.action !== "POP") {
+                    window.scrollTo(0, 0);
+                }
+
+                // Reset Mobile header to show full nav without animation
+                if (isMobile) {
+                    const mobileHeader = document.getElementById("header");
+                    if (mobileHeader) {
+                        mobileHeader.classList.remove("nav-hidden");
+                        mobileHeader.classList.add("no-animation");
+                    }
+                }
+            }
         }
-        this._previousLocation = this.props.location;
     }
 
     render() {
