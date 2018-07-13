@@ -3,7 +3,7 @@ import { isIOS } from "react-device-detect";
 
 import { IconButton } from "../../../components/button";
 import { IconSize, IconVariant } from "../../../components/icon";
-import Input, { InputVariant } from "../../../components/input";
+import Input, { InputType, InputVariant } from "../../../components/input";
 
 import "./style.scss";
 
@@ -39,6 +39,7 @@ export default class Search extends React.Component<SearchProps> {
                 <div className="mobile-search">
                     <Input
                         className="search-input"
+                        type={InputType.SEARCH}
                         value={searchString}
                         placeholder="Search"
                         variant={InputVariant.BLANK}

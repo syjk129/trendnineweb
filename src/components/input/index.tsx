@@ -11,6 +11,7 @@ export enum InputType {
     CHECKBOX = "checkbox",
     FILE = "file",
     SUBMIT = "submit",
+    SEARCH = "search",
 }
 
 export enum InputVariant {
