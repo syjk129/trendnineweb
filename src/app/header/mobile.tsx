@@ -130,7 +130,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                 return;
             }
 
-            if (Math.abs(scrollTop - this._lastScrollTop) < 300 && scrollTop > rect.height) {
+            if (Math.abs(scrollTop - this._lastScrollTop) < 300 && scrollTop > this._lastScrollTop && scrollTop > rect.height) {
                 header.classList.add("nav-hidden");
             } else if (scrollTop + window.innerHeight < document.body.scrollHeight) {
                 header.classList.remove("nav-hidden");
