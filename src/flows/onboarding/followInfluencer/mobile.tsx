@@ -28,7 +28,7 @@ export default function MobileFollowInfluencer({ influencer, followed, posts, to
                 </div>
             </div>
             <div className="influencer-content">
-                {posts.map(post => (
+                {posts && posts.map(post => (
                     <Image className="influencer-post-preview" square src={post.cover_image.thumbnail_image_url} />
                 ))}
             </div>

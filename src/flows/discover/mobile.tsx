@@ -146,7 +146,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
     @autobind
     private _renderPosts() {
         const posts = this.state.posts;
-        const postCards = posts.map(post => (
+        const postCards = posts && posts.map(post => (
             <PostCard
                 gridSize={this.state.gridSize}
                 post={post}
