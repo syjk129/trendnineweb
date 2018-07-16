@@ -2,7 +2,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 
-import { isAuthError, isPermissionError } from "../api/errors";
+import { isAuthError, isPermissionError, isCorruptedUserError } from "../api/errors";
 import RouteProps from "../flows/routeProps";
 
 interface ErrorBoundaryProps extends RouteProps {
@@ -16,18 +16,14 @@ interface ErrorBoundaryProps extends RouteProps {
 class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     // React children will trickle their errors up and this will catch them
     componentDidCatch(error, info) {
-        if (isAuthError(error)) {
-            if (!this.props.location.pathname.includes("login")) {
-                this.props.history.push(`${this.props.location.pathname}/login`);
-            }
-        } else if (isPermissionError(error)) {
-            this.props.history.push("/");
-        }
+        this._handleError(error);
     }
 
     componentWillReceiveProps(nextProps: ErrorBoundaryProps) {
         if (this.props.errors.length !== nextProps.errors.length) {
-            this._handleErrors(nextProps);
+            nextProps.errors.forEach(error => {
+                this._handleError(error);
+            });
         }
     }
 
@@ -35,19 +31,21 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
         return this.props.children;
     }
 
-    @autobind
-    private _handleErrors(props: ErrorBoundaryProps) {
-        props.errors.forEach(error => {
-            if (isAuthError(error)) {
-                if (!this.props.location.pathname.includes("login")) {
-                    this.props.history.push(`${this.props.location.pathname}/login`);
-                }
-            } else if (isPermissionError(error)) {
-                this.props.history.push("/");
+    private _handleError = (error: Error) => {
+        if (isAuthError(error)) {
+            if (!this.props.location.pathname.includes("login")) {
+                this.props.history.push(`${this.props.location.pathname}/login`);
             }
-            // for now, remove all errors
-            this.props.removeError(error);
-        });
+        } else if (isPermissionError(error)) {
+            this.props.history.push("/");
+        } else if (isCorruptedUserError(error)) {
+            localStorage.removeItem("user");
+            localStorage.removeItem("tn_auth_token");
+            localStorage.removeItem("refresh_token");
+            this.props.history.push("/");
+        }
+        // for now, remove all errors
+        this.props.removeError(error);
     }
 }
 
