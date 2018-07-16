@@ -38,7 +38,7 @@ interface MobileUserState {
 
 export default class MobileUser extends React.Component<MobileUserProps, MobileUserState> {
     state: MobileUserState = {
-        gridSize: 1,
+        gridSize: 2,
     };
 
     componentWillMount() {
