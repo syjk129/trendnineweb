@@ -19,6 +19,7 @@ interface MobileContentToolbarProps {
     selectedFilters: Map<FilterType, Filter>;
     filterOptions: Array<FilterOption>;
     sortTypes: Array<SortType>;
+    gridSize: number;
     filters: Map<FilterType, Array<FilterSearchResult>>;
     searchString: string;
     setGridSize(size: number): void;
@@ -46,6 +47,7 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
     render() {
         const {
             activeToolbar,
+            gridSize,
             currentFilterType,
             currentSortType,
             currentCategory,
@@ -76,16 +78,19 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                     </div>
                     <div className="grid-sizes">
                         <IconButton
+                            className={gridSize === 1 ? "selected" : ""}
                             icon={IconVariant.GRID_SIZE_1}
                             size={IconSize.SMALL}
                             onClick={() => this.props.setGridSize(1)}
                         />
                         <IconButton
+                            className={gridSize === 2 ? "selected" : ""}
                             icon={IconVariant.GRID_SIZE_2}
                             size={IconSize.SMALL}
                             onClick={() => this.props.setGridSize(2)}
                         />
                         <IconButton
+                            className={gridSize === 3 ? "selected" : ""}
                             icon={IconVariant.GRID_SIZE_3}
                             size={IconSize.SMALL}
                             onClick={() => this.props.setGridSize(3)}

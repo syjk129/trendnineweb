@@ -31,6 +31,7 @@ import "./style.scss";
 interface ContentToolbarProps extends RouteProps {
     className?: string;
     loggedIn: boolean;
+    gridSize: number;
     // sortType: SortType;
     contentType: ContentType | UserContentType;
     setGridSize?(size: number): void;
@@ -86,6 +87,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 <MobileView device={isMobile}>
                     <MobileContentToolbar
                         {...this.state}
+                        gridSize={this.props.gridSize}
                         selectFilterType={this._selectFilterType}
                         selectSortType={this._selectSortType}
                         selectCurrentCategory={this._selectCurrentCategory}

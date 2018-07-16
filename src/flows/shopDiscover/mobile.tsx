@@ -93,6 +93,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
                     location={this.props.location}
                     history={this.props.history}
                     match={this.props.match}
+                    gridSize={this.state.gridSize}
                     loggedIn={!!user}
                     contentType={ContentType.PRODUCT}
                     setGridSize={this._setGridSize}

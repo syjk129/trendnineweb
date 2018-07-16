@@ -11,7 +11,12 @@
         display: flex;
 
         .icon {
+            opacity: 0.5;
             padding-left: $mobile-page-spacing;
+        }
+
+        .selected .icon {
+            opacity: 1;
         }
     }
 }

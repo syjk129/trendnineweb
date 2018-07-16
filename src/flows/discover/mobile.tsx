@@ -129,6 +129,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                         location={this.props.location}
                         history={this.props.history}
                         match={this.props.match}
+                        gridSize={this.state.gridSize}
                         loggedIn={!!user}
                         contentType={ContentType.POST}
                         setGridSize={this._setGridSize}
