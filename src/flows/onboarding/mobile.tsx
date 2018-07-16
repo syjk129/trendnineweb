@@ -36,7 +36,7 @@ export default function MobileOnboarding({
                 Get started by following featured influencers.
             </p>
             <div className={`onboarding-follow-container${isMobile && " mobile"}`}>
-                {influencers.slice(0, 4).map(influencer => (
+                {influencers.map(influencer => (
                     <FollowInfluencer
                         followed={followed.has(influencer.user.id)}
                         influencer={influencer.user}
