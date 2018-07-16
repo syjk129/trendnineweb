@@ -28,11 +28,16 @@ export default class Sticky extends React.Component<StickyProps, never>  {
 
     onScroll = () => {
         const header = document.getElementById("header");
-        const navbarHeight = header.offsetTop + header.getBoundingClientRect().height;
+        const footer = document.getElementById("footer");
         const sticky = this._stickyRef.current;
+        const stickyContent = sticky.children.item(0);
+        const navbarHeight = header.offsetTop + header.getBoundingClientRect().height;
+        const childHeight = stickyContent.getBoundingClientRect().height;
 
         if (sticky) {
-            if (window.scrollY + navbarHeight >= this.stickOffset) {
+            if (footer.getBoundingClientRect().top - childHeight - 20 <= header.getBoundingClientRect().height) {
+                sticky.style.top = `${footer.getBoundingClientRect().top - childHeight - 20}px`;
+            } else if (window.scrollY + navbarHeight >= this.stickOffset) {
                 sticky.classList.add(this.props.stickyClassName);
                 sticky.style.top = `${navbarHeight}px`;
                 if (this.props.id === "filter-container") {
