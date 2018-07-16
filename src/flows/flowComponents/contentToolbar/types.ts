@@ -5,8 +5,8 @@ export enum FilterType {
     CATEGORY = "Category",
     BRANDS = "Brands",
     PRICE_RANGE = "Price Range",
-    RETAILER = "Retailers",
-    TAGS = "Tags",
+    RETAILER = "Store",
+    TAGS = "Style",
 }
 
 export enum SortType {

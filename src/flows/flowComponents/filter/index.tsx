@@ -264,19 +264,18 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
     @autobind
     private _applyFilter(filter: string, values: Set<string>) {
         const currentFilters = this.state.filters;
-        const newValues = Array.from(values);
         switch (filter) {
             case FilterConstants.CATEGORY_PARAM_STRING:
-                currentFilters.categoryIds = newValues;
+                currentFilters.categoryIds = values;
                 break;
             case FilterConstants.BRAND_PARAM_STRING:
-                currentFilters.brandIds = newValues;
+                currentFilters.brandIds = values;
                 break;
             case FilterConstants.RETAILER_PARAM_STRING:
-                currentFilters.retailerIds = newValues;
+                currentFilters.retailerIds = values;
                 break;
             case FilterConstants.TAG_PARAM_STRING:
-                currentFilters.tagIds = newValues;
+                currentFilters.tagIds = values;
                 break;
         }
 

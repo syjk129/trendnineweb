@@ -26,10 +26,10 @@ export default class PostParam {
         this.sort = this._parseStringFromParam(urlParams, PostParamKey.SORT);
 
         this.filters = new Filters();
-        this.filters.categoryIds = this._parseStringFromParam(urlParams, PostParamKey.CATEGORIES).split(PostParam.FILTER_SPLITTER);
-        this.filters.brandIds = this._parseStringFromParam(urlParams, PostParamKey.BRANDS).split(PostParam.FILTER_SPLITTER);
-        this.filters.retailerIds = this._parseStringFromParam(urlParams, PostParamKey.RETAILERS).split(PostParam.FILTER_SPLITTER);
-        this.filters.tagIds = this._parseStringFromParam(urlParams, PostParamKey.TAGS).split(PostParam.FILTER_SPLITTER);
+        this.filters.categoryIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.CATEGORIES).split(PostParam.FILTER_SPLITTER));
+        this.filters.brandIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.BRANDS).split(PostParam.FILTER_SPLITTER));
+        this.filters.retailerIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.RETAILERS).split(PostParam.FILTER_SPLITTER));
+        this.filters.tagIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.TAGS).split(PostParam.FILTER_SPLITTER));
         this.filters.maxPrice = this._parseStringFromParam(urlParams, PostParamKey.PRICE_HIGH);
         this.filters.minPrice = this._parseStringFromParam(urlParams, PostParamKey.PRICE_LOW);
     }
@@ -60,8 +60,8 @@ export default class PostParam {
         return queryString;
     }
 
-    private _convertFilterList(filters: Array<string>) {
-        return filters ? filters.join(PostParam.FILTER_SPLITTER) : "";
+    private _convertFilterList(filters: Set<string>) {
+        return filters ? Array.from(filters).join(PostParam.FILTER_SPLITTER) : "";
     }
 
     private _parseStringFromParam(urlParams: URLSearchParams, key: string) {

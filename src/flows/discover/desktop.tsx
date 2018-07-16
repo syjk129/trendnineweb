@@ -56,15 +56,15 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);
         const user = JSON.parse(localStorage.getItem("user"));
+        this._categoryName = props.match.params.categoryName;
         if (!user && !postParam.sort) {
             postParam.sort = SortConstants.LATEST_ID;
         }
+        if (this._categoryName) {
+            postParam.filters.categoryIds.add(MenuCategoryQueryMap[this._categoryName]);
+        }
 
         let queryString = postParam.convertUrlParamToQueryString();
-        this._categoryName = props.match.params.categoryName;
-        if (this._categoryName) {
-            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
-        }
         queryString += `&page_size=10`;
         this.setState({ isLoading: true });
 

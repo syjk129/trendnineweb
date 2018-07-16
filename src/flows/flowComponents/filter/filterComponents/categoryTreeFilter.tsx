@@ -11,7 +11,7 @@ import "./style.scss";
 interface CategoryTreeFilterProps {
     active: boolean;
     categoryList: Array<Category>;
-    selectedCategoryIds?: Array<string>;
+    selectedCategoryIds?: Set<string>;
     onApply?(values: Set<string>): void;
     onCancel?(): void;
  }
@@ -214,12 +214,12 @@ export default class CategoryTreeFilter extends React.Component<CategoryTreeFilt
         this.props.onCancel();
     }
 
-    private _mapCategoriesFromId(output: Set<Category>, ids: Array<string>, categories: Array<Category>) {
+    private _mapCategoriesFromId(output: Set<Category>, ids: Set<string>, categories: Array<Category>) {
         if (!categories || categories.length < 1) {
             return;
         }
         categories.map(c => {
-            if (ids.indexOf(c.full_name) > -1) {
+            if (ids.has(c.full_name)) {
                 output.add(c);
             }
             this._mapCategoriesFromId(output, ids, c.subcategories);
