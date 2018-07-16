@@ -194,4 +194,12 @@
     &.grid-size-3 {
         min-width: $min-card-width-3;
     }
+
+    &:only-of-type {
+        &.desktop {
+            &:hover {
+                height: calc(100% + 120px + #{$hover-spacing} * 2);
+            }
+        }
+    }
 }

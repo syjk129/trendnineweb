@@ -236,7 +236,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
     private _renderRecommendedtrendsetters() {
         return (
-            <div className="recommended-trendsetters-container">
+            <span className="recommended-trendsetters-container">
                 <p className="title">Influencers you might like</p>
                 <div className="recommended-trendsetters">
                     {this.state.recommendedTrendnines.slice(0, 6).map(trendsetter => (
@@ -246,7 +246,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                         </LinkButton>
                     ))}
                 </div>
-            </div>
+            </span>
         );
     }
 }
