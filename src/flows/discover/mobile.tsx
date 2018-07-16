@@ -104,14 +104,16 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         return (
             <>
                 {this.props.location.search.indexOf("keyword") === -1 && this.props.location.pathname !== "/feed" && !this._categoryName && (
-                    <Welcome loggedIn={!!user} {...this.props} />
+                    <>
+                        <Welcome loggedIn={!!user} {...this.props} />
+                        <FeaturedTrending
+                            {...this.props}
+                            featuredTrendnines={this.state.featuredTrendnines}
+                            trendingPosts={this.state.trendingPosts}
+                        />
+                    </>
                 )}
                 <div className="mobile-discover" id="mobile-discover" ref={this._pageRef}>
-                    <FeaturedTrending
-                        {...this.props}
-                        featuredTrendnines={this.state.featuredTrendnines}
-                        trendingPosts={this.state.trendingPosts}
-                    />
                     {this.state.postParam.keyword !== "" && (
                         <div className="search-text-container">
                             <div className="search-help">You searched for</div>
