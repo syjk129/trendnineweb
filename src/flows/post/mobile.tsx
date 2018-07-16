@@ -5,7 +5,7 @@ import { isMobile } from "react-device-detect";
 import { PostPreview } from "../../api/models";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import { IconSize } from "../../components/icon";
-import Image from "../../components/image";
+import Image, { ImageFitVariant } from "../../components/image";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import { ContentSection, TabbedSection } from "../flowComponents/section";
@@ -135,6 +135,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                     <div>
                         <CarouselItem
                             imageUrl={content.image && content.image.thumbnail_image_url}
+                            fit={ImageFitVariant.SCALED}
                             redirectUrl={`/product/${content.id}`}
                             newWindowUrl={content.url}
                             title={(content.brand && content.brand.name) || (content.author && content.author.username)}

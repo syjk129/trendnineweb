@@ -24,7 +24,7 @@ interface CarouselItemProps {
 
 class CarouselItem extends React.Component<CarouselItemProps> {
     render() {
-        const { imageUrl, className, fit, imageClass, redirectUrl, newWindowUrl, large, title, detail, subdetail, selected, onClick, history } = this.props;
+        const { imageUrl, className, fit, imageClass, large, title, detail, subdetail, selected, onClick, history } = this.props;
 
         let imageClasses = "carousel-item-cover";
 

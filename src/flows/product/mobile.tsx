@@ -3,6 +3,7 @@ import * as React from "react";
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import { IconSize } from "../../components/icon";
+import { ImageFitVariant } from "../../components/image";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
 import { ContentSection, ExpandableSection } from "../flowComponents/section";
 import { ProductProps } from "./types";
@@ -30,7 +31,7 @@ export default function MobileProduct({
     return (
         <div className="mobile-product">
             <Carousel attributes={attributes} slidesToShow={1}>
-                {images.map(imageUrl => <div><CarouselItem imageUrl={imageUrl} /></div>)}
+                {images.map(imageUrl => <div><CarouselItem fit={ImageFitVariant.SCALED} imageUrl={imageUrl} /></div>)}
             </Carousel>
             <div className="product-details">
                 <p className="product-brand">{product.brand && product.brand.name}</p>

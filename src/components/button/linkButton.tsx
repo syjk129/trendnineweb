@@ -64,7 +64,9 @@ class LinkButton extends React.Component<LinkButtonProps> {
     }
 
     private _onClick = () => {
-        this.props.onClick();
+        if (this.props.onClick) {
+            this.props.onClick();
+        }
         if (this.props.newWindowUrl) {
             window.open(this.props.newWindowUrl);
         }

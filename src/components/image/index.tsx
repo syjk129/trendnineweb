@@ -9,8 +9,8 @@ export enum ImageRatioVariant {
 }
 
 export enum ImageFitVariant {
-    COVER,
-    SCALED,
+    COVER = "cover",
+    SCALED = "scaled",
 }
 
 interface ImageProps {
