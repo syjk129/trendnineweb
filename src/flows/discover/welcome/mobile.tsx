@@ -1,8 +1,8 @@
 import * as React from "react";
-import { isTablet } from "react-device-detect";
+import { Link } from "react-router-dom";
+import Slider from "react-slick";
 
-import Button, { ButtonVariant } from "../../../components/button";
-import Image from "../../../components/image";
+import Image, { ImageFitVariant } from "../../../components/image";
 import WelcomeProps from "./types";
 
 import * as MobileWelcomeImage from "./mobile_welcome.png";
@@ -12,36 +12,26 @@ export default function MobileWelcome({ loggedIn, history }: WelcomeProps) {
         return null;
     }
 
+    const settings = {
+        arrows: false,
+        dots: true,
+        infinite: true,
+        autoplaySpeed: 4000,
+        autoplay: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        variableWidth: false,
+    };
+
     return (
         <div className="mobile-welcome">
-            <Image className="welcome-image" square={!isTablet} src={MobileWelcomeImage} />
-            <div className="welcome-text">
-                Welcome to TrendNine<br/><i>Shop in Style</i>
-            </div>
-            <div className="welcome-details">
-                Follow all your favorite fashion influencers here on TrendNine, and never miss out on the next hottest outfits.
-            </div>
-            <div className="welcome-buttons">
-                <Button
-                    className="join"
-                    inline
-                    white
-                    rounded
-                    variant={ButtonVariant.SECONDARY}
-                    onClick={() => history.push("/discover/login")}
-                >
-                    Join
-                </Button>
-                <Button
-                    inline
-                    white
-                    rounded
-                    variant={ButtonVariant.OUTLINE}
-                    onClick={() => history.push("/about")}
-                >
-                    Learn More
-                </Button>
-            </div>
+            <Slider {...settings}>
+                <div>
+                    <Link to="/about">
+                        <Image className="welcome-image" height={230} width={400} fit={ImageFitVariant.COVER} src={MobileWelcomeImage} />
+                    </Link>
+                </div>
+            </Slider>
         </div>
     );
 }

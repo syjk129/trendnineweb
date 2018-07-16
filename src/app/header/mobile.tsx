@@ -91,7 +91,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                         </div>
                     </div>
                     <div className="mobile-app-header">
-                        <IconButton icon={IconVariant.MENU} size={IconSize.LARGE} onClick={this._toggleMenu} selected={false} />
+                        <IconButton icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this._toggleMenu} selected={false} />
                         <Link className="nav-logo-container" to={isShop ? "/shop/discover" : "/discover"} onClick={this._close}>
                             <img
                                 className="nav-logo"
@@ -101,7 +101,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                         {this.state.showSearch ? (
                             <span className="close" onClick={this._toggleSearch}>&times;</span>
                         ) : (
-                            <IconButton icon={IconVariant.SEARCH} size={IconSize.LARGE} onClick={this._toggleSearch} />
+                            <IconButton icon={IconVariant.SEARCH} size={IconSize.MEDIUM} onClick={this._toggleSearch} />
                         )}
                     </div>
                     {this.state.showSearch && (

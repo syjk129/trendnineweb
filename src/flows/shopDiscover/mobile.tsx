@@ -115,7 +115,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
 
         // Infinite Scroll
         const page = this._pageRef.current;
-        if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 110) {
+        if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 100) {
             return;
         }
 

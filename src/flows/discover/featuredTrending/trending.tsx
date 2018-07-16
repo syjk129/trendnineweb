@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
 
 import { PostPreview } from "../../../api/models";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
@@ -21,29 +22,44 @@ export default function Trending({ trendingPosts }: TrendingProps) {
             return <Icon size={IconSize.SMALL} variant={IconVariant.ARROW_ZERO}></Icon>;
         }
     };
+    const settings = {
+        infinite: true,
+        vertical: true,
+        dots: false,
+        arrows: false,
+        autoplaySpeed: 3000,
+        autoplay: true,
+        draggable: false,
+        swipe: false,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+    };
 
     return (
         <div className="trending-container">
-            {trendingPosts.slice(0, 5).map(post => (
-                <Link to={`/post/${post.id}`} className="trending-post">
-                    <Image className="trending-post-image" square src={post.cover_image && post.cover_image.thumbnail_image_url} />
-                    <div className="trending-post-detail-rank">
-                        <div className="trending-post-detail">
-                            <div className="title">
-                                {post.title}
+            <Slider {...settings}>
+                {trendingPosts.map(post => (
+                    <div>
+                        <Link to={`/post/${post.id}`}>
+                            <div className="trending-post">
+                                <Image className="trending-post-image" src={post.cover_image && post.cover_image.thumbnail_image_url} />
+                                <div className="trending-post-details">
+                                    <div className="trending-header">
+                                        Trending Now
+                                    </div>
+                                    <div className="trending-post-title">
+                                        {post.title}
+                                    </div>
+                                </div>
+                                <div className="trending-post-rank">
+                                    <span className="rank">{post.rank_change}</span>
+                                    {_getRankIcon(post.rank_change)}
+                                </div>
                             </div>
-                        </div>
-                        <div className="trending-post-rank">
-                            <div className="rank-number">
-                                {(post.rank_change > 0 ? post.rank_change : -1 * post.rank_change) || 0}
-                            </div>
-                            <div className="rank-icon">
-                                {_getRankIcon(post.rank_change)}
-                            </div>
-                        </div>
+                        </Link>
                     </div>
-                </Link>
-            ))}
+                ))}
+            </Slider>
         </div>
     );
 }

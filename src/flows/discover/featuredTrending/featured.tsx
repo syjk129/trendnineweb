@@ -13,21 +13,20 @@ interface FeaturedProps {
 export default function Featured({ featuredTrendnines }: FeaturedProps) {
     return (
         <div className="featured-container">
-            {featuredTrendnines.slice(0, 2).map(trendnine => (
-                <Link to={`/user/${trendnine.user.username}`} className="trendnine">
-                    <div className="trendnine-image">
-                        <Image circle square src={trendnine.user.profile_small_image_url} />
-                    </div>
-                    <div className="trendnine-details">
-                        <div className="name">
-                            @{trendnine.user.username}
-                        </div>
-                        <div className="intro">
-                            {trendnine.user.introduction || "Hello!"}
-                        </div>
-                    </div>
-                </Link>
-            ))}
+            <Link className="trendnine" to={`/user/${featuredTrendnines[0].user.username}`}>
+                <Image className="trendnine-image" square circle src={featuredTrendnines[0].user.profile_thumbnail_image_url} />
+                <div className="trendnine-name">
+                    <div className="trending-header">In the Spotlight</div>
+                    <span>@{featuredTrendnines[0].user.username}</span>
+                </div>
+            </Link>
+            <Link className="trendnine" to={`/user/${featuredTrendnines[1].user.username}`}>
+                <Image className="trendnine-image" square circle src={featuredTrendnines[1].user.profile_thumbnail_image_url} />
+                <div className="trendnine-name">
+                    <div className="trending-header">&nbsp;</div>
+                    <span>@{featuredTrendnines[1].user.username}</span>
+                </div>
+            </Link>
         </div>
-    )
+    );
 }

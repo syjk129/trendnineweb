@@ -12,18 +12,18 @@
     }
 
     &.nav-hidden {
-        top: -50px;
+        top: -$mobile-navbar-height;
     }
 
     .mobile-header,
     .mobile-app-header {
         box-sizing: border-box;
         border-bottom: $standard-border-width solid $standard-border-color;
-        height: 60px;
+        height: $mobile-app-header-height;
     }
 
     .mobile-header {
-        height: 50px;
+        height: $mobile-navbar-height;
         margin: 0;
         display: flex;
         justify-content: space-between;
@@ -70,7 +70,8 @@
 
     .mobile-app-header {
         display: flex;
-        padding: $mobile-page-spacing;
+        align-items: center;
+        padding: 0 $mobile-page-spacing;
         justify-content: space-between;
         background-color: $base-background-color;
 

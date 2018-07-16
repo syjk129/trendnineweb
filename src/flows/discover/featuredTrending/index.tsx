@@ -49,20 +49,8 @@ export default class FeaturedTrending extends React.Component<FeaturedTrendingPr
 
         return (
             <div className="featured-trending">
-                <TabbedSection
-                    showDots
-                    sections={sections}
-                    selected={this.state.selectedTab}
-                    onSectionChange={this._onSectionChange}
-                >
-                    <div className="featured-trending-section">
-                        {this.state.selectedTab === FeaturedTrendingSection.FEATURED ? (
-                            <Featured featuredTrendnines={this.props.featuredTrendnines} />
-                        ) : (
-                            <Trending trendingPosts={this.props.trendingPosts}  />
-                        )}
-                    </div>
-                </TabbedSection>
+                <Featured featuredTrendnines={featuredTrendnines} />
+                <Trending trendingPosts={trendingPosts} />
             </div>
         );
     }

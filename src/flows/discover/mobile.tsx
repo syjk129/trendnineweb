@@ -107,11 +107,11 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                     <Welcome loggedIn={!!user} {...this.props} />
                 )}
                 <div className="mobile-discover" id="mobile-discover" ref={this._pageRef}>
-                    {/* <FeaturedTrending
+                    <FeaturedTrending
                         {...this.props}
                         featuredTrendnines={this.state.featuredTrendnines}
                         trendingPosts={this.state.trendingPosts}
-                    /> */}
+                    />
                     {this.state.postParam.keyword !== "" && (
                         <div className="search-text-container">
                             <div className="search-help">You searched for</div>
@@ -164,7 +164,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
 
         // Infinite Scroll
         const page = this._pageRef.current;
-        if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 110) {
+        if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 100) {
             return;
         }
 
