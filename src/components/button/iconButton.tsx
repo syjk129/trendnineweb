@@ -1,5 +1,6 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import { LinkButton } from ".";
 import Icon, { IconMap, IconSize, IconVariant } from "../icon";
@@ -48,8 +49,8 @@ export default class IconButton extends React.Component<IconButtonProps, IconBut
                 inline={inline}
                 to={url}
                 className={classes}
-                onMouseEnter={!noSwitch && this._onMouseEnter}
-                onMouseLeave={!noSwitch && this._onMouseLeave}
+                onMouseEnter={!noSwitch && !isMobile && this._onMouseEnter}
+                onMouseLeave={!noSwitch && !isMobile && this._onMouseLeave}
                 onClick={onClick}
             >
                 <Icon

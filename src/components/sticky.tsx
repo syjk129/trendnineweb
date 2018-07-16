@@ -35,7 +35,7 @@ export default class Sticky extends React.Component<StickyProps, never>  {
         const childHeight = stickyContent.getBoundingClientRect().height;
 
         if (sticky) {
-            if (footer.getBoundingClientRect().top - childHeight - 20 <= header.getBoundingClientRect().height) {
+            if (footer && footer.getBoundingClientRect().top - childHeight - 20 <= header.getBoundingClientRect().height) {
                 sticky.style.top = `${footer.getBoundingClientRect().top - childHeight - 20}px`;
             } else if (window.scrollY + navbarHeight >= this.stickOffset) {
                 sticky.classList.add(this.props.stickyClassName);

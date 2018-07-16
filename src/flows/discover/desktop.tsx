@@ -207,6 +207,11 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         this.setState({ loadingNext: true });
 
         let queryString = this.state.postParam.convertUrlParamToQueryString();
+
+        this._categoryName = this.props.match.params.categoryName;
+        if (this._categoryName) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
         queryString += "&page_size=10";
 
         const isFeed = this.props.location.pathname === "/feed";
