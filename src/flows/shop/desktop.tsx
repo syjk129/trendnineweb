@@ -138,7 +138,7 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
                     ))}
                 </Slider>
                 <div className="view-all">
-                    <Button rounded inline variant={ButtonVariant.OUTLINE} url="/discover">View All</Button>
+                    <Button rounded inline variant={ButtonVariant.OUTLINE} url="/discover?sort=popularity">View All</Button>
                 </div>
             </>
         );

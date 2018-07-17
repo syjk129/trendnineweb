@@ -7,7 +7,6 @@ import { Category, FilterSearchResult } from "../../../api/models";
 import { AppContext } from "../../../app";
 import { ContentType } from "../../model";
 import RouteProps from "../../routeProps";
-import CategoryTree from "../../shopDiscover/category-tree";
 import { UserContentType } from "../../user/types";
 import MobileContentToolbar from "./mobile";
 import {
