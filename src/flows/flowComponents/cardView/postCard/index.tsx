@@ -50,6 +50,9 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
         } else if (!noHover) {
             classes += " desktop";
         }
+        if (noHover) {
+            classes += " no-hover";
+        }
 
         // For Admin
         const user = JSON.parse(localStorage.getItem("user"));

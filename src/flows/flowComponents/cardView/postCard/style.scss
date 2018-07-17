@@ -187,6 +187,12 @@
         }
     }
 
+    &.no-hover {
+        &:hover {
+            box-shadow: 0 1px 1px rgba(25, 25, 25, 0.4);
+        }
+    }
+
     &.grid-size-2 {
         min-width: $min-card-width-2;
     }
