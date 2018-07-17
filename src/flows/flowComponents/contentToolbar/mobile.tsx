@@ -2,7 +2,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import { Category, FilterSearchResult } from "../../../api/models";
-import { IconButton } from "../../../components/button";
+import Button, { IconButton } from "../../../components/button";
 import Checkbox from "../../../components/checkbox";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
 import Sticky from "../../../components/sticky";
@@ -105,28 +105,33 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                     />
                 }
                 {activeToolbar === ToolbarType.FILTER &&
-                    <FilterView
-                        currentFilterType={currentFilterType}
-                        currentCategory={currentCategory}
-                        selectedFilters={selectedFilters}
-                        filterOptions={filterOptions}
-                        filters={filters}
-                        searchString={searchString}
-                        selectFilterType={selectFilterType}
-                        selectCurrentCategory={selectCurrentCategory}
-                        toggleCategory={toggleCategory}
-                        toggleSelectFilterItem={toggleSelectFilterItem}
-                        toggleFilterActive={() => this._toggleFilterActive(ToolbarType.FILTER)}
-                        onRangeFilterChange={onRangeFilterChange}
-                        onSearchStringChange={onSearchStringChange}
-                        clearFilters={this._clearFilters}
-                    />
+                    <>
+                        <FilterView
+                            currentFilterType={currentFilterType}
+                            currentCategory={currentCategory}
+                            selectedFilters={selectedFilters}
+                            filterOptions={filterOptions}
+                            filters={filters}
+                            searchString={searchString}
+                            selectFilterType={selectFilterType}
+                            selectCurrentCategory={selectCurrentCategory}
+                            toggleCategory={toggleCategory}
+                            toggleSelectFilterItem={toggleSelectFilterItem}
+                            toggleFilterActive={() => this._toggleFilterActive(ToolbarType.FILTER)}
+                            onRangeFilterChange={onRangeFilterChange}
+                            onSearchStringChange={onSearchStringChange}
+                            clearFilters={this._clearFilters}
+                        />
+                        <div className="filter-toolbar">
+                            <Button rounded onClick={() => this._toggleFilterActive(this.props.activeToolbar)}>Apply</Button>
+                        </div>
+                    </>
                 }
-                {filters && Object.keys(filters).length > 0 && (
+                {/* {filters && Object.keys(filters).length > 0 && (
                     <div className="active-filters">
                         {Object.keys(selectedFilters).map(filterType => this._renderFilterChips(filterType as FilterType))}
                     </div>
-                )}
+                )} */}
             </Sticky>
         );
     }

@@ -28,6 +28,14 @@
     }
 }
 
+.filter-toolbar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: $mobile-page-spacing;
+}
+
 .sticky-mobile-content-toolbar .active-filters {
     padding: 0 $mobile-page-spacing;
 }
