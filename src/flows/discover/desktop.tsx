@@ -60,11 +60,11 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         if (!user && !postParam.sort) {
             postParam.sort = SortConstants.LATEST_ID;
         }
-        if (this._categoryName) {
-            postParam.filters.categoryIds.add(MenuCategoryQueryMap[this._categoryName]);
-        }
 
         let queryString = postParam.convertUrlParamToQueryString();
+        if (this._categoryName && !Array.from(postParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
         queryString += `&page_size=10`;
         this.setState({ isLoading: true });
 
@@ -209,7 +209,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         let queryString = this.state.postParam.convertUrlParamToQueryString();
 
         this._categoryName = this.props.match.params.categoryName;
-        if (this._categoryName) {
+        if (this._categoryName && !Array.from(this.state.postParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
             queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
         }
         queryString += "&page_size=10";

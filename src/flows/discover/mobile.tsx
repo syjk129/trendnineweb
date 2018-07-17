@@ -64,7 +64,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
         }
         let queryString = postParam.convertUrlParamToQueryString();
         this._categoryName = props.match.params.categoryName;
-        if (this._categoryName) {
+        if (this._categoryName && !Array.from(postParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
             queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
         }
         queryString += "&page_size=18";
@@ -173,7 +173,9 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
 
         this.setState({ loadingNext: true });
         let queryString = this.state.postParam.convertUrlParamToQueryString();
-        queryString += "&page_size=18";
+        if (this._categoryName && !Array.from(this.state.postParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
         const newPosts = await Promise.resolve(
             location.pathname === "/feed" ?
                 this.props.getFeedPosts(queryString, this.state.nextToken)
