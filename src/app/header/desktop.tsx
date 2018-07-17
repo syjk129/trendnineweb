@@ -16,7 +16,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
         const pathname = location.pathname;
         const isShop = pathname.indexOf("/shop") > -1;
         const onSearch = (value) => history.push({
-            pathname: isShop ? "/shop" : "/discover",
+            pathname: isShop ? "/shop/discover" : "/discover",
             search: `?keyword=${value}`,
         });
         const user = JSON.parse(localStorage.getItem("user"));
