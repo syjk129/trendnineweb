@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import Image from "../../components/image";
 
@@ -28,13 +29,27 @@ enum Categories {
     SWIMWEAR = "Swimwear",
 }
 
+const URLForCategory = {
+    [Categories.BAGS]: "Handbags",
+    [Categories.DENIM]: "Women%27S%20Jeans",
+    [Categories.DRESSES]: "Dresses",
+    [Categories.HATS]: "Women%27S%20Hats",
+    [Categories.JACKETS]: "Women%27S%20Jackets",
+    [Categories.PANTS]: "Women%27S%20Pants",
+    [Categories.SHOES]: "Women%27S%20Shoes",
+    [Categories.SHORTS]: "Women%27S%20Shorts",
+    [Categories.SKIRTS]: "Skirts",
+    [Categories.SUNGLASSES]: "Women%27S%20Accessories",
+    [Categories.SWIMWEAR]: "Women%27S%20Swimwear",
+};
+
 export default function renderCategories() {
-    return Object.keys(Categories).map((category: Categories) => (
+    return Object.keys(Categories).map((category) => (
         <div>
-            <div className="category">
+            <Link to={`/shop/discover?categories=${URLForCategory[Categories[category]]}`} className="category">
                 <Image src={getImageForCategory(Categories[category])} />
                 <p className="category-name">{Categories[category]}</p>
-            </div>
+            </Link>
         </div>
     ));
 }
