@@ -19,6 +19,7 @@ import "./style.scss";
 interface PostCardProps extends RouteProps {
     post: PostPreview;
     gridSize?: number;
+    noHover?: boolean;
 }
 
 interface PostCardState {
@@ -37,7 +38,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
     };
 
     render() {
-        const { post, gridSize } = this.props;
+        const { post, noHover, gridSize } = this.props;
 
         let classes = "post-card";
         if (gridSize) {
@@ -46,7 +47,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
 
         if (isMobile) {
             classes += " mobile";
-        } else {
+        } else if (!noHover) {
             classes += " desktop";
         }
 
@@ -67,7 +68,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                         square
                     />
                 </Link>
-                {this.state.showDetails && !isMobile && (
+                {this.state.showDetails && !isMobile && !noHover && (
                     <div className="post-product">
                         {this._renderProductCarousel()}
                         {this.state.focusedProduct && (

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 import IconButton from "./iconButton";
 import LinkButton from "./linkButton";
@@ -10,6 +11,7 @@ import "./style.scss";
 interface ButtonProps {
     className?: string;
     inline?: boolean;
+    url?: string;
     rounded?: boolean;
     white?: boolean;
     variant?: ButtonVariant;
@@ -23,6 +25,7 @@ export default function Button({
     className,
     inline,
     rounded,
+    url,
     white,
     variant,
     size,
@@ -69,6 +72,16 @@ export default function Button({
 
     if (white) {
         classes += " white";
+    }
+
+    if (url) {
+        return (
+            <Link to={url}>
+                <button type="button" className={classes} onClick={onClick} disabled={disabled}>
+                    {children}
+                </button>
+            </Link>
+        );
     }
 
     return (

@@ -22,6 +22,7 @@ import PrivacyPolicy from "../flows/privacy";
 import ProductView from "../flows/product";
 import RouteProps from "../flows/routeProps";
 import ShareView from "../flows/share";
+import ShopView from "../flows/shop";
 import ShopDiscover from "../flows/shopDiscover";
 import Trending from "../flows/trending";
 import User from "../flows/user";
@@ -179,6 +180,7 @@ export default class App extends React.Component<Props, AppState> {
                         <Route path="/feed" component={Discover} />
                         <Route path="/brands" component={BrandView} />
                         <Route path="/user/:userId/:pageName?" component={User} />
+                        <Route path="/shop" exact component={ShopView} />
                         <Route path="/shop/home" component={() => <Redirect to="/shop/discover" />} />
                         <Route path="/shop/discover" component={ShopDiscover} />
                         <Route path="/shop/feed" component={ShopDiscover} />

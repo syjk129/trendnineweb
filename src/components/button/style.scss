@@ -32,6 +32,17 @@
         }
     }
 
+    &.white {
+        color: black;
+        background-color: #fff;
+
+        &:hover {
+            background-color: transparent;
+            color: #fff;
+            border-color: #fff;
+        }
+    }
+
     &.button-inline {
         display: inline-block;
         width: auto;

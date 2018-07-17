@@ -56,7 +56,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                 <div className="menu">
                     <div className="menu-header">
                         <span className="close" onClick={this.props.toggleMenu}>&times;</span>
-                        <Link to={isShop ? "/shop/discover" : "/discover"}>
+                        <Link to={isShop ? "/shop" : "/discover"}>
                             <img
                                 className="nav-logo"
                                 src={LogoWhite}

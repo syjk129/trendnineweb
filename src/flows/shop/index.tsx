@@ -1,70 +1,47 @@
 
-import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 
-import { Featured } from "../../api/models";
-import { AppContext, AppContextTypes } from "../../app";
-import Content from "../../components/content";
-import Spinner, { SpinnerContainer } from "../../components/spinner";
+import { PostPreview } from "../../api/models";
+import { AppContext } from "../../app";
 import RouteProps from "../routeProps";
+import DesktopView from "./desktop";
 
 import "./style.scss";
 
 type Props = RouteProps;
 
 interface ShopState {
-    featured: Array<Featured>;
-    isLoading: boolean;
+    popularPosts: Array<PostPreview>;
 }
 
 export default class Shop extends React.Component<Props, ShopState> {
     static contextTypes: AppContext;
 
     state: ShopState = {
-        featured: [],
-        isLoading: true,
+        popularPosts: [],
     };
 
-    componentWillMount() {
-        this.refreshContent(this.props);
-    }
-
-    async refreshContent(props: Props) {
-        const [
-            featured,
-        ] = await Promise.all([
-            this.context.api.getFeatured(""),
-        ]);
-
-        this.setState({
-            featured,
-            isLoading: false,
-        });
+    async componentWillMount() {
+        const popularPosts = await this.context.api.getLatestPosts("order_by=popularity&page_size=10");
+        this.setState({ popularPosts: popularPosts.list });
     }
 
     render() {
-        if (this.state.isLoading) {
-            return <SpinnerContainer><Spinner /></SpinnerContainer>;
+        if (isMobile) {
+            this.props.history.push("/shop/discover");
         }
 
         return (
-            <div className="shop">
-                <Content>
-                    {this._renderFeatured()}
-                </Content>
-            </div>
+            <>
+                <BrowserView device={isBrowser}>
+                    <DesktopView popularPosts={this.state.popularPosts} />
+                </BrowserView>
+                <MobileView device={isMobile}>
+                </MobileView>
+            </>
         );
-    }
-
-    @autobind
-    private _renderFeatured() {
-        const featured = this.state.featured;
-        return featured.map((f, index) => (
-            <div>
-                {f.content}
-            </div>
-        ));
     }
 }
 

@@ -114,7 +114,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 break;
             case ContentType.PRODUCT:
             case ContentType.SHOP:
-                this.props.history.push("/shop/discover");
+                this.props.history.push("/shop");
                 break;
         }
         this.setState({ activeToolbar: null });

@@ -16,7 +16,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
         const pathname = location.pathname;
         const isShop = pathname.indexOf("/shop") > -1;
         const onSearch = (value) => history.push({
-            pathname: isShop ? "/shop/discover" : "/discover",
+            pathname: isShop ? "/shop" : "/discover",
             search: `?keyword=${value}`,
         });
         const user = JSON.parse(localStorage.getItem("user"));
@@ -29,7 +29,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                             <NavLink url="/discover" pathname={pathname} selected={!isShop}>
                                 Discover
                             </NavLink>
-                            <NavLink url="/shop/home" pathname={pathname} selected={isShop}>
+                            <NavLink url="/shop" pathname={pathname} selected={isShop}>
                                 Shop
                             </NavLink>
                         </div>
@@ -58,7 +58,7 @@ export default class DesktopHeader extends React.Component<HeaderProps> {
                 </div>
                 <div className="nav-header">
                     <div className="nav-content">
-                        <Link className="nav-logo-container" to={isShop ? "/shop/home" : "/discover"}><img className="nav-logo" src={Logo} /></Link>
+                        <Link className="nav-logo-container" to={isShop ? "/shop" : "/discover"}><img className="nav-logo" src={Logo} /></Link>
                         <div className="nav-header-links">
                             <div className="nav-pages">
                                 <NavLink url={isShop ? "/shop/discover" : "/discover"} pathname={pathname} large>Trending</NavLink>
