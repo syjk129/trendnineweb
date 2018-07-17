@@ -149,7 +149,7 @@ export default class PostView extends React.Component<Props, PostState> {
             let recentlyViewedArray = JSON.parse(recentlyViewed);
 
             if (!recentlyViewedArray || recentlyViewedArray.length < 1) {
-                recentlyViewedArray = [{ type: "post", content: post }];
+                recentlyViewedArray = [{ type: "Post", content: post }];
             } else {
                 const indexOfPost = recentlyViewedArray.findIndex(recent => recent.content.id === post.id);
 

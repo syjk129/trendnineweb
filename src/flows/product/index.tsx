@@ -68,7 +68,7 @@ export default class ProductView extends React.Component<Props, ProductState> {
         let recentlyViewedArray = JSON.parse(recentlyViewed);
 
         if (!recentlyViewedArray || recentlyViewedArray.length < 1) {
-            recentlyViewedArray = [{ type: "product", content: product }];
+            recentlyViewedArray = [{ type: "Product", content: product }];
         } else {
             const indexOfProduct = recentlyViewedArray.findIndex(recent => recent.content.id === product.id);
 
