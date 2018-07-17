@@ -6,7 +6,7 @@ import { CardContainer } from "../../components/card";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { ProductCard } from "../flowComponents/cardView";
 import ContentToolbar from "../flowComponents/contentToolbar";
-import { ContentType, Filters, PostParam } from "../model";
+import { ContentType, MenuCategory, MenuCategoryQueryMap, PostParam } from "../model";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
 interface MobileShopDiscoverState extends ShopDiscoverState {
@@ -28,7 +28,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
 
     componentWillMount() {
         this._pageRef = React.createRef();
-        this.refreshContent();
+        this.refreshContent(this.props);
     }
 
     componentWillReceiveProps(nextProps: ShopDiscoverProps) {
@@ -36,7 +36,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
             !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
         ) {
             this.setState({ isLoading: true });
-            this.refreshContent();
+            this.refreshContent(nextProps);
         }
     }
 
@@ -55,10 +55,15 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
         document.removeEventListener("touchmove", this._paginateNextProducts);
     }
 
-    async refreshContent() {
+    async refreshContent(props: ShopDiscoverProps) {
         const params = new URLSearchParams(location.search);
         const productParam = new PostParam(params);
+        this._categoryName = props.match.params.categoryName;
+
         let queryString = productParam.convertUrlParamToQueryString();
+        if (this._categoryName && !Array.from(productParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
         queryString += "&page_size=18";
 
         const [
@@ -107,6 +112,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
     }
 
     private _pageRef: React.RefObject<HTMLDivElement>;
+    private _categoryName: MenuCategory | null;
 
     @autobind
     private async _paginateNextProducts() {
@@ -123,6 +129,9 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
         this.setState({ loadingNext: true });
 
         let queryString = this.state.productParam.convertUrlParamToQueryString();
+        if (this._categoryName && !Array.from(this.state.productParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
         queryString += "&page_size=18";
         const newProducts = await Promise.resolve(
             location.pathname === "/feed" ?

@@ -63,11 +63,11 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         const params = new URLSearchParams(props.location.search);
         const productParam = new PostParam(params);
         this._categoryName = props.match.params.categoryName;
-        if (this._categoryName) {
-            productParam.filters.categoryIds.add(MenuCategoryQueryMap[this._categoryName]);
-        }
 
         let queryString = productParam.convertUrlParamToQueryString();
+        if (this._categoryName && !Array.from(productParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
         queryString += `&page_size=10`;
         const products = location.pathname === "/shop/feed" ? await this.props.getFeedProducts() : await this.props.getLatestProducts(queryString);
 
@@ -183,7 +183,10 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         }
         this.setState({ loadingNext: true });
 
-        const queryString = this.state.productParam.convertUrlParamToQueryString();
+        let queryString = this.state.productParam.convertUrlParamToQueryString();
+        if (this._categoryName && !Array.from(this.state.productParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
+            queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
+        }
         const newProducts = await Promise.resolve(
             location.pathname === "/feed" ?
                 this.props.getFeedProducts(queryString, this.state.nextToken)
