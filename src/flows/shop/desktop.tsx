@@ -57,13 +57,13 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
 
     private _renderFullScreenContent = () => {
         return (
-            <Link to="/discover" className="full-screen-content">
+            <Link to="/shop/discover" className="full-screen-content">
                 <Image src={FullScreen1} />
                 <div className="full-screen-item">
                     <div className="full-screen-title">
                         What's New
                     </div>
-                    <Button rounded inline white url="/discover">View All</Button>
+                    <Button rounded inline white url="/shop/discover">View All</Button>
                 </div>
             </Link>
         );
@@ -138,7 +138,7 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
                     ))}
                 </Slider>
                 <div className="view-all">
-                    <Button rounded inline variant={ButtonVariant.OUTLINE}>View All</Button>
+                    <Button rounded inline variant={ButtonVariant.OUTLINE} url="/discover">View All</Button>
                 </div>
             </>
         );
