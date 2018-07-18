@@ -155,18 +155,19 @@
 
     &.mobile {
         .title-container {
-            height: 60px;
+            height: 55px;
 
             .title {
-                font-size: $mobile-font-size-2;
-                line-height: $mobile-font-size-3;
+                font-size: $mobile-font-size-3;
+                line-height: $mobile-line-height-2;
             }
         }
 
         &.grid-size-2 {
             .title-container {
                 .title {
-                    font-size: $mobile-font-size-1;
+                    font-size: $mobile-font-size-2;
+                    line-height: $mobile-line-height-1;
                 }
             }
         }

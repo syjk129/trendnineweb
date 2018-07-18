@@ -76,8 +76,8 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                         <div className="mobile-right-header">
                             {user ? (
                                 <>
-                                    <IconButton icon={IconVariant.WISHLIST} size={IconSize.LARGE} url={`/user/${user.id}/wishlist`}/>
-                                    <IconButton icon={IconVariant.PROFILE} size={IconSize.LARGE} url={`/user/${user.id}`}/>
+                                    <IconButton icon={IconVariant.WISHLIST} size={IconSize.MEDIUM} url={`/user/${user.id}/wishlist`}/>
+                                    <IconButton icon={IconVariant.PROFILE} size={IconSize.MEDIUM} url={`/user/${user.id}`}/>
                                 </>
                             ) : (
                                 <Button

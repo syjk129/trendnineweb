@@ -1,5 +1,59 @@
 @import "../../styles/variables.scss";
 
+.nav-logo-container {
+    display: flex;
+    align-items: center;
+
+    .nav-logo {
+        width: 200px;
+        max-height: 30px;
+        object-fit: contain;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    &.left {
+        position: absolute;
+
+        &.hidden {
+            visibility: hidden;
+        }
+    }
+}
+
+.search-header {
+    border-bottom: $standard-border-width solid $standard-border-color;
+
+    .search-input {
+        position: absolute;
+        right: $page-spacing;
+        border: none;
+        border-bottom: $standard-border-width solid $standard-border-color;
+        border-radius: 0;
+        font-size: $font-size-1;
+        width: 300px;
+        margin-right: $page-spacing;
+    }
+
+    .close {
+        color: #000;
+        position: absolute;
+        float: right;
+        right: $page-spacing;
+        font-size: 35px;
+        font-weight: 200;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+}
+
 .mobile-header-container {
     position: fixed;
     width: 100%;
@@ -83,7 +137,7 @@
             width: $mobile-icon-large;
             top: $mobile-page-spacing + 4;
             left: $mobile-page-spacing;
-            font-size: $mobile-font-size-4;
+            font-size: $mobile-font-size-5;
             font-weight: 200;
         }
 
@@ -94,19 +148,30 @@
             cursor: pointer;
         }
     }
+
+    .nav-logo-container {
+        .nav-logo {
+            width: 170px;
+        }
+    }
 }
 
-.nav-logo-container {
+.user-logged-in-buttons {
+    height: 100%;
     display: flex;
-    align-items: center;
 
-    .nav-logo {
-        width: 150px;
-        max-height: 30px;
-        object-fit: contain;
+    .link-button {
+        margin: auto;
 
-        &:hover {
-            cursor: pointer;
+        &:first-of-type {
+            margin-right: $base-spacing;
+        }
+    }
+
+    .icon {
+        &::before {
+            width: 25px;
+            height: 25px;
         }
     }
 }
@@ -129,9 +194,12 @@
     }
 
     .user-header,
-    .nav-header {
+    .nav-header,
+    .search-header {
         .nav-content {
+            position: relative;
             display: flex;
+            align-items: center;
             padding: 0 $page-spacing;
             width: 100%;
             max-width: $max-content-width;
@@ -147,17 +215,46 @@
 
         width: 100%;
         display: inline-flex;
-        border-bottom: $standard-border-width solid $standard-border-color;
+    }
+
+    .page-switch {
+        display: inline-block;
+        margin: 0 $large-spacing;
+
+        &.hidden {
+            display: none;
+        }
+
+        .nav-link a {
+            color: $color-red-1;
+        }
     }
 
     .user-header {
+        &.hidden {
+            display: none;
+        }
+
         .nav-content {
+            position: relative;
             z-index: 11;
-            justify-content: space-between;
+            justify-content: center;
             height: $navbar-height - $navbar-menu-height;
 
             .header-left-buttons {
+                position: absolute;
+                left: $page-spacing;
                 display: flex;
+                align-items: center;
+
+                .nav-link {
+                    height: 20px;
+                }
+            }
+
+            .header-right-buttons {
+                position: absolute;
+                right: $page-spacing;
             }
         }
     }
@@ -165,6 +262,7 @@
     .nav-header {
         height: $navbar-menu-height;
         background-color: $color-white;
+        border-bottom: $standard-border-width solid $standard-border-color;
 
         .nav-pages,
         .nav-logo,
@@ -178,55 +276,54 @@
             .nav-logo {
                 width: 180px;
             }
+
+            &.left .nav-logo {
+                @media (max-width: 1300px) {
+                    width: 150px;
+                }
+            }
         }
 
         .nav-header-links {
             display: flex;
-            justify-content: space-between;
+            position: relative;
+            justify-content: center;
+            align-items: center;
             flex-grow: 1;
 
             .search {
+                position: absolute;
+                right: 0;
                 display: flex;
-                float: left;
-                width: 200px;
-                height: $line-height-4;
-                border: $standard-border-width solid $color-grey-4;
-                margin-top: auto;
-                margin-bottom: auto;
-                border-radius: $rounded-border-radius;
+                align-items: center;
 
-                input {
-                    font-size: $font-size-2;
-                    letter-spacing: $letter-spacing-1;
-                    padding-right: $base-spacing * 2;
-                    text-align: left;
-                    flex-grow: 1;
+                &:hover {
+                    cursor: pointer;
                 }
 
-                img {
+                .search-item {
+                    display: flex;
+                }
+
+                .search-label {
+                    font-weight: $font-weight-semibold;
+                    font-size: $font-size-1;
                     margin-right: $base-spacing;
                 }
+
+                .user-buttons {
+                    display: flex;
+                    margin-left: $base-spacing;
+
+                    &.hidden {
+                        display: none;
+                    }
+
+                    .link-button:first-of-type {
+                        margin-right: $base-spacing;
+                    }
+                }
             }
-        }
-    }
-}
-
-.user-logged-in-buttons {
-    height: 100%;
-    display: flex;
-
-    .link-button {
-        margin: auto;
-
-        &:first-of-type {
-            margin-right: $base-spacing;
-        }
-    }
-
-    .icon {
-        &::before {
-            width: 25px;
-            height: 25px;
         }
     }
 }

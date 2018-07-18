@@ -25,7 +25,7 @@
         line-height: $mobile-checkbox-size;
         font-size: $font-size-2;
         padding-left: $mobile-checkbox-size + $base-spacing;
-        margin-top: -($checkbox-size - $mobile-font-size-1);
+        margin-top: -($checkbox-size - $mobile-font-size-2);
 
         .checkbox-checkmark {
             height: $checkbox-size;

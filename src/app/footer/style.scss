@@ -3,6 +3,8 @@
 .footer-container {
     width: 100%;
     border-top: $standard-border-width solid $standard-border-color;
+    padding: $standard-border-width;
+    box-sizing: border-box;
 }
 
 .footer {

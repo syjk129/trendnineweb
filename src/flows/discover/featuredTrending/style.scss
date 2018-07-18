@@ -27,7 +27,7 @@ $trending-item-size: 50px;
         }
 
         .trendnine-name {
-            font-size: $mobile-font-size-1;
+            font-size: $mobile-font-size-2;
             font-weight: $font-weight-bold;
             margin-right: $base-spacing;
             height: 100%;
@@ -69,7 +69,7 @@ $trending-item-size: 50px;
 
         .trending-post-details {
             height: $trending-item-size;
-            font-size: $mobile-font-size-1;
+            font-size: $mobile-font-size-2;
             margin-right: $base-spacing;
             overflow: hidden;
             flex-grow: 1;
@@ -82,7 +82,7 @@ $trending-item-size: 50px;
         }
 
         .trending-post-rank {
-            font-size: $mobile-font-size-1;
+            font-size: $mobile-font-size-2;
             flex-shrink: 0;
             width: 50px;
             display: flex;
