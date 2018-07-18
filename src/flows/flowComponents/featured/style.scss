@@ -35,6 +35,7 @@
 .mobile-featured-trendnine {
     display: flex;
     padding: $base-spacing;
+    padding-left: 0;
     border-bottom: $standard-border-width solid $standard-border-color;
 
     &:last-child {

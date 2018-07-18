@@ -53,6 +53,9 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
         if (noHover) {
             classes += " no-hover";
         }
+        if (this.state.showDetails) {
+            classes += " show-details";
+        }
 
         // For Admin
         const user = JSON.parse(localStorage.getItem("user"));
@@ -62,13 +65,17 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
         const imageUrl = post.cover_image && (isMobile ? post.cover_image.small_image_url : post.cover_image.thumbnail_image_url);
 
         return (
-            <div className={classes} onMouseEnter={this._onCardMouseEnter} onMouseLeave={this._onCardMouseLeave}>
+            <div
+                className={classes}
+                onMouseLeave={this._onCardMouseLeave}
+            >
                 <Link to={`/post/${post.id}`} className="post-card-image">
                     <Image
                         className="post-image"
                         src={imageUrl}
                         fit={ImageFitVariant.COVER}
                         square
+                        onMouseEnter={this._onCardMouseEnter}
                     />
                 </Link>
                 {this.state.showDetails && !isMobile && !noHover && (
@@ -97,7 +104,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                         </Link>
                         <div className="author-container">
                             <Author author={post.author} />
-                            {gridSize !== 2 && formatTime(post.created)}
+                            <span className="author-date">{gridSize !== 2 && formatTime(post.created)}</span>
                         </div>
                         <ActionLinks
                             iconSize={isMobile && gridSize !== 2 ? IconSize.LARGE : IconSize.MEDIUM}

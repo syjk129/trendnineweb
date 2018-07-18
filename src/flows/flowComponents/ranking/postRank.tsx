@@ -29,11 +29,6 @@ class PostRank extends React.Component<PostRankProps> {
                     >
                         <img className="post-rank-img" src={post.cover_image && post.cover_image.thumbnail_image_url} />
                         <div className="post-rank-detail">
-                            {!hideName && (
-                                <p className="post-rank-name">
-                                    Post
-                                </p>
-                            )}
                             {post.title &&
                                 <p className="post-rank-title">
                                     {post.title}

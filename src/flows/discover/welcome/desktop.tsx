@@ -68,7 +68,6 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
                     <Button
                         className="slide-2-shop"
                         inline
-                        white
                         rounded
                         variant={ButtonVariant.PRIMARY}
                         size={ButtonSize.WIDE}

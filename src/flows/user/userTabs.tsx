@@ -29,7 +29,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     selected={pathname === `/user/${userId}`}
                     onClick={() => setContent(UserContentType.POST)}
                 >
-                    <p>POSTS{` (${profile.blog_post_count})`}</p>
+                    <p>{`${profile.blog_post_count} `}POSTS</p>
                 </NavLink>
             }
             {profile && profile.product_count > 0 &&
@@ -38,7 +38,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     pathname={pathname}
                     onClick={() => setContent(UserContentType.PRODUCT)}
                 >
-                    <p>PRODUCTS{` (${profile.product_count})`}</p>
+                    <p>{`${profile.product_count} `}PRODUCTS</p>
                 </NavLink>
             }
             {isSelf &&
@@ -48,7 +48,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     selected={pathname === `/user/${userId}` || pathname === `/user/${userId}/bookmarks`}
                     onClick={() => setContent(UserContentType.POST_WISHLIST)}
                 >
-                    <p>BOOKMARKS</p>
+                    <p>SAVED POSTS</p>
                 </NavLink>
             }
             {isSelf &&
@@ -76,7 +76,7 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     pathname={pathname}
                     onClick={() => setContent(UserContentType.FOLLOWING)}
                 >
-                    <p>FOLLOWING{profile && ` (${profile.following_count})`}</p>
+                    <p>{profile && `${profile.following_count} `}FOLLOWING</p>
                 </NavLink>
             }
             {isSelf &&

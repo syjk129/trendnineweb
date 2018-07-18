@@ -1,7 +1,7 @@
 @import "../../../../styles/variables";
 
 .post-card {
-    $hover-spacing: $base-spacing * 1.5;
+    $hover-spacing: $base-spacing;
 
     background-color: #fff;
     min-width: $min-card-width;
@@ -122,14 +122,14 @@
 
         .title-container {
             display: block;
-            height: 50px;
+            height: 35px;
             overflow: hidden;
             margin-bottom: $base-spacing;
 
             .title {
                 font-size: $font-size-2;
                 font-weight: $font-weight-bold;
-                line-height: $line-height-2;
+                line-height: $line-height-1;
 
                 &.unpublished {
                     color: red;
@@ -140,13 +140,17 @@
         .author-container {
             display: flex;
             justify-content: space-between;
-            margin-bottom: $base-spacing;
+            margin-bottom: $base-spacing / 1.5;
+
+            .author-date {
+                color: $text-faded;
+            }
         }
     }
 
     .action-btns {
         border-top: $standard-border-width solid $color-grey-0;
-        padding-top: $base-spacing;
+        padding-top: $base-spacing / 1.5;
     }
 
     &.mobile {
@@ -171,14 +175,14 @@
     &.desktop {
         box-sizing: border-box;
 
-        &:hover {
+        &.show-details {
             border: $standard-border-width solid $color-grey-2;
             z-index: 1;
             margin-left: -$hover-spacing;
             margin-top: -$hover-spacing;
             padding: $hover-spacing - $standard-border-width;
             width: calc(100% + #{$hover-spacing * 2});
-            height: calc(100% + 105px + #{$hover-spacing} * 2);
+            height: calc(100% + 105px + #{$hover-spacing * 2});
 
             .post-card-content {
                 position: absolute;

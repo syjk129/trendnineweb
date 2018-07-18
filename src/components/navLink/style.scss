@@ -42,8 +42,8 @@
             color: $text-primary;
         }
 
-        margin-bottom: $standard-border-width * -2;
-        border-bottom: ($standard-border-width * 3) solid $color-accent;
+        // margin-bottom: $standard-border-width * -2;
+        border-bottom: ($standard-border-width * 2) solid $color-accent;
     }
 
     &:first-child {

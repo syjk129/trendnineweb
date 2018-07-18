@@ -31,7 +31,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
             <div className="product-card-footer">
                 <p className="product-card-brand">{product.title}</p>
                 <div className="product-card-bottom">
-                    <p className="product-card-price">${product.price}</p>
+                    <div className="product-card-price">${product.price}</div>
                     <div className="product-action-btns">
                         <ActionLinks
                             iconSize={isMobile && gridSize !== 2 ? IconSize.LARGE : IconSize.MEDIUM}

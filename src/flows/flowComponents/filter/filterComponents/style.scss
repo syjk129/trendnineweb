@@ -17,9 +17,9 @@
 
         .filter-action-buttons {
             button {
+                padding: $base-spacing $base-spacing * 3;
                 margin: 0;
-                width: $button-width-xs;
-                height: $button-height-sm;
+                width: auto;
 
                 &:first-child {
                     margin-right: $base-spacing;
@@ -72,6 +72,7 @@
 
             &:first-child {
                 padding-top: 0;
+                padding-left: $base-spacing * 2;
             }
         }
 
@@ -129,7 +130,7 @@
 }
 
 .search-filter-input-container {
-    width: 50%;
+    width: 100%;
     max-width: $min-card-width * 2;
     min-width: $min-card-width - 5 * $base-spacing;
 
@@ -142,6 +143,7 @@
     }
 
     border: $standard-border-width solid $standard-border-color;
+    border-radius: $standard-border-radius;
     padding: 0 $base-spacing;
     height: $button-height-sm;
     display: flex;
