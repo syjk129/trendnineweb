@@ -151,7 +151,7 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
         const rect = header.getBoundingClientRect();
         const scrollDelta = 200;
 
-        if (header && logo && userButtons) {
+        if (header && logo) {
             const scrollTop = window.scrollY;
             if (Math.abs(this._lastScrollTop - scrollTop) <= scrollDelta) {
                 return;
@@ -159,12 +159,16 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
 
             if (scrollTop > this._lastScrollTop && scrollTop > rect.height) {
                 logo.classList.remove("hidden");
-                userButtons.classList.remove("hidden");
+                if (userButtons) {
+                    userButtons.classList.remove("hidden");
+                }
                 pageSwitch.classList.remove("hidden");
                 header.classList.add("hidden");
             } else if (scrollTop + window.innerHeight < document.body.scrollHeight) {
                 logo.classList.add("hidden");
-                userButtons.classList.add("hidden");
+                if (userButtons) {
+                    userButtons.classList.add("hidden");
+                }
                 pageSwitch.classList.add("hidden");
                 header.classList.remove("hidden");
             }
