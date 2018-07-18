@@ -61,8 +61,14 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
     async refreshContent(props: ShopDiscoverProps) {
         const params = new URLSearchParams(props.location.search);
-        const productParam = new PostParam(params);
+        let productParam = new PostParam(params);
         this._categoryName = props.match.params.categoryName;
+
+        if (this.state.selectedTree) {
+            this.state.selectedTree.selectedCategories.forEach(category => {
+                productParam.filters.categoryIds.add(category);
+            });
+        }
 
         let queryString = productParam.convertUrlParamToQueryString();
         if (this._categoryName && !Array.from(productParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
@@ -170,6 +176,11 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
     @autobind
     private async _push(postParams: PostParam) {
+        if (this.state.selectedTree) {
+            this.state.selectedTree.selectedCategories.forEach(category => {
+                postParams.filters.categoryIds.add(category);
+            });
+        }
         this.props.history.push({
             pathname: location.pathname,
             search: `?${postParams.convertToUrlParamString()}`,
@@ -183,7 +194,15 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         }
         this.setState({ loadingNext: true });
 
-        let queryString = this.state.productParam.convertUrlParamToQueryString();
+        let productParam = this.state.productParam;
+
+        if (this.state.selectedTree) {
+            this.state.selectedTree.selectedCategories.forEach(category => {
+                productParam.filters.categoryIds.add(category);
+            });
+        }
+
+        let queryString = productParam.convertUrlParamToQueryString();
         if (this._categoryName && !Array.from(this.state.productParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
             queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
         }
