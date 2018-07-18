@@ -101,14 +101,16 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                                     <span className="search-label">SEARCH</span>
                                     <IconButton size={IconSize.LARGE} icon={IconVariant.SEARCH} />
                                 </div>
-                                <div className="user-buttons hidden" ref={this._userButtonRef}>
-                                    <LinkButton to={`/user/${user.username}/wishlist`}>
-                                        <Icon variant={IconVariant.WISHLIST} size={IconSize.LARGE} />
-                                    </LinkButton>
-                                    <LinkButton to={`/user/${user.username}`}>
-                                        <Icon variant={IconVariant.PROFILE} size={IconSize.LARGE} />
-                                    </LinkButton>
-                                </div>
+                                {user && (
+                                    <div className="user-buttons hidden" ref={this._userButtonRef}>
+                                        <LinkButton to={`/user/${user.username}/wishlist`}>
+                                            <Icon variant={IconVariant.WISHLIST} size={IconSize.LARGE} />
+                                        </LinkButton>
+                                        <LinkButton to={`/user/${user.username}`}>
+                                            <Icon variant={IconVariant.PROFILE} size={IconSize.LARGE} />
+                                        </LinkButton>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
