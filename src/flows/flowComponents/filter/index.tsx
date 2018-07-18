@@ -59,7 +59,7 @@ export default class Filter extends React.Component<FilterProps, FilterState> {
             const categories = await this.context.api.getCategories();
             this._toggleSubFilter(this._getFilterList()[0]);
             this.setState({
-                categories: categories[1].subcategories,
+                categories: categories.find(category => category.id === "70668ef0-7a13-41b1-8cda-c28b67e8098a"),
             });
         } catch (err) {
             console.warn(err);

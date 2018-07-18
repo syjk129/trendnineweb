@@ -41,7 +41,7 @@ export default class ShopCategoryTreeSidebar extends React.Component<ShopCategor
             return null;
         }
 
-        let category = this.props.categoryList[1];
+        let category = this.props.categoryList.find(category => category.id === "70668ef0-7a13-41b1-8cda-c28b67e8098a");
         if (this.props.menuCategory) {
             category = findCategory(MenuCategoryQueryMap[this.props.menuCategory], this.props.categoryList);
         }
