@@ -55,13 +55,12 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                         <Link className="nav-logo-container" to={isShop ? "/shop" : "/discover"}><img className="nav-logo" src={Logo} /></Link>
                         <div className="header-right-buttons">
                             {(!loggedIn || !user) &&
-                                <Button
+                                <LinkButton
                                     className="login-button"
-                                    variant={ButtonVariant.OUTLINE}
                                     onClick={() => history.push(`${location.pathname}/login`)}
                                 >
                                     Sign In / Join
-                                </Button>
+                                </LinkButton>
                             }
                             {loggedIn && user &&
                                 <div className="user-logged-in-buttons">

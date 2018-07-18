@@ -188,8 +188,8 @@
         height: 24px;
         padding: 0 $base-spacing;
         font-size: $font-size-1;
-        line-height: $font-size-1;
-        text-transform: none;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
         border-color: $color-grey-4;
     }
 
