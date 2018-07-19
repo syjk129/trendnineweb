@@ -3,19 +3,9 @@ import { Link } from "react-router-dom";
 
 import Image from "../../components/image";
 
-import * as Bags from "./images/bags.png";
-import * as Denim from "./images/denim.png";
-import * as Dresses from "./images/dresses.png";
-import * as Hats from "./images/hats.png";
-import * as Jackets from "./images/jackets.png";
-import * as Pants from "./images/pants.png";
-import * as Shoes from "./images/shoes.png";
-import * as Shorts from "./images/shorts.png";
-import * as Skirts from "./images/skirts.png";
-import * as Sunglasses from "./images/sunglasses.png";
-import * as Swimwear from "./images/swimwear.png";
+import { getMarketingImage } from "./images";
 
-enum Categories {
+export enum Categories {
     BAGS = "Bags",
     DENIM = "Denim",
     DRESSES = "Dresses",
@@ -44,39 +34,20 @@ const URLForCategory = {
 };
 
 export default function renderCategories() {
-    return Object.keys(Categories).map((category) => (
-        <div>
-            <Link to={`/shop/discover?categories=${URLForCategory[Categories[category]]}`} className="category">
-                <Image src={getImageForCategory(Categories[category])} />
-                <p className="category-name">{Categories[category]}</p>
-            </Link>
-        </div>
-    ));
-}
-
-function getImageForCategory(category: Categories) {
-    switch (category) {
-        case Categories.BAGS:
-            return Bags;
-        case Categories.DENIM:
-            return Denim;
-        case Categories.DRESSES:
-            return Dresses;
-        case Categories.HATS:
-            return Hats;
-        case Categories.JACKETS:
-            return Jackets;
-        case Categories.PANTS:
-            return Pants;
-        case Categories.SHOES:
-            return Shoes;
-        case Categories.SHORTS:
-            return Shorts;
-        case Categories.SKIRTS:
-            return Skirts;
-        case Categories.SUNGLASSES:
-            return Sunglasses;
-        case Categories.SWIMWEAR:
-            return Swimwear;
-    }
+    return Object.keys(Categories).map((category) => {
+        const image = getMarketingImage(Categories[category]);
+        return (
+            <div>
+                <Link to={`/shop/discover?categories=${URLForCategory[Categories[category]]}`} className="category">
+                    <Image
+                        src={image.originalImage}
+                        previewSrc={image.smallImage}
+                        width={image.width}
+                        height={image.height}
+                    />
+                    <p className="category-name">{Categories[category]}</p>
+                </Link>
+            </div>
+        );
+    });
 }

@@ -1,4 +1,5 @@
 import * as React from "react";
+import FadeIn from "react-lazyload-fadein";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
@@ -8,16 +9,7 @@ import { IconVariant } from "../../components/icon";
 import Image from "../../components/image";
 import { PostCard } from "../flowComponents/cardView";
 import renderCategories from "./categories";
-
-import * as FullScreen1 from "./images/full-screen-1.png";
-import * as Shop1 from "./images/shop-1.png";
-import * as Shop2 from "./images/shop-2.png";
-import * as Shop3 from "./images/shop-3.png";
-
-import * as Half1 from "./images/half-1.png";
-import * as Half2 from "./images/half-2.png";
-import * as Half3 from "./images/half-3.png";
-import * as Half4 from "./images/half-4.png";
+import { getMarketingImage, MarketingImages } from "./images";
 
 interface DesktopShopProps {
     popularPosts: Array<PostPreview>;
@@ -29,8 +21,8 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
             <div className="desktop-shop">
                 {this._renderMainCarousel()}
                 {this._renderHalfScreenContent(
-                    Half1,
-                    Half2,
+                    getMarketingImage(MarketingImages.HALF1),
+                    getMarketingImage(MarketingImages.HALF2),
                     "Dream Bags",
                     "Beach Please",
                     "/shop/category/bags",
@@ -40,8 +32,8 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
                 {this._renderPopularPosts()}
                 <div className="divider" />
                 {this._renderHalfScreenContent(
-                    Half3,
-                    Half4,
+                    getMarketingImage(MarketingImages.HALF3),
+                    getMarketingImage(MarketingImages.HALF4),
                     "Pants",
                     "Summer Dresses",
                     "/shop/discover?categories=Women%27S%20Pants",
@@ -56,9 +48,16 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
     }
 
     private _renderFullScreenContent = () => {
+        const fullScreen1 = getMarketingImage(MarketingImages.FULL1);
+
         return (
             <Link to="/shop/discover" className="full-screen-content">
-                <Image src={FullScreen1} />
+                <Image
+                    src={fullScreen1.originalImage}
+                    previewSrc={fullScreen1.smallImage}
+                    width={fullScreen1.width}
+                    height={fullScreen1.height}
+                />
                 <div className="full-screen-item">
                     <div className="full-screen-title">
                         What's New
@@ -148,12 +147,26 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
         return (
             <div className="half-screen-content">
                 <div className="half-screen-item">
-                    <Link to={url1}><Image src={img1} /></Link>
+                    <Link to={url1}>
+                        <Image
+                            src={img1.originalImage}
+                            previewSrc={img1.smallImage}
+                            width={img1.width}
+                            height={img2.height}
+                        />
+                    </Link>
                     <div className="half-screen-item-title">{title1}</div>
                     <Button inline rounded url={url1}>Shop Now</Button>
                 </div>
                 <div className="half-screen-item">
-                    <Link to={url2}><Image src={img2} /></Link>
+                    <Link to={url2}>
+                        <Image
+                            src={img2.originalImage}
+                            previewSrc={img2.smallImage}
+                            width={img2.width}
+                            height={img2.height}
+                        />
+                    </Link>
                     <div className="half-screen-item-title">{title2}</div>
                     <Button inline rounded url={url2}>Shop Now</Button>
                 </div>
@@ -172,13 +185,21 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
             slidesToScroll: 1,
             variableWidth: false,
         };
+        const carousel1Image = getMarketingImage(MarketingImages.CAROUSEL1);
+        const carousel2Image = getMarketingImage(MarketingImages.CAROUSEL2);
+        const carousel3Image = getMarketingImage(MarketingImages.CAROUSEL3);
 
         return (
             <div className="shop-main-carousel">
                 <Slider {...settings}>
                     <div>
                         <Link to="/user/alltheprettybirds" className="shop-main-banner">
-                            <Image src={Shop3} />
+                            <Image
+                                src={carousel1Image.originalImage}
+                                previewSrc={carousel1Image.smallImage}
+                                width={carousel1Image.width}
+                                height={carousel1Image.height}
+                            />
                             <div className="shop-main-text center">
                                 <div className="banner-title">
                                     @alltheprettybirds
@@ -192,7 +213,12 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
                     </div>
                     <div>
                         <Link to="shop/discover?categories=Women%27S%20Swimwear" className="shop-main-banner">
-                            <Image src={Shop2} />
+                            <Image
+                                src={carousel2Image.originalImage}
+                                previewSrc={carousel2Image.smallImage}
+                                width={carousel2Image.width}
+                                height={carousel2Image.height}
+                            />
                             <div className="shop-main-text left">
                                 <div className="banner-title">
                                     Poolside Stories
@@ -206,7 +232,12 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
                     </div>
                     <div>
                         <Link to="/shop/discover?categories=Skirts" className="shop-main-banner">
-                            <Image src={Shop1} />
+                            <Image
+                                src={carousel3Image.originalImage}
+                                previewSrc={carousel3Image.smallImage}
+                                width={carousel3Image.width}
+                                height={carousel3Image.height}
+                            />
                             <div className="shop-main-text left dark">
                                 <div className="banner-title">
                                     Summer Skirts
