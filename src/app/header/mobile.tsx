@@ -156,7 +156,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
 
     private _onSearch = () => {
         const isShop = this.props.location.pathname.indexOf("/shop") > -1;
-        this.props.history.push(`${isShop ? "shop/" : ""}/discover?keyword=${this.state.searchString}`);
+        this.props.history.push(`${isShop ? "/shop" : ""}/discover?keyword=${this.state.searchString}`);
         this._toggleSearch();
     }
 

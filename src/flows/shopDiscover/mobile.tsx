@@ -88,6 +88,12 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
 
         return (
             <div className="mobile-discover" ref={this._pageRef}>
+                {this.state.productParam.keyword !== "" && (
+                    <div className="search-text-container">
+                        <div className="search-help">You searched for</div>
+                        <div className="search-text">{this.state.productParam.keyword}</div>
+                    </div>
+                )}
                 {this.state.productParam.keyword !== "" && this.state.products.length < 1 && (
                     <div className="no-search-result-text">
                         No results for "{ this.state.productParam.keyword }"
@@ -103,7 +109,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
                     contentType={ContentType.PRODUCT}
                     setGridSize={this._setGridSize}
                 />
-                <CardContainer gridSize={this.state.gridSize} className={this.state.productParam.keyword === "" ? "" : "card-container-extra-space"}>
+                <CardContainer gridSize={this.state.gridSize}>
                     {this._renderProducts()}
                 </CardContainer>
                 {this.state.loadingNext && <Spinner />}
