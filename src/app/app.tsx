@@ -153,9 +153,12 @@ export default class App extends React.Component<Props, AppState> {
                 !nextProps.location.pathname.includes("onboarding")
             ) {
                 // Don't scroll to top if it's a pop action (meaning user pressed back button)
-                if (nextProps.location.action !== "POP") {
+                if (nextProps.history.action !== "POP") {
                     window.scrollTo(0, 0);
+                } else {
+                    window.scrollTo(0, this._previousScroll);
                 }
+                this._previousScroll = window.scrollY;
 
                 // Reset Mobile header to show full nav without animation
                 if (isMobile) {
@@ -209,6 +212,7 @@ export default class App extends React.Component<Props, AppState> {
 
     private _mainContentRef: React.RefObject<HTMLDivElement>;
     private _previousLocation: any;
+    private _previousScroll: any;
 
     @autobind
     private _setLoggedState(loggedIn: boolean) {

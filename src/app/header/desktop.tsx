@@ -148,10 +148,10 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
         const logo = this._logoRef.current;
         const userButtons = this._userButtonRef.current;
         const pageSwitch = this._pageSwitchRef.current;
-        const rect = header.getBoundingClientRect();
         const scrollDelta = 200;
 
         if (header && logo) {
+            const rect = header.getBoundingClientRect();
             const scrollTop = window.scrollY;
             if (Math.abs(this._lastScrollTop - scrollTop) <= scrollDelta) {
                 return;
