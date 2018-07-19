@@ -11,6 +11,7 @@
 $trending-item-size: 50px;
 
 .featured-container {
+    overflow: hidden;
     display: flex;
     border-top: $standard-border-width solid $standard-border-color;
 
