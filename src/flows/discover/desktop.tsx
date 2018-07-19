@@ -1,6 +1,7 @@
 
 import autobind from "autobind-decorator";
 import * as React from "react";
+import FadeIn from "react-lazyload-fadein";
 
 import { LinkButton } from "../../components/button";
 import { CardContainer } from "../../components/card";
@@ -191,7 +192,11 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
     private _renderPosts() {
         const posts = this.state.posts;
         const postCards = posts && posts.map(post => (
-            <PostCard post={post}/>
+            <FadeIn height={540} duration={150}>
+                {onload => (
+                    <PostCard onload={onload} post={post} />
+                )}
+            </FadeIn>
         ));
 
         // update the logic to add recommended trendsetters whenever

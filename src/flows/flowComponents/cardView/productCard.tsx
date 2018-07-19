@@ -12,6 +12,7 @@ interface ProductCardProps {
     isMobile?: boolean;
     gridSize?: number;
     isShop?: boolean;
+    onload?(): void;
 }
 
 interface ProductCardState {
@@ -24,7 +25,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
     };
 
     render() {
-        const { product, gridSize, isMobile, isShop } = this.props;
+        const { product, gridSize, isMobile, onload, isShop } = this.props;
 
         const wishlistVariant = this.state.wishlisted ? IconVariant.WISHLIST_FILLED : IconVariant.WISHLIST;
         const footerItem = (
@@ -48,6 +49,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
             <Card
                 className="product-card"
                 gridSize={gridSize || 1}
+                onload={onload}
                 scaleImage
                 imageUrl={product.image && (isMobile ? product.image.small_image_url : product.image.thumbnail_image_url)}
                 redirectUrl={isShop ? `/shop/product/${product.id}` : `/product/${product.id}`}

@@ -20,6 +20,7 @@ interface PostCardProps extends RouteProps {
     post: PostPreview;
     gridSize?: number;
     noHover?: boolean;
+    onload?(): void;
 }
 
 interface PostCardState {
@@ -38,7 +39,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
     };
 
     render() {
-        const { post, noHover, gridSize } = this.props;
+        const { post, noHover, gridSize, onload } = this.props;
 
         let classes = "post-card";
         if (gridSize) {
@@ -75,6 +76,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                         src={imageUrl}
                         fit={ImageFitVariant.COVER}
                         square
+                        onload={onload}
                         onMouseEnter={this._onCardMouseEnter}
                     />
                 </Link>

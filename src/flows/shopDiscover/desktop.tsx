@@ -1,5 +1,6 @@
 import autobind from "autobind-decorator";
 import * as React from "react";
+import FadeIn from "react-lazyload-fadein";
 
 import { Category } from "../../api/models";
 import { AppContext } from "../../app";
@@ -130,10 +131,15 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
                     <CardContainer>
                         {this.state.products.map(product => (
-                            <ProductCard
-                                product={product}
-                                isShop
-                            />
+                            <FadeIn height={540} duration={150}>
+                                {onload => (
+                                    <ProductCard
+                                        onload={onload}
+                                        product={product}
+                                        isShop
+                                    />
+                                )}
+                            </FadeIn>
                         ))}
                     </CardContainer>
                     {this.state.nextToken && <ViewMore isLoading={this.state.loadingNext} onClick={this._paginateNextProducts} />}

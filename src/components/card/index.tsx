@@ -19,6 +19,7 @@ interface CardProps {
     singleLineTitle?: boolean;
     hoverItem?: React.ReactNode;
     footerItem?: React.ReactNode;
+    onload?(): void;
 }
 
 interface CardState {
@@ -30,7 +31,7 @@ class Card extends React.Component<CardProps, CardState> {
     componentDidMount() { }
 
     render() {
-        const { imageUrl, className, scaleImage, redirectUrl, gridSize, title, singleLineTitle, hoverItem, footerItem } = this.props;
+        const { imageUrl, className, scaleImage, redirectUrl, onload, gridSize, title, singleLineTitle, hoverItem, footerItem } = this.props;
 
         let classes = "card";
 
@@ -59,6 +60,7 @@ class Card extends React.Component<CardProps, CardState> {
                         src={imageUrl}
                         fit={scaleImage ? ImageFitVariant.SCALED : ImageFitVariant.COVER}
                         square
+                        onload={onload}
                     />
                 </Link>
                 {gridSize < 3 && (

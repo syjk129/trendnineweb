@@ -24,6 +24,7 @@ interface ImageProps {
     fit?: ImageFitVariant;
     square?: boolean;
     circle?: boolean;
+    onload?(): void;
     onMouseEnter?(): void;
     onMouseLeave?(): void;
     setRef?(ref: React.RefObject<HTMLDivElement>);
@@ -76,7 +77,7 @@ export default class ImageComponent extends React.Component<ImageProps> {
             circle,
             fit,
             ratio,
-            setRef,
+            onload,
             onClick,
             src,
             previewSrc,
@@ -140,7 +141,7 @@ export default class ImageComponent extends React.Component<ImageProps> {
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
             >
-                <img className="main-image" src={previewSrc || src} ref={this._imageRef}/>
+                <img className="main-image" src={previewSrc || src} ref={this._imageRef} onLoad={onload}/>
             </div>
         );
     }
