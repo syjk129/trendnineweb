@@ -1,4 +1,5 @@
 import { Category } from "../../api/models";
+import { PostParam } from "../model";
 
 export function findCategory(categoryName: string, categories: Array<Category>) {
     let found = categories.find(category => category.full_name === categoryName);
@@ -25,9 +26,7 @@ export default class CategoryTree {
     }
 
     populateSelectedCategories = (selectedCategories: Array<string>) => {
-        if (!this.selectedCategories) {
-            this.selectedCategories = new Set();
-        }
+        this.selectedCategories = new Set();
         if (this.categories) {
             this.selectedCategories = selectedCategories.reduce((selectedCategories, categoryName) => {
                 const category = findCategory(categoryName, this.categories);
@@ -45,6 +44,10 @@ export default class CategoryTree {
             return sanitizedCategories.join(",");
         }
         return null;
+    }
+
+    getSanitizedCategories = () => {
+        return this._sanitizeCategories(Array.from(this.selectedCategories), this.categories);
     }
 
     private _sanitizeCategories = (selectedCategories: Array<string>, categories: Array<Category>) => {

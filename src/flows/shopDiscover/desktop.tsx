@@ -64,7 +64,8 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         const params = new URLSearchParams(props.location.search);
         const productParam = new PostParam(params);
         this._categoryName = props.match.params.categoryName;
-
+        const selectedTree = this.state.selectedTree;
+        selectedTree.populateSelectedCategories(Array.from(productParam.filters.categoryIds));
         let queryString = productParam.convertUrlParamToQueryString();
         if (this._categoryName && !Array.from(productParam.filters.categoryIds).find(categoryId => categoryId.length > 0)) {
             queryString += `&categories=${MenuCategoryQueryMap[this._categoryName]}`;
@@ -75,7 +76,8 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
         this.setState({
             products: products.list,
             nextToken: products.nextToken,
-            productParam: productParam,
+            productParam,
+            selectedTree,
             isLoading: false,
         });
 
@@ -164,8 +166,11 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
 
     @autobind
     private async _filterProducts(filters: Filters) {
-        this.state.productParam.filters = filters;
-        this._push(this.state.productParam);
+        const productParam = this.state.productParam;
+        productParam.filters = filters;
+        productParam.filters.categoryIds = this.state.selectedTree.getSanitizedCategories();
+        this.setState({ productParam });
+        this._push(productParam);
     }
 
     @autobind
@@ -207,12 +212,10 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
     }
 
     private _applyCategories = () => {
-        let queryString = this.state.selectedTree.getQueryString();
-        let pathname = this.props.location.pathname;
-        if (queryString) {
-            pathname += `?categories=${queryString}`;
-        }
-        this.props.history.push(pathname);
+        let productParam = this.state.productParam;
+        productParam.filters.categoryIds = this.state.selectedTree.getSanitizedCategories();
+        this.setState({ productParam });
+        this._push(productParam);
     }
 
     private _toggleCategory = (category: Category) => {
