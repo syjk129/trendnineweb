@@ -66,7 +66,7 @@ export async function createErrorFromResponse(responseJson: any) {
     ) {
         return new AuthError(new Error(responseJson.statusText));
     }
-    if (responseJson.code === "user_not_found" || responseJson.result.user_id_or_username) {
+    if (responseJson.code === "user_not_found" || responseJson.result && responseJson.result.user_id_or_username) {
         return new CorruptedUserError(new Error(responseJson.statusText));
     }
     if (responseJson.result && responseJson.result.indexOf("Permission denied") !== -1) {
