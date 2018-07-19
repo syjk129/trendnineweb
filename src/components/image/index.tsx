@@ -15,6 +15,7 @@ export enum ImageFitVariant {
 
 interface ImageProps {
     src: string;
+    previewSrc?: string;
     className?: string;
     height?: number;
     width?: number;
@@ -25,13 +26,61 @@ interface ImageProps {
     circle?: boolean;
     onMouseEnter?(): void;
     onMouseLeave?(): void;
-    setRef?: React.RefObject<HTMLDivElement>;
+    setRef?(ref: React.RefObject<HTMLDivElement>);
+    // setRef?: React.RefObject<HTMLDivElement>;
     onClick?(): void;
 }
 
-export default class Image extends React.Component<ImageProps> {
+
+export default class ImageComponent extends React.Component<ImageProps> {
+    componentWillMount() {
+        this._containerRef = React.createRef();
+        this._imageRef = React.createRef();
+    }
+
+    componentDidMount() {
+        if (this.props.setRef) {
+            this.props.setRef(this._containerRef);
+        }
+        const container = this._containerRef.current;
+        const image = this._imageRef.current;
+
+        if (container && image && this.props.previewSrc) {
+            const smallImage = new Image();
+            smallImage.src = image.src;
+            smallImage.classList.add("blur-image");
+            smallImage.onload = () => {
+                smallImage.classList.remove("blur-image");
+            };
+
+            const largeImage = new Image();
+            largeImage.src = this.props.src;
+            largeImage.classList.add("blur-image");
+            largeImage.onload = () => {
+                largeImage.classList.remove("blur-image");
+                smallImage.style.display = "none";
+            };
+            container.appendChild(largeImage);
+        }
+    }
+
     render() {
-        const { className, inline, height, width, onMouseEnter, onMouseLeave, square, circle, fit, ratio, setRef, onClick, src } = this.props;
+        const {
+            className,
+            inline,
+            height,
+            width,
+            onMouseEnter,
+            onMouseLeave,
+            square,
+            circle,
+            fit,
+            ratio,
+            setRef,
+            onClick,
+            src,
+            previewSrc,
+        } = this.props;
 
         let classes = "image-container";
 
@@ -53,6 +102,10 @@ export default class Image extends React.Component<ImageProps> {
 
         if (width && height) {
             classes += " nojump";
+        }
+
+        if (previewSrc) {
+            classes += " blur-in";
         }
 
         switch (fit) {
@@ -82,12 +135,16 @@ export default class Image extends React.Component<ImageProps> {
                 className={classes}
                 onClick={onClick}
                 style={style}
-                ref={setRef}
+                // ref={previewSrc ? this._containerRef : setRef}
+                ref={this._containerRef}
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
             >
-                <img src={src}/>
+                <img className="main-image" src={previewSrc || src} ref={this._imageRef}/>
             </div>
         );
     }
+
+    private _imageRef: React.RefObject<HTMLImageElement>;
+    private _containerRef: React.RefObject<HTMLDivElement>;
 }

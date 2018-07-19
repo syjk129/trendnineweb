@@ -19,6 +19,25 @@
         }
     }
 
+    &.blur-in {
+        img {
+            transition: opacity 1s linear;
+
+            &.blur-image {
+                opacity: 0;
+            }
+
+            &.loaded {
+                opacity: 1;
+            }
+        }
+
+        .main-image {
+            filter: blur(50px);
+            transform: scale(1);
+        }
+    }
+
     &.scaled {
         img {
             background-color: white;

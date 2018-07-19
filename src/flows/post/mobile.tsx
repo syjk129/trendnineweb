@@ -50,8 +50,9 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                         className="post-cover"
                         width={post.cover_image.original_image_width}
                         height={post.cover_image.original_image_height}
-                        src={post.cover_image.original_image_url}
-                        setRef={this._coverImageRef}
+                        src={post.cover_image.small_image_url}
+                        previewSrc={post.cover_image.thumbnail_image_url}
+                        setRef={this._setRef}
                     />
                     {this.state.productTags.length > 0 && this.state.productTags.map(tag => (
                         <ProductTag tag={tag} />
@@ -107,6 +108,10 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
     }
 
     private _coverImageRef: React.RefObject<HTMLDivElement>;
+
+    private _setRef = (ref: React.RefObject<HTMLDivElement>) => {
+        this._coverImageRef = ref;
+    }
 
     private _updateImageTags = (props: MobilePostProps) => {
         const current = this._coverImageRef.current;

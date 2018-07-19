@@ -153,7 +153,8 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
                                 width={post.cover_image.original_image_width}
                                 height={post.cover_image.original_image_height}
                                 src={post.cover_image.original_image_url}
-                                setRef={this._coverImageRef}
+                                previewSrc={post.cover_image.thumbnail_image_url}
+                                setRef={this._setRef}
                             />
                             {this.state.isManager && this.state.editableProductTags.length > 0 && this.state.editableProductTags.map(tag => (
                                 <div>
@@ -256,6 +257,10 @@ export default class DesktopPost extends React.Component<DesktopPostProps, Deskt
     }
 
     private _coverImageRef: React.RefObject<HTMLDivElement>;
+
+    private _setRef = (ref: React.RefObject<HTMLDivElement>) => {
+        this._coverImageRef = ref;
+    }
 
     private _updateImageTags = (props: DesktopPostProps) => {
         const current = this._coverImageRef.current;
