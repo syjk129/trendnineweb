@@ -224,7 +224,7 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
                                     Poolside Stories
                                 </div>
                                 <div className="banner-detail">
-                                    The hottest suits for your poolside to seaside pleasure - all influencer approved.
+                                    The hottest suits for your poolside to seaside<br/>pleasure - all influencer approved.
                                 </div>
                                 <Button inline white rounded url="/shop/discover?categories=Women%27S%20Swimwear">Shop Swimwear</Button>
                             </div>
@@ -243,7 +243,7 @@ export default class DesktopShop extends React.Component<DesktopShopProps> {
                                     Summer Skirts
                                 </div>
                                 <div className="banner-detail">
-                                    The summer's hottest mini, midi + maxi skirts under the sun - all influencer approved.
+                                    The summer's hottest mini, midi + maxi skirts<br/>under the sun - all influencer approved.
                                 </div>
                                 <Button inline rounded url="/shop/discover?categories=Skirts">Shop Skirts</Button>
                             </div>
