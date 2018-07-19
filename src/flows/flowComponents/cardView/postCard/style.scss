@@ -171,6 +171,12 @@
                 }
             }
         }
+
+        &.grid-size-3 {
+            .post-image img {
+                border-radius: $standard-border-radius;
+            }
+        }
     }
 
     &.desktop {
