@@ -42,7 +42,7 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
         const pathname = location.pathname;
         const isShop = pathname.indexOf("/shop") > -1;
         const prevPage = isShop ? "Shop" : "Discover";
-        const prevPageUrl = isShop ? "/shop" : "/";
+        const prevPageUrl = isShop ? "/shop" : "/discover";
 
         return (
             <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>

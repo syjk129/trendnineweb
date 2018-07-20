@@ -169,6 +169,8 @@ export default class App extends React.Component<Props, AppState> {
                     }
                 }
             }
+        } else if (nextProps.history.action === "PUSH") {
+            window.scrollTo(0, 0);
         }
     }
 
@@ -245,7 +247,7 @@ export default class App extends React.Component<Props, AppState> {
         } else if (this._previousLocation && this._previousLocation.pathname) {
             this.props.history.push(`${this._previousLocation.pathname}`);
         } else {
-            this.props.history.push("/");
+            this.props.history.push("/discover");
         }
     }
 
