@@ -50,7 +50,7 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
                                     rounded
                                     variant={ButtonVariant.SECONDARY}
                                     size={ButtonSize.WIDE}
-                                    onClick={() => history.push(`${location.pathname}/login`)}
+                                    url={`${location.pathname}/login`}
                                 >
                                     Join
                                 </Button>
@@ -60,7 +60,7 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
                                     rounded
                                     variant={ButtonVariant.OUTLINE}
                                     size={ButtonSize.WIDE}
-                                    onClick={() => history.push("/about")}
+                                    url="/about"
                                 >
                                     Learn More
                                 </Button>
@@ -85,7 +85,7 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
                                 rounded
                                 variant={ButtonVariant.SECONDARY}
                                 size={ButtonSize.WIDE}
-                                onClick={() => history.push("/discover?tags=summer&sort=latest")}
+                                url="/discover?tags=summer&sort=latest"
                             >
                                 View Posts
                             </Button>
@@ -99,7 +99,7 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
                                 rounded
                                 variant={ButtonVariant.PRIMARY}
                                 size={ButtonSize.WIDE}
-                                onClick={() => history.push("/shop/discover?categories=Women%27S%20Swimwear&sort=price_asc")}
+                                url="/shop/discover?categories=Women%27S%20Swimwear&sort=price_asc"
                             >
                                 Shop Now
                             </Button>
@@ -123,7 +123,7 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
                             rounded
                             variant={ButtonVariant.SECONDARY}
                             size={ButtonSize.WIDE}
-                            onClick={() => history.push("/user/kyrzayda_")}
+                            url="/user/kyrzayda_"
                         >
                             Shop her style
                         </Button>
@@ -147,7 +147,7 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
                             rounded
                             variant={ButtonVariant.SECONDARY}
                             size={ButtonSize.WIDE}
-                            onClick={() => history.push("/shop/category/bags")}
+                            url="/shop/discover?sort=latest&tags=vacation"
                         >
                             Shop Now
                         </Button>
