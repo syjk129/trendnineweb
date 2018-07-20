@@ -29,7 +29,7 @@ const URLForCategory = {
     [Categories.SHOES]: "Women%27S%20Shoes",
     [Categories.SHORTS]: "Women%27S%20Shorts",
     [Categories.SKIRTS]: "Skirts",
-    [Categories.SUNGLASSES]: "Women%27S%20Accessories",
+    [Categories.SUNGLASSES]: "Women%27S%20Eyewear&sort=popularity",
     [Categories.SWIMWEAR]: "Women%27S%20Swimwear",
 };
 
