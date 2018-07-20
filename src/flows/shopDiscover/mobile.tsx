@@ -6,6 +6,7 @@ import { CardContainer } from "../../components/card";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { ProductCard } from "../flowComponents/cardView";
 import ContentToolbar from "../flowComponents/contentToolbar";
+import SearchResult from "../flowComponents/searchResult";
 import { ContentType, MenuCategory, MenuCategoryQueryMap, PostParam } from "../model";
 import { ShopDiscoverProps, ShopDiscoverState } from "./type";
 
@@ -89,10 +90,7 @@ export default class MobileShopDiscover extends React.Component<ShopDiscoverProp
         return (
             <div className="mobile-discover" ref={this._pageRef}>
                 {this.state.productParam.keyword !== "" && (
-                    <div className="search-text-container">
-                        <div className="search-help">You searched for</div>
-                        <div className="search-text">{this.state.productParam.keyword}</div>
-                    </div>
+                    <SearchResult value={this.state.productParam.keyword} />
                 )}
                 {this.state.productParam.keyword !== "" && this.state.products.length < 1 && (
                     <div className="no-search-result-text">

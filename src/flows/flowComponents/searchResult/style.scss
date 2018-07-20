@@ -1,0 +1,17 @@
+@import "../../../styles/variables";
+
+.search-result {
+    margin-bottom: $base-spacing * 2;
+
+    .search-label {
+        color: $text-faded;
+        font-size: $font-size-1;
+    }
+
+    input {
+        font-size: $font-size-4;
+        font-family: $font-family-serif;
+        border-color: #000;
+        border-radius: 0;
+    }
+}

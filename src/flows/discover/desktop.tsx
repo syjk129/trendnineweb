@@ -6,6 +6,7 @@ import FadeIn from "react-lazyload-fadein";
 import { LinkButton } from "../../components/button";
 import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
+import Input, { InputVariant } from "../../components/input";
 import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
@@ -13,6 +14,7 @@ import { PostCard } from "../flowComponents/cardView";
 import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
+import SearchResult from "../flowComponents/searchResult";
 import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
 import { SortConstants } from "../flowComponents/sort/types";
@@ -136,10 +138,7 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                         ) : (
                             <>
                                 {this.state.postParam.keyword !== "" && (
-                                    <div className="search-text-container">
-                                        <div className="search-help">You searched for</div>
-                                        <div className="search-text">{this.state.postParam.keyword}</div>
-                                    </div>
+                                    <SearchResult value={this.state.postParam.keyword} />
                                 )}
                                 <Sticky id="filter-container" stickyClassName="sticky-filter-container">
                                     <div className="filter-container">

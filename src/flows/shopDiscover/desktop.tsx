@@ -11,6 +11,7 @@ import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import { ProductCard } from "../flowComponents/cardView";
 import Filter, { FilterTarget } from "../flowComponents/filter";
+import SearchResult from "../flowComponents/searchResult";
 import Sort from "../flowComponents/sort";
 import ViewMore from "../flowComponents/viewMore";
 import { Filters, MenuCategory, MenuCategoryQueryMap, PostParam } from "../model";
@@ -103,10 +104,7 @@ export default class DesktopShopDiscover extends React.Component<ShopDiscoverPro
                 </Sidebar>
                 <Content>
                     {this.state.productParam.keyword !== "" && (
-                        <div className="search-text-container">
-                            <div className="search-help">You searched for</div>
-                            <div className="search-text">{this.state.productParam.keyword}</div>
-                        </div>
+                        <SearchResult value={this.state.productParam.keyword} />
                     )}
                     <Sticky id="filter-container" stickyClassName="sticky-filter-container">
                         <div className="filter-container">

@@ -6,6 +6,7 @@ import { CardContainer } from "../../components/card";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { PostCard } from "../flowComponents/cardView";
 import ContentToolbar from "../flowComponents/contentToolbar";
+import SearchResult from "../flowComponents/searchResult";
 import { SortConstants } from "../flowComponents/sort/types";
 import { ContentType, MenuCategoryQueryMap, PostParam } from "../model";
 import FeaturedTrending from "./featuredTrending";
@@ -115,10 +116,7 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                 )}
                 <div className="mobile-discover" id="mobile-discover" ref={this._pageRef}>
                     {this.state.postParam.keyword !== "" && (
-                        <div className="search-text-container">
-                            <div className="search-help">You searched for</div>
-                            <div className="search-text">{this.state.postParam.keyword}</div>
-                        </div>
+                        <SearchResult value={this.state.postParam.keyword} />
                     )}
                     {this.state.postParam.keyword !== "" && this.state.posts.length < 1 && (
                         <div className="no-search-result-text">

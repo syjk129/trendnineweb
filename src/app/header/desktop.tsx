@@ -96,10 +96,7 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                                 </div>
                             </div>
                             <div className="search">
-                                <div className="search-item" onClick={this._toggleSearch}>
-                                    <span className="search-label">SEARCH</span>
-                                    <IconButton size={IconSize.LARGE} icon={IconVariant.SEARCH} />
-                                </div>
+                                <IconButton size={IconSize.LARGE} icon={IconVariant.SEARCH} onClick={this._toggleSearch} />
                                 {user && (
                                     <div className="user-buttons hidden" ref={this._userButtonRef}>
                                         <LinkButton to={`/user/${user.username}/wishlist`}>
@@ -114,12 +111,14 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                         </div>
                     </div>
                 </div>
-                <div className={`search-header${this.state.searchOpen ? "" : " hidden"}`}>
-                    <div className="nav-content">
-                        <Input className="search-input" placeholder="SEARCH" onEnterPress={this._onSearch} autofocus />
-                        <span className="close" onClick={this._toggleSearch}>&times;</span>
+                {this.state.searchOpen && (
+                    <div className="search-header">
+                        <div className="nav-content">
+                            <Input className="search-input" placeholder="I am looking for" onEnterPress={this._onSearch} autofocus />
+                            <span className="close" onClick={this._toggleSearch}>&times;</span>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         );
     }

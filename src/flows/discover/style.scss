@@ -4,24 +4,6 @@
     display: flex;
     margin-bottom: $base-spacing * 2;
 
-    .search-text-container {
-        .search-help {
-            color: $text-faded;
-            margin-bottom: $base-spacing * 2;
-        }
-
-        .search-text {
-            padding-left: 0;
-            padding-bottom: $base-spacing;
-            font-family: $font-family-serif;
-            font-size: $font-size-4;
-            font-weight: $font-weight-bold;
-            max-width: 860px;
-            color: $text-primary;
-            border-bottom: solid $standard-border-width #000;
-        }
-    }
-
     .recommended-trendsetters-container {
         display: block;
         border-radius: $standard-border-radius;
@@ -73,9 +55,5 @@
 
     .slick-slide {
         margin-right: 50px;
-    }
-
-    .search-text-container {
-        margin-bottom: $base-spacing * 2;
     }
 }

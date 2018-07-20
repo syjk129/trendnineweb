@@ -28,14 +28,16 @@
     border-bottom: $standard-border-width solid $standard-border-color;
 
     .search-input {
-        position: absolute;
-        right: $page-spacing;
+        height: 100%;
         border: none;
-        border-bottom: $standard-border-width solid $standard-border-color;
-        border-radius: 0;
-        font-size: $font-size-1;
-        width: 300px;
+        font-size: $font-size-3;
+        line-height: $line-height-3;
         margin-right: $page-spacing;
+
+        &::placeholder {
+            font-family: $font-family-sans-serif;
+            color: $color-grey-4;
+        }
     }
 
     .close {

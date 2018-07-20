@@ -55,21 +55,3 @@
         height: 10px;
     }
 }
-
-.search-text-container {
-    .search-help {
-        color: $text-faded;
-        margin-bottom: $base-spacing * 2;
-    }
-
-    .search-text {
-        padding-left: $base-spacing * 2;
-        padding-bottom: $base-spacing;
-        font-family: $font-family-serif;
-        font-size: $font-size-4;
-        font-weight: $font-weight-bold;
-        max-width: 860px;
-        color: $text-primary;
-        border-bottom: solid $standard-border-width #000;
-    }
-}
