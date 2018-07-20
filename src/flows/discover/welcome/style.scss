@@ -59,51 +59,85 @@
     position: relative;
 
     .button {
-        margin-right: $base-spacing * 2;
-        width: 200px;
+        display: inline-block;
+        min-width: 200px;
+    }
+
+    .grouped-buttons {
+        .button {
+            margin-right: $base-spacing * 2;
+        }
+    }
+
+    .welcome-banner-content {
+        position: absolute;
+        display: flex;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+
+        .white {
+            color: #fff;
+        }
+
+        &.main {
+            align-items: end;
+            text-align: left;
+            left: 50px;
+        }
+
+        &.left {
+            margin-left: calc(25% - 250px);
+        }
+
+        &.right {
+            margin-right: calc(25% - 250px);
+        }
+
+        &.left,
+        &.right {
+            width: 500px;
+        }
+
+        .left-content,
+        .right-content {
+            width: 500px;
+            position: absolute;
+        }
+
+        .left-content {
+            left: 0;
+            margin-left: calc(12.5% - 250px);
+        }
+
+        .right-content {
+            right: 0;
+            margin-right: calc(12.5% - 250px);
+        }
+
+        .content-title {
+            font-size: $font-size-5;
+            font-weight: $font-weight-bold;
+            line-height: $line-height-5;
+            font-family: $font-family-serif;
+            margin-bottom: $base-spacing * 2;
+        }
+
+        .content-description {
+            font-size: $font-size-2;
+            line-height: $line-height-3;
+            margin-bottom: $base-spacing * 2;
+        }
     }
 
     .button-outline {
         color: #fff;
         border-color: #fff;
-    }
-
-    .slide-1-join {
-        position: absolute;
-        bottom: 15%;
-        left: 5%;
-    }
-
-    .slide-1-learn {
-        position: absolute;
-        bottom: 15%;
-        left: calc(5% + 220px);
-    }
-
-    .slide-2-view {
-        position: absolute;
-        bottom: 25%;
-        left: 4%;
-    }
-
-    .slide-2-shop {
-        position: absolute;
-        bottom: 25%;
-        right: 3%;
-    }
-
-    .slide-3-view {
-        position: absolute;
-        bottom: 25%;
-        left: 20%;
-        transform: translateX(-50%);
-        width: auto;
-    }
-
-    .slide-4-shop {
-        position: absolute;
-        bottom: 25%;
-        right: 18%;
-        transform: translateX(50%);
     }
 }
