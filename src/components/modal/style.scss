@@ -29,8 +29,13 @@
         padding: 20px;
         border: 1px solid #888;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        animation-name: animatetop;
-        animation-duration: 0.4s;
+
+        &.full-screen {
+            padding: 0;
+            height: 100%;
+            border: none;
+            border-radius: 0;
+        }
     }
 
     .close {
@@ -60,6 +65,10 @@
     box-sizing: border-box;
     display: flex;
     align-items: center;
+
+    &.full-screen {
+        padding: 0;
+    }
 
     .modal-content {
         width: 100%;

@@ -2,15 +2,15 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import { Category, FilterSearchResult } from "../../../api/models";
-import Button, { IconButton, ButtonVariant } from "../../../components/button";
-import Checkbox from "../../../components/checkbox";
-import Icon, { IconSize, IconVariant } from "../../../components/icon";
+import Button, { ButtonVariant, IconButton } from "../../../components/button";
+import { IconSize, IconVariant } from "../../../components/icon";
+import Modal from "../../../components/modal";
 import Sticky from "../../../components/sticky";
 import { noScroll, removeNoScroll } from "../../../util/scroll";
 import FilterView from "./filter";
 import FilterNavigation from "./filterNavigation";
 import SortView from "./sort";
-import { Filter, FilterOption, FilterType, SortType, ToolbarType, FilterCategory } from "./types";
+import { Filter, FilterCategory, FilterOption, FilterType, SortType, ToolbarType } from "./types";
 
 interface MobileContentToolbarProps {
     activeToolbar: ToolbarType | null;
@@ -108,45 +108,49 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                    </div>
                 </div>
                 {activeToolbar === ToolbarType.SORT &&
-                    <FilterNavigation
-                        title="Sort"
-                        onClose={() => this._toggleFilterActive(ToolbarType.SORT)}
-                    >
-                        <SortView
-                            sortTypes={sortTypes}
-                            currentSortType={currentSortType}
-                            selectSortType={this._selectSortType}
-                        />
-                    </FilterNavigation>
+                    <Modal isOpen={activeToolbar === ToolbarType.SORT} fullScreen hideClose close={() => this._toggleFilterActive(activeToolbar)}>
+                        <FilterNavigation
+                            title="Sort"
+                            onClose={() => this._toggleFilterActive(ToolbarType.SORT)}
+                        >
+                            <SortView
+                                sortTypes={sortTypes}
+                                currentSortType={currentSortType}
+                                selectSortType={this._selectSortType}
+                            />
+                        </FilterNavigation>
+                    </Modal>
                 }
                 {activeToolbar === ToolbarType.FILTER &&
-                    <FilterNavigation
-                        title={currentCategory ? currentCategory.slice(-1)[0].display_name : "Filter"}
-                        onBack={this._navigationBackHandler()}
-                        onClose={() => this._toggleFilterActive(this.props.activeToolbar)}
-                        clearFilter={this._clearFilters}
-                    >
-                        <FilterView
-                            currentFilterType={currentFilterType}
-                            currentCategory={currentCategory}
-                            selectedFilters={selectedFilters}
-                            filterOptions={filterOptions}
-                            filters={filters}
-                            searchString={searchString}
-                            selectFilterType={selectFilterType}
-                            selectCurrentCategory={selectCurrentCategory}
-                            toggleCategory={toggleCategory}
-                            toggleSelectFilterItem={toggleSelectFilterItem}
-                            toggleFilterActive={() => this._toggleFilterActive(ToolbarType.FILTER)}
-                            onRangeFilterChange={onRangeFilterChange}
-                            onSearchStringChange={onSearchStringChange}
-                        />
-                        {hasChanged && (
-                            <div className="filter-toolbar">
-                                <Button rounded onClick={() => this._toggleFilterActive(this.props.activeToolbar)}>View Results</Button>
-                            </div>
-                        )}
-                    </FilterNavigation>
+                    <Modal isOpen={activeToolbar === ToolbarType.FILTER} fullScreen hideClose close={() => this._toggleFilterActive(activeToolbar)}>
+                        <FilterNavigation
+                            title={currentCategory ? currentCategory.slice(-1)[0].display_name : "Filter"}
+                            onBack={this._navigationBackHandler()}
+                            onClose={() => this._toggleFilterActive(this.props.activeToolbar)}
+                            clearFilter={this._clearFilters}
+                        >
+                            <FilterView
+                                currentFilterType={currentFilterType}
+                                currentCategory={currentCategory}
+                                selectedFilters={selectedFilters}
+                                filterOptions={filterOptions}
+                                filters={filters}
+                                searchString={searchString}
+                                selectFilterType={selectFilterType}
+                                selectCurrentCategory={selectCurrentCategory}
+                                toggleCategory={toggleCategory}
+                                toggleSelectFilterItem={toggleSelectFilterItem}
+                                toggleFilterActive={() => this._toggleFilterActive(ToolbarType.FILTER)}
+                                onRangeFilterChange={onRangeFilterChange}
+                                onSearchStringChange={onSearchStringChange}
+                            />
+                            {hasChanged && (
+                                <div className="filter-toolbar">
+                                    <Button rounded onClick={() => this._toggleFilterActive(this.props.activeToolbar)}>View Results</Button>
+                                </div>
+                            )}
+                        </FilterNavigation>
+                    </Modal>
                 }
             </Sticky>
         );
@@ -192,14 +196,12 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                 this.setState({ stickyAdded: false });
             }
             stickyPlaceholder.classList.add("hidden");
-            contentToolbar.classList.remove("filter-open");
         } else {
             if (!contentToolbar.classList.contains("sticky-mobile-content-toolbar")) {
                 contentToolbar.classList.add("sticky-mobile-content-toolbar");
                 this.setState({ stickyAdded: true });
             }
             stickyPlaceholder.classList.remove("hidden");
-            contentToolbar.classList.add("filter-open");
         }
 
         // Make html and body not scrollable while filter is open

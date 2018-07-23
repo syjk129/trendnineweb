@@ -8,6 +8,8 @@ import "./style.scss";
 interface ModalProps {
     children: React.ReactNode;
     className?: string;
+    fullScreen?: boolean;
+    hideClose?: boolean;
     isOpen: boolean;
     close(): void;
 }
@@ -52,7 +54,7 @@ export default class Modal extends React.Component<ModalProps> {
     }
 
     render() {
-        const { children, className } = this.props;
+        const { children, fullScreen, hideClose, className } = this.props;
 
         const style = {
             display: this.state.open ? "flex" : "none",
@@ -63,11 +65,28 @@ export default class Modal extends React.Component<ModalProps> {
             classes += ` ${className}`;
         }
 
+        if (fullScreen) {
+            classes += " full-screen";
+        }
+
+        let containerClasses;
+        if (isMobile) {
+            containerClasses = "mobile-modal";
+        } else {
+            containerClasses = "modal";
+        }
+
+        if (fullScreen) {
+            containerClasses += " full-screen";
+        }
+
         return (
-            <div className={isMobile ? "mobile-modal" : "modal"} ref={this._modalRef} style={style}>
+            <div className={containerClasses} ref={this._modalRef} style={style}>
                 <div className={classes}>
                     <div className="modal-header">
-                        <span className="close" onClick={this._close}>&times;</span>
+                        {!hideClose && (
+                            <span className="close" onClick={this._close}>&times;</span>
+                        )}
                     </div>
                     {children}
                 </div>
