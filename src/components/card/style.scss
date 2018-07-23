@@ -1,5 +1,13 @@
 @import "../../styles/variables";
 
+.sticky-placeholder {
+    content: "";
+
+    &.hidden {
+        display: none;
+    }
+}
+
 .card {
     background-color: #fff;
     min-width: $min-card-width;
@@ -82,11 +90,10 @@
 }
 
 .card-container {
-    padding-top: $filter-padding;
+    padding-top: $base-spacing;
     flex: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width-1}, 1fr));
-    //padding-top: $filter-height + $filter-padding + $content-spacing;
     grid-gap: $card-spacing;
 
     &.grid-size-2 {

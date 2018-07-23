@@ -3,11 +3,14 @@
 .list-item {
     display: flex;
     justify-content: space-between;
-    border-bottom: $standard-border-width solid $standard-border-color;
     padding: $mobile-page-spacing;
     font-size: $font-size-2;
-    font-weight: $font-weight-bold;
-    text-transform: uppercase;
+    align-items: center;
+
+    &.main {
+        font-weight: $font-weight-bold;
+        text-transform: uppercase;
+    }
 
     .list-label,
     .list-label-back {
@@ -18,6 +21,7 @@
     .list-label {
         justify-content: space-between;
         align-items: center;
+        font-size: $mobile-font-size-2;
     }
 
     .back-button {

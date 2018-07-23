@@ -15,25 +15,19 @@ interface ListItemProps {
     onClick?(): void;
 }
 
-export default function ListItem ({ label, back, value, checked, open, onSelect, onClick }: ListItemProps) {
+export default function ListItem ({ label, value, checked, open, onSelect, onClick }: ListItemProps) {
+    const showCheckbox = checked !== undefined && onSelect;
     return (
-        <div className="list-item">
-            {checked !== undefined && onSelect && (
+        <div className={showCheckbox ? "list-item" : "list-item main"}>
+            {showCheckbox && (
                 <Checkbox value={value} checked={checked} onChange={onSelect} />
             )}
-            {back ? (
-                <span className="list-label-back" onClick={onClick}>
-                    <div className="back-button"><Icon variant={open ? IconVariant.ARROW_LEFT : IconVariant.ARROW_RIGHT} /></div>
-                    <span className="label">{label}</span>
-                </span>
-            ) : (
-                <span className="list-label" onClick={onClick}>
-                    <span className="label">{label}</span>
-                    {onClick && (
-                        <div><Icon variant={open ? IconVariant.ARROW_LEFT : IconVariant.ARROW_RIGHT} /></div>
-                    )}
-                </span>
-            )}
+            <span className="list-label" onClick={onClick}>
+                <span className="label">{label}</span>
+                {onClick && (
+                    <div><Icon variant={open ? IconVariant.ARROW_LEFT : IconVariant.ARROW_RIGHT} /></div>
+                )}
+            </span>
         </div>
     );
 }

@@ -24,7 +24,6 @@ interface FilterViewProps {
     toggleFilterActive(): void;
     onRangeFilterChange(min: number, max: number): void;
     onSearchStringChange(searchString: string): void;
-    clearFilters(): void;
 }
 
 export default class FilterView extends React.Component<FilterViewProps> {
@@ -33,7 +32,6 @@ export default class FilterView extends React.Component<FilterViewProps> {
             currentFilterType,
             filterOptions,
             selectFilterType,
-            clearFilters,
         } = this.props;
 
         return (
@@ -42,7 +40,6 @@ export default class FilterView extends React.Component<FilterViewProps> {
                     <ListItem label={filterOption.type} onClick={() => selectFilterType(filterOption.type)} />
                 ))}
                 {currentFilterType && this._renderFilterSearch()}
-                <LinkButton className="clear-filter" onClick={clearFilters}>Clear all filters</LinkButton>
             </ListContainer>
         );
     }
@@ -54,7 +51,6 @@ export default class FilterView extends React.Component<FilterViewProps> {
             filterOptions,
             selectedFilters,
             filters,
-            selectFilterType,
             toggleSelectFilterItem,
         } = this.props;
 
@@ -63,7 +59,6 @@ export default class FilterView extends React.Component<FilterViewProps> {
             case FilterCategory.SEARCH:
                 return (
                     <div className="filter-search-container">
-                        <ListItem label={currentFilterType} back open onClick={() => selectFilterType(null)} />
                         <div className="filter-search">
                             <Input
                                 placeholder={`Search for ${currentFilterType}`}
@@ -72,10 +67,10 @@ export default class FilterView extends React.Component<FilterViewProps> {
                             />
                         </div>
                         <div className="filter-search-results">
-                            {filters[currentFilterType].map(filterSearchResult => (
+                            {filters[currentFilterType] && filters[currentFilterType].map(filterSearchResult => (
                                 <Checkbox
                                     value={filterSearchResult.id}
-                                    label={filterSearchResult.name}
+                                    label={filterSearchResult.name || filterSearchResult.content}
                                     checked={this._isFilterSearchResultChecked(filterSearchResult)}
                                     onChange={() => toggleSelectFilterItem(filterSearchResult.id)}
                                 />
@@ -86,7 +81,6 @@ export default class FilterView extends React.Component<FilterViewProps> {
             case FilterCategory.RANGE:
                 return (
                     <div className="filter-search-container">
-                        <ListItem label={currentFilterType} back open onClick={() => selectFilterType(null)} />
                         <div className="filter-results">
                             <div className="range-label">
                                 <span>
@@ -114,7 +108,6 @@ export default class FilterView extends React.Component<FilterViewProps> {
                 const category = currentCategory.slice(-1)[0];
                 return (
                     <div className="tree-select-filter">
-                        <ListItem label={category.display_name} back open onClick={() => this.props.selectCurrentCategory(null)} />
                         {category.subcategories.map((subcategory: Category) => (
                             <ListItem
                                 label={subcategory.display_name}

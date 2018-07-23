@@ -3,7 +3,6 @@
 .filter-search-results {
     box-sizing: border-box;
     padding: $mobile-page-spacing;
-    height: calc(100% - 67px - 46px);
     overflow: auto;
 
     .checkbox-container {
@@ -14,7 +13,6 @@
 .filter-results {
     box-sizing: border-box;
     padding: $mobile-page-spacing;
-    height: calc(100% - 67px - 46px);
     overflow: auto;
 }
 
@@ -36,9 +34,6 @@
 
 .filter-search-container {
     height: 100%;
-}
-
-.clear-filter {
-    padding: $mobile-page-spacing;
-    text-decoration: underline;
+    display: flex;
+    flex-direction: column;
 }
