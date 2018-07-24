@@ -51,6 +51,7 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
                 gridSize={gridSize || 1}
                 onload={onload}
                 scaleImage
+                newWindowUrl={product.url}
                 imageUrl={product.image && (isMobile ? product.image.small_image_url : product.image.thumbnail_image_url)}
                 redirectUrl={isShop ? `/shop/product/${product.id}` : `/product/${product.id}`}
                 title={product.brand && product.brand.name || "Product"}

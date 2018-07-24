@@ -7,7 +7,7 @@ import WelcomeProps from "./types";
 
 import * as MobileWelcomeImage from "./mobile_welcome.png";
 
-export default function MobileWelcome({ loggedIn, history }: WelcomeProps) {
+export default function MobileWelcome({ loggedIn }: WelcomeProps) {
     if (loggedIn) {
         return null;
     }
