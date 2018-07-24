@@ -270,7 +270,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     private _selectFilterType(filterType: FilterType | null) {
         this.setState({
             currentFilterType: filterType,
-            currentCategory: filterType === FilterType.CATEGORY && this.state.filters[filterType] ? [this.state.filters[filterType][1]] : null,
+            currentCategory: filterType === FilterType.CATEGORY && this.state.filters[filterType] ? [this.state.filters[filterType].find(c => c.id === "70668ef0-7a13-41b1-8cda-c28b67e8098a")] : null,
         });
     }
 

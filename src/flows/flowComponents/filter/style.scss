@@ -3,6 +3,7 @@
 .filter-container {
     position: relative;
     z-index: 2;
+    height: $button-height-sm;
     width: 100%;
     background-color: $base-background-color;
     padding-top: 22px;
@@ -49,7 +50,6 @@
     transform: translate3d(0, 0, 0);
     width: calc(min(100%, 1440px) - #{$sidebar-width} - #{$sidebar-padding} - #{$page-spacing} * 2 + 2 * #{$base-spacing});
     background-color: $base-background-color;
-    padding-bottom: $base-spacing * 2;
     margin-left: -1 * $base-spacing;
     z-index: 2;
     top: $navbar-height - $standard-border-width;
@@ -68,34 +68,3 @@
         }
     }
 }
-
-// .mobile-filter,
-// .sticky-mobile-filter {
-//     width: 100%;
-//     display: flex;
-//     justify-content: space-between;
-
-//     .grid-sizes {
-//         align-items: center;
-//         display: flex;
-
-//         .icon {
-//             padding-left: $base-spacing;
-//         }
-//     }
-// }
-
-// .sticky-mobile-filter {
-//     width: 100%;
-//     box-sizing: border-box;
-//     position: fixed;
-//     z-index: 3;
-//     top: 59px;
-//     left: 0;
-//     padding: $mobile-page-spacing;
-//     background-color: $base-background-color;
-
-//     .mobile-filter {
-//         width: 100%;
-//     }
-// }
