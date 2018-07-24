@@ -5,6 +5,99 @@
     margin-bottom: $base-spacing * 2;
 }
 
+.mobile-shop {
+    margin-bottom: $base-spacing * 2;
+
+    .shop-main-carousel {
+        margin-bottom: $base-spacing * 4;
+    }
+
+    .shop-main-banner,
+    .full-screen-content {
+        position: relative;
+        display: block;
+
+        .shop-main-text {
+            position: absolute;
+            display: flex;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            padding: $mobile-page-spacing * 2;
+
+            .banner-title {
+                font-size: $mobile-font-size-4;
+                font-family: $font-family-serif;
+                font-weight: $font-weight-semibold;
+                margin-bottom: $base-spacing * 2;
+            }
+
+            .banner-detail {
+                font-size: $mobile-font-size-1;
+                margin-bottom: $base-spacing * 2;
+                line-height: $mobile-line-height-2;
+            }
+        }
+    }
+
+    .half-screen-content {
+        margin: $mobile-page-spacing;
+        text-align: center;
+
+        .image-container {
+            margin-bottom: $base-spacing;
+        }
+
+        .half-screen-title {
+            font-size: $mobile-font-size-3;
+            font-family: $font-family-serif;
+            font-weight: $font-weight-bold;
+            margin-bottom: $base-spacing;
+        }
+    }
+
+    .divider {
+        border-bottom: $standard-border-width solid $standard-border-color;
+        margin: $base-spacing * 4 0;
+    }
+
+    .popular-post-container {
+        margin: 0 $mobile-page-spacing;
+
+        .post-card {
+            margin: $base-spacing;
+        }
+    }
+
+    .shop-category-title {
+        text-align: center;
+        font-size: $mobile-font-size-3;
+        font-family: $font-family-serif;
+        font-weight: $font-weight-bold;
+        margin-bottom: $base-spacing;
+    }
+
+    .category {
+        display: block;
+        margin: $base-spacing;
+
+        .image-container {
+            margin-bottom: $base-spacing;
+        }
+
+        .category-name {
+            text-align: center;
+            font-weight: $font-weight-bold;
+            font-size: $font-size-2;
+        }
+    }
+}
+
 .desktop-shop {
     margin-bottom: $base-spacing * 10;
 
@@ -33,10 +126,6 @@
     .divider {
         border-bottom: $standard-border-width solid $standard-border-color;
         margin: $base-spacing * 4 0;
-    }
-
-    .post-card {
-        margin: $base-spacing;
     }
 
     .shop-category-title {
@@ -157,6 +246,10 @@
 
     .popular-post-container {
         margin-bottom: $base-spacing * 2;
+
+        .post-card {
+            margin: $base-spacing;
+        }
     }
 
     .view-all {

@@ -6,7 +6,8 @@ import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detec
 import { PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
 import RouteProps from "../routeProps";
-import DesktopView from "./desktop";
+import DesktopShopView from "./desktop";
+import MobileShopView from "./mobile";
 
 import "./style.scss";
 
@@ -29,16 +30,13 @@ export default class Shop extends React.Component<Props, ShopState> {
     }
 
     render() {
-        if (isMobile) {
-            this.props.history.push("/shop/discover");
-        }
-
         return (
             <>
                 <BrowserView device={isBrowser}>
-                    <DesktopView popularPosts={this.state.popularPosts} />
+                    <DesktopShopView popularPosts={this.state.popularPosts} />
                 </BrowserView>
                 <MobileView device={isMobile}>
+                    <MobileShopView popularPosts={this.state.popularPosts} />
                 </MobileView>
             </>
         );

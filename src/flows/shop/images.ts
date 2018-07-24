@@ -18,6 +18,67 @@ export enum MarketingImages {
     FULL1,
 }
 
+export function getMobileMarketingImage(imageType: MarketingImages | Categories): MarketingImage {
+    switch (imageType) {
+        case MarketingImages.CAROUSEL1:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/6432ff0b041c41a59baa4413f88c1fca.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/e165d90b10774ee8bc7ccd4ec7912dfd.jpg",
+                width: 375,
+                height: 250,
+            };
+        case MarketingImages.CAROUSEL2:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/f9b26a3b23514256ac6c8bad712344ac.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/6756824a2906441c9c7ab83bdf4241d1.jpg",
+                width: 375,
+                height: 250,
+            };
+        case MarketingImages.CAROUSEL3:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/ea93b9032ce54a62bbd8f82bd21c7d58.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/f77ec7f5eb694108a761461887c1ce32.jpg",
+                width: 375,
+                height: 250,
+            };
+        case MarketingImages.HALF1:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/f1fe1f4c06e9445898a5ed7f2af3c6c2.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/af5d003905844d6f9255668975b6967b.png",
+                width: 345,
+                height: 180,
+            };
+        case MarketingImages.HALF2:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/663f9d4cfef349d2b96def0f8ef13914.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/d5661222136c4b4fa26b52e8f61bc93a.png",
+                width: 345,
+                height: 180,
+            };
+        case MarketingImages.HALF3:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/215f8b2d723f43fabd86d367e1ce84e6.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/8df7d07e87b244c3b40de497350cd80d.png",
+                width: 345,
+                height: 180,
+            };
+        case MarketingImages.HALF4:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/cd67b0726c8449ae89ce77fab0760f64.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/88b62be8266444c8ae83b51f54a90da6.png",
+                width: 345,
+                height: 180,
+            };
+        case MarketingImages.FULL1:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/2a99ab75de9941b0be6b427dd130efb3.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/2475bebe3091415093db12fcc60f2b51.png",
+                width: 345,
+                height: 200,
+            };
+    }
+}
+
 // TODO: This should come from the service later
 export function getMarketingImage(imageType: MarketingImages | Categories): MarketingImage {
     switch (imageType) {
