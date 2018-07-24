@@ -41,7 +41,7 @@ export default function MobileWelcome({ loggedIn }: WelcomeProps) {
                             height={welcomeImage.height}
                             className="welcome-image"
                         />
-                        <div className="welcome-banner-content left">
+                        <div className="welcome-banner-content">
                             <div className="welcome-banner-title">
                                 Shop the hottest<br/>looks worn by<br/><i>fashion influencers</i>
                             </div>
