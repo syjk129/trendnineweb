@@ -1,49 +1,44 @@
 @import "../../../styles/variables";
 
 .mobile-welcome {
-    position: relative;
     margin-bottom: $base-spacing;
 
-    .welcome-text,
-    .welcome-details,
-    .welcome-buttons {
-        color: #fff;
-        position: absolute;
-    }
+    .welcome-banner {
+        display: block;
+        position: relative;
 
-    .welcome-image img {
-        max-height: 400px;
-        width: 100%;
-    }
+        .welcome-banner-content {
+            position: absolute;
+            display: flex;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            color: #fff;
+            padding: $base-spacing * 2;
 
-    .welcome-text {
-        left: $mobile-page-spacing;
-        top: $mobile-page-spacing * 2;
-        font-family: $font-family-serif;
-        font-size: calc(4vh + 3vw);
-        line-height: calc(5vh + 4vw);
-    }
+            &.left {
+                text-align: left;
+                align-items: end;
+            }
 
-    .welcome-details {
-        padding-right: $mobile-page-spacing * 2;
-        top: calc(50% + 1vh);
-        left: $mobile-page-spacing;
-        font-size: calc(1.5vh + 1.5vw);
-        line-height: calc(3vh + 3vw);
-        font-weight: $font-weight-light;
-    }
+            .welcome-banner-title {
+                font-family: $font-family-serif;
+                font-size: $mobile-font-size-4;
+                line-height: $mobile-line-height-4;
+                font-weight: $font-weight-semibold;
+                margin-bottom: $base-spacing;
+            }
 
-    .welcome-buttons {
-        width: calc(100% - #{$mobile-page-spacing * 2});
-        top: 80%;
-        left: $mobile-page-spacing;
-        display: flex;
-
-        button {
-            width: 200px;
-
-            &:first-of-type {
-                margin-right: $mobile-page-spacing;
+            .welcome-banner-description {
+                font-size: $mobile-font-size-2;
+                line-height: $mobile-line-height-2;
+                margin-bottom: $base-spacing;
             }
         }
     }
@@ -53,91 +48,91 @@
     @media (max-width: 1440px) {
         margin: 0 -#{$page-spacing};
     }
-}
 
-.welcome-banner {
-    position: relative;
+    .welcome-banner {
+        position: relative;
 
-    .button {
-        display: inline-block;
-        min-width: 200px;
-    }
-
-    .grouped-buttons {
         .button {
-            margin-right: $base-spacing * 2;
-        }
-    }
-
-    .welcome-banner-content {
-        position: absolute;
-        display: flex;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        align-items: center;
-
-        .white {
-            color: #fff;
+            display: inline-block;
+            min-width: 200px;
         }
 
-        &.main {
-            align-items: end;
-            text-align: left;
-            left: 50px;
+        .grouped-buttons {
+            .button {
+                margin-right: $base-spacing * 2;
+            }
         }
 
-        &.left {
-            margin-left: calc(25% - 250px);
-        }
-
-        &.right {
-            margin-right: calc(25% - 250px);
-        }
-
-        &.left,
-        &.right {
-            width: 500px;
-        }
-
-        .left-content,
-        .right-content {
-            width: 500px;
+        .welcome-banner-content {
             position: absolute;
-        }
-
-        .left-content {
+            display: flex;
+            top: 0;
+            bottom: 0;
             left: 0;
-            margin-left: calc(12.5% - 250px);
-        }
-
-        .right-content {
             right: 0;
-            margin-right: calc(12.5% - 250px);
+            margin: auto;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+
+            .white {
+                color: #fff;
+            }
+
+            &.main {
+                align-items: end;
+                text-align: left;
+                left: 50px;
+            }
+
+            &.left {
+                margin-left: calc(25% - 250px);
+            }
+
+            &.right {
+                margin-right: calc(25% - 250px);
+            }
+
+            &.left,
+            &.right {
+                width: 500px;
+            }
+
+            .left-content,
+            .right-content {
+                width: 500px;
+                position: absolute;
+            }
+
+            .left-content {
+                left: 0;
+                margin-left: calc(12.5% - 250px);
+            }
+
+            .right-content {
+                right: 0;
+                margin-right: calc(12.5% - 250px);
+            }
+
+            .content-title {
+                font-size: $font-size-5;
+                font-weight: $font-weight-bold;
+                line-height: $line-height-5;
+                font-family: $font-family-serif;
+                margin-bottom: $base-spacing * 2;
+            }
+
+            .content-description {
+                font-size: $font-size-2;
+                line-height: $line-height-3;
+                margin-bottom: $base-spacing * 2;
+            }
         }
 
-        .content-title {
-            font-size: $font-size-5;
-            font-weight: $font-weight-bold;
-            line-height: $line-height-5;
-            font-family: $font-family-serif;
-            margin-bottom: $base-spacing * 2;
+        .button-outline {
+            color: #fff;
+            border-color: #fff;
         }
-
-        .content-description {
-            font-size: $font-size-2;
-            line-height: $line-height-3;
-            margin-bottom: $base-spacing * 2;
-        }
-    }
-
-    .button-outline {
-        color: #fff;
-        border-color: #fff;
     }
 }

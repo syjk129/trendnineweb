@@ -10,6 +10,47 @@ export enum DiscoverMarketingImages {
     CAROUSEL1,
     CAROUSEL2,
     CAROUSEL3,
+    CAROUSEL4,
+}
+
+export function getMobileMarketingImage(imageType: DiscoverMarketingImages): MarketingImage {
+    switch (imageType) {
+        case DiscoverMarketingImages.WELCOME:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/e4c59e33f9c34bf492ce5b9584a7cf07.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/b8c9a74aba0544d48a67c62db260269b.jpg",
+                width: 375,
+                height: 250,
+            };
+        case DiscoverMarketingImages.CAROUSEL1:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/c95afab81f1740dfa2e872dd118a355e.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/29e344d04b6c42edab05b73fe5726651.jpg",
+                width: 375,
+                height: 250,
+            };
+        case DiscoverMarketingImages.CAROUSEL2:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/efb161dcb3a849dd8939aad58e2e16b8.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/621eac3a2ab149cd97626a290f313480.jpg",
+                width: 375,
+                height: 250,
+            };
+        case DiscoverMarketingImages.CAROUSEL3:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/a3820370f1b64178ac73522d5313b006.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/8bd69256437d4520bda029de2364f8c4.jpg",
+                width: 375,
+                height: 250,
+            };
+        case DiscoverMarketingImages.CAROUSEL4:
+            return {
+                smallImage: "https://trendnine.s3.amazonaws.com/images/2018/07/53cafb3c90284d7096fa5a5af34262fd.png",
+                originalImage: "https://trendnine.s3.amazonaws.com/images/2018/07/75dbe545040b476ca8fb567d316db792.jpg",
+                width: 375,
+                height: 250,
+            };
+    }
 }
 
 export function getDesktopMarketingImage(imageType: DiscoverMarketingImages): MarketingImage {

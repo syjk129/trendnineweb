@@ -151,7 +151,7 @@ export default class MobileShop extends React.Component<MobileShopProps> {
         return (
             <Slider {...settings} className="shop-main-carousel">
                 <div>
-                    <Link to="/" className="shop-main-banner">
+                    <Link to="/user/alltheprettybirds/products" className="shop-main-banner">
                         <Image
                             src={carousel1Image.originalImage}
                             previewSrc={carousel1Image.smallImage}
@@ -165,7 +165,7 @@ export default class MobileShop extends React.Component<MobileShopProps> {
                             <div className="banner-detail">
                                 From Jamaica to NYC, Tamu illuminates her cultural background through the lenses of a style connoisseur to capture fashion from a different angle.
                             </div>
-                            <Button inline white rounded url="/user/alltheprettybirds">Shop Her Style</Button>
+                            <Button inline white rounded url="/user/alltheprettybirds/products">Shop Her Style</Button>
                         </div>
                     </Link>
                 </div>
