@@ -2,6 +2,7 @@ import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
+import { Helmet } from "react-helmet";
 
 import { Comment, Person, Post, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
@@ -57,8 +58,33 @@ export default class PostView extends React.Component<Props, PostState> {
             return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
+        const post = this.state.post;
+
         return (
             <>
+                <Helmet>
+                    <meta name="description" content={post.title} />
+                    {/* Twitter */}
+                    <meta name="twitter:card" content="summary_large_image" />
+                    <meta name="twitter:site" content="trendnine.com" />
+                    <meta name="twitter:title" content={post.title} />
+                    <meta name="twitter:description" content={post.author && `By @${post.author.username}`} />
+                    <meta name="twitter:creator" content={post.author && `@${post.author.username}`} />
+                    <meta name="twitter:image:src" content={post.cover_image && post.cover_image.small_image_url} />
+
+                    {/* Open Graph Tags */}
+                    <meta property="og:type" content="article" />
+                    <meta property="og:title" content={post.title} />
+                    <meta property="og:article:author" content={post.author && `@${post.author.username}`} />
+                    <meta property="og:article:section" content="Fashion" />
+                    {post.tags.map(tag => (
+                        <meta property="og:article:tag" content={tag.content} />
+                    ))}
+                    <meta property="og:url" content="https://www.trendnine.com" />
+                    <meta property="og:image" content={post.cover_image && post.cover_image.small_image_url} />
+                    <meta property="og:description" content={post.author && `By @${post.author.username}`} />
+                    <meta property="og:site_name" content="TrendNine" />
+                </Helmet>
                 <PageNavigation />
                 <BrowserView device={isBrowser}>
                     <DesktopPost
