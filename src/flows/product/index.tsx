@@ -6,7 +6,6 @@ import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detec
 import { PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
-import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
 import RouteProps from "../routeProps";
 import DesktopProduct from "./desktop";
 import MobileProduct from "./mobile";
