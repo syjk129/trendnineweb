@@ -62,7 +62,7 @@ export default class PostView extends React.Component<Props, PostState> {
 
         return (
             <>
-                <Helmet defer={false}>
+                <Helmet>
                     <meta name="description" content={post.title} />
                     {/* Twitter */}
                     <meta name="twitter:card" content="summary_large_image" />
