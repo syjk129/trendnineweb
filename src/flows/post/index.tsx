@@ -73,7 +73,6 @@ export default class PostView extends React.Component<Props, PostState> {
                     <meta name="twitter:image:src" content={post.cover_image && post.cover_image.small_image_url} />
 
                     {/* Open Graph Tags */}
-                    <meta property="fb:page_id" content="201224070695370" />
                     <meta property="og:url" content={`https://www.trendnine.com/post/${post.id}`} />
                     <meta property="og:type" content="article" />
                     <meta property="og:title" content={post.title} />
