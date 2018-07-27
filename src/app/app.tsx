@@ -188,7 +188,6 @@ export default class App extends React.Component<Props, AppState> {
                     </Helmet>
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
-                        <Route exact path="/" render={() => <Redirect to="/discover" />} />
                         <Route path="/discover:query?/:category?/:categoryName?" component={Discover} />
                         <Route path="/feed" component={Discover} />
                         <Route path="/brands" component={BrandView} />
@@ -213,6 +212,7 @@ export default class App extends React.Component<Props, AppState> {
                         <Route path="/:url*/onboarding" render={(props) => <OnboardingView {...props} close={this._redirectCloseModal} />}/>
                         <Route path="/logout" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                         <Route path="/register" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
+                        <Route exact path="/" render={() => <Redirect to="/discover" />} />
                     </div>
                     <Footer {...this.props} />
                 </AppProvider>

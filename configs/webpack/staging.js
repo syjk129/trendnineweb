@@ -1,6 +1,7 @@
 // staging config
 const merge = require('webpack-merge');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {resolve} = require('path');
 
 const commonConfig = require('./common');
@@ -30,6 +31,7 @@ module.exports = merge(commonConfig, {
   plugins: [
     new webpack.DefinePlugin({
         "API_URL": JSON.stringify("https://backend-alpha.trendnine.com")
-    })
+    }),
+    new CopyWebpackPlugin(["assets"])
   ],
 });
