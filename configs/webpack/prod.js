@@ -32,6 +32,6 @@ module.exports = merge(commonConfig, {
     new webpack.DefinePlugin({
         "API_URL": JSON.stringify("https://api.trendnine.com")
     }),
-    new CopyWebpackPlugin([{ from: "src/assets", to: "dist" }])
+    new CopyWebpackPlugin(["assets"])
   ],
 });

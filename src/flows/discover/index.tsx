@@ -2,6 +2,7 @@ import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
+import { Helmet } from "react-helmet";
 
 import { AppContext, AppContextTypes } from "../../app";
 import PageNavigation from "../flowComponents/pageNavigation";
@@ -19,6 +20,9 @@ export default class Discover extends React.Component<Props> {
 
         return (
             <>
+                <Helmet defer={false}>
+                    <title>Discover</title>
+                </Helmet>
                 <PageNavigation />
                 <BrowserView device={isBrowser}>
                     <DesktopDiscover

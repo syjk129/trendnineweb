@@ -2,6 +2,7 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
+import { Helmet } from "react-helmet";
 
 import { PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
@@ -32,6 +33,9 @@ export default class Shop extends React.Component<Props, ShopState> {
     render() {
         return (
             <>
+                <Helmet defer={false}>
+                    <title>Shop</title>
+                </Helmet>
                 <BrowserView device={isBrowser}>
                     <DesktopShopView popularPosts={this.state.popularPosts} />
                 </BrowserView>
