@@ -30,6 +30,7 @@ module.exports = merge(commonConfig, {
   plugins: [
     new webpack.DefinePlugin({
         "API_URL": JSON.stringify("https://backend-alpha.trendnine.com")
-    })
+    }),
+    new CopyWebpackPlugin(["assets"])
   ],
 });
