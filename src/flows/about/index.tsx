@@ -1,5 +1,6 @@
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
+import { Helmet } from "react-helmet";
 
 import { LinkButton } from "../../components/button";
 import Content from "../../components/content";
@@ -82,23 +83,29 @@ export default function AboutUs() {
     };
 
     return (
-        <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
-            <PageNavigation />
-            <BrowserView viewClassName="flex" device={isBrowser}>
-                <Sidebar>
+        <>
+            <Helmet defer={false}>
+                <title>About</title>
+                <meta name="descrition" content="" />
+            </Helmet>
+            <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
+                <PageNavigation />
+                <BrowserView viewClassName="flex" device={isBrowser}>
+                    <Sidebar>
+                        <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About Us
+                    </Sidebar>
+                    <Content>
+                    { renderContent() }
+                    </Content>
+                </BrowserView>
+                <MobileView device={isMobile}>
+                    <div className="mobile-link-button">
                     <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About Us
-                </Sidebar>
-                <Content>
-                { renderContent() }
-                </Content>
-            </BrowserView>
-            <MobileView device={isMobile}>
-                <div className="mobile-link-button">
-                <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;About Us
-                </div>
-                { renderContent() }
-            </MobileView>
-        </div>
+                    </div>
+                    { renderContent() }
+                </MobileView>
+            </div>
+        </>
     );
 }
 

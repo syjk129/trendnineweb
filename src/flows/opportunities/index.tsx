@@ -2,6 +2,7 @@ import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
+import { Helmet } from "react-helmet";
 
 import { AppContext } from "../../app";
 import { ButtonVariant, LinkButton } from "../../components/button";
@@ -45,23 +46,28 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
         const prevPageUrl = isShop ? "/shop" : "/discover";
 
         return (
-            <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
-                <PageNavigation />
-                <BrowserView viewClassName="flex" device={isBrowser}>
-                    <Sidebar>
-                        <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;I'm an Influencer
-                    </Sidebar>
-                    <Content>
+            <>
+                <Helmet defer={false}>
+                    <title>About</title>
+                </Helmet>
+                <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
+                    <PageNavigation />
+                    <BrowserView viewClassName="flex" device={isBrowser}>
+                        <Sidebar>
+                            <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;I'm an Influencer
+                        </Sidebar>
+                        <Content>
+                            {this._renderContent()}
+                        </Content>
+                    </BrowserView>
+                    <MobileView device={isMobile}>
+                        <div className="mobile-link-button">
+                            <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;I'm an Influencer
+                    </div>
                         {this._renderContent()}
-                    </Content>
-                </BrowserView>
-                <MobileView device={isMobile}>
-                    <div className="mobile-link-button">
-                        <LinkButton to={prevPageUrl}>{prevPage}</LinkButton>&nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;I'm an Influencer
+                    </MobileView>
                 </div>
-                    {this._renderContent()}
-                </MobileView>
-            </div>
+            </>
         );
     }
 
