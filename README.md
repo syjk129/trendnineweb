@@ -1,5 +1,8 @@
 # TrendNine
 
+## Staging Environments
+Push to the staging environment for changes to pre-production, and update master to deploy to production
+
 ## Getting Started
 Install the following plugins for your editor. We have config files that will stylize our code to be consistent. We recommend using VSCode for development.
 
