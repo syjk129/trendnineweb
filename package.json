@@ -9,6 +9,8 @@
     "url": "git+https://syjk129@bitbucket.org/syjk129/emerald.git"
   },
   "scripts": {
+    "build:prod": "npm run clean-dist && webpack -p --config=configs/webpack/prod.js && cp _redirects dist/",
+    "build:staging": "npm run clean-dist && webpack -p --config=configs/webpack/staging.js && cp _redirects dist/",
     "build": "npm run clean-dist && webpack -p --config=configs/webpack/prod.js && cp _redirects dist/",
     "clean-dist": "rm -f -r -d dist",
     "lint": "npm run lint:ts && npm run lint:sass",

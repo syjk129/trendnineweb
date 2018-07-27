@@ -1,4 +1,4 @@
-// production config
+// staging config
 const merge = require('webpack-merge');
 const {resolve} = require('path');
 
@@ -28,7 +28,7 @@ module.exports = merge(commonConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-        "API_URL": JSON.stringify("https://api.trendnine.com")
+        "API_URL": JSON.stringify("https://backend-alpha.trendnine.com")
     })
   ],
 });
