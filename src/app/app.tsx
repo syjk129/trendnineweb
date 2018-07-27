@@ -33,7 +33,7 @@ import Header from "./header";
 import { AppContext, AppContextTypes } from "./types";
 
 import "../styles/base.scss";
-
+declare var API_URL: string;
 export interface AppProps {
 }
 
@@ -63,7 +63,7 @@ class AppProvider extends React.Component<AppProviderProps, AppProviderState> {
         super(props);
 
         const api = new Api({
-            apiUrl: "https://api.trendnine.com",
+            apiUrl: API_URL || "https://api.trendnine.com",
             setError: props.setError,
         });
 
