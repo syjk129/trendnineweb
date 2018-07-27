@@ -59,6 +59,7 @@ export default class PostView extends React.Component<Props, PostState> {
         }
 
         const post = this.state.post;
+        const postContentPreview = this._getPostContentPreview().trim().slice(0, 300);
 
         return (
             <>
@@ -79,13 +80,14 @@ export default class PostView extends React.Component<Props, PostState> {
                     <meta property="og:image" content={post.cover_image && post.cover_image.small_image_url} />
                     <meta property="og:image:width" content={post.cover_image && `${post.cover_image.original_image_width}`} />
                     <meta property="og:image:height" content={post.cover_image && `${post.cover_image.original_image_height}`} />
-                    <meta property="og:title" content={post.title} />
-                    <meta property="article:author" content={post.author && `@${post.author.username}`} />
+                    <meta property="og:title" content={`${post.author ? `@${post.author.username} | ` : ""}${post.title}`} />
+                    <meta property="og:description" content={postContentPreview.length > 0 ? postContentPreview : "TrendNine | Discover & Shop the Looks from Fashion Influencers"} />
+                    {/* <meta property="article:author" content={post.author && `@${post.author.username}`} /> */}
+                    <meta property="article:author" content="https://www.facebook.com/trendnine" />
                     <meta property="article:section" content="Fashion" />
                     {post.tags.map(tag => (
                         <meta property="article:tag" content={tag.content} />
                     ))}
-                    <meta property="og:description" content={post.author && `By @${post.author.username}`} />
                     <meta property="og:site_name" content="TrendNine" />
                 </Helmet>
                 <PageNavigation />
@@ -115,6 +117,12 @@ export default class PostView extends React.Component<Props, PostState> {
     }
 
     private _postId: string;
+
+    private _getPostContentPreview = () => {
+        const span = document.createElement("span");
+        span.innerHTML = this.state.post.content;
+        return span.textContent || span.innerText;
+    }
 
     private _toggleWishlist = () => {
         this.setState({ wishlisted: !this.state.wishlisted });
