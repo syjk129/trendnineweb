@@ -179,12 +179,12 @@ export default class App extends React.Component<Props, AppState> {
         return (
             <ErrorBoundary setLoggedState={this._setLoggedState} removeError={this._removeError} errors={this.state.errors}>
                 <AppProvider {...this.props} setError={this._setError} openModal={this._openModal} setLoggedState={this._setLoggedState}>
-                    {/* <Helmet defer={false}>
+                    <Helmet defer={false}>
                         <meta property="og:title" content="TrendNine | Discover & Shop the Looks from Fashion Influencers"/>
                         <meta property="og:description" content="Get daily outfit inspiration from Sincerely Jules, Song of Style, We Wore What, and thousands of influencers, wearing brands you love, such as ASOS, Zimmerman, and Balenciaga. Shopping for trending clothes, shoes, handbags, accessories, and swimsuits from top bloggers, influencers, and brands has never been easier. Shop in style."/>
                         <meta property="og:url" content="https://trendnineweb.netlify.com"/>
                         <meta property="og:image" content="https://trendnine-dev-bucket.s3.amazonaws.com/images/2018/07/599f91b9949f48109bd829f6dc2d3aab.png"/>
-                    </Helmet> */}
+                    </Helmet>
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
