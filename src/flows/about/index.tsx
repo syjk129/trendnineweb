@@ -86,7 +86,7 @@ export default function AboutUs() {
         <>
             <Helmet defer={false}>
                 <title>About</title>
-                <meta name="descrition" content="" />
+                <meta name="description" content="TrendNine is the first one-stop shop featuring the latest fashion and styles from influencers worldwide." />
             </Helmet>
             <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
                 <PageNavigation />

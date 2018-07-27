@@ -35,6 +35,7 @@ export default class Shop extends React.Component<Props, ShopState> {
             <>
                 <Helmet defer={false}>
                     <title>Shop</title>
+                    <meta name="description" content="Browse trendiest looks and outfits worn by fashion influencers" />
                 </Helmet>
                 <BrowserView device={isBrowser}>
                     <DesktopShopView popularPosts={this.state.popularPosts} />
