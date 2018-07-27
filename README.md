@@ -1,5 +1,4 @@
 # TrendNine
-
 We use Netlify to host our website and prerender crawler requests for SEO and Meta Information.
 
 ## Staging Environments
