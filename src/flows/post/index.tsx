@@ -85,7 +85,6 @@ export default class PostView extends React.Component<Props, PostState> {
                     {post.tags.map(tag => (
                         <meta property="article:tag" content={tag.content} />
                     ))}
-                    <meta property="og:url" content="https://www.trendnine.com" />
                     <meta property="og:description" content={post.author && `By @${post.author.username}`} />
                     <meta property="og:site_name" content="TrendNine" />
                 </Helmet>
