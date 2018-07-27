@@ -63,6 +63,7 @@ export default class PostView extends React.Component<Props, PostState> {
         return (
             <>
                 <Helmet defer={false}>
+                    <html prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#" />
                     <meta name="description" content={post.title} />
                     {/* Twitter */}
                     <meta name="twitter:card" content="summary_large_image" />
@@ -73,16 +74,16 @@ export default class PostView extends React.Component<Props, PostState> {
                     <meta name="twitter:image:src" content={post.cover_image && post.cover_image.small_image_url} />
 
                     {/* Open Graph Tags */}
+                    <meta property="og:type" content="article" />
                     <meta property="og:url" content={`https://www.trendnine.com/post/${post.id}`} />
                     <meta property="og:image" content={post.cover_image && post.cover_image.small_image_url} />
                     <meta property="og:image:width" content={post.cover_image && `${post.cover_image.original_image_width}`} />
                     <meta property="og:image:height" content={post.cover_image && `${post.cover_image.original_image_height}`} />
-                    <meta property="og:type" content="article" />
                     <meta property="og:title" content={post.title} />
-                    <meta property="og:article:author" content={post.author && `@${post.author.username}`} />
-                    <meta property="og:article:section" content="Fashion" />
+                    <meta property="article:author" content={post.author && `@${post.author.username}`} />
+                    <meta property="article:section" content="Fashion" />
                     {post.tags.map(tag => (
-                        <meta property="og:article:tag" content={tag.content} />
+                        <meta property="article:tag" content={tag.content} />
                     ))}
                     <meta property="og:url" content="https://www.trendnine.com" />
                     <meta property="og:description" content={post.author && `By @${post.author.username}`} />
