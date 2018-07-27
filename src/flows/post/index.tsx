@@ -75,7 +75,7 @@ export default class PostView extends React.Component<Props, PostState> {
 
                     {/* Open Graph Tags */}
                     <meta property="og:type" content="article" />
-                    <meta property="og:url" content={`https://trendnine.netlify.com/post/${post.id}`} />
+                    <meta property="og:url" content={`https://trendnineweb.netlify.com/post/${post.id}`} />
                     <meta property="og:image" content={post.cover_image && post.cover_image.small_image_url} />
                     <meta property="og:image:width" content={post.cover_image && `${post.cover_image.original_image_width}`} />
                     <meta property="og:image:height" content={post.cover_image && `${post.cover_image.original_image_height}`} />
