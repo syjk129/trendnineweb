@@ -2,6 +2,7 @@ import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
+import { Helmet } from "react-helmet";
 
 import { Person } from "../../api/models";
 import { AppContext } from "../../app";
@@ -78,8 +79,18 @@ export default class User extends React.Component<Props, UserState> {
                 </SpinnerContainer>
             );
         }
+
+        const contentTitle = this.state.profile && this.state.profile.user ? `${this.state.profile.user.username} | TrendNine` : "Profile | TrendNine";
+        const contentDescription = this.state.profile && this.state.profile.user && this.state.profile.user.introduction;
+
         return (
             <div>
+                <Helmet>
+                    <title>{contentTitle}</title>
+                    {contentDescription && (
+                        <meta name="description" content={contentDescription} />
+                    )}
+                </Helmet>
                 <PageNavigation />
                 <BrowserView device={isBrowser}>
                     <DesktopUser
