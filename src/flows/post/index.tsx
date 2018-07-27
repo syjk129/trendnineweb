@@ -60,6 +60,8 @@ export default class PostView extends React.Component<Props, PostState> {
 
         const post = this.state.post;
         const postContentPreview = this._getPostContentPreview().trim().slice(0, 300);
+        const postPreviewTitle = `${post.author ? `@${post.author.username} | ` : ""}${post.title}`;
+        const postPreviewDescription = postContentPreview.length > 0 ? postContentPreview : "TrendNine | Discover & Shop the Looks from Fashion Influencers";
 
         return (
             <>
@@ -69,19 +71,19 @@ export default class PostView extends React.Component<Props, PostState> {
                     {/* Twitter */}
                     <meta name="twitter:card" content="summary_large_image" />
                     <meta name="twitter:site" content="trendnine.com" />
-                    <meta name="twitter:title" content={post.title} />
-                    <meta name="twitter:description" content={post.author && `By @${post.author.username}`} />
+                    <meta name="twitter:title" content={postPreviewTitle} />
+                    <meta name="twitter:description" content={postPreviewDescription} />
                     <meta name="twitter:creator" content={post.author && `@${post.author.username}`} />
                     <meta name="twitter:image:src" content={post.cover_image && post.cover_image.small_image_url} />
 
                     {/* Open Graph Tags */}
                     <meta property="og:type" content="article" />
-                    <meta property="og:url" content={`https://trendnineweb.netlify.com/post/${post.id}`} />
+                    <meta property="og:url" content={`https://www.trendnine.com/post/${post.id}`} />
                     <meta property="og:image" content={post.cover_image && post.cover_image.small_image_url} />
                     <meta property="og:image:width" content={post.cover_image && `${post.cover_image.original_image_width}`} />
                     <meta property="og:image:height" content={post.cover_image && `${post.cover_image.original_image_height}`} />
-                    <meta property="og:title" content={`${post.author ? `@${post.author.username} | ` : ""}${post.title}`} />
-                    <meta property="og:description" content={postContentPreview.length > 0 ? postContentPreview : "TrendNine | Discover & Shop the Looks from Fashion Influencers"} />
+                    <meta property="og:title" content={postPreviewTitle} />
+                    <meta property="og:description" content={postPreviewDescription} />
                     {/* <meta property="article:author" content={post.author && `@${post.author.username}`} /> */}
                     <meta property="article:author" content="https://www.facebook.com/trendnine" />
                     <meta property="article:section" content="Fashion" />
