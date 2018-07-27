@@ -49,6 +49,7 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
             <>
                 <Helmet defer={false}>
                     <title>About</title>
+                    <meta name="description" content="Publish, connect, and monetize your style content on TrendNine." />
                 </Helmet>
                 <div className={isMobile ? "static-content mobile-static-content" : "static-content"}>
                     <PageNavigation />
