@@ -1,9 +1,8 @@
 # TrendNine
-
 We use Netlify to host our website and prerender crawler requests for SEO and Meta Information.
 
 ## Staging Environments
-Push to the staging environment for changes to pre-production, and create a pull request to master to deploy to production.
+Push to the `staging` branch for changes to pre-production, and create a pull request to `master` to deploy to production.
 
 ## Getting Started
 Install the following plugins for your editor. We have config files that will stylize our code to be consistent. We recommend using VSCode for development.

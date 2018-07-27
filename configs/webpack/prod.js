@@ -1,6 +1,7 @@
 // production config
 const merge = require('webpack-merge');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {resolve} = require('path');
 
 const commonConfig = require('./common');
@@ -30,6 +31,7 @@ module.exports = merge(commonConfig, {
   plugins: [
     new webpack.DefinePlugin({
         "API_URL": JSON.stringify("https://api.trendnine.com")
-    })
+    }),
+    new CopyWebpackPlugin([{ from: "src/assets", to: "dist" }])
   ],
 });
