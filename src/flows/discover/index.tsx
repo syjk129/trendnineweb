@@ -21,7 +21,6 @@ export default class Discover extends React.Component<Props> {
         return (
             <>
                 <Helmet defer={false}>
-                    <title>Discover</title>
                     <meta name="description" content="Get inspired by style inspirations from fashion influencers" />
                 </Helmet>
                 <PageNavigation />

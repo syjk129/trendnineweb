@@ -137,7 +137,7 @@ export default class MobileShop extends React.Component<MobileShopProps> {
             arrows: false,
             dots: true,
             infinite: true,
-            autoplaySpeed: 4000,
+            autoplaySpeed: 8000,
             autoplay: true,
             slidesToShow: 1,
             slidesToScroll: 1,
