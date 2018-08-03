@@ -291,7 +291,7 @@ class Settings extends React.Component<SettingsProps, SettingsState> {
                 usernameErrorMsg: "",
             });
         } else {
-            this.props.history.push(`${this.props.location.pathname}/login`);
+            this.props.history.push({ pathname: "/login", state: { modal: true }});
         }
     }
 

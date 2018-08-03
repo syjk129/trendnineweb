@@ -50,7 +50,7 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
                                     rounded
                                     variant={ButtonVariant.SECONDARY}
                                     size={ButtonSize.WIDE}
-                                    url={`${location.pathname}/login`}
+                                    url="/login"
                                 >
                                     Join
                                 </Button>

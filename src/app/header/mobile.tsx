@@ -83,7 +83,10 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                                 <Button
                                     className="mobile-login-button"
                                     variant={ButtonVariant.OUTLINE}
-                                    onClick={() => this.props.history.push(`${this.props.location.pathname}/login`)}
+                                    onClick={() => this.props.history.push({
+                                        pathname: "/login",
+                                        state: { modal: true },
+                                    })}
                                 >
                                     Sign In / Join
                                 </Button>

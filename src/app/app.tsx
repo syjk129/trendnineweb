@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import {
     Redirect,
     Route,
+    Switch,
 } from "react-router-dom";
 
 import Api from "../api";
@@ -134,6 +135,7 @@ export default class App extends React.Component<Props, AppState> {
         super(props);
 
         this._mainContentRef = React.createRef();
+        this._previousLocation = this.props.location;
     }
 
     componentDidMount() {
@@ -148,14 +150,12 @@ export default class App extends React.Component<Props, AppState> {
 
     componentWillReceiveProps(nextProps: Props) {
         if (nextProps.location.pathname !== this.props.location.pathname) {
-            this._previousLocation = this.props.location;
-            if (!nextProps.location.pathname.includes("share") &&
-                !nextProps.location.pathname.includes("login") &&
-                !nextProps.location.pathname.includes("onboarding")
-            ) {
+            if (!nextProps.location.state || !nextProps.location.state.modal) {
                 // Don't scroll to top if it's a pop action (meaning user pressed back button)
                 if (nextProps.history.action !== "POP") {
-                    window.scrollTo(0, 0);
+                    if (!nextProps.location.state || !nextProps.location.state.modalClose) {
+                        window.scrollTo(0, 0);
+                    }
                 } else {
                     window.scrollTo(0, this._previousScroll);
                 }
@@ -170,12 +170,25 @@ export default class App extends React.Component<Props, AppState> {
                     }
                 }
             }
-        } else if (nextProps.history.action === "PUSH") {
+        } else if (nextProps.history.action === "PUSH" && !nextProps.location.state) {
             window.scrollTo(0, 0);
         }
     }
 
+    componentWillUpdate(nextProps: Props) {
+        const { location } = this.props;
+        // set previousLocation if props.location is not modal
+        if (
+            nextProps.history.action !== "POP" &&
+            (!location.state || !location.state.modal)
+        ) {
+            this._previousLocation = this.props.location;
+        }
+    }
+
     render() {
+        const isModal = this.props.location.state && this.props.location.state.modal;
+
         return (
             <ErrorBoundary setLoggedState={this._setLoggedState} removeError={this._removeError} errors={this.state.errors}>
                 <AppProvider {...this.props} setError={this._setError} openModal={this._openModal} setLoggedState={this._setLoggedState}>
@@ -188,31 +201,40 @@ export default class App extends React.Component<Props, AppState> {
                     </Helmet>
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
-                        <Route path="/discover:query?/:category?/:categoryName?" component={Discover} />
-                        <Route path="/feed" component={Discover} />
-                        <Route path="/brands" component={BrandView} />
-                        <Route path="/user/:userId/:pageName?" component={User} />
-                        <Route path="/shop" exact component={ShopView} />
-                        <Route path="/shop/home" component={() => <Redirect to="/shop/discover" />} />
-                        <Route path="/shop/discover" component={ShopDiscover} />
-                        <Route path="/shop/feed" component={ShopDiscover} />
-                        <Route path="/shop/brands" component={BrandView} />
-                        <Route path="/shop/product/:productId" component={ProductView} />
-                        <Route path="/shop/category/:categoryName" component={ShopDiscover} />
-                        <Route path="/post/:postId" component={PostView} />
-                        <Route path="/product/:productId" component={ProductView} />
-                        <Route path="/trending" component={Trending} />
-                        <Route path="/:url*/share/:shareType?/:shareId?" render={(props) => <ShareView {...props} close={this._redirectCloseModal} />} />
-                        <Route path="/:url*/about" component={AboutUs} />
-                        <Route path="/:url*/contact" component={ContactUs} />
-                        <Route path="/:url*/terms" component={TermsAndConditions} />
-                        <Route path="/:url*/opportunities" component={Opportunities} />
-                        <Route path="/:url*/privacy" component={PrivacyPolicy} />
-                        <Route path="/:url*/login" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />}/>
-                        <Route path="/:url*/onboarding" render={(props) => <OnboardingView {...props} close={this._redirectCloseModal} />}/>
-                        <Route path="/logout" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
-                        <Route path="/register" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                         <Route exact path="/" render={() => <Redirect to="/discover" />} />
+                        <Switch location={isModal ? this._previousLocation : this.props.location}>
+                            <Route path="/discover:query?/:category?/:categoryName?" component={Discover} />
+                            <Route path="/feed" component={Discover} />
+                            <Route path="/brands" component={BrandView} />
+                            <Route path="/user/:userId/:pageName?" component={User} />
+                            <Route path="/shop" exact component={ShopView} />
+                            <Route path="/shop/home" component={() => <Redirect to="/shop/discover" />} />
+                            <Route path="/shop/discover" component={ShopDiscover} />
+                            <Route path="/shop/feed" component={ShopDiscover} />
+                            <Route path="/shop/brands" component={BrandView} />
+                            <Route path="/shop/product/:productId" component={ProductView} />
+                            <Route path="/shop/category/:categoryName" component={ShopDiscover} />
+                            <Route path="/post/:postId" component={PostView} />
+                            <Route path="/product/:productId" component={ProductView} />
+                            <Route path="/trending" component={Trending} />
+                            <Route path="/:url*/share/:shareType?/:shareId?" render={(props) => <ShareView {...props} close={this._redirectCloseModal} />} />
+                            <Route path="/:url*/about" component={AboutUs} />
+                            <Route path="/:url*/contact" component={ContactUs} />
+                            <Route path="/:url*/terms" component={TermsAndConditions} />
+                            <Route path="/:url*/opportunities" component={Opportunities} />
+                            <Route path="/:url*/privacy" component={PrivacyPolicy} />
+                            <Route path="/login" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />}/>
+                            <Route path="/onboarding" render={(props) => <OnboardingView {...props} close={this._redirectCloseModal} />}/>
+                            <Route path="/logout" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
+                            <Route path="/register" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
+                            {/* <Route path="/" component={Discover} /> */}
+                        </Switch>
+                        {isModal && (
+                            <>
+                                <Route path="/login" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />}/>
+                                <Route path="/post/:postId" render={(props) => <PostView {...props} close={this._redirectCloseModal} />} />
+                            </>
+                        )}
                     </div>
                     <Footer {...this.props} />
                 </AppProvider>
@@ -249,13 +271,22 @@ export default class App extends React.Component<Props, AppState> {
         this.setState({ modalContent: component });
     }
 
-    private _redirectCloseModal = (redirect?: string) => {
+    private _redirectCloseModal = (redirect?: string, isModal?: boolean) => {
         if (redirect) {
-            this.props.history.push(redirect);
+            this.props.history.push({
+                pathname: redirect,
+                state: { modal: isModal },
+            });
         } else if (this._previousLocation && this._previousLocation.pathname) {
-            this.props.history.push(`${this._previousLocation.pathname}`);
+            this.props.history.push({
+                pathname: `${this._previousLocation.pathname}`,
+                state: { modalClose: true },
+            });
         } else {
-            this.props.history.push("/discover");
+            this.props.history.push({
+                pathname: "/discover",
+                state: { modalClose: true },
+            });
         }
     }
 

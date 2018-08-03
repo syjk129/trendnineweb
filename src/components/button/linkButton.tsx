@@ -5,7 +5,7 @@ import RouteProps from "../../flows/routeProps";
 
 interface LinkButtonProps extends RouteProps {
     selected?: boolean;
-    to?: string;
+    to?: any;
     showSelected?: boolean;
     newWindowUrl?: string;
     className?: string;

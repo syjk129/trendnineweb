@@ -1,342 +1,219 @@
-import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types";
 import * as React from "react";
-import { isMobile } from "react-device-detect";
+import Slider from "react-slick";
 
-import { Comment, Person, Post, PostPreview, Product } from "../../api/models";
-import Carousel, { CarouselItem } from "../../components/carousel";
+import { Comment, Post, PostPreview } from "../../api/models";
+import { AppContext } from "../../app";
+import { IconButton } from "../../components/button";
 import Content from "../../components/content";
-import { IconSize } from "../../components/icon";
-import Image, { ImageFitVariant } from "../../components/image";
-import Sidebar from "../../components/sidebar";
+import { IconSize, IconVariant } from "../../components/icon";
+import Image from "../../components/image";
 import Sticky from "../../components/sticky";
-import formatTime from "../../util/formatTime";
-import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
-import Author from "../flowComponents/author";
+import { PostCard } from "../flowComponents/cardView";
 import Comments from "../flowComponents/comments";
-import { PostRank } from "../flowComponents/ranking";
-import { ContentSection, SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
-import Tag from "../flowComponents/tag";
+import { ContentSection, SidebarPostProductListSection } from "../flowComponents/section";
 import PostAuthorDetails from "./postAuthorDetails";
-import ProductTag from "./productTag";
 
-interface DesktopPostProps {
-    likes: number;
-    liked: boolean;
-    wishlisted: boolean;
+interface PostViewProps {
+    isManager?: boolean;
     post: Post;
+    scrollRef: React.RefObject<HTMLDivElement>;
+    isModal: boolean;
+    setCurrentPost(): void;
+}
+
+interface DesktopPostViewState {
     comments: Array<Comment>;
-    relatedPosts: Array<Post>;
-    featuredTrendnines: Array<Person>;
-    likeComment(commentId: string): Promise<void>;
-    unlikeComment(commentId: string): Promise<void>;
-    submitComment(comment: string, parentCommentId: string): Promise<void>;
-    updatePostProductTags?(postId: string, productTags: Array<any>): Promise<void>;
-    toggleWishlist(): void;
-    toggleLike(): void;
+    relatedPosts: Array<PostPreview>;
+    saved: boolean;
 }
 
-interface DesktopPostState {
-    productTags: Array<any>;
-    editableProductTags: Array<any>;
-    isManager: boolean;
-}
+export default class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewState> {
+    static contextTypes: AppContext;
 
-export default class DesktopPost extends React.Component<DesktopPostProps, DesktopPostState> {
-    state: DesktopPostState = {
-        productTags: [],
-        editableProductTags: [],
-        isManager: false,
+    state: DesktopPostViewState = {
+        comments: [],
+        relatedPosts: [],
+        saved: false,
     };
 
-    constructor(props: DesktopPostProps) {
-        super(props);
+    async componentWillMount() {
+        this._postId = this.props.post.id;
+        this._postViewRef = React.createRef();
+        this._nextPostRef = React.createRef();
 
-        this._coverImageRef = React.createRef();
+        if (this.props.scrollRef && this.props.scrollRef.current) {
+            this.props.scrollRef.current.addEventListener("scroll", this._onScroll);
+            this.props.scrollRef.current.addEventListener("touchmove", this._onScroll);
+        } else {
+            document.addEventListener("scroll", this._onScroll);
+            document.addEventListener("touchmove", this._onScroll);
+        }
+        const relatedPosts = await this.context.api.getRelatedPosts(this._postId);
+        this.setState({ relatedPosts });
     }
 
-    componentWillReceiveProps(nextProps: DesktopPostProps) {
-        if (nextProps.post.id !== this.props.post.id) {
-            this._updateImageTags(nextProps);
+    componentWillUnmount() {
+        if (this.props.scrollRef && this.props.scrollRef.current) {
+            this.props.scrollRef.current.removeEventListener("scroll", this._onScroll);
+            this.props.scrollRef.current.removeEventListener("touchmove", this._onScroll);
+        } else {
+            document.removeEventListener("scroll", this._onScroll);
+            document.removeEventListener("touchmove", this._onScroll);
         }
-    }
-
-    componentDidMount() {
-        this._updateImageTags(this.props);
-        window.addEventListener("resize", () => this._updateImageTags(this.props));
-
-        if (this._coverImageRef.current) {
-            const rect = this._coverImageRef.current.getBoundingClientRect();
-
-            // remove this later
-            this._coverImageRef.current.addEventListener("click", (event) => {
-                console.log(`x: ${event.offsetX / rect.width}`);
-                console.log(`y: ${event.offsetY / rect.height}`);
-            });
-        }
-
-        const user = localStorage.getItem("user");
-        const token = localStorage.getItem("tn_auth_token");
-        let isManager = false;
-        if (user !== null && user !== "undefined" && token && token !== "undefined" ) {
-            let parsedUser = JSON.parse(user);
-            isManager = parsedUser["auth_level"] >= 3;
-        }
-
-        this.setState({
-            editableProductTags: this.props.post.product_tags.map(tag => {
-                const product = this.props.post.products.find(product => product.id === tag.product_id);
-                return {
-                    product_id: tag.product_id,
-                    name: product && product.title || "",
-                    x_axis: tag.x_axis,
-                    y_axis: tag.y_axis,
-                };
-            }),
-            isManager: isManager,
-        });
     }
 
     render() {
-        const {
-            liked,
-            likes,
-            wishlisted,
-            post,
-            comments,
-            relatedPosts,
-            likeComment,
-            unlikeComment,
-            submitComment,
-            toggleLike,
-            toggleWishlist,
-        } = this.props;
-
-        const commentsTitle = comments && comments.length > 0 ? (
-            `Comments (${comments.length})`
-        )  : "Comments";
-
-        const postProducts = post.products.map(product => ({ type: "Product", content: product }));
-
-        const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
-
         return (
-            <div className="post">
-                <Sidebar>
-                    {post.products.length > 0 && (
-                        <SidebarPostProductListSection title="Products in This Post" items={postProducts} />
-                    )}
-                    {post.tags.length > 0 && (
-                        <SidebarSection title="Tags">
-                            <div className="tag-container">
-                                {post.tags.map(tag => (
-                                    <Tag tag={tag} />
-                                ))}
-                            </div>
-                        </SidebarSection>
-                    )}
-                    {relatedPosts.length > 0 && (
-                        <SidebarSection title="You May Also Like">
-                            <PostRank posts={relatedPosts.slice(0, 4)} hideRanks />
-                        </SidebarSection>
-                    )}
-                    {recentlyViewed &&
-                        <Sticky id="recently-viewed-section" stickyClassName="sticky-sidebar-recently-viewed">
-                            <SidebarPostProductListSection title="Recently Viewed" items={recentlyViewed} />
-                        </Sticky>
-                    }
-                </Sidebar>
-                <Content>
-                    {post && (
+            <div className="post-view-container">
+                <div className="post" ref={this._postViewRef}>
+                    <Content>
                         <div className="post-content" ref="cover">
                             <Image
                                 className="post-cover"
-                                width={post.cover_image.original_image_width}
-                                height={post.cover_image.original_image_height}
-                                src={post.cover_image.original_image_url}
-                                previewSrc={post.cover_image.thumbnail_image_url}
-                                setRef={this._setRef}
+                                width={this.props.post.cover_image.original_image_width}
+                                height={this.props.post.cover_image.original_image_height}
+                                src={this.props.post.cover_image.original_image_url}
+                                previewSrc={this.props.post.cover_image.thumbnail_image_url}
                             />
-                            {this.state.isManager && this.state.editableProductTags.length > 0 && this.state.editableProductTags.map(tag => (
-                                <div>
-                                    {tag.name}
-                                    <input
-                                        type="number"
-                                        defaultValue={tag.x_axis}
-                                        onChange={(e) => this._handleProductTagsChange(e, tag, true)}
-                                    />
-                                    <input
-                                        type="number"
-                                        defaultValue={tag.y_axis}
-                                        onChange={(e) => this._handleProductTagsChange(e, tag, false)}
-                                    />
-                                </div>
-                            ))}
-                            {this.state.isManager && <button onClick={this._submitProductTagsChange}>
-                                Update
-                            </button>}
-                            {this.state.productTags.length > 0 && this.state.productTags.map(tag => (
-                                <ProductTag tag={tag} />
-                            ))}
                             <p className="post-title">
-                                {post.title}
+                                {this.props.post.title}
                             </p>
                             <div className="post-subtitle">
                                 <PostAuthorDetails
-                                    author={post.author}
+                                    author={this.props.post.author}
                                     iconSize={IconSize.LARGE}
-                                    postDate={new Date(post.created)}
-                                    postId={post.id}
-                                    wishlisted={wishlisted}
-                                    likes={likes}
-                                    liked={liked}
-                                    toggleLike={toggleLike}
-                                    toggleWishlist={toggleWishlist}
+                                    postDate={new Date(this.props.post.created)}
+                                    postId={this.props.post.id}
+                                    wishlisted={this.state.saved}
+                                    toggleWishlist={this._toggleWishlist}
                                 />
                             </div>
                             <div className="post-details">
                                 {/* TODO: Don't use dangerouslySetInnerHTML. Make this safer */}
-                                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                                <div dangerouslySetInnerHTML={{ __html: this.props.post.content }} />
                             </div>
                         </div>
-                    )}
-                    {post.products.length > 0 && (
-                        <ContentSection title="Products in This Post">
-                            <Carousel>
-                                {post.products.map(product => (
-                                    <div>
-                                        <CarouselItem
-                                            fit={ImageFitVariant.SCALED}
-                                            imageUrl={product.image && product.image.thumbnail_image_url}
-                                            redirectUrl={`/product/${product.id}`}
-                                            newWindowUrl={product.url}
-                                            title={product.brand && product.brand.name}
-                                            detail={product.title}
-                                            subdetail={ this._renderProductFooter(product) }
-                                        />
-                                    </div>
-                                ))}
-                            </Carousel>
+                        <ContentSection title="Comments">
+                            <Comments
+                                comments={this.state.comments}
+                                likeComment={this._likeComment}
+                                unlikeComment={this._unlikeComment}
+                                submitComment={this._submitComment}
+                            />
                         </ContentSection>
+                    </Content>
+                    <div className="post-sidebar">
+                        {this.props.post.products.length > 0 && (
+                            <Sticky
+                                id="recently-viewed-section"
+                                stickyClassName="sticky-sidebar-recently-viewed"
+                                bottomEl={this._nextPostRef}
+                                scrollRef={this.props.scrollRef}
+                                maxTop={this.props.isModal ? 0 : null}
+                            >
+                                <SidebarPostProductListSection
+                                    title="Products in This Post"
+                                    items={this.props.post.products.map(product => ({
+                                        type: "Product",
+                                        content: product,
+                                    }))}
+                                />
+                            </Sticky>
+                        )}
+                    </div>
+                </div>
+                <div ref={this._nextPostRef}>
+                    {this.state.relatedPosts && (
+                        this._renderRelatedPosts()
                     )}
-                    {post.tags.length > 0 && (
-                        <ContentSection title="Tags">
-                            {post.tags.map(tag => (
-                                <Tag tag={tag} inline />
-                            ))}
-                        </ContentSection>
-                    )}
-                    {relatedPosts && (
-                        <ContentSection title="You May Also Like">
-                            <Carousel>
-                                {relatedPosts.map(post => (
-                                    <div>
-                                        <CarouselItem
-                                            fit={ImageFitVariant.COVER}
-                                            imageUrl={post.cover_image && post.cover_image.thumbnail_image_url}
-                                            redirectUrl={`/post/${post.id}`}
-                                            title={post.author && post.author.username}
-                                            detail={post.title}
-                                            subdetail={ this._renderPostFooter(post) }
-                                        />
-                                    </div>
-                                ))}
-                            </Carousel>
-                        </ContentSection>
-                    )}
-                    <ContentSection title={commentsTitle}>
-                        <Comments
-                            comments={comments}
-                            likeComment={likeComment}
-                            unlikeComment={unlikeComment}
-                            submitComment={submitComment}
-                        />
-                    </ContentSection>
-                </Content>
+                    <div className={`next-post-container${!this.props.isModal ? " full-screen" : ""}`} ref={this._nextPostRef}>
+                        <div className="next-post-text">
+                            Next Post
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
 
-    private _coverImageRef: React.RefObject<HTMLDivElement>;
+    private _postId: string;
+    private _postViewRef: React.RefObject<HTMLDivElement>;
+    private _nextPostRef: React.RefObject<HTMLDivElement>;
 
-    private _setRef = (ref: React.RefObject<HTMLDivElement>) => {
-        this._coverImageRef = ref;
-    }
+    private _renderRelatedPosts = () => {
+        const settings = {
+            arrows: true,
+            prevArrow: <IconButton icon={IconVariant.ARROW_LEFT} />,
+            nextArrow: <IconButton icon={IconVariant.ARROW_RIGHT} />,
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            variableWidth: false,
+            centerMode: true,
+            responsive: [{
+                breakpoint: 1543,
+                settings: {
+                    slidesToShow: 3,
+                },
+            },
+            {
+                breakpoint: 1300,
+                settings: {
+                    slidesToShow: 2,
+                },
+            }],
+        };
 
-    private _updateImageTags = (props: DesktopPostProps) => {
-        const current = this._coverImageRef.current;
-        if (current) {
-            const rect = current.getBoundingClientRect();
-
-            this.setState({ productTags: props.post.product_tags.map(tag => {
-                const product = props.post.products.find(product => product.id === tag.product_id);
-                return {
-                    product_id: tag.product_id,
-                    product_url: product && product.url,
-                    name: product && product.title || "",
-                    style: {
-                        left: current.offsetLeft + rect.width * tag.x_axis + 15,
-                        top: current.offsetTop + rect.height * tag.y_axis - 17,
-                    },
-                };
-            })});
-        }
-    }
-
-    private _renderPostFooter = (post: PostPreview)  => {
         return (
-            <>
-                <div className="author-date">
-                    <Author author={post.author} />
-                    {formatTime(post.created)}
-                </div>
-                <div className="post-card-footer">
-                    <ActionLinks
-                        iconSize={IconSize.MEDIUM}
-                        variant={ActionLinksVariant.POST}
-                        id={post.id}
-                        wishlisted={post.wishlisted}
-                        liked={post.liked}
-                        likes={post.likes}
-                    />
-                </div>
-            </>
+            <ContentSection title="You May Also Like">
+                <Slider {...settings} className="related-post-container">
+                    {this.state.relatedPosts && this.state.relatedPosts.map(post => (
+                        <div>
+                            <PostCard post={post} noHover clearData />
+                        </div>
+                    ))}
+                </Slider>
+            </ContentSection>
         );
     }
 
-    private _renderProductFooter = (product) => {
-        return (
-        <div className="post-card-hover-footer">
-            <p className="post-card-hover-price">
-                {`$${product.price}`}
-            </p>
-            <ActionLinks
-                variant={ActionLinksVariant.PRODUCT}
-                id={product.id}
-                wishlisted={product.wishlisted}
-                hideShare
-            />
-        </div>);
-    }
-
-    @autobind
-    private _handleProductTagsChange(event, tag, is_x) {
-        let product_tags = this.state.editableProductTags;
-        for (let i = 0; i < product_tags.length; i++) {
-            if (product_tags[i].product_id === tag.product_id) {
-                if (is_x) {
-                    product_tags[i].x_axis = parseFloat(event.target.value);
-                } else {
-                    product_tags[i].y_axis = parseFloat(event.target.value);
-                }
+    private _onScroll = () => {
+        const postView = this._postViewRef.current;
+        if (postView) {
+            const rect = postView.getBoundingClientRect();
+            if (rect.top > 0 && rect.top < 200 && rect.bottom > 200 || rect.bottom < window.innerHeight - 200 && rect.bottom > 200) {
+                this.props.setCurrentPost();
             }
         }
-        this.setState({ editableProductTags: product_tags });
     }
 
-    @autobind
-    private async _submitProductTagsChange() {
-        await this.props.updatePostProductTags(this.props.post.id, this.state.editableProductTags);
-        window.location.reload(false);
+    private _toggleWishlist = () => {
+        this.setState({ saved: !this.state.saved });
+        if (this.state.saved) {
+            this.context.api.unwishlist(this._postId, "blog");
+        } else {
+            this.context.api.wishlist(this._postId, "blog");
+        }
     }
 
+    private _likeComment = (commentId: string) => {
+        return this.context.api.likeComment(this._postId, commentId);
+    }
+
+    private _unlikeComment = (commentId: string) => {
+        return this.context.api.unlikeComment(this._postId, commentId);
+    }
+
+    private _submitComment = async (comment: string, parentCommentId: string) => {
+        await this.context.api.submitComment(this._postId, comment, parentCommentId);
+        const newComments = await this.context.api.getComments(this._postId);
+        this.setState({ comments: newComments });
+    }
 }
+
+DesktopPostView.contextTypes = {
+    api: PropTypes.any,
+    setError: PropTypes.func,
+    openModal: PropTypes.func,
+};

@@ -14,7 +14,7 @@ import { AuthData } from "./types";
 
 interface AuthProps extends RouteProps {
     apiUrl: string;
-    close(redirect?: string): void;
+    close(redirect?: string, isModal?: boolean): void;
     setLoggedState(loggedIn: boolean): void;
 }
 
@@ -103,13 +103,10 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
             await this._setLoggedInUser();
             this.props.setLoggedState(true);
             if (isNewUser) {
-                let pathname = this.props.location.pathname;
-                if (pathname.includes("login")) {
-                    pathname = pathname.replace("login", "onboarding");
-                }
-                this.props.close(pathname);
+                this.props.close("/onboarding", true);
             } else {
                 this.props.close();
+                location.reload();
             }
         } else {
             if (response["non_field_errors"]) {

@@ -11,6 +11,8 @@ interface ModalProps {
     fullScreen?: boolean;
     hideClose?: boolean;
     isOpen: boolean;
+    scrollRef?: React.RefObject<HTMLDivElement>;
+    contentRef?: React.RefObject<HTMLDivElement>;
     close(): void;
 }
 
@@ -23,23 +25,23 @@ export default class Modal extends React.Component<ModalProps> {
         open: this.props.isOpen,
     };
 
-    constructor(props: ModalProps) {
-        super(props);
-
+    componentWillMount() {
         this._modalRef = React.createRef();
     }
 
     componentDidMount() {
         window.onclick = event => {
-            if (event.target === this._modalRef.current) {
-                this._modalRef.current.style.display = "none";
+            const scrollRef = this.props.scrollRef ? this.props.scrollRef.current : this._modalRef.current;
+            if (event.target === scrollRef) {
                 this._close();
             }
         };
+        window.addEventListener("keyup", this._onKeyPress);
         noScroll();
     }
 
     componentWillUnmount() {
+        window.removeEventListener("keyup", this._onKeyPress);
         removeNoScroll();
     }
 
@@ -81,8 +83,8 @@ export default class Modal extends React.Component<ModalProps> {
         }
 
         return (
-            <div className={containerClasses} ref={this._modalRef} style={style}>
-                <div className={classes}>
+            <div className={containerClasses} ref={this.props.scrollRef || this._modalRef} style={style}>
+                <div className={classes} ref={this.props.contentRef}>
                     <div className="modal-header">
                         {!hideClose && (
                             <span className="close" onClick={this._close}>&times;</span>
@@ -96,12 +98,20 @@ export default class Modal extends React.Component<ModalProps> {
 
     private _modalRef: React.RefObject<HTMLDivElement>;
 
+    private _onKeyPress = (event) => {
+        if (event.keyCode === 27) {
+            this._close();
+        }
+    }
+
     private _open = () => {
     }
 
     private _close = () => {
-        this.props.close();
-        this._modalRef.current.style.display = "none";
+        removeNoScroll();
+        if (this.props.close) {
+            this.props.close();
+        }
         this.setState({ open: false });
     }
 }

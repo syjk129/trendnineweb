@@ -34,7 +34,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
     private _handleError = (error: Error) => {
         if (isAuthError(error)) {
             if (!this.props.location.pathname.includes("login")) {
-                this.props.history.push(`${this.props.location.pathname}/login`);
+                this.props.history.push({ pathname: "/login", state: { modal: true } });
             }
         } else if (isPermissionError(error)) {
             this.props.history.push("/discover");

@@ -20,6 +20,7 @@ interface PostCardProps extends RouteProps {
     post: PostPreview;
     gridSize?: number;
     noHover?: boolean;
+    clearData?: boolean;
     onload?(): void;
 }
 
@@ -70,7 +71,16 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                 className={classes}
                 onMouseLeave={this._onCardMouseLeave}
             >
-                <Link to={`/post/${post.id}`} className="post-card-image">
+                <Link
+                    to={{
+                        pathname: `/post/${post.id}`,
+                        state: {
+                            modal: true,
+                            clearData: this.props.clearData,
+                        },
+                    }}
+                    className="post-card-image"
+                >
                     <Image
                         className="post-image"
                         src={imageUrl}

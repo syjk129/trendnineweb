@@ -1,46 +1,74 @@
 import autobind from "autobind-decorator";
+import { PropTypes } from "prop-types"
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
-import { PostPreview } from "../../api/models";
+import { Comment, Post, PostPreview } from "../../api/models";
+import { AppContext } from "../../app";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import { IconSize } from "../../components/icon";
 import Image, { ImageFitVariant } from "../../components/image";
 import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
 import Comments from "../flowComponents/comments";
 import { ContentSection, TabbedSection } from "../flowComponents/section";
-import Tag from "../flowComponents/tag";
 import PostAuthorDetails from "./postAuthorDetails";
-import ProductTag from "./productTag";
-import { MobilePostProps, MobilePostState, TabbedSectionTypes } from "./types";
+import { TabbedSectionTypes } from "./types";
+
+export interface MobilePostProps {
+    post: Post;
+    scrollRef: React.RefObject<HTMLDivElement>;
+    isModal: boolean;
+    setCurrentPost(): void;
+}
+
+export interface MobilePostState {
+    section: TabbedSectionTypes;
+    tabbedContent: Array<any>;
+    comments: Array<Comment>;
+    relatedPosts: Array<PostPreview>;
+    saved: boolean;
+}
 
 export default class MobilePost extends React.Component<MobilePostProps, MobilePostState> {
+    static contextTypes: AppContext;
+
     state: MobilePostState = {
         section: TabbedSectionTypes.PRODUCTS_IN_THIS_POST,
         tabbedContent: this.props.post.products,
-        productTags: [],
+        comments: [],
+        relatedPosts: [],
+        saved: this.props.post.wishlisted,
     };
 
-    componentWillMount() {
-        this._coverImageRef = React.createRef();
+    async componentWillMount() {
+        this._postId = this.props.post.id;
+        this._postViewRef = React.createRef();
+        this._nextPostRef = React.createRef();
+
+        if (this.props.scrollRef && this.props.scrollRef.current) {
+            this.props.scrollRef.current.addEventListener("scroll", this._onScroll);
+            this.props.scrollRef.current.addEventListener("touchmove", this._onScroll);
+        } else {
+            document.addEventListener("scroll", this._onScroll);
+            document.addEventListener("touchmove", this._onScroll);
+        }
+        const relatedPosts = await this.context.api.getRelatedPosts(this._postId);
+        this.setState({ relatedPosts });
     }
 
-    componentDidMount() {
-        this._updateImageTags(this.props);
+    componentWillUnmount() {
+        if (this.props.scrollRef && this.props.scrollRef.current) {
+            this.props.scrollRef.current.removeEventListener("scroll", this._onScroll);
+            this.props.scrollRef.current.removeEventListener("touchmove", this._onScroll);
+        } else {
+            document.removeEventListener("scroll", this._onScroll);
+            document.removeEventListener("touchmove", this._onScroll);
+        }
     }
 
     render() {
         const {
-            likes,
-            liked,
-            wishlisted,
             post,
-            comments,
-            likeComment,
-            unlikeComment,
-            submitComment,
-            toggleLike,
-            toggleWishlist,
         } = this.props;
 
         return (
@@ -52,11 +80,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                         height={post.cover_image.original_image_height}
                         src={post.cover_image.small_image_url}
                         previewSrc={post.cover_image.thumbnail_image_url}
-                        setRef={this._setRef}
                     />
-                    {this.state.productTags.length > 0 && this.state.productTags.map(tag => (
-                        <ProductTag tag={tag} />
-                    ))}
                     <p className="post-title">
                         {post.title}
                     </p>
@@ -66,11 +90,8 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                             iconSize={isMobile ? IconSize.MEDIUM : IconSize.LARGE}
                             postDate={new Date(post.created)}
                             postId={post.id}
-                            wishlisted={wishlisted}
-                            likes={likes}
-                            liked={liked}
-                            toggleLike={toggleLike}
-                            toggleWishlist={toggleWishlist}
+                            wishlisted={this.state.saved}
+                            toggleWishlist={this._toggleWishlist}
                         />
                     </div>
                     <div className="post-details">
@@ -88,48 +109,36 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                         ))}
                     </Carousel>
                 </TabbedSection>
-                {post.tags.length > 0 && (
-                    <ContentSection title="Tags">
-                        {post.tags.map(tag => (
-                            <Tag tag={tag} inline />
-                        ))}
-                    </ContentSection>
-                )}
                 <ContentSection title="Comments">
                     <Comments
-                        comments={comments}
-                        likeComment={likeComment}
-                        unlikeComment={unlikeComment}
-                        submitComment={submitComment}
+                        comments={this.state.comments}
+                        likeComment={this._likeComment}
+                        unlikeComment={this._unlikeComment}
+                        submitComment={this._submitComment}
                     />
                 </ContentSection>
+                <div ref={this._nextPostRef}>
+                    <div className={`next-post-container${!this.props.isModal ? " full-screen" : ""}`} ref={this._nextPostRef}>
+                        <div className="next-post-text">
+                            Next Post
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
 
-    private _coverImageRef: React.RefObject<HTMLDivElement>;
+    private _postId: string;
+    private _postViewRef: React.RefObject<HTMLDivElement>;
+    private _nextPostRef: React.RefObject<HTMLDivElement>;
 
-    private _setRef = (ref: React.RefObject<HTMLDivElement>) => {
-        this._coverImageRef = ref;
-    }
-
-    private _updateImageTags = (props: MobilePostProps) => {
-        const current = this._coverImageRef.current;
-        if (current) {
-            const rect = current.getBoundingClientRect();
-
-            this.setState({ productTags: props.post.product_tags.map(tag => {
-                const product = props.post.products.find(product => product.id === tag.product_id);
-                return {
-                    product_id: tag.product_id,
-                    product_url: product && product.url,
-                    name: product && product.title || "",
-                    style: {
-                        left: current.offsetLeft + rect.width * tag.x_axis + 15,
-                        top: current.offsetTop + rect.height * tag.y_axis - 17,
-                    },
-                };
-            })});
+    private _onScroll = () => {
+        const postView = this._postViewRef.current;
+        if (postView) {
+            const rect = postView.getBoundingClientRect();
+            if (rect.top > 0 && rect.top < 200 && rect.bottom > 200 || rect.bottom < window.innerHeight - 200 && rect.bottom > 200) {
+                this.props.setCurrentPost();
+            }
         }
     }
 
@@ -173,7 +182,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 tabbedContent = this.props.post.products;
                 break;
             case TabbedSectionTypes.YOU_MAY_ALSO_LIKE:
-                tabbedContent = this.props.relatedPosts;
+                tabbedContent = this.state.relatedPosts;
                 break;
         }
         this.setState({ tabbedContent, section });
@@ -211,4 +220,33 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
             />
         </div>);
     }
+
+    private _toggleWishlist = () => {
+        this.setState({ saved: !this.state.saved });
+        if (this.state.saved) {
+            this.context.api.unwishlist(this._postId, "blog");
+        } else {
+            this.context.api.wishlist(this._postId, "blog");
+        }
+    }
+
+    private _likeComment = (commentId: string) => {
+        return this.context.api.likeComment(this._postId, commentId);
+    }
+
+    private _unlikeComment = (commentId: string) => {
+        return this.context.api.unlikeComment(this._postId, commentId);
+    }
+
+    private _submitComment = async (comment: string, parentCommentId: string) => {
+        await this.context.api.submitComment(this._postId, comment, parentCommentId);
+        const newComments = await this.context.api.getComments(this._postId);
+        this.setState({ comments: newComments });
+    }
 }
+
+MobilePost.contextTypes = {
+    api: PropTypes.any,
+    setError: PropTypes.func,
+    openModal: PropTypes.func,
+};
