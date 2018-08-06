@@ -86,34 +86,85 @@ export default class PostView extends React.Component<PostProps, PostState> {
             props = { ref: this._pageRef };
         }
 
+        let postContentPreview;
+        let postPreviewTitle;
+        let postPreviewDescription;
+        if (this._post) {
+            postContentPreview = this._getPostContentPreview(this._post.content).trim().slice(0, 300);
+            postPreviewTitle = `${this._post.author ? `@${this._post.author.username} | ` : ""}${this._post.title}`;
+            postPreviewDescription = postContentPreview.length > 0 ? postContentPreview : "TrendNine | Discover & Shop the Looks from Fashion Influencers";
+        }
+
         return (
-            <ContainerEl {...props} isOpen>
-                {/* {this._populateHead()} */}
-                <PageNavigation />
-                {this.state.isLoading && (
-                    <Spinner />
+            <>
+                {this._post && (
+                    <Helmet defer={false}>
+                        <html prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#" />
+                        <meta name="description" content={this._post.title} />
+                        {/* Twitter */}
+                        <meta name="twitter:card" content="summary_large_image" />
+                        <meta name="twitter:site" content="trendnine.com" />
+                        <meta name="twitter:title" content={postPreviewTitle} />
+                        <meta name="twitter:description" content={postPreviewDescription} />
+                        <meta name="twitter:creator" content={this._post.author && `@${this._post.author.username}`} />
+                        <meta name="twitter:image:src" content={this._post.cover_image && this._post.cover_image.small_image_url} />
+
+                        {/* Open Graph Tags */}
+                        <meta property="og:type" content="article" />
+                        <meta property="og:url" content={`https://www.trendnine.com/post/${this._post.id}`} />
+                        <meta property="og:image" content={this._post.cover_image && this._post.cover_image.small_image_url} />
+                        <meta property="og:image:width" content={this._post.cover_image && `${this._post.cover_image.original_image_width}`} />
+                        <meta property="og:image:height" content={this._post.cover_image && `${this._post.cover_image.original_image_height}`} />
+                        <meta property="og:title" content={postPreviewTitle} />
+                        <meta property="og:description" content={postPreviewDescription} />
+                        {/* <meta property="article:author" content={post.author && `@${post.author.username}`} /> */}
+                        <meta property="article:author" content="https://www.facebook.com/trendnine" />
+                        <meta property="article:section" content="Fashion" />
+                        {this._post.tags.map(tag => (
+                            <meta property="article:tag" content={tag.content} />
+                        ))}
+                        <meta property="og:site_name" content="TrendNine" />
+                        <script type="ld+json">
+                            {
+                                `
+                                    "@context": "http://schema.org/",
+                                    "@type": "Article",
+                                    "name": "${postPreviewTitle}",
+                                    "author": "${this._post.author && this._post.author.username}",
+                                    "image": "${this._post.cover_image && this._post.cover_image.small_image_url}",
+                                    "description": "${postPreviewDescription}"
+                                `
+                            }
+                        </script>
+                    </Helmet>
                 )}
-                {this.state.posts.map(post => (
-                    <>
-                        {isMobile ? (
-                            <MobilePost
-                                post={post}
-                                setCurrentPost={() => this._setCurrentPost(post)}
-                                scrollRef={this._scrollRef}
-                                isModal={this._isModal}
-                            />
-                        ) : (
-                            <DesktopPost
-                                post={post}
-                                setCurrentPost={() => this._setCurrentPost(post)}
-                                scrollRef={this._scrollRef}
-                                isModal={this._isModal}
-                            />
-                        )}
-                    </>
-                ))}
-                {this.state.loadingNext && <Spinner/>}
-            </ContainerEl>
+                <ContainerEl {...props} isOpen>
+                    <PageNavigation />
+                    {this.state.isLoading && (
+                        <Spinner />
+                    )}
+                    {this.state.posts.map(post => (
+                        <>
+                            {isMobile ? (
+                                <MobilePost
+                                    post={post}
+                                    setCurrentPost={() => this._setCurrentPost(post)}
+                                    scrollRef={this._scrollRef}
+                                    isModal={this._isModal}
+                                />
+                            ) : (
+                                <DesktopPost
+                                    post={post}
+                                    setCurrentPost={() => this._setCurrentPost(post)}
+                                    scrollRef={this._scrollRef}
+                                    isModal={this._isModal}
+                                />
+                            )}
+                        </>
+                    ))}
+                    {this.state.loadingNext && <Spinner/>}
+                </ContainerEl>
+            </>
         );
     }
 
@@ -121,6 +172,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
     private _pageRef: React.RefObject<HTMLDivElement>;
     private _scrollListener: any;
     private _isModal: boolean;
+    private _post: Post;
 
     private _fetchData = async (props: PostProps) => {
         this.setState({ isLoading: true });
@@ -132,6 +184,10 @@ export default class PostView extends React.Component<PostProps, PostState> {
             this.context.api.getPost(props.match.params.postId),
             this.context.api.getLatestPosts(),
         ]);
+
+        if (!this._post) {
+            this._post = post;
+        }
 
         this.setState({
             posts: [post],
