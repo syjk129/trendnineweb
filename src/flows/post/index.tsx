@@ -80,7 +80,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 contentRef: this._pageRef,
                 scrollRef: this._scrollRef,
                 close: this.props.close,
-                fullScreen: true,
+                fullScreen: isMobile,
             };
         } else {
             props = { ref: this._pageRef };
@@ -146,7 +146,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
             this.setState({ currentPost: post });
             this.props.history.push({
                 pathname: `/post/${post.id}`,
-                state: this._isModal && { modal: true },
+                state: { modal: this._isModal },
             });
         }
     }
