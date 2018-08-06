@@ -47,14 +47,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         this.updateWindowWidth();
     }
 
-    componentWillReceiveProps(nextProps: DiscoverProps) {
-        if (nextProps.location !== this.props.location &&
-            !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
-        ) {
-            this.refreshContent(nextProps);
-        }
-    }
-
     async refreshContent(props: DiscoverProps) {
         const params = new URLSearchParams(location.search);
         const postParam = new PostParam(params);

@@ -57,7 +57,10 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                             {(!loggedIn || !user) &&
                                 <LinkButton
                                     className="login-button"
-                                    onClick={() => history.push(`${location.pathname}/login`)}
+                                    to={{
+                                        pathname: "/login",
+                                        state: { modal: true },
+                                    }}
                                 >
                                     Sign In / Join
                                 </LinkButton>

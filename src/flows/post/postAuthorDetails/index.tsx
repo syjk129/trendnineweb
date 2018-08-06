@@ -15,9 +15,6 @@ interface PostAuthorDetailsProps extends RouteProps {
     postDate: Date;
     postId: string;
     wishlisted: boolean;
-    likes: number;
-    liked: boolean;
-    toggleLike(): void;
     toggleWishlist(): void;
 }
 
@@ -28,7 +25,7 @@ function formatDate(date: Date) {
 class PostAuthorDetails extends React.Component<PostAuthorDetailsProps> {
 
     render() {
-        const { author, postId, postDate, toggleLike, toggleWishlist } = this.props;
+        const { author, postId, postDate, toggleWishlist } = this.props;
 
         let classes = "post-author";
         if (isMobile) {
@@ -55,16 +52,6 @@ class PostAuthorDetails extends React.Component<PostAuthorDetailsProps> {
                 </div>
 
                 <div className="post-action-btns">
-                    <span className="likes">
-                        <IconButton
-                            icon={IconVariant.LIKE}
-                            size={this.props.iconSize}
-                            selected={this.props.liked}
-                            onClick={toggleLike}
-                        >
-                        </IconButton>
-                        {this.props.likes > 0 && this.props.likes}
-                    </span>
                     <IconButton
                         icon={IconVariant.SHARE}
                         size={this.props.iconSize}
