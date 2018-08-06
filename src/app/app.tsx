@@ -150,7 +150,7 @@ export default class App extends React.Component<Props, AppState> {
 
     componentWillReceiveProps(nextProps: Props) {
         if (nextProps.location.pathname !== this.props.location.pathname) {
-            if (!nextProps.location.state || !nextProps.location.state.modal) {
+            if (!nextProps.location.state || !nextProps.location.state.modal && !nextProps.location.state.noScroll) {
                 // Don't scroll to top if it's a pop action (meaning user pressed back button)
                 if (nextProps.history.action !== "POP") {
                     if (!nextProps.location.state || !nextProps.location.state.modalClose) {

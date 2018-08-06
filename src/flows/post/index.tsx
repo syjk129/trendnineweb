@@ -146,7 +146,10 @@ export default class PostView extends React.Component<PostProps, PostState> {
             this.setState({ currentPost: post });
             this.props.history.push({
                 pathname: `/post/${post.id}`,
-                state: { modal: this._isModal },
+                state: {
+                    modal: this._isModal,
+                    noScroll: true,
+                },
             });
         }
     }
