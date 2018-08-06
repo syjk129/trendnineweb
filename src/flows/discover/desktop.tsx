@@ -97,6 +97,15 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
         this.setState({numCardsPerRow: Math.max(numCardsPerRow, 2)});
     }
 
+    componentWillReceiveProps(nextProps: DiscoverProps) {
+        if (nextProps.location !== this.props.location &&
+            !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding") &&
+            (!nextProps.location.state || !nextProps.location.state.modalClose)
+        ) {
+            this.refreshContent(nextProps);
+        }
+    }
+
     render() {
         const user = JSON.parse(localStorage.getItem("user"));
         const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
