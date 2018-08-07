@@ -235,55 +235,6 @@ export default class PostView extends React.Component<PostProps, PostState> {
         span.innerHTML = content;
         return span.textContent || span.innerText;
     }
-
-    private _populateHead = async () => {
-        const post = await this.context.api.getPost(this.props.match.params.postId);
-        const postContentPreview = this._getPostContentPreview(post.content).trim().slice(0, 300);
-        const postPreviewTitle = `${post.author ? `@${post.author.username} | ` : ""}${post.title}`;
-        const postPreviewDescription = postContentPreview.length > 0 ? postContentPreview : "TrendNine | Discover & Shop the Looks from Fashion Influencers";
-
-        return (
-            <Helmet defer={false}>
-                <html prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#" />
-                <meta name="description" content={post.title} />
-                {/* Twitter */}
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:site" content="trendnine.com" />
-                <meta name="twitter:title" content={postPreviewTitle} />
-                <meta name="twitter:description" content={postPreviewDescription} />
-                <meta name="twitter:creator" content={post.author && `@${post.author.username}`} />
-                <meta name="twitter:image:src" content={post.cover_image && post.cover_image.small_image_url} />
-
-                {/* Open Graph Tags */}
-                <meta property="og:type" content="article" />
-                <meta property="og:url" content={`https://www.trendnine.com/post/${post.id}`} />
-                <meta property="og:image" content={post.cover_image && post.cover_image.small_image_url} />
-                <meta property="og:image:width" content={post.cover_image && `${post.cover_image.original_image_width}`} />
-                <meta property="og:image:height" content={post.cover_image && `${post.cover_image.original_image_height}`} />
-                <meta property="og:title" content={postPreviewTitle} />
-                <meta property="og:description" content={postPreviewDescription} />
-                {/* <meta property="article:author" content={post.author && `@${post.author.username}`} /> */}
-                <meta property="article:author" content="https://www.facebook.com/trendnine" />
-                <meta property="article:section" content="Fashion" />
-                {post.tags.map(tag => (
-                    <meta property="article:tag" content={tag.content} />
-                ))}
-                <meta property="og:site_name" content="TrendNine" />
-                <script type="ld+json">
-                    {
-                        `
-                            "@context": "http://schema.org/",
-                            "@type": "Article",
-                            "name": "${postPreviewTitle}",
-                            "author": "${post.author && post.author.username}",
-                            "image": "${post.cover_image && post.cover_image.small_image_url}",
-                            "description": "${postPreviewDescription}"
-                        `
-                    }
-                </script>
-            </Helmet>
-        );
-    }
 }
 
 PostView.contextTypes = {

@@ -106,6 +106,9 @@
     }
 
     &.mobile {
+        width: auto;
+        left: auto;
+        right: auto;
         margin-left: -$mobile-page-spacing;
         margin-right: -$mobile-page-spacing;
     }

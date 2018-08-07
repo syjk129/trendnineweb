@@ -81,6 +81,7 @@
 
         .modal-header {
             position: fixed;
+            transform: translate3d(0, 0, 0);
             width: 100%;
             padding: $mobile-page-spacing;
             box-sizing: border-box;
