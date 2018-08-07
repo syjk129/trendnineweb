@@ -1,4 +1,3 @@
-import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { Link } from "react-router-dom";
@@ -43,7 +42,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
     }
 
     componentWillReceiveProps(nextProps: HeaderProps) {
-        if (this.props.location.pathname !== nextProps.location.pathname) {
+        if (this.props.location.pathname !== nextProps.location.pathname && (!nextProps.location.state || !nextProps.location.state.modal)) {
             this._lastScrollTop = 0;
             this._close();
         }
