@@ -3,6 +3,7 @@
 .page-navigation {
     z-index: 3;
     position: fixed;
+    transform: translate3d(0, 0, 0);
     bottom: $page-spacing;
     right: $page-spacing;
     width: 45px;
