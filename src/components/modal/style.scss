@@ -20,7 +20,8 @@
     top: 0;
     bottom: 0;
     right: 0;
-    overflow: auto; /* Enable scroll if needed */
+    overflow: scroll; /* Enable scroll if needed */
+    -webkit-overflow-scrolling: touch;
     background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 
     .modal-content {
@@ -70,10 +71,7 @@
 
     .modal-content {
         width: 100%;
-        max-height: 100%;
         box-sizing: border-box;
-        overflow-y: scroll;
-        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
     }
 
@@ -88,10 +86,6 @@
             box-sizing: border-box;
             z-index: 2;
             background-color: #fff;
-        }
-
-        .modal-content {
-            max-height: none;
         }
     }
 }

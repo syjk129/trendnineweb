@@ -105,6 +105,11 @@
         margin-right: -50vw;
     }
 
+    &.mobile {
+        margin-left: -$mobile-page-spacing;
+        margin-right: -$mobile-page-spacing;
+    }
+
     .next-post-text {
         max-width: $max-content-width;
         margin: auto;

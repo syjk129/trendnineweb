@@ -118,7 +118,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                     />
                 </ContentSection>
                 <div ref={this._nextPostRef}>
-                    <div className={`next-post-container${!this.props.isModal ? " full-screen" : ""}`} ref={this._nextPostRef}>
+                    <div className={`next-post-container${!this.props.isModal ? " full-screen" : ""}${isMobile ? " mobile" : ""}`} ref={this._nextPostRef}>
                         <div className="next-post-text">
                             Next Post
                         </div>
