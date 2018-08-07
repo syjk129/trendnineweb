@@ -72,7 +72,7 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
         } = this.props;
 
         return (
-            <div className="mobile-post">
+            <div className="mobile-post" ref={this._postViewRef}>
                 <div className="post-content">
                     <Image
                         className="post-cover"
