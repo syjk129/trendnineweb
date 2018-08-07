@@ -75,7 +75,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
                     to={{
                         pathname: `/post/${post.id}`,
                         state: {
-                            modal: true,
+                            modal: !isMobile,
                             clearData: this.props.clearData,
                         },
                     }}
