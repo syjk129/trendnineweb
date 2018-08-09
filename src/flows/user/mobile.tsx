@@ -178,7 +178,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                 return this.props.content.map(item => <PostCard isMobile post={item} gridSize={this.state.gridSize} />);
             case UserContentType.PRODUCT:
             case UserContentType.PRODUCT_WISHLIST:
-                return this.props.content.map(item => <ProductCard isMobile product={item} gridSize={this.state.gridSize} />);
+                return this.props.content.map(item => <ProductCard isMobile product={item} gridSize={this.state.gridSize} referrerId={this.props.userId} />);
             case UserContentType.FOLLOWER:
             case UserContentType.FOLLOWING:
                 return this.props.content.map(item => <UserCard user={item} following={item.followed} />);

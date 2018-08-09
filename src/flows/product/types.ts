@@ -7,5 +7,6 @@ export interface ProductProps {
     reviews: Array<any>;
     wishlisted: boolean;
     toggleWishlist(): void;
+    onProductClick(): void;
 }
 

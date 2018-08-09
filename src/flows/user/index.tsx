@@ -55,6 +55,8 @@ export default class User extends React.Component<Props, UserState> {
         if (nextProps.location.pathname.split("/")[2] !== this.props.location.pathname.split("/")[2]) {
             this._updateContent(nextProps, contentType);
         }
+
+        this.context.api.getTrackedClicks("this_week");
     }
 
     componentWillMount() {

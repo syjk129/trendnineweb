@@ -32,7 +32,7 @@ export class SidebarPostProductListSection extends React.Component<SidebarPostPr
             this.props.items.length > 0 && (
                 <SidebarSection title={this.props.title}>
                     {this.props.items.map(item => {
-                        return item.type === "Product" ? this._renderProduct(item.content) : this._renderPost(item.content);
+                        return item.type === "Product" ? this._renderProduct(item) : this._renderPost(item.content);
                     })}
                 </SidebarSection>
             )
@@ -59,13 +59,13 @@ export class SidebarPostProductListSection extends React.Component<SidebarPostPr
             </LinkButton>
         );
     }
-    private _renderProduct(product) {
+    private _renderProduct(productWrapper) {
+        const product = productWrapper.content;
         return (
             <div className="post-card-hover-item post-rank">
                 <LinkButton
                     className="post-card-hover-btn"
-                    to={`/product/${product.id}`}
-                    onClick={() => window.open(product.url)}
+                    to={`/product/${product.id}?referrer_type=post&referrer_id=${productWrapper.postId}`}
                 >
                     <img className="product-rank-img" src={product.image && product.image.thumbnail_image_url} />
                     <div className="post-card-hover-content post-rank-detail">

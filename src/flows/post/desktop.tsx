@@ -117,6 +117,7 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
                                     items={this.props.post.products.map(product => ({
                                         type: "Product",
                                         content: product,
+                                        postId: this.props.post.id,
                                     }))}
                                 />
                             </Sticky>

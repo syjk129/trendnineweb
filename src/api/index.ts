@@ -314,6 +314,18 @@ export default class Api {
         return this._PUT(`/api/v1/posts/product_tags/${post_id}`, request);
     }
 
+    trackClickFromPost(postId: string, productId: string): Promise<void> {
+        return this._POST(`/api/v1/shownow/products/${productId}?ref_post_id=${postId}`);
+    }
+
+    trackClickFromInfluencer(influencerId: string, productId: string): Promise<void> {
+        return this._POST(`/api/v1/shopnow/products/${productId}?ref_influencer_id=${influencerId}`);
+    }
+
+    getTrackedClicks(dateRange: string): Promise<any> {
+        return this._GET(`/api/v1/shopnow?date_range=${dateRange}`);
+    }
+
     private _apiUrl: string;
     private _apiOptions: ApiOptions;
 

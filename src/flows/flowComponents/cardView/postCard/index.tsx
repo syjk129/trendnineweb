@@ -183,8 +183,7 @@ class PostCard extends React.Component<PostCardProps, PostCardState> {
 
     private _redirectProduct = (product) => {
         return () => {
-            this.props.history.push(`/product/${product.id}`);
-            window.open(product.url);
+            this.props.history.push(`/product/${product.id}?referrer_type=post&referrer_id=${this.props.post.id}`);
         };
     }
 

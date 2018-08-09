@@ -35,7 +35,6 @@ export default class ProductView extends React.Component<Props, ProductState> {
 
     componentWillMount() {
         this.refreshContent(this.props);
-
     }
 
     componentWillReceiveProps(nextProps: Props) {
@@ -100,12 +99,14 @@ export default class ProductView extends React.Component<Props, ProductState> {
                     <DesktopProduct
                         {...this.state}
                         toggleWishlist={this._toggleWishlist}
+                        onProductClick={this._onProductClick}
                     />
                 </BrowserView>
                 <MobileView device={isMobile}>
                     <MobileProduct
                         {...this.state}
                         toggleWishlist={this._toggleWishlist}
+                        onProductClick={this._onProductClick}
                     />
                 </MobileView>
             </div>
@@ -123,6 +124,30 @@ export default class ProductView extends React.Component<Props, ProductState> {
             this.context.api.wishlistProduct(this._productId);
             this.setState({ wishlisted: true });
         }
+    }
+
+    private _onProductClick = () => {
+        const queryParams = this.props.location.search.slice(1).split("&");
+        let referrerType;
+        let referrerId;
+        queryParams.forEach(param => {
+            const query = param.split("=");
+            if (query.length < 2) {
+                return;
+            } else if (query[0].toLowerCase() === "referrer_type") {
+                referrerType = query[1];
+            } else if (query[0].toLowerCase() === "referrer_id") {
+                referrerId = query[1];
+            }
+        });
+        if (referrerId && referrerType) {
+            if (referrerType.toLowerCase() === "post") {
+                this.context.api.trackClickFromPost(referrerId, this._productId);
+            } else if (referrerType.toLowerCase() === "user") {
+                this.context.api.trackClickFromInfluencer(referrerType, this._productId);
+            }
+        }
+        window.open(this.state.product.url);
     }
 }
 
