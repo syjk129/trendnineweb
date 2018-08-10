@@ -77,6 +77,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                     this._renderInfluencerProfile(profile)
                 )}
                 <UserTabs
+                    user={user}
                     userId={userId}
                     isSelf={user.id === userId}
                     profile={profile}

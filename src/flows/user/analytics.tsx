@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { withRouter } from "react-router-dom";
 
 import { ProductClicksResponse } from "../../api/responses";
 import { AppContext } from "../../app";
@@ -12,7 +13,7 @@ interface AnalyticsState {
     totalClicks: ProductClicksResponse;
 }
 
-export default class Analytics extends React.Component<Props, AnalyticsState> {
+class Analytics extends React.Component<Props, AnalyticsState> {
     static contextTypes: AppContext;
 
     state: AnalyticsState = {
@@ -77,3 +78,5 @@ Analytics.contextTypes = {
     setError: PropTypes.func,
     openModal: PropTypes.func,
 };
+
+export default withRouter(Analytics);
