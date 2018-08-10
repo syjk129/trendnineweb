@@ -1,5 +1,4 @@
 import * as React from "react";
-import { isMobile } from "react-device-detect";
 
 import Card from "../../../components/card";
 import { IconSize, IconVariant } from "../../../components/icon";
@@ -12,6 +11,7 @@ interface ProductCardProps {
     isMobile?: boolean;
     gridSize?: number;
     isShop?: boolean;
+    referrerId?: string;
     onload?(): void;
 }
 
@@ -51,9 +51,8 @@ export default class ProductCard extends React.Component<ProductCardProps, Produ
                 gridSize={gridSize || 1}
                 onload={onload}
                 scaleImage
-                newWindowUrl={product.url}
                 imageUrl={product.image && (isMobile ? product.image.small_image_url : product.image.thumbnail_image_url)}
-                redirectUrl={isShop ? `/shop/product/${product.id}` : `/product/${product.id}`}
+                redirectUrl={`/product/${product.id}${this.props.referrerId ? `?referrer_type=user&referrer_id=${this.props.referrerId}` : ""}`}
                 title={product.brand && product.brand.name || "Product"}
                 footerItem={footerItem}
             />

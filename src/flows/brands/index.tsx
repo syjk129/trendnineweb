@@ -13,7 +13,6 @@ import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import Sticky from "../../components/sticky";
 import PageNavigation from "../flowComponents/pageNavigation";
-import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import RouteProps from "../routeProps";
 import DesktopBrands from "./desktop";
 import MobileBrands from "./mobile";

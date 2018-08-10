@@ -21,6 +21,10 @@ import {
     isAuthError,
 } from "./errors";
 
+import {
+    ProductClicksResponse,
+} from "./responses";
+
 export interface ApiOptions {
     apiUrl: string;
     setError(error: Error): void;
@@ -314,6 +318,22 @@ export default class Api {
         return this._PUT(`/api/v1/posts/product_tags/${post_id}`, request);
     }
 
+    trackClickFromPost(postId: string, productId: string): Promise<void> {
+        return this._POST(`/api/v1/shopnow/products/${productId}?ref_post_id=${postId}`);
+    }
+
+    trackClickFromInfluencer(influencerId: string, productId: string): Promise<void> {
+        return this._POST(`/api/v1/shopnow/products/${productId}?ref_influencer_id=${influencerId}`);
+    }
+
+    getTrackedProductClicks(dateRange: string): Promise<any> {
+        return this._GET(`/api/v1/shopnow/products?date_range=${dateRange}`);
+    }
+
+    getTrackedClicks(dateRange: string): Promise<ProductClicksResponse> {
+        return this._GET(`/api/v1/shopnow?date_range=${dateRange}`);
+    }
+
     private _apiUrl: string;
     private _apiOptions: ApiOptions;
 
@@ -471,8 +491,13 @@ export default class Api {
     }
 
     private _getRequestHeader(noAuth?: boolean) {
-        const user = localStorage.getItem("user");
         const token = localStorage.getItem(tokenName);
+        let session = localStorage.getItem("session_token");
+        if (!session || session === "undefined") {
+            session = generateUUID();
+            localStorage.setItem("session_token", session);
+        }
+
         let jwtToken = "";
 
         if (token && token !== "undefined") {
@@ -481,6 +506,8 @@ export default class Api {
             if (exp > current) {
                 jwtToken = `JWT ${token}`;
             }
+        } else if ((!token || token === "undefined") && session) {
+            jwtToken = `JWT ${session}`;
         }
         if (jwtToken && token && !noAuth) {
             return {
@@ -494,4 +521,11 @@ export default class Api {
             "Content-Type": "application/json",
         };
     }
+}
+
+function generateUUID() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+        const r = Math.random() * 16 | 0, v = c === "x" ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }

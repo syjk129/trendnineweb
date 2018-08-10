@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 
 import Api from "../api";
-import Modal from "../components/modal";
 import Spinner, { SpinnerContainer } from "../components/spinner";
 import AboutUs from "../flows/about";
 import Auth from "../flows/auth";

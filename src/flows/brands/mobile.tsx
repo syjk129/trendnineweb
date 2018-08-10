@@ -12,7 +12,6 @@ import NavLink from "../../components/navLink";
 import ScrollTo from "../../components/scrollTo";
 import Sidebar from "../../components/sidebar";
 import Sticky from "../../components/sticky";
-import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
 import { BrandsProps } from "./types";
 
 import "./style.scss";

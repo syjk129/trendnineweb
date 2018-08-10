@@ -1,12 +1,14 @@
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
+import { Person } from "../../api/models";
 import NavLink from "../../components/navLink";
 import { UserContentType } from "./types";
 
 import "./style.scss";
 
 interface UserTabsProps {
+    user: Person;
     userId: string;
     isSelf: boolean;
     profile: any;
@@ -14,11 +16,13 @@ interface UserTabsProps {
     setContent(page: UserContentType): void;
 }
 
-export default function UserTabs({ userId, isSelf, profile, pathname, setContent }: UserTabsProps) {
+export default function UserTabs({ user, userId, isSelf, profile, pathname, setContent }: UserTabsProps) {
     let classes = "user-nav";
     if (isMobile) {
         classes += " mobile";
     }
+
+    const isInfluencer = user.auth_level === 2;
 
     return (
         <div className={classes}>
@@ -86,6 +90,15 @@ export default function UserTabs({ userId, isSelf, profile, pathname, setContent
                     onClick={() => setContent(UserContentType.SETTINGS)}
                 >
                     <p>Settings</p>
+                </NavLink>
+            }
+            {isSelf && isInfluencer &&
+                <NavLink
+                    url={`/user/${userId}/${UserContentType.ANALYTICS}`}
+                    pathname={pathname}
+                    onClick={() => setContent(UserContentType.ANALYTICS)}
+                >
+                    <p>Analytics</p>
                 </NavLink>
             }
         </div>

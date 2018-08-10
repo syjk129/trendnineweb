@@ -91,7 +91,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                                     <div dangerouslySetInnerHTML={{ __html: product.description }} />
                                 </p>
                                 <div className="button-container">
-                                    <Button rounded variant={ButtonVariant.PRIMARY} onClick={() => window.open(product.url)}>Buy Now</Button>
+                                    <Button rounded variant={ButtonVariant.PRIMARY} onClick={this.props.onProductClick}>Buy Now</Button>
                                     <Button rounded variant={ButtonVariant.OUTLINE} onClick={toggleWishlist}>{wishlistBtnText}</Button>
                                 </div>
                             </div>
@@ -124,7 +124,6 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                                             fit={ImageFitVariant.SCALED}
                                             imageUrl={product.image && product.image.thumbnail_image_url}
                                             redirectUrl={`/product/${product.id}`}
-                                            newWindowUrl={product.url}
                                             title={product.brand && product.brand.name}
                                             detail={product.title}
                                             subdetail={this._renderProductFooter(product)}

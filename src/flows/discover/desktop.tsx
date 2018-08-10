@@ -15,7 +15,7 @@ import Featured from "../flowComponents/featured";
 import Filter, { FilterTarget } from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import SearchResult from "../flowComponents/searchResult";
-import { SidebarPostProductListSection, SidebarSection } from "../flowComponents/section";
+import { SidebarSection } from "../flowComponents/section";
 import Sort from "../flowComponents/sort";
 import { SortConstants } from "../flowComponents/sort/types";
 import ViewMore from "../flowComponents/viewMore";
@@ -125,11 +125,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
                                 <PostRank posts={this.state.trendingPosts} />
                             </SidebarSection>
                         )}
-                        {recentlyViewed && !this.state.isLoading &&
-                            <Sticky id="recently-viewed-section" stickyClassName="sticky-sidebar-recently-viewed">
-                                <SidebarPostProductListSection title="Recently Viewed" items={recentlyViewed} />
-                            </Sticky>
-                        }
                     </Sidebar>
                     <Content>
                         {this.state.isLoading ? (
