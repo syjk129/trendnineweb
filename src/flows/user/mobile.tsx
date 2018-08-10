@@ -2,14 +2,13 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import { Person } from "../../api/models";
-import Card, { CardContainer } from "../../components/card";
+import { CardContainer } from "../../components/card";
 import Image from "../../components/image";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
-import ContentToolbar from "../flowComponents/contentToolbar";
-import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
 import RouteProps from "../routeProps";
+import Analytics from "./analytics";
 import FollowButton from "./followButton";
 import UserTabs from "./userTabs";
 
@@ -85,6 +84,7 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
                     setContent={setContentType}
                 />
                 {this._renderSettings()}
+                {this._renderAnalytics()}
                 <CardContainer gridSize={this.state.gridSize}>
                     {this._renderContent()}
                 </CardContainer>
@@ -152,15 +152,6 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
         );
     }
 
-    private _renderUserProfile = () => {
-        return (
-            <>
-                <div className="user-name">
-                </div>
-            </>
-        );
-    }
-
     @autobind
     private _renderSettings() {
         if (this.props.contentType === UserContentType.SETTINGS) {
@@ -168,6 +159,12 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
         }
 
         return null;
+    }
+
+    private _renderAnalytics = () => {
+        if (this.props.contentType === UserContentType.ANALYTICS) {
+            return <Analytics />;
+        }
     }
 
     @autobind
