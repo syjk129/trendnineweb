@@ -13,6 +13,7 @@ import { SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
 import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
+import Analytics from "./analytics";
 import FollowButton from "./followButton";
 import Settings from "./settings";
 import UserTabs from "./userTabs";
@@ -118,6 +119,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                 </Sidebar>
                 <Content>
                     <UserTabs
+                        user={user}
                         userId={userId}
                         isSelf={user.username === userId}
                         profile={profile}
@@ -125,6 +127,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                         setContent={setContentType}
                     />
                     {this._renderSettings()}
+                    {this._renderAnalytics()}
                     <CardContainer>
                         {this._renderContent()}
                     </CardContainer>
@@ -141,6 +144,12 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
         }
 
         return null;
+    }
+
+    private _renderAnalytics = () => {
+        if (this.props.contentType === UserContentType.ANALYTICS) {
+            return <Analytics />;
+        }
     }
 
     @autobind

@@ -20,4 +20,5 @@ export enum UserContentType {
     POST_WISHLIST = "bookmarks",
     PRODUCT_WISHLIST = "wishlist",
     SETTINGS = "settings",
+    ANALYTICS = "analytics",
 }
