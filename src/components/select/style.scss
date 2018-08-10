@@ -1,0 +1,8 @@
+@import "../../styles/variables";
+
+.select {
+    height: $button-height-sm;
+    right: 0;
+    top: $button-height-sm / 2;
+    background-color: transparent;
+}

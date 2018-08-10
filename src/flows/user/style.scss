@@ -285,6 +285,11 @@
 
     .overview-title {
         font-size: $font-size-3;
-        margin-bottom: $base-spacing;
+    }
+
+    .click-details {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
     }
 }

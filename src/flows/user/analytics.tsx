@@ -4,13 +4,30 @@ import { withRouter } from "react-router-dom";
 
 import { ProductClicksResponse } from "../../api/responses";
 import { AppContext } from "../../app";
+import Select from "../../components/select";
 import RouteProps from "../routeProps";
+
+enum SortDateRange {
+    TODAY = "today",
+    THIS_WEEK = "this_week",
+    THIS_MONTH = "this_month",
+    LAST_MONTH = "last_month",
+}
+
+const SortDateRangeDisplay = {
+    [SortDateRange.TODAY]: "Today",
+    [SortDateRange.THIS_WEEK]: "This Week",
+    [SortDateRange.THIS_MONTH]: "This Month",
+    [SortDateRange.LAST_MONTH]: "Last Month",
+};
 
 type Props = RouteProps;
 
 interface AnalyticsState {
     productClicks: Array<any>;
     totalClicks: ProductClicksResponse;
+    overviewDateRange: SortDateRange;
+    productDateRange: SortDateRange;
 }
 
 class Analytics extends React.Component<Props, AnalyticsState> {
@@ -19,7 +36,9 @@ class Analytics extends React.Component<Props, AnalyticsState> {
     state: AnalyticsState = {
         productClicks: [],
         totalClicks: null,
-    }
+        overviewDateRange: SortDateRange.THIS_WEEK,
+        productDateRange: SortDateRange.THIS_WEEK,
+    };
 
     async componentWillMount() {
         const [
@@ -36,8 +55,17 @@ class Analytics extends React.Component<Props, AnalyticsState> {
     render() {
         return (
             <div className="analytics">
-                <div className="overview-title">
-                    Overview
+                <div className="click-details">
+                    <div className="overview-title">
+                        Overview
+                    </div>
+                    <Select value={this.state.overviewDateRange} onChange={this._onOverviewDateRangeSelect}>
+                        {Object.keys(SortDateRange).map(dateRange => (
+                            <option value={SortDateRange[dateRange]}>
+                                {SortDateRangeDisplay[SortDateRange[dateRange]]}
+                            </option>
+                        ))}
+                    </Select>
                 </div>
                 {this.state.totalClicks && (
                     <table>
@@ -53,8 +81,17 @@ class Analytics extends React.Component<Props, AnalyticsState> {
                         </tr>
                     </table>
                 )}
-                <div className="overview-title">
-                    Clicks by Product
+                <div className="click-details">
+                    <div className="overview-title">
+                        Clicks by Product
+                    </div>
+                    <Select value={this.state.productDateRange} onChange={this._onProductDateRangeSelect}>
+                        {Object.keys(SortDateRange).map(dateRange => (
+                            <option value={SortDateRange[dateRange]}>
+                                {SortDateRangeDisplay[SortDateRange[dateRange]]}
+                            </option>
+                        ))}
+                    </Select>
                 </div>
                 <table>
                     <tr className="header">
@@ -70,6 +107,20 @@ class Analytics extends React.Component<Props, AnalyticsState> {
                 </table>
             </div>
         );
+    }
+
+    private _onOverviewDateRangeSelect = async (overviewDateRange) => {
+        this.setState({ overviewDateRange });
+
+        const totalClicks = await this.context.api.getTrackedClicks(overviewDateRange);
+        this.setState({ totalClicks });
+    }
+
+    private _onProductDateRangeSelect = async (productDateRange) => {
+        this.setState({ productDateRange });
+
+        const productClicks = await this.context.api.getTrackedProductClicks(productDateRange);
+        this.setState({ productClicks });
     }
 }
 
