@@ -2,8 +2,10 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 
 import { Person } from "../../api/models";
+import { LinkButton } from "../../components/button";
 import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
+import { SocialIcon, SocialIconType } from "../../components/icon";
 import Image from "../../components/image";
 import Sidebar from "../../components/sidebar";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
@@ -97,7 +99,15 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                                     </div>
                                 )}
                                 {/* <div className="social-container">
-                                    TODO: SOCIAL links
+                                    {influencer.blog_url && (
+                                        <LinkButton href={influencer.blog_url} target="_blank"><SocialIcon icon={SocialIconType.INSTAGRAM} /></LinkButton>
+                                    )}
+                                    {influencer.instagram_url && (
+                                        <LinkButton href={influencer.instagram_url} target="_blank"><SocialIcon icon={SocialIconType.INSTAGRAM} /></LinkButton>
+                                    )}
+                                    {influencer.youtube_url && (
+                                        <LinkButton href={influencer.youtube_url} target="_blank"><SocialIcon icon={SocialIconType.INSTAGRAM} /></LinkButton>
+                                    )}
                                 </div> */}
                             </SidebarSection>
                             {profile.top_posts && profile.top_posts.length > 0 &&

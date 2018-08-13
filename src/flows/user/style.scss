@@ -189,6 +189,11 @@
         padding: $base-spacing;
         margin-top: $base-spacing * 3;
         border-top: $standard-border-width solid $standard-border-color;
+        display: flex;
+
+        .link-button {
+            margin-right: $base-spacing;
+        }
     }
 }
 

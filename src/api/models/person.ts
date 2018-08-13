@@ -15,4 +15,7 @@ export default class Person {
     follower_count: number;
     following_count: number;
     followed: boolean;
+    youtube_url: string | null;
+    instagram_url: string | null;
+    blog_url: string | null;
 }

@@ -5,6 +5,9 @@ import * as React from "react";
 import { browserHistory, Route, Router } from "react-router-dom";
 import "url-search-params-polyfill";
 
+import Cookies from "../util/cookies";
+import { generateUUID } from "../util/uuid";
+
 // To add to window
 if (!(window as any).Promise) {
   (window as any).Promise = Promise;
@@ -21,6 +24,10 @@ export default class AppContainer extends React.Component {
             const state = { ...this._history.location.state };
             delete state.modal;
             this._history.replace({ ...this._history.location, state });
+        }
+
+        if (!Cookies.cookieExists("sessionid") || !Cookies.getCookie("sessionid")) {
+            Cookies.setCookie("sessionid", generateUUID());
         }
     }
 
