@@ -82,4 +82,5 @@ export enum SocialIconType {
     TWITTER = "https://twitter.com/trendnine",
     INSTAGRAM = "https://www.instagram.com/trendnine/",
     PINTEREST = "https://www.pinterest.com/trendnine/",
+    YOUTUBE = "https://www.youtube.com",
 }

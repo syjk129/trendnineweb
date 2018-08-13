@@ -189,6 +189,11 @@
         padding: $base-spacing;
         margin-top: $base-spacing * 3;
         border-top: $standard-border-width solid $standard-border-color;
+        display: flex;
+
+        .link-button {
+            margin-right: $base-spacing;
+        }
     }
 }
 
@@ -285,6 +290,11 @@
 
     .overview-title {
         font-size: $font-size-3;
-        margin-bottom: $base-spacing;
+    }
+
+    .click-details {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
     }
 }

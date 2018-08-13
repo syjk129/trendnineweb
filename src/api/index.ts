@@ -24,6 +24,7 @@ import {
 import {
     ProductClicksResponse,
 } from "./responses";
+import Cookies from "../util/cookies";
 
 export interface ApiOptions {
     apiUrl: string;
@@ -354,6 +355,7 @@ export default class Api {
         try {
             const token = localStorage.getItem("refresh_token");
             const response = await fetch(url, {
+                credentials: "include",
                 method: "POST",
                 body: JSON.stringify({ refresh: token }),
                 headers: {
@@ -383,6 +385,7 @@ export default class Api {
             const response = await fetch(url, {
                 method: "GET",
                 headers: this._getRequestHeader(),
+                credentials: "include",
             });
 
             const responseJson = await response.json();
@@ -419,7 +422,7 @@ export default class Api {
             const response = await fetch(url, {
                 method: "GET",
                 headers: this._getRequestHeader(),
-                mode: "cors",
+                credentials: "include",
             });
 
             const responseJson = await response.json();
@@ -468,9 +471,9 @@ export default class Api {
             const requestObject = request ? Object.assign(request, this._getRequestHeader(noAuth)) : this._getRequestHeader(noAuth);
             const response = await fetch(url, {
                 method,
+                credentials: "include",
                 headers: this._getRequestHeader(noAuth),
                 body: JSON.stringify(requestObject),
-                mode: "cors",
             });
 
             const responseJson = await response.json();
@@ -492,11 +495,7 @@ export default class Api {
 
     private _getRequestHeader(noAuth?: boolean) {
         const token = localStorage.getItem(tokenName);
-        let session = localStorage.getItem("session_token");
-        if (!session || session === "undefined") {
-            session = generateUUID();
-            localStorage.setItem("session_token", session);
-        }
+        const session = Cookies.getCookie("sessionid");
 
         let jwtToken = "";
 
@@ -506,9 +505,8 @@ export default class Api {
             if (exp > current) {
                 jwtToken = `JWT ${token}`;
             }
-        } else if ((!token || token === "undefined") && session) {
-            jwtToken = `JWT ${session}`;
         }
+
         if (jwtToken && token && !noAuth) {
             return {
                 "Accept": "application/json",
@@ -521,11 +519,4 @@ export default class Api {
             "Content-Type": "application/json",
         };
     }
-}
-
-function generateUUID() {
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-        const r = Math.random() * 16 | 0, v = c === "x" ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
 }
