@@ -1,5 +1,6 @@
 import "whatwg-fetch";
 
+import Cookies from "../util/cookies";
 import {
     Brand,
     Category,
@@ -22,9 +23,13 @@ import {
 } from "./errors";
 
 import {
+    PostRequest,
+    PresignedPostRequest,
+} from "./requests";
+
+import {
     ProductClicksResponse,
 } from "./responses";
-import Cookies from "../util/cookies";
 
 export interface ApiOptions {
     apiUrl: string;
@@ -100,6 +105,16 @@ export default class Api {
         return this._GET_PAGINATION(url, nextToken);
     }
 
+    // Posts
+
+    getPresignedPost(request: PresignedPostRequest): Promise<void> {
+        return this._POST("/api/v1/s3_presigned_post", request);
+    }
+
+    createPost(request: PostRequest): Promise<void> {
+        return this._POST("/api/v1/posts", request);
+    }
+
     getLatestPosts(queryString?: string, nextToken?: string): Promise<Post> {
         let url = "/api/v1/posts";
         if (queryString) {
@@ -119,6 +134,8 @@ export default class Api {
         }
         return this._GET_PAGINATION(url, nextToken);
     }
+
+    // Products
 
     getLatestProducts(queryString?: string, nextToken?: string): Promise<Products> {
         let url = "/api/v1/marketplace/products";

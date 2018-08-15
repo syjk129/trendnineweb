@@ -1,0 +1,10 @@
+@import "../../styles/variables";
+
+.cms {
+    max-width: $max-content-width;
+    margin: auto;
+
+    table {
+        width: 100%;
+    }
+}
