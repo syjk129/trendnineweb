@@ -1,0 +1,81 @@
+@import "../../../styles/variables";
+
+.image-upload {
+    width: 500px;
+    display: flex;
+
+    .file-upload,
+    .file-description {
+        display: inline-block;
+        width: 50%;
+    }
+
+    .file-upload {
+        margin-right: $base-spacing * 2;
+    }
+
+    .image-preview-dnd {
+        border: 2px solid #000;
+        border-style: dotted;
+        position: relative;
+        margin-bottom: $base-spacing;
+
+        &::before {
+            content: "";
+            display: block;
+            padding-top: 100%;
+        }
+
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: scale-down;
+        }
+
+        .dnd-text {
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            text-align: center;
+            font-size: $font-size-2;
+        }
+    }
+
+    .image-upload-button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .file-description {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .alt-text-label {
+            flex-grow: 1;
+            height: 100%;
+
+            textarea {
+                height: calc(100% - #{$line-height-1} - #{$base-spacing});
+            }
+        }
+
+        .image-upload-modal-actions {
+            display: flex;
+            width: 100%;
+            min-height: 45px;
+
+            button {
+                &:first-of-type {
+                    margin-right: $base-spacing;
+                }
+            }
+        }
+    }
+}

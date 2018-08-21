@@ -230,7 +230,7 @@ export default class App extends React.Component<Props, AppState> {
                             <Route path="/logout" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                             <Route path="/register" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                             <PrivateRoute path="/cms" component={CMSView} />
-                            <PrivateRoute path="/upload/:postType/:actionType?" component={PostUpload} />
+                            <PrivateRoute path="/upload/:postType/:postId?" component={PostUpload} />
                             {/* <Route path="/" component={Discover} /> */}
                         </Switch>
                         {isModal && (

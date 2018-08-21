@@ -6,7 +6,7 @@ export interface PostField {
 }
 
 export default function getUploadRequirements(postType: PostType): Array<PostField> {
-    switch (postType) {
+    switch (postType.toLowerCase()) {
         case PostType.ARTICLE:
             return [
                 {
@@ -34,7 +34,11 @@ export default function getUploadRequirements(postType: PostType): Array<PostFie
                     required: true,
                 },
                 {
-                    type: PostFieldType.PREVIEW_IMAGE,
+                    type: PostFieldType.COVER_IMAGE,
+                    required: true,
+                },
+                {
+                    type: PostFieldType.CTA_URL,
                     required: true,
                 },
             ];
@@ -72,8 +76,12 @@ export default function getUploadRequirements(postType: PostType): Array<PostFie
                     type: PostFieldType.PREVIEW_IMAGE,
                     required: true,
                 },
+                {
+                    type: PostFieldType.PRODUCT_TAGS,
+                    required: true,
+                },
             ];
-        case PostType.EDIT:
+        case PostType.RESULT:
             return [
                 {
                     type: PostFieldType.TITLE,
@@ -105,6 +113,6 @@ export default function getUploadRequirements(postType: PostType): Array<PostFie
                 },
             ];
         default:
-            throw new Error("Unsupported post type");
+            throw new Error(`Unsupported post type: ${postType}`);
     }
 }

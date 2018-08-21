@@ -88,7 +88,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                         {this._isManager ? (
                             <>
                                 <Button onClick={() => this._createNew(PostType.ARTICLE)}>Create New Article</Button>
-                                <Button onClick={() => this._createNew(PostType.EDIT)}>Create New Edit</Button>
+                                <Button onClick={() => this._createNew(PostType.RESULT)}>Create New Result</Button>
                             </>
                         ) : (
                             <Button onClick={() => this._createNew(PostType.BLOG)}>Create New Blog</Button>
@@ -97,7 +97,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                             <tr>
                                 <th>{post.title}</th>
                                 <th>01/01/01</th>
-                                <th>Edit</th>
+                                {/* <th onClick={() => this._editPost(post)}>Edit</th> */}
                             </tr>
                         ))}
                     </table>
@@ -109,6 +109,10 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
     private _isManager: boolean;
     private _draft: PostDraft;
 
+    private _editPost = (post) => {
+        this.props.history.push(`/upload/blog/${post.id}`);
+    }
+
     private _createNew = (postType: PostType) => {
         switch (postType) {
             case PostType.ARTICLE:
@@ -117,7 +121,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
             case PostType.BLOG:
                 this.props.history.push("/upload/blog");
                 return;
-            case PostType.EDIT:
+            case PostType.RESULT:
                 this.props.history.push("/upload/editorial");
                 return;
         }
@@ -131,7 +135,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
             case PostType.BLOG:
                 this.props.history.push("/upload/blog");
                 return;
-            case PostType.EDIT:
+            case PostType.RESULT:
                 return;
         }
     }

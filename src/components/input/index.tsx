@@ -25,7 +25,7 @@ export enum InputTheme {
     DARK,
 }
 
-interface InputProps {
+export interface InputProps {
     id?: string;
     value?: string;
     className?: string;

@@ -1,14 +1,18 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import * as SparkMD5 from "spark-md5";
 import "whatwg-fetch";
 
 import { PresignedPostRequest } from "../../api/requests";
 import { AppContext } from "../../app";
+import Spinner from "../../components/spinner";
 import uploadImage from "../../util/uploadImage";
+import { generateUUID } from "../../util/uuid";
+
+import "./style.scss";
 
 interface ImageUploadButtonProps {
     className?: string;
+    id?: string;
     isProcessing: boolean;
     setProcessing(isProcessing: boolean): void;
     setImage(imageUrl: string): void;
@@ -19,22 +23,33 @@ export default class ImageUploadButton extends React.Component<ImageUploadButton
 
     componentWillMount() {
         this._buttonRef = React.createRef();
+        this._inputId = generateUUID();
     }
 
     render() {
+        let classes = "image-upload-button";
+        if (this.props.className) {
+            classes += ` ${this.props.className}`;
+        }
+
         return (
-            <input
-                className={this.props.className}
-                type="file"
-                onChange={this._uploadImage}
-                ref={this._buttonRef}
-            />
+            <>
+                <input
+                    id={this.props.id || this._inputId}
+                    className={classes}
+                    type="file"
+                    onChange={this._uploadImage}
+                    ref={this._buttonRef}
+                />
+                <label className="image-upload-button-label" htmlFor={this.props.id || this._inputId}>{this.props.isProcessing ? <Spinner flat noPadding /> : "Select File"}</label>
+            </>
         );
     }
 
     private _buttonRef: React.RefObject<HTMLInputElement>;
+    private _inputId: string;
 
-    private _uploadImage = async (event) => {
+    private _uploadImage = async () => {
         if (!this._buttonRef.current) {
             return;
         }
@@ -46,7 +61,7 @@ export default class ImageUploadButton extends React.Component<ImageUploadButton
 
         const imageFile = files.files[0];
         if (imageFile.size > 10000000) {
-            console.log("too big nigga");
+            console.log("too big");
         }
 
         const image = await uploadImage(imageFile, this._getPresignedPost);

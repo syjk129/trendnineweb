@@ -11,3 +11,9 @@
 .editor-input {
     padding: 0 $base-spacing * 2;
 }
+
+.post-editor {
+    .ql-editor {
+        min-height: 500px;
+    }
+}

@@ -120,3 +120,24 @@
         display: inline-block;
     }
 }
+
+.image-upload-button {
+    display: none;
+}
+
+.image-upload-button-label {
+    border: 1px solid $brand-color;
+    border-radius: $standard-border-radius;
+    padding: $base-spacing / 2 $base-spacing;
+    display: flex;
+    justify-content: center;
+    max-width: 70px;
+    text-align: center;
+
+    &:hover {
+        background-color: #000;
+        color: #fff;
+        border-color: #000;
+        cursor: pointer;
+    }
+}

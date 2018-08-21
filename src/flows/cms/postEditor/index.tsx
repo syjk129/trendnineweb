@@ -7,15 +7,45 @@ import "react-quill/dist/quill.snow.css";
 import "./style.scss";
 
 import { PresignedPostRequest } from "../../../api/requests";
-import uploadImage from "../../../util/uploadImage";
+import ImageUploadModal from "../../flowComponents/imageUploadModal";
+
+// Custom Image Blot to add alt text to images
+const BlockEmbed = Quill.import("blots/block/embed");
+class ImageBlot extends BlockEmbed {
+    static create(value) {
+        let node = super.create();
+        node.setAttribute("alt", value.alt);
+        node.setAttribute("src", value.src);
+        return node;
+    }
+
+    static value(node) {
+        return {
+            alt: node.getAttribute("alt"),
+            src: node.getAttribute("src"),
+        };
+    }
+}
+ImageBlot.blotName = "image";
+ImageBlot.tagName = "img";
+Quill.register(ImageBlot);
 
 interface PostEditorProps {
     editorState: string;
     onChange(editorState: string): void;
     getPresignedPost(request: PresignedPostRequest): void;
+    setEditorRef(ref: any): void;
 }
 
-export default class PostEditor extends React.Component<PostEditorProps> {
+interface PostEditorState {
+    modalOpen: boolean;
+}
+
+export default class PostEditor extends React.Component<PostEditorProps, PostEditorState> {
+    state: PostEditorState = {
+        modalOpen: false,
+    };
+
     componentWillMount() {
         this._modules = this._getModules();
         this._formats = this._getFormats();
@@ -31,14 +61,22 @@ export default class PostEditor extends React.Component<PostEditorProps> {
 
     render() {
         return (
-            <ReactQuill
-                theme="snow"
-                modules={this._modules}
-                formats={this._formats}
-                value={this.props.editorState}
-                ref={(el) => this._reactQuillRef = el}
-                onChange={this.props.onChange}
-            />
+            <>
+                <ReactQuill
+                    className="post-editor"
+                    theme="snow"
+                    modules={this._modules}
+                    formats={this._formats}
+                    value={this.props.editorState}
+                    ref={(el) => this._reactQuillRef = el}
+                    onChange={this.props.onChange}
+                />
+                <ImageUploadModal
+                    modalOpen={this.state.modalOpen}
+                    setImage={this._insertImage}
+                    close={this._closeModal}
+                />
+            </>
         );
     }
 
@@ -50,16 +88,22 @@ export default class PostEditor extends React.Component<PostEditorProps> {
     private _attachQuillRef = () => {
         if (!this._reactQuillRef || typeof this._reactQuillRef.getEditor !== "function") return;
         this._quillRef = this._reactQuillRef.getEditor();
+        this.props.setEditorRef(this._quillRef);
     }
 
-    private _uploadImage = async () => {
-        // TODO: error handling
+    private _uploadImageHandler = async () => {
         if (!this._quillRef) return;
+        this.setState({ modalOpen: true });
+    }
 
+    private _insertImage = (image: string, altText: string) => {
         const range = this._quillRef.getSelection();
         const position = range ? range.index : 0;
-        this._quillRef.insertEmbed(position, "image", "https://trendnine.s3.amazonaws.com/images/2018/08/164b87a3c8c04d959cbd10077260587a.jpg");
-        // TODO: modal handler for upload image?
+        this._quillRef.insertEmbed(position, "image", { alt: altText, src: image });
+    }
+
+    private _closeModal = () => {
+        this.setState({ modalOpen: false });
     }
 
     private _getModules = () => {
@@ -73,7 +117,7 @@ export default class PostEditor extends React.Component<PostEditorProps> {
                     ["clean"],
                 ],
                 handlers: {
-                    image: this._uploadImage,
+                    image: this._uploadImageHandler,
                 },
             },
             imageResize: {},
