@@ -2,6 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import IconButton from "./iconButton";
+import ImageUploadButton from "./imageUploadButton";
 import LinkButton from "./linkButton";
 
 import { ButtonSize, ButtonVariant } from "./types";
@@ -95,5 +96,6 @@ export {
     ButtonSize,
     ButtonVariant,
     IconButton,
+    ImageUploadButton,
     LinkButton,
 };

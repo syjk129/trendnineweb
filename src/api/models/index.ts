@@ -8,8 +8,10 @@ import Pagination from "./pagination";
 import Person from "./person";
 import Post from "./post";
 import PostPreview from "./post-preview";
+import PostTagType from "./post-tag-type";
 import Posts from "./posts";
 import Product from "./product";
+import ProductSearchResult from "./product-search-result";
 import Products from "./products";
 import Retailer from "./retailer";
 import Tag from "./tag";
@@ -25,8 +27,10 @@ export {
     Person,
     Post,
     PostPreview,
+    PostTagType,
     Posts,
     Product,
+    ProductSearchResult,
     Products,
     Retailer,
     Tag,

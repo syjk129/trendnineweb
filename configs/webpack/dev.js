@@ -36,7 +36,7 @@ module.exports = merge(commonConfig, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
-        "API_URL": JSON.stringify("https://api.trendnine.com")
+        "API_URL": JSON.stringify("https://backend-alpha.trendnine.com")
     })
   ],
 });

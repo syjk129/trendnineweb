@@ -2,9 +2,24 @@ import * as React from "react";
 
 import "./style.scss";
 
-export default function Spinner() {
+interface SpinnerProps {
+    noPadding?: boolean;
+    flat?: boolean;
+}
+
+export default function Spinner({ flat, noPadding }: SpinnerProps) {
+    let classes;
+    if (flat) {
+        classes = "flat-spinner";
+    } else {
+        classes = "spinner";
+    }
+
+    if (noPadding) {
+        classes += " no-padding";
+    }
     return (
-        <div className="spinner" />
+        <div className={classes}><div></div><div></div><div></div><div></div></div>
     );
 }
 

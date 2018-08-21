@@ -1,0 +1,43 @@
+@import "../../../styles/variables";
+
+.post-upload {
+    max-width: $max-content-width;
+    margin: auto;
+    padding-top: $page-spacing;
+
+    .post-upload-header {
+        display: flex;
+        border-bottom: 1px solid $standard-border-color;
+        padding-bottom: $base-spacing * 2;
+        margin-bottom: $base-spacing * 2;
+
+        button:first-of-type {
+            margin-right: $base-spacing;
+        }
+    }
+
+    .post-upload-select {
+        .checkbox-container {
+            display: inline-block;
+            width: calc(50% - #{$base-spacing * 3});
+        }
+    }
+
+    .form-field {
+        margin-bottom: $base-spacing * 2;
+
+        label {
+            font-size: $font-size-2;
+            margin-bottom: $base-spacing;
+            display: block;
+        }
+    }
+
+    .style-occasion-tag {
+        display: flex;
+
+        .form-field {
+            width: 50%;
+        }
+    }
+}

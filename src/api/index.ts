@@ -1,5 +1,6 @@
 import "whatwg-fetch";
 
+import Cookies from "../util/cookies";
 import {
     Brand,
     Category,
@@ -11,6 +12,7 @@ import {
     Post,
     PostPreview,
     Posts,
+    PostTagType,
     Products,
     Retailer,
     Tag,
@@ -22,9 +24,16 @@ import {
 } from "./errors";
 
 import {
+    ArticleRequest,
+    PostRequest,
+    PresignedPostRequest,
+    ResultRequest,
+} from "./requests";
+
+import {
     ProductClicksResponse,
 } from "./responses";
-import Cookies from "../util/cookies";
+import { PostType } from "../flows/cms/types";
 
 export interface ApiOptions {
     apiUrl: string;
@@ -100,6 +109,28 @@ export default class Api {
         return this._GET_PAGINATION(url, nextToken);
     }
 
+
+    // Posts
+
+
+    getPresignedPost(request: PresignedPostRequest): Promise<void> {
+        return this._POST("/api/v1/s3_presigned_post", request);
+    }
+
+    updatePost(postId: string, request: PostRequest): Promise<void> {
+        return this._PUT(`/api/v1/posts/${postId}`, request);
+    }
+
+    createPost(postType: PostType, request: PostRequest | ArticleRequest | ResultRequest): Promise<void> {
+        switch (postType) {
+            case PostType.ARTICLE:
+            case PostType.RESULT:
+                return this._POST("/api/v1/featured", request);
+            case PostType.BLOG:
+            return this._POST("/api/v1/posts", request);
+        }
+    }
+
     getLatestPosts(queryString?: string, nextToken?: string): Promise<Post> {
         let url = "/api/v1/posts";
         if (queryString) {
@@ -120,6 +151,26 @@ export default class Api {
         return this._GET_PAGINATION(url, nextToken);
     }
 
+    getPostTags(postTagType: PostTagType): Promise<void> {
+        return this._GET(`/api/v1/posts/tags?type=${postTagType}`);
+    }
+
+    getPost(postId: string): Promise<Post> {
+        return this._GET(`/api/v1/posts/${postId}`);
+    }
+
+    getRelatedPosts(postId: string): Promise<Post> {
+        return this._GET(`/api/v1/posts/${postId}/related?page_size=10`);
+    }
+
+    getPostsForProduct(productId: string): Promise<Array<PostPreview>> {
+        return this._GET(`/api/v1/marketplace/products/${productId}/posts`);
+    }
+
+
+    // Products
+
+
     getLatestProducts(queryString?: string, nextToken?: string): Promise<Products> {
         let url = "/api/v1/marketplace/products";
         if (queryString) {
@@ -136,22 +187,6 @@ export default class Api {
         return this._GET_PAGINATION(url, nextToken);
     }
 
-    searchPosts(queryString?: string): Promise<Array<PostPreview>> {
-        let url = "/api/v1/posts/search";
-        if (queryString) {
-            url += `?keyword=${queryString}`;
-        }
-        return this._GET(url);
-    }
-
-    getPost(postId: string): Promise<Post> {
-        return this._GET(`/api/v1/posts/${postId}`);
-    }
-
-    getRelatedPosts(postId: string): Promise<Post> {
-        return this._GET(`/api/v1/posts/${postId}/related?page_size=10`);
-    }
-
     getProduct(productId: string): Promise<any> {
         return this._GET(`/api/v1/marketplace/products/${productId}`);
     }
@@ -160,8 +195,20 @@ export default class Api {
         return this._GET(`/api/v1/marketplace/products/${productId}/related?page_size=10`);
     }
 
-    getPostsForProduct(productId: string): Promise<Array<PostPreview>> {
-        return this._GET(`/api/v1/marketplace/products/${productId}/posts`);
+
+    // Search
+
+
+    searchProducts(queryString: string): Promise<Array<any>> {
+        return this._GET(`/api/v1/products/search${queryString}`);
+    }
+
+    searchPosts(queryString?: string): Promise<Array<PostPreview>> {
+        let url = "/api/v1/posts/search";
+        if (queryString) {
+            url += `?keyword=${queryString}`;
+        }
+        return this._GET(url);
     }
 
     getFeaturedTrendnines(pageSize?: number): Promise<Array<FeaturedInfluencer>> {
@@ -318,6 +365,8 @@ export default class Api {
         };
         return this._PUT(`/api/v1/posts/product_tags/${post_id}`, request);
     }
+
+    // Tracking
 
     trackClickFromPost(postId: string, productId: string): Promise<void> {
         return this._POST(`/api/v1/shopnow/products/${productId}?ref_post_id=${postId}`);

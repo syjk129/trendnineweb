@@ -13,6 +13,8 @@ import Spinner, { SpinnerContainer } from "../components/spinner";
 import AboutUs from "../flows/about";
 import Auth from "../flows/auth";
 import BrandView from "../flows/brands";
+import CMSView from "../flows/cms";
+import PostUpload from "../flows/cms/postUpload";
 import ContactUs from "../flows/contact";
 import Discover from "../flows/discover";
 import TermsAndConditions from "../flows/legal";
@@ -30,6 +32,7 @@ import User from "../flows/user";
 import ErrorBoundary from "./errorBoundary";
 import Footer from "./footer";
 import Header from "./header";
+import PrivateRoute from "./privateRoute";
 import { AppContext, AppContextTypes } from "./types";
 
 import "../styles/base.scss";
@@ -226,6 +229,8 @@ export default class App extends React.Component<Props, AppState> {
                             <Route path="/onboarding" render={(props) => <OnboardingView {...props} close={this._redirectCloseModal} />}/>
                             <Route path="/logout" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                             <Route path="/register" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
+                            <PrivateRoute path="/cms" component={CMSView} />
+                            <PrivateRoute path="/upload/:postType/:postId?" component={PostUpload} />
                             {/* <Route path="/" component={Discover} /> */}
                         </Switch>
                         {isModal && (

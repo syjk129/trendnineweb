@@ -1,0 +1,39 @@
+@import "../../../styles/variables.scss";
+
+.product-tag-modal {
+    width: calc(100% - #{$page-spacing * 4});
+    height: calc(100% - #{$page-spacing * 4});
+    max-width: 800px;
+
+    .product-search-modal-container {
+        display: flex;
+        height: 100%;
+    }
+
+    .product-search {
+        flex-grow: 1;
+        height: 100%;
+    }
+
+    .tagged-products {
+        width: 250px;
+        flex-shrink: 0;
+    }
+
+    .product-search-results {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: $base-spacing * 2;
+        height: calc(100% - 80px);
+        overflow-y: scroll;
+    }
+
+    .product-search-result {
+        display: flex;
+
+        .product-image {
+            flex-shrink: 0;
+            width: 50%;
+        }
+    }
+}

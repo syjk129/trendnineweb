@@ -3,6 +3,7 @@ const {resolve} = require('path');
 const {CheckerPlugin} = require('awesome-typescript-loader');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   resolve: {
@@ -33,6 +34,11 @@ module.exports = {
           'sass-loader',
         ],
       },
+        {
+            test: /\.js$/,
+            exclude: /node_modules(?!\/quill-image-drop-module|quill-image-resize-module)/,
+            loader: 'babel-loader',
+      }
     ],
   },
   output: {
@@ -45,6 +51,9 @@ module.exports = {
     new CheckerPlugin(),
     new StyleLintPlugin(),
     new HtmlWebpackPlugin({template: 'index.html.ejs',}),
+    new webpack.ProvidePlugin({
+        'window.Quill': 'quill'
+    })
   ],
   externals: {
     'react': 'React',
