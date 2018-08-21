@@ -49,10 +49,6 @@ export default function getUploadRequirements(postType: PostType): Array<PostFie
                     required: true,
                 },
                 {
-                    type: PostFieldType.CAPTION,
-                    required: true,
-                },
-                {
                     type: PostFieldType.TAGS,
                     required: false,
                 },
@@ -74,7 +70,7 @@ export default function getUploadRequirements(postType: PostType): Array<PostFie
                 },
                 {
                     type: PostFieldType.PREVIEW_IMAGE,
-                    required: true,
+                    required: false,
                 },
                 {
                     type: PostFieldType.PRODUCT_TAGS,
