@@ -69,6 +69,9 @@ export default function Button({
         case ButtonSize.SMALL:
             classes += " button-small";
             break;
+        case ButtonSize.VERY_SMALL:
+            classes += " button-very-small";
+            break;
     }
 
     if (white) {

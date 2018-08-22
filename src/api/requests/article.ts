@@ -7,4 +7,5 @@ export default interface ArticleRequest {
     style_tag_list: Array<string>;
     cover_image_url: string;
     priority_level: number;
+    cta_url: string;
 }

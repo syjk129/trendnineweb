@@ -14,6 +14,7 @@ import "./style.scss";
 interface ProductSearchModalProps {
     selectedProducts: Array<ProductSearchTag>;
     selectProduct(product: ProductSearchTag): void;
+    removeProduct(product: ProductSearchTag): void;
 }
 
 interface ProductSearchModalState {
@@ -74,6 +75,7 @@ export default class ProductSearchModal extends React.Component<ProductSearchMod
                                 {this.props.selectedProducts.map(selectedProduct => (
                                     <div className="tagged-product">
                                         {selectedProduct.title}
+                                        <Button inline onClick={() => this.props.removeProduct(selectedProduct)}>Remove</Button>
                                     </div>
                                 ))}
                             </div>

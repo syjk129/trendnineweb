@@ -1,5 +1,6 @@
 import "whatwg-fetch";
 
+import { PostType } from "../flows/cms/types";
 import Cookies from "../util/cookies";
 import {
     Brand,
@@ -33,7 +34,6 @@ import {
 import {
     ProductClicksResponse,
 } from "./responses";
-import { PostType } from "../flows/cms/types";
 
 export interface ApiOptions {
     apiUrl: string;
@@ -129,6 +129,14 @@ export default class Api {
             case PostType.BLOG:
             return this._POST("/api/v1/posts", request);
         }
+    }
+
+    updateFeaturedPost(postId: string, request: ArticleRequest | ResultRequest): Promise<void> {
+        return this._PUT(`/api/v1/featured/${postId}`, request);
+    }
+
+    getFeaturedPosts(postType?: PostType): Promise<void> {
+        return this._GET(`/api/v1/featured${postType ? `?type=${postType}` : ""}`);
     }
 
     getLatestPosts(queryString?: string, nextToken?: string): Promise<Post> {

@@ -34,7 +34,6 @@ interface PostEditorProps {
     editorState: string;
     onChange(editorState: string): void;
     getPresignedPost(request: PresignedPostRequest): void;
-    setEditorRef(ref: any): void;
 }
 
 interface PostEditorState {
@@ -88,7 +87,6 @@ export default class PostEditor extends React.Component<PostEditorProps, PostEdi
     private _attachQuillRef = () => {
         if (!this._reactQuillRef || typeof this._reactQuillRef.getEditor !== "function") return;
         this._quillRef = this._reactQuillRef.getEditor();
-        this.props.setEditorRef(this._quillRef);
     }
 
     private _uploadImageHandler = async () => {
@@ -110,7 +108,7 @@ export default class PostEditor extends React.Component<PostEditorProps, PostEdi
         return {
             toolbar: {
                 container: [
-                    [{ "header": [1, 2, false] }],
+                    [{ "header": [1, 2, 3, false] }],
                     ["bold", "italic", "underline", "strike", "blockquote"],
                     [{"list": "ordered"}, {"list": "bullet"}, {"indent": "-1"}, {"indent": "+1"}],
                     ["link", "image"],

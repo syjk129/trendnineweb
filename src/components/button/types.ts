@@ -8,6 +8,7 @@ export enum ButtonSize {
     FIT = "fit",
     WIDE = "wide",
     SMALL = "small",
+    VERY_SMALL = "very_small",
 }
 
 export interface ButtonProps {

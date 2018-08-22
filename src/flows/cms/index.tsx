@@ -2,8 +2,9 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
+import { ArticleRequest } from "../../api/requests";
 import { AppContext } from "../../app";
-import Button from "../../components/button";
+import Button, { ButtonSize, ButtonVariant } from "../../components/button";
 import RouteProps from "../routeProps";
 import { PostDraft, PostType } from "./types";
 
@@ -37,6 +38,9 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
         this._draft = JSON.parse(localStorage.getItem("post_draft")) as PostDraft;
 
         if (this._isManager) {
+            const content = await this.context.api.getFeaturedPosts();
+            const featured = content.filter(post => post.priority_level > 0);
+            this.setState({ uploads: content, featured });
             // set uploads as edit/articles
         } else {
             const content = await this.context.api.getPostsForUser(user.id);
@@ -53,25 +57,41 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
             <div className="cms">
                 {this._draft && (
                     <div className="draft">
-                        <p className="">
+                        <p className="draft-label">
                             You have an unfinished upload
                         </p>
-                        <Button onClick={this._editDraft}>Continue</Button>
+                        <Button variant={ButtonVariant.OUTLINE} onClick={this._editDraft}>Continue</Button>
                     </div>
                 )}
                 {this._isManager && (
                     <div className="list-container">
                         <h4>Featured Articles</h4>
                         <table>
-                            <tr>
-                                <th>Order</th>
-                                <th>Title</th>
-                                <th>Type</th>
-                                <th>Date</th>
-                                <th></th>
+                            <tr className="header">
+                                <th className="order">Order</th>
+                                <th className="title">Title</th>
+                                <th className="type">Type</th>
+                                <th className="actions"></th>
                             </tr>
                             {this.state.featured.map(post => (
                                 <tr>
+                                    <th className="order">
+                                        {post.priority_level > 1 && (
+                                            <div onClick={() => this._reorderFeature(post, true)}>Up</div>
+                                        )}
+                                        {post.priority_level}
+                                        {post.priority_level < this.state.featured.length && (
+                                            <div onClick={() => this._reorderFeature(post, false)}>Down</div>
+                                        )}
+                                    </th>
+                                    <th className="title">{post.title}</th>
+                                    <th className="type">{post.type}</th>
+                                    <th className="actions">
+                                        <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._toggleFeature(post)}>
+                                            {post.priority_level > 0 ? "Unfeature" : "Feature"}
+                                        </Button>
+                                        <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._editPost(post)}>Edit</Button>
+                                    </th>
                                 </tr>
                             ))}
                         </table>
@@ -79,25 +99,32 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                 )}
                 <div className="list-container">
                     <h4>Uploads</h4>
-                    <table>
-                        <tr>
-                            <th>Title</th>
-                            <th>Date</th>
-                            <th></th>
-                        </tr>
+                    <div className="create-new-container">
                         {this._isManager ? (
                             <>
-                                <Button onClick={() => this._createNew(PostType.ARTICLE)}>Create New Article</Button>
-                                <Button onClick={() => this._createNew(PostType.RESULT)}>Create New Result</Button>
+                                <Button inline size={ButtonSize.SMALL} onClick={() => this._createNew(PostType.ARTICLE)}>Create New Article</Button>
+                                <Button inline size={ButtonSize.SMALL} onClick={() => this._createNew(PostType.RESULT)}>Create New Result</Button>
                             </>
                         ) : (
-                            <Button onClick={() => this._createNew(PostType.BLOG)}>Create New Blog</Button>
+                            <Button inline size={ButtonSize.SMALL} onClick={() => this._createNew(PostType.BLOG)}>Create New Blog</Button>
                         )}
+                    </div>
+                    <table>
+                        <tr className="header">
+                            <th className="title">Title</th>
+                            <th>Date</th>
+                            <th className="actions"></th>
+                        </tr>
                         {this.state.uploads.map(post => (
                             <tr>
-                                <th>{post.title}</th>
+                                <th className="title">{post.title}</th>
                                 <th>01/01/01</th>
-                                {/* <th onClick={() => this._editPost(post)}>Edit</th> */}
+                                <th className="actions">
+                                    <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._toggleFeature(post)}>
+                                        {post.priority_level > 0 ? "Unfeature" : "Feature"}
+                                    </Button>
+                                    <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._editPost(post)}>Edit</Button>
+                                </th>
                             </tr>
                         ))}
                     </table>
@@ -113,7 +140,81 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
         this.props.history.push(`/upload/blog/${post.id}`);
     }
 
+    private _reorderFeature = (post, up) => {
+        const maxPriorityLevel = this.state.featured.reduce((level, current) => {
+            if (current.priority_level > level) {
+                return current.priority_level;
+            }
+            return level;
+        }, 0);
+        let priorityLevel;
+        if (post.priority_level === 0) {
+            priorityLevel = maxPriorityLevel + 1;
+        } else {
+            priorityLevel = up ? post.priority_level - 1 : post.priority_level + 1;
+        }
+        const swap = this.state.featured.find(f => f.priority_level === priorityLevel);
+        this._setPriorityLevel(post, priorityLevel);
+        if (swap) {
+            this._setPriorityLevel(swap, up ? swap.priority_level + 1 : swap.priority_level - 1);
+            this._swapPriority(post, swap);
+        }
+    }
+
+    private _swapPriority = (post1, post2) => {
+        const index1 = this.state.featured.findIndex(featured => featured.id === post1.id);
+        const index2 = this.state.featured.findIndex(featured => featured.id === post2.id);
+        const featured = this.state.featured;
+        featured[index1] = post2;
+        featured[index2] = post1;
+        this.setState({ featured });
+    }
+
+    private _setPriorityLevel = (post, priorityLevel) => {
+        let request;
+        if (post.type.toLowerCase() === PostType.ARTICLE) {
+            request = {
+                type: post.type,
+                title: post.title,
+                caption: post.caption,
+                content: post.content,
+                tag_list: post.tag_list,
+                occasion_tag_list: post.occasion_tag_list,
+                style_tag_list: post.style_tag_list,
+                cover_image_url: post.cover_image.original_image_url,
+                priority_level: priorityLevel,
+                cta_url: post.cta_url,
+            } as ArticleRequest;
+        }
+        this.context.api.updateFeaturedPost(post.id, request);
+        let featured = this.state.featured;
+        if (priorityLevel === 0) {
+            featured = this.state.featured.filter(featured => featured.id !== post.id);
+        } else if (!featured.find(f => f.id === post.id)) {
+            featured.push(post);
+        }
+        const uploads = this.state.uploads.map(upload => {
+            if (upload.id === post.id) {
+                const newUpload = upload;
+                newUpload.priority_level = priorityLevel;
+                return newUpload;
+            } else {
+                return upload;
+            }
+        });
+        this.setState({ uploads, featured });
+    }
+
+    private _toggleFeature = (post) => {
+        if (post.priority_level === 0) {
+            this._reorderFeature(post, true);
+        } else {
+            this._setPriorityLevel(post, 0);
+        }
+    }
+
     private _createNew = (postType: PostType) => {
+        localStorage.removeItem("post_draft");
         switch (postType) {
             case PostType.ARTICLE:
                 this.props.history.push("/upload/article");
@@ -128,14 +229,15 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
     }
 
     private _editDraft = () => {
-        console.log(this._draft);
         switch (this._draft.type) {
             case PostType.ARTICLE:
+                this.props.history.push("/upload/article");
                 return;
             case PostType.BLOG:
                 this.props.history.push("/upload/blog");
                 return;
             case PostType.RESULT:
+                this.props.history.push("/upload/result");
                 return;
         }
     }
