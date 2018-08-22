@@ -80,6 +80,12 @@
         }
     }
 
+    &.button-blank {
+        background-color: transparent;
+        border: none;
+        color: #000;
+    }
+
     &.button-small {
         font-size: $font-size-1;
     }

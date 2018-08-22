@@ -2,6 +2,7 @@ export enum ButtonVariant {
     PRIMARY = "primary",
     SECONDARY = "secondary",
     OUTLINE = "outline",
+    BLANK = "blank",
 }
 
 export enum ButtonSize {
