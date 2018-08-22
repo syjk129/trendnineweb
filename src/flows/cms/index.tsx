@@ -2,7 +2,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
-import { ArticleRequest, ResultRequest } from "../../api/requests";
+import { ArticleRequest } from "../../api/requests";
 import { AppContext } from "../../app";
 import Button, { ButtonSize, ButtonVariant } from "../../components/button";
 import RouteProps from "../routeProps";
@@ -90,7 +90,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                                         <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._toggleFeature(post)}>
                                             {post.priority_level > 0 ? "Unfeature" : "Feature"}
                                         </Button>
-                                        <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._editPost}>Edit</Button>
+                                        <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._editPost(post)}>Edit</Button>
                                     </th>
                                 </tr>
                             ))}
@@ -123,7 +123,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                                     <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._toggleFeature(post)}>
                                         {post.priority_level > 0 ? "Unfeature" : "Feature"}
                                     </Button>
-                                    <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._editPost}>Edit</Button>
+                                    <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._editPost(post)}>Edit</Button>
                                 </th>
                             </tr>
                         ))}
@@ -214,6 +214,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
     }
 
     private _createNew = (postType: PostType) => {
+        localStorage.removeItem("post_draft");
         switch (postType) {
             case PostType.ARTICLE:
                 this.props.history.push("/upload/article");

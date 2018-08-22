@@ -318,7 +318,7 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     private _onOccasionTagChange = (searchCheckbox: any) => {
         let selectedOccasions = this.state.selectedOccasions;
         if (selectedOccasions.some(value => value.id === searchCheckbox.id)) {
-            selectedOccasions.filter(value => value.id === searchCheckbox.id);
+            selectedOccasions = selectedOccasions.filter(value => value.id !== searchCheckbox.id);
         } else {
             selectedOccasions.push(searchCheckbox);
         }
@@ -330,7 +330,7 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     private _onStyleTagChange = (searchCheckbox: any) => {
         let selectedStyles = this.state.selectedStyles;
         if (selectedStyles.some(value => value.id === searchCheckbox.id)) {
-            selectedStyles.filter(value => value.id === searchCheckbox.id);
+            selectedStyles = selectedStyles.filter(value => value.id !== searchCheckbox.id);
         } else {
             selectedStyles.push(searchCheckbox);
         }
