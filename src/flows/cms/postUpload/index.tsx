@@ -199,7 +199,11 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                 {this._hasFieldType(PostFieldType.PRODUCT_TAGS) && (
                     <div className="form-field">
                         <label htmlFor="post-upload-product-tags">Products In this Post</label>
-                        <ProductSearchModal selectedProducts={this.state.productTags} selectProduct={this._selectProduct} />
+                        <ProductSearchModal
+                            selectedProducts={this.state.productTags}
+                            selectProduct={this._selectProduct}
+                            removeProduct={this._removeProduct}
+                        />
                     </div>
                 )}
                 {this._hasFieldType(PostFieldType.CONTENT) && (
@@ -297,6 +301,12 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
 
     private _hasFieldType = (postFieldType: PostFieldType) => {
         return this._postFields.some(postField => postField.type === postFieldType);
+    }
+
+    private _removeProduct = (product: ProductSearchResult) => {
+        let productTags = this.state.productTags;
+        productTags = productTags.filter(tag => tag.id !== product.id);
+        this.setState({ productTags });
     }
 
     private _selectProduct = (product: ProductSearchResult) => {
