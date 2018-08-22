@@ -56,17 +56,19 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     };
 
     async componentWillMount() {
-        this._postType = this.props.match.params.postType;
+        this._postType = this.props.match.params.postType.toLowerCase();
         this._postId = this.props.match.params.postId;
 
         // Redirect to cms page if post type doesn't exist
         if (!Object.keys(PostType).some(type => this._postType === PostType[type])) {
             this.props.history.push("/cms");
+            return;
         }
 
         this._postFields = getUploadRequirements(this._postType);
         const postDraft = JSON.parse(localStorage.getItem("post_draft")) as PostDraft;
-        if (this._postId) {
+
+        if (this._postId) { // Update Flow
             const post = await this.context.api.getPost(this._postId);
             const productTags = post.product_tags.map(tag => {
                 const product = post.products.find(product => product.id === tag.product_id);
@@ -99,9 +101,9 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                 coverImage: post.cover_image.original_image_url,
                 previewImage: this.state.previewImage,
             }));
-        } else if (postDraft) {
+        } else if (postDraft) { // Draft Flow
             this.setState({ ...postDraft });
-        } else {
+        } else { // Fresh Flow
             localStorage.setItem("post_draft", JSON.stringify({
                 type: this._postType,
                 title: this.state.title,
@@ -207,7 +209,6 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                             editorState={this.state.content}
                             onChange={this._onContentChange}
                             getPresignedPost={this._getPresignedPost}
-                            setEditorRef={this._setEditorRef}
                         />
                     </div>
                 )}
@@ -223,15 +224,6 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     private _postType: PostType;
     private _postId: string;
     private _postFields: Array<PostField>;
-    private _editorRef: any;
-
-    private _closeModal = () => {
-        this.setState({ modalOpen: false });
-    }
-
-    private _openModal = () => {
-        this.setState({ modalOpen: true });
-    }
 
     private _submit = () => {
         const productTags = this.state.productTags.map(product => ({
@@ -240,16 +232,6 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
             x_axis: 0,
             y_axis: 0,
         } as TagRequest));
-        let images = [];
-        if (this._editorRef) {
-            const htmlImages = this._editorRef.container.getElementsByTagName("img");
-            for (let i = 0; i < htmlImages.length; i++) {
-                if (htmlImages[i].src) {
-                    images.push(htmlImages[i].src);
-                }
-            }
-        }
-        images.unshift(this.state.coverImage);
 
         let request;
         switch (this._postType) {
@@ -266,7 +248,6 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                     cta_url: this.state.ctaUrl,
                     priority_level: 0,
                 } as ArticleRequest;
-                this.context.api.createPost(this._postType, request);
                 break;
             case PostType.BLOG:
                 request = {
@@ -278,11 +259,6 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                     occasion_tag_list: this.state.selectedOccasions.map(occasion => occasion.content),
                     product_tags: productTags,
                 } as PostRequest;
-                if (this._postId) {
-                    this.context.api.updatePost(this._postId, request);
-                } else {
-                    this.context.api.createPost(this._postType, request);
-                }
                 break;
             case PostType.RESULT:
                 request = {
@@ -296,8 +272,12 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                     cta_url: this.state.ctaUrl,
                     priority_level: 0,
                 } as ResultRequest;
-                this.context.api.createPost(this._postType, request);
                 break;
+        }
+        if (this._postId) {
+            this.context.api.updatePost(this._postId, request);
+        } else {
+            this.context.api.createPost(this._postType, request);
         }
         localStorage.removeItem("post_draft");
         this.props.history.push("/cms");
@@ -311,15 +291,6 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     }
 
     private _cancel = () => {
-        this.setState({
-            type: null,
-            title: "",
-            tags: null,
-            content: null,
-            coverImage: null,
-            previewImage: null,
-            processingCoverImage: false,
-        });
         localStorage.removeItem("post_draft");
         this.props.history.push("/cms");
     }
@@ -393,6 +364,14 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
         this._updateDraft({ ctaUrl });
     }
 
+    private _closeModal = () => {
+        this.setState({ modalOpen: false });
+    }
+
+    private _openModal = () => {
+        this.setState({ modalOpen: true });
+    }
+
     private _setCoverImageProcessing = (isProcessing: boolean) => {
         this.setState({ processingCoverImage: isProcessing });
     }
@@ -400,10 +379,6 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     private _setCoverImage = (coverImage: string, altText: string) => {
         this.setState({ coverImage });
         this._updateDraft({ coverImage });
-    }
-
-    private _setEditorRef = (ref: any) => {
-        this._editorRef = ref;
     }
 
     private _getPresignedPost = (request: PresignedPostRequest) => {

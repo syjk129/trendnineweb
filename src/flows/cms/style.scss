@@ -3,8 +3,77 @@
 .cms {
     max-width: $max-content-width;
     margin: auto;
+    padding-top: $page-spacing;
+    margin-bottom: $page-spacing;
 
     table {
         width: 100%;
+        border-collapse: collapse;
+    }
+
+    .draft {
+        padding: $base-spacing * 2;
+        width: 300px;
+        border: 1px solid $color-red-1;
+        border-radius: $standard-border-radius;
+
+        .draft-label {
+            font-size: $font-size-3;
+            margin-bottom: $base-spacing * 2;
+        }
+    }
+
+    .create-new-container {
+        margin-bottom: $base-spacing;
+
+        button {
+            margin-right: $base-spacing;
+        }
+    }
+
+    .list-container {
+        th {
+            font-weight: $font-weight-regular;
+            border-bottom: $standard-border-width solid $standard-border-color;
+
+            &:first-of-type {
+                padding-left: $base-spacing;
+            }
+
+            &:last-of-type {
+                padding-right: $base-spacing;
+            }
+        }
+
+        h4 {
+            font-size: $font-size-3;
+            font-weight: $font-weight-regular;
+        }
+
+        .header th {
+            font-weight: $font-weight-bold;
+        }
+
+        .order {
+            width: 80px;
+        }
+
+        .type {
+            width: 150px;
+        }
+
+        .title {
+            text-align: left;
+        }
+
+        .actions {
+            width: 200px;
+            text-align: right;
+            padding: $base-spacing 0;
+
+            button {
+                margin-left: $base-spacing;
+            }
+        }
     }
 }

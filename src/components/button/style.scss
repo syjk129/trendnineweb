@@ -84,6 +84,11 @@
         font-size: $font-size-1;
     }
 
+    &.button-very-small {
+        font-size: $font-size-1;
+        padding: $base-spacing / 4 $base-spacing / 2;
+    }
+
     &.button-wide {
         padding: 10px 50px;
     }
