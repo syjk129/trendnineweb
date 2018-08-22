@@ -23,6 +23,7 @@ export default function UserTabs({ user, userId, isSelf, profile, pathname, setC
     }
 
     const isInfluencer = user.auth_level === 2;
+    const isManager = user.auth_level >= 3;
 
     return (
         <div className={classes}>
@@ -101,6 +102,14 @@ export default function UserTabs({ user, userId, isSelf, profile, pathname, setC
                     <p>Analytics</p>
                 </NavLink>
             }
+            {isSelf && (isInfluencer || isManager) && (
+                <NavLink
+                    url="/cms"
+                    pathname={pathname}
+                >
+                    <p>CMS</p>
+                </NavLink>
+            )}
         </div>
     );
 }
