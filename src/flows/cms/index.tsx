@@ -18,6 +18,10 @@ interface CMSViewState {
     nextToken: string | null;
 }
 
+function formatDate(date: Date) {
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+}
+
 export default class CMSView extends React.Component<Props, CMSViewState> {
     static contextTypes: AppContext;
 
@@ -118,11 +122,13 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                         {this.state.uploads.map(post => (
                             <tr>
                                 <th className="title">{post.title}</th>
-                                <th>01/01/01</th>
+                                <th>{formatDate(new Date(post.created))}</th>
                                 <th className="actions">
-                                    <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._toggleFeature(post)}>
-                                        {post.priority_level > 0 ? "Unfeature" : "Feature"}
-                                    </Button>
+                                    {this._isManager && (
+                                        <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._toggleFeature(post)}>
+                                            {post.priority_level > 0 ? "Unfeature" : "Feature"}
+                                        </Button>
+                                    )}
                                     <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._editPost(post)}>Edit</Button>
                                 </th>
                             </tr>

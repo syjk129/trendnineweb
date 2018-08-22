@@ -131,6 +131,16 @@ export default class Api {
         }
     }
 
+    deletePost(postId: string, postType: PostType): Promise<void> {
+        switch (postType) {
+            case PostType.ARTICLE:
+            case PostType.RESULT:
+                return this._DELETE(`/api/v1/featured/${postId}`);
+            case PostType.BLOG:
+                return this._DELETE(`/api/v1/posts/${postId}`);
+        }
+    }
+
     updateFeaturedPost(postId: string, request: ArticleRequest | ResultRequest): Promise<void> {
         return this._PUT(`/api/v1/featured/${postId}`, request);
     }

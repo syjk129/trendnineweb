@@ -11,8 +11,12 @@
         padding-bottom: $base-spacing * 2;
         margin-bottom: $base-spacing * 2;
 
-        button:first-of-type {
+        button:not(:last-of-type) {
             margin-right: $base-spacing;
+        }
+
+        .delete-button {
+            color: $color-red-1;
         }
     }
 

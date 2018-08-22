@@ -125,6 +125,9 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
         return (
             <div className="post-upload">
                 <div className="post-upload-header">
+                    {this._postId && (
+                        <Button className="delete-button" variant={ButtonVariant.BLANK} onClick={this._delete}>Delete</Button>
+                    )}
                     <Button variant={ButtonVariant.OUTLINE} onClick={this._cancel}>Cancel</Button>
                     <Button onClick={this._submit}>{this._postId ? "Update Post" : "Create Post"}</Button>
                 </div>
@@ -288,10 +291,9 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     }
 
     private _delete = () => {
-        switch (this._postType) {
-            case PostType.ARTICLE:
-                break;
-        }
+        this.context.api.deletePost(this._postId, this._postType);
+        localStorage.removeItem("post_draft");
+        this.props.history.push("/cms");
     }
 
     private _cancel = () => {

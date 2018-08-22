@@ -57,6 +57,9 @@ export default function Button({
         case ButtonVariant.OUTLINE:
             classes += " button-outline";
             break;
+        case ButtonVariant.BLANK:
+            classes += " button-blank";
+            break;
         default:
             classes += " button-primary";
             break;
