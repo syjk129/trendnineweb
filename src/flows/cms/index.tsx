@@ -122,7 +122,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                         {this.state.uploads.map(post => (
                             <tr>
                                 <th className="title">{post.title}</th>
-                                <th>{formatDate(new Date(post.created)}</th>
+                                <th>{formatDate(new Date(post.created))}</th>
                                 <th className="actions">
                                     {this._isManager && (
                                         <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._toggleFeature(post)}>
