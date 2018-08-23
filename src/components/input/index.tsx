@@ -2,6 +2,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import { ChangeEvent } from "react";
 
+import { generateUUID } from "../../util/uuid";
 import "./style.scss";
 
 export enum InputType {
@@ -37,6 +38,7 @@ export interface InputProps {
     checked?: boolean;
     required?: boolean;
     autofocus?: boolean;
+    error?: string;
     onChange?(value: any): void;
     onEnterPress?(value: any): void;
 }
@@ -47,7 +49,7 @@ export default class Input extends React.Component<InputProps, never> {
     };
 
     render() {
-        const { className, variant, theme, autofocus } = this.props;
+        const { className, variant, theme, autofocus, error } = this.props;
 
         let classes = "";
 
@@ -77,20 +79,27 @@ export default class Input extends React.Component<InputProps, never> {
             classes += " button";
         }
 
+        const id = this.props.id || generateUUID();
+
         return (
-            <input
-                id={this.props.id}
-                className={classes}
-                value={this.props.value}
-                onChange={this._handleChange}
-                onKeyPress={this._handleKeyPress}
-                placeholder={this.props.placeholder}
-                disabled={this.props.disabled}
-                checked={this.props.checked}
-                type={this.props.type}
-                required={this.props.required}
-                autoFocus={autofocus}
-            />
+            <>
+                <input
+                    id={id}
+                    className={classes}
+                    value={this.props.value}
+                    onChange={this._handleChange}
+                    onKeyPress={this._handleKeyPress}
+                    placeholder={this.props.placeholder}
+                    disabled={this.props.disabled}
+                    checked={this.props.checked}
+                    type={this.props.type}
+                    required={this.props.required}
+                    autoFocus={autofocus}
+                />
+                {error && (
+                    <label className="input-error-msg" htmlFor={id}>{error}</label>
+                )}
+            </>
         );
     }
 

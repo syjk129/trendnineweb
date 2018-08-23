@@ -3,7 +3,7 @@
 .product-tag-modal {
     width: calc(100% - #{$page-spacing * 4});
     height: calc(100% - #{$page-spacing * 4});
-    max-width: 800px;
+    max-width: 1000px;
 
     .product-search-modal-container {
         display: flex;
@@ -39,6 +39,7 @@
                 width: 80px;
                 object-fit: scale-down;
                 margin-right: $base-spacing;
+                flex-shrink: 0;
             }
         }
 
