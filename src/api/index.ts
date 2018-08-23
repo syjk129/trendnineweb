@@ -456,7 +456,7 @@ export default class Api {
             });
 
             const responseJson = await response.json();
-            if (!response.ok) {
+            if (!response.ok && responseJson.code !== 1) {
                 if (!retry) {
                     await this.refreshToken();
                     return this._GET(path, true);
@@ -472,6 +472,7 @@ export default class Api {
             return responseJson.result;
         } catch (err) {
             this._apiOptions.setError(err);
+            return false;
         }
     }
 
@@ -493,7 +494,7 @@ export default class Api {
             });
 
             const responseJson = await response.json();
-            if (!response.ok) {
+            if (!response.ok && responseJson.code !== 1) {
                 if (!retry) {
                     await this.refreshToken();
                     return this._GET_PAGINATION(path, nextToken, true);
@@ -511,7 +512,8 @@ export default class Api {
                 nextToken: responseJson.next_token,
             };
         } catch (err) {
-            throw new Error(err);
+            this._apiOptions.setError(err);
+            return false;
         }
     }
 
@@ -544,7 +546,9 @@ export default class Api {
             });
 
             const responseJson = await response.json();
-            if (!response.ok) {
+            console.log(responseJson);
+            console.log(response);
+            if (!response.ok && responseJson.code !== 1) {
                 if (retry === undefined) {
                     await this.refreshToken();
                     return this._update(path, method, request, true);

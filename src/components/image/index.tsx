@@ -6,6 +6,7 @@ export enum ImageRatioVariant {
     SQUARE,
     CIRCLE,
     POST_COVER,
+    PRODUCT_IMAGE,
 }
 
 export enum ImageFitVariant {
@@ -120,6 +121,9 @@ export default class ImageComponent extends React.Component<ImageProps> {
         }
 
         switch (ratio) {
+            case ImageRatioVariant.PRODUCT_IMAGE:
+                classes += " product-image-ratio";
+                break;
             case ImageRatioVariant.POST_COVER:
                 classes += " post-cover-ratio";
                 break;

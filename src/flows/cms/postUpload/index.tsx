@@ -31,6 +31,7 @@ interface PostUploadState extends PostDraft {
     styles: Array<any>;
     occasions: Array<any>;
     images: Array<ImageRequest>;
+    errors: Array<any>;
 }
 
 export default class PostUpload extends React.Component<Props, PostUploadState> {
@@ -53,6 +54,7 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
         styles: [],
         occasions: [],
         images: [],
+        errors: [],
     };
 
     async componentWillMount() {
@@ -134,25 +136,44 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                 {this._hasFieldType(PostFieldType.TITLE) && (
                     <div className="form-field">
                         <label htmlFor="post-upload-title">Title*</label>
-                        <Input id="post-upload-title" value={this.state.title} placeholder="Title" onChange={this._onTitleChange} />
+                        <Input
+                            id="post-upload-title"
+                            value={this.state.title}
+                            placeholder="Title"
+                            onChange={this._onTitleChange}
+                            error={this.state.errors && this.state.errors["title"]}
+                        />
                     </div>
                 )}
                 {this._hasFieldType(PostFieldType.CAPTION) && (
                     <div className="form-field">
                         <label htmlFor="post-upload-caption">Caption*</label>
-                        <Input id="post-upload-caption" value={this.state.caption} placeholder="Caption" onChange={this._onCaptionChange} />
+                        <Input
+                            id="post-upload-caption"
+                            value={this.state.caption}
+                            placeholder="Caption"
+                            onChange={this._onCaptionChange}
+                            error={this.state.errors && this.state.errors["caption"]}
+                        />
                     </div>
                 )}
                 {this._hasFieldType(PostFieldType.CTA_URL) && (
                     <div className="form-field">
                         <label htmlFor="post-upload-cta">CTA url*</label>
-                        <Input id="post-upload-cta" value={this.state.ctaUrl} placeholder="Caption" onChange={this._onCtaUrlChange} />
+                        <Input
+                            id="post-upload-cta"
+                            value={this.state.ctaUrl}
+                            placeholder="Caption"
+                            onChange={this._onCtaUrlChange}
+                            error={this.state.errors && this.state.errors["cta_url"]}
+                        />
                     </div>
                 )}
                 {this._hasFieldType(PostFieldType.COVER_IMAGE) && (
                     <div className="form-field">
                         <label htmlFor="post-upload-cover">Cover Image*</label>
                         <Button onClick={this._openModal}>Add Cover Image</Button>
+                        <div className="form-error">{this.state.errors && this.state.errors["cover_image_url"]}</div>
                         {this.state.coverImage}
                     </div>
                 )}
@@ -207,11 +228,13 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                             selectProduct={this._selectProduct}
                             removeProduct={this._removeProduct}
                         />
+                        <div className="form-error">{this.state.errors && this.state.errors["product_tags"]}</div>
                     </div>
                 )}
                 {this._hasFieldType(PostFieldType.CONTENT) && (
                     <div className="form-field">
                         <label htmlFor="post-upload-content">Content*</label>
+                        <div className="form-error">{this.state.errors && this.state.errors["content"]}</div>
                         <PostEditor
                             editorState={this.state.content}
                             onChange={this._onContentChange}
@@ -232,7 +255,7 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     private _postId: string;
     private _postFields: Array<PostField>;
 
-    private _submit = () => {
+    private _submit = async () => {
         const productTags = this.state.productTags.map(product => ({
             product_id: product.id,
             api_type: "shopstyle",
@@ -281,13 +304,19 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                 } as ResultRequest;
                 break;
         }
+        let response;
         if (this._postId) {
-            this.context.api.updatePost(this._postId, request);
+            response = await this.context.api.updatePost(this._postId, request);
         } else {
-            this.context.api.createPost(this._postType, request);
+            response = await this.context.api.createPost(this._postType, request);
         }
-        localStorage.removeItem("post_draft");
-        this.props.history.push("/cms");
+
+        if (response.code !== 1) {
+            localStorage.removeItem("post_draft");
+            this.props.history.push("/cms");
+        } else {
+            this.setState({ errors: response.result });
+        }
     }
 
     private _delete = () => {
@@ -354,26 +383,31 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     private _onContentChange = (content: string) => {
         this.setState({ content });
         this._updateDraft({ content });
+        this._removeError("content");
     }
 
     private _onTitleChange = (title: string) => {
         this.setState({ title });
         this._updateDraft({ title });
+        this._removeError("title");
     }
 
     private _onTagsChange = (tags: string) => {
         this.setState({ tags });
         this._updateDraft({ tags });
+        this._removeError("tags");
     }
 
     private _onCaptionChange = (caption: string) => {
         this.setState({ caption });
         this._updateDraft({ caption });
+        this._removeError("caption");
     }
 
     private _onCtaUrlChange = (ctaUrl: string) => {
         this.setState({ ctaUrl });
         this._updateDraft({ ctaUrl });
+        this._removeError("cta_url");
     }
 
     private _closeModal = () => {
@@ -384,17 +418,22 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
         this.setState({ modalOpen: true });
     }
 
-    private _setCoverImageProcessing = (isProcessing: boolean) => {
-        this.setState({ processingCoverImage: isProcessing });
-    }
-
     private _setCoverImage = (coverImage: string, altText: string) => {
         this.setState({ coverImage });
         this._updateDraft({ coverImage });
+        this._removeError("cover_image_url");
     }
 
     private _getPresignedPost = (request: PresignedPostRequest) => {
         return this.context.api.getPresignedPost(request);
+    }
+
+    private _removeError = (errorKey: string) => {
+        let errors = this.state.errors;
+        if (errors[errorKey]) {
+            delete errors[errorKey];
+            this.setState({ errors });
+        }
     }
 
     private _updateDraft = (draftData: Partial<PostDraft>) => {
