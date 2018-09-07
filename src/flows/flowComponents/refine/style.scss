@@ -1,0 +1,52 @@
+@import "../../../styles/variables";
+
+.refine-section {
+    margin-bottom: $base-spacing;
+
+    .refine-section-header {
+        display: flex;
+        border-bottom: $standard-border-width solid $standard-border-color;
+        text-transform: uppercase;
+        font-size: $font-size-callout;
+        letter-spacing: $letter-spacing-callout;
+        justify-content: space-between;
+        font-weight: $font-weight-bold;
+        align-items: center;
+        padding: $base-spacing 0;
+        margin-bottom: $base-spacing;
+        cursor: pointer;
+
+        .icon {
+            margin: 0;
+        }
+    }
+
+    .refine-section-content {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    .refine-item-container {
+        .refine-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: $base-spacing;
+            cursor: pointer;
+        }
+
+        .refine-item-select {
+            display: flex;
+            align-items: center;
+        }
+
+        .refine-item-name {
+            &.selected {
+                text-decoration: underline;
+            }
+        }
+
+        .refine-item-children {
+            padding-left: $base-spacing;
+        }
+    }
+}

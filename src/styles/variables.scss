@@ -36,7 +36,7 @@ $button-height-sm: 34px;
 
 // Borders
 $standard-border-width: 1px;
-$standard-border-color: $color-grey-1;
+$standard-border-color: $_color-grey-4;
 $standard-border-radius: 3px;
 $rounded-border-radius: 5px;
 
@@ -47,7 +47,7 @@ $card-hover-width: 220px;
 
 $carousel-item-width: 180px;
 
-$sidebar-width: 235px;
+$sidebar-width: 280px;
 $sidebar-padding: 45px;
 
 $ranking-img-height: 65px;
@@ -56,7 +56,6 @@ $ranking-img-width: $ranking-img-height;
 $hover-img-height: 70px;
 $hover-img-width: $hover-img-height;
 
-$section-spacing: 50px;
 $filter-content-max-height: 360px;
 
 $scroll-width: 10px;
@@ -64,13 +63,27 @@ $scroll-track-width: 1px;
 $scroll-track-thumb-width: 6px;
 
 $profile-image-size: 22px;
-$max-page-width: 1440px;
-$min-page-width: 1000px;
+$max-page-width: 1200px;
+$min-page-width: 800px;
 
 $max-content-width: 960px;
 
 // Card
 
-$min-card-width-1: 250px;
+$min-card-width-1: 220px;
 $min-card-width-2: 148px;
 $min-card-width-3: 98px;
+
+// -------- New --------- //
+$color-primary: $_color-grey-1;
+$color-secondary: $_color-grey-2;
+$color-muted: $_color-grey-3;
+$color-brand: #652fd8;
+
+$section-spacing: $base-spacing * 3;
+$element-spacing: $base-spacing * 3;
+
+$border-color: $_color-grey-4;
+$border-width: 2px;
+$border-radius: 5px;
+$drop-shadow: 0 0 5px rgba(149, 149, 149, 0.5);

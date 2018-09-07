@@ -1,0 +1,47 @@
+@import "../../../../styles/variables";
+
+.article-card {
+    display: flex;
+    margin-bottom: $element-spacing;
+
+    .article-card-image {
+        width: 50%;
+        margin-right: $element-spacing;
+    }
+
+    .article-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .article-title-container {
+        &:hover {
+            h3 {
+                border-bottom: $border-width solid $color-brand;
+                margin-bottom: $base-spacing - $border-width;
+            }
+        }
+    }
+
+    .article-caption,
+    .article-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    .article-title {
+        display: inline-block;
+    }
+
+    .article-caption {
+        margin-bottom: $base-spacing * 2;
+    }
+
+    .article-read {
+        text-transform: uppercase;
+        font-weight: $font-weight-bold;
+    }
+}

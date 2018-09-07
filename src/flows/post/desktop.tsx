@@ -1,10 +1,12 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { withRouter } from "react-router-dom";
 import Slider from "react-slick";
 
 import { Comment, Post, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
-import { IconButton } from "../../components/button";
+import Button, { ButtonVariant, IconButton } from "../../components/button";
+import Callout, { CalloutVariant } from "../../components/callout";
 import Content from "../../components/content";
 import { IconSize, IconVariant } from "../../components/icon";
 import Image from "../../components/image";
@@ -12,9 +14,10 @@ import Sticky from "../../components/sticky";
 import { PostCard } from "../flowComponents/cardView";
 import Comments from "../flowComponents/comments";
 import { ContentSection, SidebarPostProductListSection } from "../flowComponents/section";
+import RouteProps from "../routeProps";
 import PostAuthorDetails from "./postAuthorDetails";
 
-interface PostViewProps {
+interface PostViewProps extends RouteProps {
     isManager?: boolean;
     post: Post;
     scrollRef: React.RefObject<HTMLDivElement>;
@@ -26,15 +29,17 @@ interface DesktopPostViewState {
     comments: Array<Comment>;
     relatedPosts: Array<PostPreview>;
     saved: boolean;
+    authorPosts: Array<PostPreview>;
 }
 
-export default class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewState> {
+class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewState> {
     static contextTypes: AppContext;
 
     state: DesktopPostViewState = {
         comments: [],
         relatedPosts: [],
         saved: false,
+        authorPosts: [],
     };
 
     async componentWillMount() {
@@ -49,8 +54,14 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
             document.addEventListener("scroll", this._onScroll);
             document.addEventListener("touchmove", this._onScroll);
         }
-        const relatedPosts = await this.context.api.getRelatedPosts(this._postId);
-        this.setState({ relatedPosts });
+        const [
+            relatedPosts,
+            authorPosts,
+        ] = await Promise.all([
+            this.context.api.getRelatedPosts(this._postId),
+            this.context.api.getPostsForUser(this.props.post.author.id),
+        ]);
+        this.setState({ relatedPosts, authorPosts: authorPosts.list });
     }
 
     componentWillUnmount() {
@@ -64,11 +75,31 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
     }
 
     render() {
+        let shareUrl;
+        const pathname = window.location.pathname.split("/").filter(path => path !== "");
+        if (pathname.length === 2) {
+            shareUrl = `${window.location.pathname}/share`;
+        } else {
+            shareUrl = `/share/post/${this._postId}`;
+        }
+
         return (
             <div className="post-view-container">
                 <div className="post" ref={this._postViewRef}>
                     <Content>
                         <div className="post-content" ref="cover">
+                            <div className="post-header">
+                                <div>
+                                    <Callout inline>Looks</Callout>
+                                    <Callout inline variant={CalloutVariant.MUTED}>TODAY</Callout>
+                                </div>
+                                <IconButton
+                                    icon={IconVariant.SHARE}
+                                    size={IconSize.LARGE}
+                                    onClick={() => this.props.history.push(shareUrl)}
+                                />
+                            </div>
+                            <h2 className="post-title">{this.props.post.title}</h2>
                             <Image
                                 className="post-cover"
                                 width={this.props.post.cover_image.original_image_width}
@@ -76,21 +107,7 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
                                 src={this.props.post.cover_image.original_image_url}
                                 previewSrc={this.props.post.cover_image.thumbnail_image_url}
                             />
-                            <p className="post-title">
-                                {this.props.post.title}
-                            </p>
-                            <div className="post-subtitle">
-                                <PostAuthorDetails
-                                    author={this.props.post.author}
-                                    iconSize={IconSize.LARGE}
-                                    postDate={new Date(this.props.post.created)}
-                                    postId={this.props.post.id}
-                                    wishlisted={this.state.saved}
-                                    toggleWishlist={this._toggleWishlist}
-                                />
-                            </div>
                             <div className="post-details">
-                                {/* TODO: Don't use dangerouslySetInnerHTML. Make this safer */}
                                 <div dangerouslySetInnerHTML={{ __html: this.props.post.content }} />
                             </div>
                         </div>
@@ -112,14 +129,38 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
                                 scrollRef={this.props.scrollRef}
                                 maxTop={this.props.isModal ? 0 : null}
                             >
-                                <SidebarPostProductListSection
-                                    title="Products in This Post"
-                                    items={this.props.post.products.map(product => ({
-                                        type: "Product",
-                                        content: product,
-                                        postId: this.props.post.id,
-                                    }))}
-                                />
+                                <div className="user-more">
+                                    <div className="user-follow-container">
+                                        <div className="user-details">
+                                            <img className="user-image" src={this.props.post.author.profile_small_image_url} />
+                                            <div className="username">
+                                                <p className="more-from">More from</p>
+                                                <b>{this.props.post.author.username}</b>
+                                            </div>
+                                        </div>
+                                        <Button className="user-follow" inline variant={ButtonVariant.OUTLINE}>FOLLOW</Button>
+                                    </div>
+                                    <div className="user-posts">
+                                        {this.state.authorPosts.slice(0, 3).map(post => (
+                                            <Image square src={post.cover_image.thumbnail_image_url} />
+                                        ))}
+                                    </div>
+                                </div>
+                                <Callout>Products in this post</Callout>
+                                {this.props.post.products.map(product => (
+                                    <div className="sidebar-product">
+                                        <img className="sidebar-product-image" src={product.image && product.image.thumbnail_image_url} />
+                                        <div className="sidebar-product-details">
+                                            <b>{product.brand && product.brand.name}</b>
+                                            <div className="sidebar-product-name">
+                                                {product.title}
+                                            </div>
+                                            <div className="price">
+                                                ${product.price}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </Sticky>
                         )}
                     </div>
@@ -128,11 +169,6 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
                     {this.state.relatedPosts && (
                         this._renderRelatedPosts()
                     )}
-                    <div className={`next-post-container${!this.props.isModal ? " full-screen" : ""}`} ref={this._nextPostRef}>
-                        <div className="next-post-text">
-                            Next Post
-                        </div>
-                    </div>
                 </div>
             </div>
         );
@@ -218,3 +254,5 @@ DesktopPostView.contextTypes = {
     setError: PropTypes.func,
     openModal: PropTypes.func,
 };
+
+export default withRouter(DesktopPostView);

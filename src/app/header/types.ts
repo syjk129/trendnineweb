@@ -1,9 +1,12 @@
-import * as H from "history";
+import { Category, PostTag } from "../../api/models";
+import RouteProps from "../../flows/routeProps";
 
-import { Person } from "../../api/models";
-
-export interface HeaderProps {
+export interface HeaderProps extends RouteProps {
+    styles: Array<PostTag>;
+    occasions: Array<PostTag>;
+    categories: Array<Category>;
     loggedIn: boolean;
-    history: H.History;
-    location: any;
+    bannerAction: React.ReactNode;
+    bannerContent: React.ReactNode;
+    dismissBanner(): void;
 }

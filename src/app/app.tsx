@@ -11,13 +11,16 @@ import {
 import Api from "../api";
 import Spinner, { SpinnerContainer } from "../components/spinner";
 import AboutUs from "../flows/about";
+import Article from "../flows/article";
 import Auth from "../flows/auth";
 import BrandView from "../flows/brands";
 import CMSView from "../flows/cms";
 import PostUpload from "../flows/cms/postUpload";
 import ContactUs from "../flows/contact";
 import Discover from "../flows/discover";
+import HomeView from "../flows/home";
 import TermsAndConditions from "../flows/legal";
+import LooksView from "../flows/looks";
 import OnboardingView from "../flows/onboarding";
 import Opportunities from "../flows/opportunities";
 import PostView from "../flows/post";
@@ -203,20 +206,22 @@ export default class App extends React.Component<Props, AppState> {
                     </Helmet>
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
-                        <Route exact path="/" render={() => <Redirect to="/discover" />} />
+                        {/* <Route exact path="/" render={() => <Redirect to="/discover" />} /> */}
                         <Switch location={isModal ? this._previousLocation : this.props.location}>
+                            <Route exact path="/" component={HomeView} />
+                            <Route path="/looks:query?" component={LooksView} />
                             <Route path="/discover:query?/:category?/:categoryName?" component={Discover} />
                             <Route path="/feed" component={Discover} />
                             <Route path="/brands" component={BrandView} />
                             <Route path="/user/:userId/:pageName?" component={User} />
                             <Route path="/shop" exact component={ShopView} />
-                            <Route path="/shop/home" component={() => <Redirect to="/shop/discover" />} />
+                            <Route path="/shop/:category?/:subcategory?" component={ShopView} />
                             <Route path="/shop/discover" component={ShopDiscover} />
-                            <Route path="/shop/feed" component={ShopDiscover} />
                             <Route path="/shop/brands" component={BrandView} />
                             <Route path="/shop/product/:productId" component={ProductView} />
                             <Route path="/shop/category/:categoryName" component={ShopDiscover} />
                             <Route path="/post/:postId" component={PostView} />
+                            <Route path="/article/:articleId" component={Article} />
                             <Route path="/product/:productId" component={ProductView} />
                             <Route path="/trending" component={Trending} />
                             <Route path="/:url*/share/:shareType?/:shareId?" render={(props) => <ShareView {...props} close={this._redirectCloseModal} />} />
@@ -231,7 +236,6 @@ export default class App extends React.Component<Props, AppState> {
                             <Route path="/register" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />} />
                             <PrivateRoute path="/cms" component={CMSView} />
                             <PrivateRoute path="/upload/:postType/:postId?" component={PostUpload} />
-                            {/* <Route path="/" component={Discover} /> */}
                         </Switch>
                         {isModal && (
                             <>
@@ -264,7 +268,7 @@ export default class App extends React.Component<Props, AppState> {
 
     @autobind
     private _removeError(error: Error) {
-        const errors = this.state.errors.filter(err => err == error);
+        const errors = this.state.errors.filter(err => err === error);
         this.setState({
             errors,
         });

@@ -1,0 +1,20 @@
+@import "../../styles/variables";
+
+.looks {
+    display: flex;
+    padding-top: $base-spacing;
+
+    .sticky-looks-refine {
+        position: fixed;
+        width: $sidebar-width;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .look-tabs {
+        margin-bottom: $section-spacing;
+    }
+}
+
+.looks-tag-carousel {
+    margin-bottom: $section-spacing;
+}

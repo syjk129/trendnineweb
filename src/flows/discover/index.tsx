@@ -4,7 +4,7 @@ import * as React from "react";
 import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
 import { Helmet } from "react-helmet";
 
-import { AppContext, AppContextTypes } from "../../app";
+import { AppContext } from "../../app";
 import PageNavigation from "../flowComponents/pageNavigation";
 import RouteProps from "../routeProps";
 import DesktopDiscover from "./desktop";

@@ -25,10 +25,9 @@
     background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 
     .modal-content {
-        border-radius: $standard-border-radius;
+        border-radius: $border-radius;
         background-color: #fefefe;
-        padding: 20px;
-        border: 1px solid #888;
+        padding: $section-spacing;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
         &.full-screen {

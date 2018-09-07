@@ -58,7 +58,9 @@
 
     &.square-image,
     &.post-cover-ratio,
-    &.product-image-ratio {
+    &.product-image-ratio,
+    &.look-cover-ratio,
+    &.article-cover-ratio {
         &::before {
             content: "";
             display: block;
@@ -79,12 +81,17 @@
         padding-top: 100%;
     }
 
-    &.post-cover-ratio::before {
+    &.post-cover-ratio::before,
+    &.article-cover-ratio::before {
         padding-top: 62.5%; // 16:10 ratio
     }
 
     &.product-image-ratio::before {
         padding-top: 150%;
+    }
+
+    &.look-cover-ratio::before {
+        padding-top: 133%;
     }
 
     &.circle-image img {

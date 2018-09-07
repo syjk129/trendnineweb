@@ -94,6 +94,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                                         <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._toggleFeature(post)}>
                                             {post.priority_level > 0 ? "Unfeature" : "Feature"}
                                         </Button>
+                                        <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} url={this._getPreviewUrl(post)}>View</Button>
                                         <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._editPost(post)}>Edit</Button>
                                     </th>
                                 </tr>
@@ -107,7 +108,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                         {this._isManager ? (
                             <>
                                 <Button inline size={ButtonSize.SMALL} onClick={() => this._createNew(PostType.ARTICLE)}>Create New Article</Button>
-                                <Button inline size={ButtonSize.SMALL} onClick={() => this._createNew(PostType.RESULT)}>Create New Result</Button>
+                                <Button inline size={ButtonSize.SMALL} onClick={() => this._createNew(PostType.COLLECTION)}>Create New Collection</Button>
                             </>
                         ) : (
                             <Button inline size={ButtonSize.SMALL} onClick={() => this._createNew(PostType.BLOG)}>Create New Blog</Button>
@@ -129,6 +130,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                                             {post.priority_level > 0 ? "Unfeature" : "Feature"}
                                         </Button>
                                     )}
+                                    <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} url={this._getPreviewUrl(post)}>View</Button>
                                     <Button inline size={ButtonSize.VERY_SMALL} variant={ButtonVariant.OUTLINE} onClick={() => this._editPost(post)}>Edit</Button>
                                 </th>
                             </tr>
@@ -142,8 +144,26 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
     private _isManager: boolean;
     private _draft: PostDraft;
 
+    private _getPreviewUrl = (post) => {
+        if (this._isManager) {
+            return post.cta_url || `/article/${post.id}`;
+        } else {
+            return `/post/${post.id}`;
+        }
+    }
+
     private _editPost = (post) => {
-        this.props.history.push(`/upload/blog/${post.id}`);
+        if (this._isManager) {
+            switch (post.type.toLowerCase()) {
+                case PostType.ARTICLE:
+                    this.props.history.push(`/upload/article/${post.id}`);
+                    break;
+                case PostType.COLLECTION:
+                    this.props.history.push(`/upload/result/${post.id}`);
+            }
+        } else {
+            this.props.history.push(`/upload/blog/${post.id}`);
+        }
     }
 
     private _reorderFeature = (post, up) => {
@@ -228,7 +248,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
             case PostType.BLOG:
                 this.props.history.push("/upload/blog");
                 return;
-            case PostType.RESULT:
+            case PostType.COLLECTION:
                 this.props.history.push("/upload/editorial");
                 return;
         }
@@ -242,7 +262,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
             case PostType.BLOG:
                 this.props.history.push("/upload/blog");
                 return;
-            case PostType.RESULT:
+            case PostType.COLLECTION:
                 this.props.history.push("/upload/result");
                 return;
         }

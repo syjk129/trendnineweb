@@ -1,7 +1,7 @@
 export enum PostType {
     BLOG = "blog",
     ARTICLE = "article",
-    RESULT = "editorial",
+    COLLECTION = "editorial",
 }
 
 export interface PostDraft {

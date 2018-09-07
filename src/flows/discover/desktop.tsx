@@ -108,7 +108,6 @@ export default class DesktopDiscover extends React.Component<DiscoverProps, Desk
 
     render() {
         const user = JSON.parse(localStorage.getItem("user"));
-        const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
 
         return (
             <>

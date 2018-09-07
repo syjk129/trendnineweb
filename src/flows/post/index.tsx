@@ -20,6 +20,7 @@ interface PostProps extends RouteProps {
 
 interface PostState {
     currentPost: Post;
+    post: Post;
     posts: Array<Post>;
     nextPosts: Array<PostPreview>;
     isLoading: boolean;
@@ -31,6 +32,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
 
     state: PostState = {
         currentPost: null,
+        post: null,
         posts: [],
         nextPosts: [],
         isLoading: false,
@@ -81,6 +83,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 scrollRef: this._scrollRef,
                 close: this.props.close,
                 fullScreen: isMobile,
+                hideClose: !isMobile,
             };
         } else {
             props = { ref: this._pageRef };
@@ -190,6 +193,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
         }
 
         this.setState({
+            post,
             posts: [post],
             currentPost: post,
             nextPosts: nextPosts.list,
@@ -211,6 +215,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
     }
 
     private _populateNextPost = async () => {
+        return;
         if (!this.state.loadingNext) {
             const page = this._pageRef.current;
             if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 500) {
