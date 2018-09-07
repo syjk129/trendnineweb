@@ -1,33 +1,31 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
 import { withRouter } from "react-router-dom";
-import Slider from "react-slick";
 
 import { Comment, Post, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
 import Button, { ButtonVariant, IconButton } from "../../components/button";
 import Callout, { CalloutVariant } from "../../components/callout";
+import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
 import { IconSize, IconVariant } from "../../components/icon";
 import Image from "../../components/image";
 import Sticky from "../../components/sticky";
-import { PostCard } from "../flowComponents/cardView";
+import LookCard from "../flowComponents/cardView/lookCard";
 import Comments from "../flowComponents/comments";
-import { ContentSection, SidebarPostProductListSection } from "../flowComponents/section";
+import { ContentSection } from "../flowComponents/section";
 import RouteProps from "../routeProps";
-import PostAuthorDetails from "./postAuthorDetails";
 
 interface PostViewProps extends RouteProps {
     isManager?: boolean;
     post: Post;
+    relatedPosts: Array<PostPreview>;
     scrollRef: React.RefObject<HTMLDivElement>;
     isModal: boolean;
-    setCurrentPost(): void;
 }
 
 interface DesktopPostViewState {
     comments: Array<Comment>;
-    relatedPosts: Array<PostPreview>;
     saved: boolean;
     authorPosts: Array<PostPreview>;
 }
@@ -37,7 +35,6 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
 
     state: DesktopPostViewState = {
         comments: [],
-        relatedPosts: [],
         saved: false,
         authorPosts: [],
     };
@@ -47,31 +44,12 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
         this._postViewRef = React.createRef();
         this._nextPostRef = React.createRef();
 
-        if (this.props.scrollRef && this.props.scrollRef.current) {
-            this.props.scrollRef.current.addEventListener("scroll", this._onScroll);
-            this.props.scrollRef.current.addEventListener("touchmove", this._onScroll);
-        } else {
-            document.addEventListener("scroll", this._onScroll);
-            document.addEventListener("touchmove", this._onScroll);
-        }
         const [
-            relatedPosts,
             authorPosts,
         ] = await Promise.all([
-            this.context.api.getRelatedPosts(this._postId),
             this.context.api.getPostsForUser(this.props.post.author.id),
         ]);
-        this.setState({ relatedPosts, authorPosts: authorPosts.list });
-    }
-
-    componentWillUnmount() {
-        if (this.props.scrollRef && this.props.scrollRef.current) {
-            this.props.scrollRef.current.removeEventListener("scroll", this._onScroll);
-            this.props.scrollRef.current.removeEventListener("touchmove", this._onScroll);
-        } else {
-            document.removeEventListener("scroll", this._onScroll);
-            document.removeEventListener("touchmove", this._onScroll);
-        }
+        this.setState({ authorPosts: authorPosts.list });
     }
 
     render() {
@@ -129,46 +107,51 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
                                 scrollRef={this.props.scrollRef}
                                 maxTop={this.props.isModal ? 0 : null}
                             >
-                                <div className="user-more">
-                                    <div className="user-follow-container">
-                                        <div className="user-details">
-                                            <img className="user-image" src={this.props.post.author.profile_small_image_url} />
-                                            <div className="username">
-                                                <p className="more-from">More from</p>
-                                                <b>{this.props.post.author.username}</b>
+                                <div>
+                                    <div className="user-more">
+                                        <div className="user-follow-container">
+                                            <div className="user-details">
+                                                <img className="user-image" src={this.props.post.author.profile_small_image_url} />
+                                                <div className="username">
+                                                    <p className="more-from">More from</p>
+                                                    <b>{this.props.post.author.username}</b>
+                                                </div>
+                                            </div>
+                                            <Button className="user-follow" inline variant={ButtonVariant.OUTLINE}>FOLLOW</Button>
+                                        </div>
+                                        <div className="user-posts">
+                                            {this.state.authorPosts.slice(0, 3).map(post => (
+                                                <Image square src={post.cover_image.thumbnail_image_url} />
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <Callout>Products in this post</Callout>
+                                    {this.props.post.products.map(product => (
+                                        <div className="sidebar-product">
+                                            <img className="sidebar-product-image" src={product.image && product.image.thumbnail_image_url} />
+                                            <div className="sidebar-product-details">
+                                                <b>{product.brand && product.brand.name}</b>
+                                                <div className="sidebar-product-name">
+                                                    {product.title}
+                                                </div>
+                                                <div className="price">
+                                                    ${product.price}
+                                                </div>
                                             </div>
                                         </div>
-                                        <Button className="user-follow" inline variant={ButtonVariant.OUTLINE}>FOLLOW</Button>
-                                    </div>
-                                    <div className="user-posts">
-                                        {this.state.authorPosts.slice(0, 3).map(post => (
-                                            <Image square src={post.cover_image.thumbnail_image_url} />
-                                        ))}
-                                    </div>
+                                    ))}
                                 </div>
-                                <Callout>Products in this post</Callout>
-                                {this.props.post.products.map(product => (
-                                    <div className="sidebar-product">
-                                        <img className="sidebar-product-image" src={product.image && product.image.thumbnail_image_url} />
-                                        <div className="sidebar-product-details">
-                                            <b>{product.brand && product.brand.name}</b>
-                                            <div className="sidebar-product-name">
-                                                {product.title}
-                                            </div>
-                                            <div className="price">
-                                                ${product.price}
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
                             </Sticky>
                         )}
                     </div>
                 </div>
                 <div ref={this._nextPostRef}>
-                    {this.state.relatedPosts && (
-                        this._renderRelatedPosts()
-                    )}
+                    <Callout>Related Looks</Callout>
+                    <CardContainer>
+                        {this.props.relatedPosts.map(post => (
+                            <LookCard look={post} />
+                        ))}
+                    </CardContainer>
                 </div>
             </div>
         );
@@ -177,53 +160,6 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
     private _postId: string;
     private _postViewRef: React.RefObject<HTMLDivElement>;
     private _nextPostRef: React.RefObject<HTMLDivElement>;
-
-    private _renderRelatedPosts = () => {
-        const settings = {
-            arrows: true,
-            prevArrow: <IconButton icon={IconVariant.ARROW_LEFT} />,
-            nextArrow: <IconButton icon={IconVariant.ARROW_RIGHT} />,
-            infinite: true,
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            variableWidth: false,
-            centerMode: true,
-            responsive: [{
-                breakpoint: 1543,
-                settings: {
-                    slidesToShow: 3,
-                },
-            },
-            {
-                breakpoint: 1300,
-                settings: {
-                    slidesToShow: 2,
-                },
-            }],
-        };
-
-        return (
-            <ContentSection title="You May Also Like">
-                <Slider {...settings} className="related-post-container">
-                    {this.state.relatedPosts && this.state.relatedPosts.map(post => (
-                        <div>
-                            <PostCard post={post} noHover clearData />
-                        </div>
-                    ))}
-                </Slider>
-            </ContentSection>
-        );
-    }
-
-    private _onScroll = () => {
-        const postView = this._postViewRef.current;
-        if (postView) {
-            const rect = postView.getBoundingClientRect();
-            if (rect.top > 0 && rect.top < 200 && rect.bottom > 200 || rect.bottom < window.innerHeight - 200 && rect.bottom > 200) {
-                this.props.setCurrentPost();
-            }
-        }
-    }
 
     private _toggleWishlist = () => {
         this.setState({ saved: !this.state.saved });

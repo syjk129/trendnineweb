@@ -1,5 +1,5 @@
 import autobind from "autobind-decorator";
-import { PropTypes } from "prop-types"
+import { PropTypes } from "prop-types";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
@@ -18,7 +18,6 @@ export interface MobilePostProps {
     post: Post;
     scrollRef: React.RefObject<HTMLDivElement>;
     isModal: boolean;
-    setCurrentPost(): void;
 }
 
 export interface MobilePostState {
@@ -45,25 +44,8 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
         this._postViewRef = React.createRef();
         this._nextPostRef = React.createRef();
 
-        if (this.props.scrollRef && this.props.scrollRef.current) {
-            this.props.scrollRef.current.addEventListener("scroll", this._onScroll);
-            this.props.scrollRef.current.addEventListener("touchmove", this._onScroll);
-        } else {
-            document.addEventListener("scroll", this._onScroll);
-            document.addEventListener("touchmove", this._onScroll);
-        }
         const relatedPosts = await this.context.api.getRelatedPosts(this._postId);
         this.setState({ relatedPosts });
-    }
-
-    componentWillUnmount() {
-        if (this.props.scrollRef && this.props.scrollRef.current) {
-            this.props.scrollRef.current.removeEventListener("scroll", this._onScroll);
-            this.props.scrollRef.current.removeEventListener("touchmove", this._onScroll);
-        } else {
-            document.removeEventListener("scroll", this._onScroll);
-            document.removeEventListener("touchmove", this._onScroll);
-        }
     }
 
     render() {
@@ -131,16 +113,6 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
     private _postId: string;
     private _postViewRef: React.RefObject<HTMLDivElement>;
     private _nextPostRef: React.RefObject<HTMLDivElement>;
-
-    private _onScroll = () => {
-        const postView = this._postViewRef.current;
-        if (postView) {
-            const rect = postView.getBoundingClientRect();
-            if (rect.top > 0 && rect.top < 200 && rect.bottom > 200 || rect.bottom < window.innerHeight - 200 && rect.bottom > 200) {
-                this.props.setCurrentPost();
-            }
-        }
-    }
 
     private _renderTabbedContent = (content: any) => {
         switch (this.state.section) {
