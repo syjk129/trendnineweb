@@ -1,6 +1,10 @@
 @import "../../styles/variables";
 
 .article {
+    max-width: 900px;
+    margin: auto;
+    margin-top: $section-spacing;
+
     .article-content {
         img {
             width: 100%;
@@ -9,5 +13,11 @@
         p {
             margin: 0;
         }
+    }
+
+    .article-title {
+        padding-bottom: $base-spacing * 2;
+        border-bottom: $standard-border-width solid $border-color;
+        margin-bottom: $section-spacing;
     }
 }

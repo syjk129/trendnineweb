@@ -3,7 +3,6 @@ import * as React from "react";
 
 import { IconButton } from "../../../components/button";
 import Icon, { IconSize, IconVariant } from "../../../components/icon";
-import "./style.scss";
 
 interface ExpandableSectionProps {
     title: string;

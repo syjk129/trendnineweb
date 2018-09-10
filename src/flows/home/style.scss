@@ -60,27 +60,6 @@
     }
 }
 
-.home-section {
-    margin-bottom: $section-spacing;
-
-    .home-section-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: $section-spacing;
-
-        .header-text {
-            display: flex;
-            align-items: baseline;
-
-            .header-title {
-                margin: 0;
-                margin-right: $base-spacing;
-            }
-        }
-    }
-}
-
 .featured-collections {
     display: flex;
     max-height: 500px;
@@ -96,7 +75,7 @@
 }
 
 .articles {
-    max-width: 900px;
+    max-width: $articles-max-width;
 }
 
 .view-all-button {

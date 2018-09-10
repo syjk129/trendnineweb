@@ -1,8 +1,6 @@
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
-import "./style.scss";
-
 interface ContentSectionProps {
     title: string;
     children: React.ReactNode;

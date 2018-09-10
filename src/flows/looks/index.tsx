@@ -116,11 +116,7 @@ export default class Looks extends React.Component<Props, LooksState> {
                         ) : (
                             <CardContainer>
                                 {this.state.looks.map(look => (
-                                    <FadeIn height={540} duration={150}>
-                                        {onload => (
-                                            <LookCard onload={onload} look={look} />
-                                        )}
-                                    </FadeIn>
+                                    <LookCard onload={onload} look={look} />
                                 ))}
                             </CardContainer>
                         )}

@@ -108,3 +108,24 @@
         }
     }
 }
+
+.featured-section {
+    margin-bottom: $section-spacing;
+
+    .featured-section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: $section-spacing;
+
+        .header-text {
+            display: flex;
+            align-items: baseline;
+
+            .header-title {
+                margin: 0;
+                margin-right: $base-spacing;
+            }
+        }
+    }
+}

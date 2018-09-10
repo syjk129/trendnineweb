@@ -249,7 +249,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                 this.props.history.push("/upload/blog");
                 return;
             case PostType.COLLECTION:
-                this.props.history.push("/upload/editorial");
+                this.props.history.push("/upload/cta");
                 return;
         }
     }

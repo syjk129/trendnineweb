@@ -1,0 +1,10 @@
+@import "../../styles/variables";
+
+.collections-grid {
+    $collections-card-size: 300px;
+
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(#{$collections-card-size}, 1fr));
+    grid-gap: $element-spacing - $base-spacing;
+}

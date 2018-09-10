@@ -5,14 +5,13 @@ import { Link } from "react-router-dom";
 import { Featured, FeaturedType, PostPreview, PostTag, PostTagType } from "../../api/models";
 import { AppContext } from "../../app";
 import Button, { ButtonSize, ButtonVariant } from "../../components/button";
-import Image from "../../components/image";
 import LinkButton from "../../components/linkButton";
 import { PostType } from "../cms/types";
 import ArticleCard from "../flowComponents/cardView/articleCard";
 import FeaturedCard from "../flowComponents/cardView/featuredCard";
 import { LooksCarousel, TagCarousel } from "../flowComponents/carousel";
+import { FeaturedSection } from "../flowComponents/section";
 import RouteProps from "../routeProps";
-import HomeSection from "./homeSection";
 
 import "./style.scss";
 
@@ -100,39 +99,42 @@ export default class Home extends React.Component<Props, HomeState> {
                     <div className="welcome-banner-content">
                     </div>
                 </div> */}
-                <HomeSection
+                <FeaturedSection
                     title="Trending Looks"
                     subtitle="Our favorite looks from the influencers"
-                    cta={(<LinkButton url="" className="view-all-button">View All</LinkButton>)}
+                    cta={(<LinkButton url="/looks" className="view-all-button">View All</LinkButton>)}
                 >
                     <LooksCarousel looks={this.state.trendingLooks} />
-                </HomeSection>
-                <HomeSection
+                </FeaturedSection>
+                <FeaturedSection
                     title="Style & Occasion"
                     subtitle="Discover influencer posts by style and occasion"
-                    cta={(<LinkButton url="" className="view-all-button">View All</LinkButton>)}
+                    cta={(<LinkButton url="/looks" className="view-all-button">View All</LinkButton>)}
                 >
                     <TagCarousel tags={this.state.tags} />
-                </HomeSection>
-                <HomeSection
+                </FeaturedSection>
+                <FeaturedSection
                     title="Featured Collections"
                     subtitle="Curated gallery of the hottest trends"
-                    cta={(<LinkButton url="" className="view-all-button">View All</LinkButton>)}
+                    cta={(<LinkButton url="/collections" className="view-all-button">View All</LinkButton>)}
                 >
                     <div className="featured-collections">
                         <FeaturedCard post={this._getFeaturedAtLevel(1)} />
                         <FeaturedCard post={this._getFeaturedAtLevel(2)} />
                         <FeaturedCard post={this._getFeaturedAtLevel(3)} />
                     </div>
-                </HomeSection>
-                <HomeSection
+                </FeaturedSection>
+                <FeaturedSection
                     title="Articles"
                     subtitle="Must-read articles to keep up with Social Media trends"
                 >
                     <div className="articles">
-                        {this.state.articles.map(article => <ArticleCard article={article} />)}
+                        {this.state.articles.slice(0, 4).map(article => <ArticleCard article={article} />)}
+                        {this.state.articles.length > 4 && (
+                            <Button url="/editorials" variant={ButtonVariant.OUTLINE}>View All</Button>
+                        )}
                     </div>
-                </HomeSection>
+                </FeaturedSection>
             </div>
         );
     }

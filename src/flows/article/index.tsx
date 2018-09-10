@@ -3,6 +3,9 @@ import * as React from "react";
 
 import { Featured } from "../../api/models";
 import { AppContext } from "../../app";
+import { IconButton } from "../../components/button";
+import Callout, { CalloutVariant } from "../../components/callout";
+import { IconSize, IconVariant } from "../../components/icon";
 import RouteProps from "../routeProps";
 
 import "./style.scss";
@@ -41,6 +44,13 @@ export default class ArticleView extends React.Component<Props, ArticleState> {
 
         return (
             <div className="article">
+                <div className="article-header">
+                    <div>
+                        <Callout inline>Looks</Callout>
+                        <Callout inline variant={CalloutVariant.MUTED}>TODAY</Callout>
+                    </div>
+                </div>
+                <h2 className="article-title">{this.state.article.title}</h2>
                 <div className="article-content" dangerouslySetInnerHTML={{__html: this.state.article.content}} />
             </div>
         );

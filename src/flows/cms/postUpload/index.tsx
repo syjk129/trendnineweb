@@ -340,11 +340,12 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                     type: this._postType.toUpperCase(),
                     title: this.state.title,
                     caption: this.state.caption,
+                    content: "content",
                     tag_list: this.state.tags.split(",").map(tag => tag.trim()),
                     style_tag_list: this.state.selectedStyles.map(style => style.content),
                     occasion_tag_list: this.state.selectedOccasions.map(occasion => occasion.content),
                     cover_image_url: this.state.coverImage,
-                    cta_url: this.state.ctaUrl,
+                    direct_url: this.state.ctaUrl,
                     priority_level: 0,
                 } as ResultRequest;
                 break;

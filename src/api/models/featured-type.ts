@@ -1,6 +1,6 @@
 enum FeaturedType {
     ARTICLE = "ARTICLE",
-    CTA = "EDITORIAL",
+    CTA = "CTA",
 }
 
 export default FeaturedType;

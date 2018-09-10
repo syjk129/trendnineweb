@@ -3,8 +3,6 @@ import * as React from "react";
 import { LinkButton } from "../../../components/button";
 import ActionLinks, { ActionLinksVariant } from "../actions";
 
-import "./style.scss";
-
 interface SidebarSectionProps {
     title: string;
     children: React.ReactNode;

@@ -109,17 +109,29 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                             </Link>
                             <div className="header-links">
                                 <div className="header-link">
-                                    Looks
+                                    <div className="header-link-text">
+                                        Looks
+                                    </div>
                                     {this._renderLookSubheader()}
                                 </div>
-                                <div className="header-link">
+                                <NavLink
+                                    className="header-link"
+                                    pathname={this.props.location.pathname}
+                                    url="/collections"
+                                >
                                     Collections
-                                </div>
-                                <div className="header-link">
+                                </NavLink>
+                                <NavLink
+                                    className="header-link"
+                                    pathname={this.props.location.pathname}
+                                    url="/editorials"
+                                >
                                     Editorials
-                                </div>
+                                </NavLink>
                                 <div className="header-link">
-                                    Shop
+                                    <div className="header-link-text">
+                                        Shop
+                                    </div>
                                     {this._renderCategorySubheader()}
                                 </div>
                             </div>

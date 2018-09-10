@@ -6,6 +6,7 @@ import "./style.scss";
 interface NavLinkProps {
     url: string | any;
     pathname: string;
+    className?: string;
     small?: boolean;
     muted?: boolean;
     selected?: boolean;
@@ -13,10 +14,14 @@ interface NavLinkProps {
     onClick?(): void;
 }
 
-export default function NavLink({ url, pathname, small, muted, selected, children, onClick }: NavLinkProps) {
+export default function NavLink({ url, className, small, muted, selected, children, onClick }: NavLinkProps) {
     let classes = "nav-link";
 
-    if (pathname === url || selected) {
+    if (className) {
+        classes += ` ${className}`;
+    }
+
+    if (selected) {
         classes += " selected";
     }
 

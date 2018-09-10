@@ -184,6 +184,12 @@
                 text-transform: uppercase;
                 font-size: $font-size-callout;
 
+                .header-link-text {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                }
+
                 .subheader {
                     left: 50%;
                     transform: translate(-50%, 0);

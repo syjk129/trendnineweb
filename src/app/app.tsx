@@ -12,10 +12,12 @@ import Api from "../api";
 import Spinner, { SpinnerContainer } from "../components/spinner";
 import AboutUs from "../flows/about";
 import Article from "../flows/article";
+import ArticlesView from "../flows/articles";
 import Auth from "../flows/auth";
 import BrandView from "../flows/brands";
 import CMSView from "../flows/cms";
 import PostUpload from "../flows/cms/postUpload";
+import CollectionsView from "../flows/collections";
 import ContactUs from "../flows/contact";
 import Discover from "../flows/discover";
 import HomeView from "../flows/home";
@@ -213,6 +215,8 @@ export default class App extends React.Component<Props, AppState> {
                             <Route path="/discover:query?/:category?/:categoryName?" component={Discover} />
                             <Route path="/feed" component={Discover} />
                             <Route path="/brands" component={BrandView} />
+                            <Route path="/editorials" component={ArticlesView} />
+                            <Route path="/collections" component={CollectionsView} />
                             <Route path="/user/:userId/:pageName?" component={User} />
                             <Route path="/shop" exact component={ShopView} />
                             <Route path="/shop/:category?/:subcategory?" component={ShopView} />
