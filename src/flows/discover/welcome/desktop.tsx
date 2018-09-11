@@ -23,7 +23,6 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
 
     const welcomeImage = getDesktopMarketingImage(DiscoverMarketingImages.WELCOME);
     const carousel1Img = getDesktopMarketingImage(DiscoverMarketingImages.CAROUSEL1);
-    const carousel2Img = getDesktopMarketingImage(DiscoverMarketingImages.CAROUSEL2);
     const carousel3Img = getDesktopMarketingImage(DiscoverMarketingImages.CAROUSEL3);
 
     return (
@@ -104,29 +103,6 @@ export default function DesktopWelcome({ loggedIn, history, location }: WelcomeP
                                 Shop Now
                             </Button>
                         </div>
-                    </div>
-                </div>
-                <div className="welcome-banner">
-                    <Image
-                        src={carousel2Img.originalImage}
-                        previewSrc={carousel2Img.smallImage}
-                        width={carousel2Img.width}
-                        height={carousel2Img.height}
-                    />
-                    <div className="welcome-banner-content left">
-                        <div className="content-title white">@kyrzayda</div>
-                        <div className="content-description white">
-                            New York's It-Girl, Kyrzayda Rodriguez, gives "boho-chic" a risk-taking twist.<br/>She is no stranger to mixing up prints and bringing her creativeness to life.
-                        </div>
-                        <Button
-                            inline
-                            rounded
-                            variant={ButtonVariant.SECONDARY}
-                            size={ButtonSize.WIDE}
-                            url="/user/kyrzayda_"
-                        >
-                            Shop her style
-                        </Button>
                     </div>
                 </div>
                 <div className="welcome-banner">

@@ -26,7 +26,6 @@ export default function MobileWelcome({ loggedIn }: WelcomeProps) {
     const welcomeImage = getMobileMarketingImage(DiscoverMarketingImages.WELCOME);
     const carousel1Image = getMobileMarketingImage(DiscoverMarketingImages.CAROUSEL1);
     const carousel2Image = getMobileMarketingImage(DiscoverMarketingImages.CAROUSEL2);
-    const carousel3Image = getMobileMarketingImage(DiscoverMarketingImages.CAROUSEL3);
     const carousel4Image = getMobileMarketingImage(DiscoverMarketingImages.CAROUSEL4);
 
     return (
@@ -80,26 +79,6 @@ export default function MobileWelcome({ loggedIn }: WelcomeProps) {
                                 Elevated<br/>Swimwear
                             </div>
                             <Button rounded inline white url="/shop/discover?categories=Women%27S%20Swimwear&sort=price_asc">Shop Now</Button>
-                        </div>
-                    </Link>
-                </div>
-                <div>
-                    <Link to="/user/kyrzayda_" className="welcome-banner">
-                        <Image
-                            src={carousel3Image.originalImage}
-                            previewSrc={carousel3Image.smallImage}
-                            width={carousel3Image.width}
-                            height={carousel3Image.height}
-                            className="welcome-image"
-                        />
-                        <div className="welcome-banner-content">
-                            <div className="welcome-banner-title">
-                                @kyrzayda
-                            </div>
-                            <div className="welcome-banner-description">
-                                New York's It-Girl, Kyrzayda Rodriguez, gives "boho-chic" a risk-taking twist. She is no stranger to mixing up prints and bringing her creativeness to life.
-                            </div>
-                            <Button rounded inline white url="/user/kyrzayda_">Shop her style</Button>
                         </div>
                     </Link>
                 </div>
