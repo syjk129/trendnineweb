@@ -51,9 +51,9 @@ export default class Home extends React.Component<Props, HomeState> {
             occasions,
         ] = await Promise.all([
             this.context.api.getFeaturedPosts(),
-            this.context.api.getFeaturedPosts(PostType.ARTICLE),
+            this.context.api.getFeaturedPosts(PostType.ARTICLE, "order_by=latest"),
             this.context.api.getFeaturedPosts(PostType.COLLECTION),
-            this.context.api.getLatestPosts("sort=popularity&page_size=15"),
+            this.context.api.getLatestPosts("order_by=popularity&page_size=15"),
             this.context.api.getPostTags(PostTagType.STYLE),
             this.context.api.getPostTags(PostTagType.OCCASION),
         ]);

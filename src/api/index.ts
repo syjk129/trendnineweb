@@ -148,8 +148,12 @@ export default class Api {
         return this._PUT(`/api/v1/featured/${postId}`, request);
     }
 
-    getFeaturedPosts(postType?: PostType): Promise<Array<Featured>> {
-        return this._GET(`/api/v1/featured${postType ? `?type=${postType}` : ""}`);
+    getFeaturedPosts(postType?: PostType, queryString?: string): Promise<Array<Featured>> {
+        let query = `?${queryString || ""}`;
+        if (postType) {
+            query += `&type=${postType}`;
+        }
+        return this._GET(`/api/v1/featured${query}`);
     }
 
     getFeaturedPost(postId: string): Promise<Featured> {
