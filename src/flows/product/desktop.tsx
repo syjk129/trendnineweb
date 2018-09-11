@@ -3,17 +3,15 @@ import * as React from "react";
 
 import { PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
-import Button, { ButtonVariant } from "../../components/button";
-import Carousel, { CarouselItem } from "../../components/carousel";
+import Button, { ButtonVariant, IconButton } from "../../components/button";
+import Callout, { CalloutVariant } from "../../components/callout";
 import Content from "../../components/content";
-import { IconSize } from "../../components/icon";
+import { IconSize, IconVariant } from "../../components/icon";
 import Image, { ImageFitVariant } from "../../components/image";
-import Sidebar from "../../components/sidebar";
 import Sticky from "../../components/sticky";
 import formatTime from "../../util/formatTime";
-import ActionLinks, {ActionLinksVariant} from "../flowComponents/actions";
+import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
 import Author from "../flowComponents/author";
-import { ContentSection, SidebarPostProductListSection } from "../flowComponents/section";
 import { ProductProps } from "./types";
 
 import "./style.scss";
@@ -28,6 +26,10 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
     state: ProductState = {
         selectedImage: null,
     };
+
+    componentWillMount() {
+        this._relatedProductRef = React.createRef();
+    }
 
     render() {
         const {
@@ -56,12 +58,35 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
             product.productItems.forEach(productItem => productSizes.add(productItem.size));
         }
 
-        let wishlistBtnText = wishlisted ? "Remove from wishlist" : "Add to wishlist";
-        const recentlyViewed = JSON.parse(localStorage.getItem("recentlyViewed"));
-
         return (
-            <div className="product">
-                    <Sidebar>
+            <div className="product-view-container">
+                <div className="product">
+                    <Content>
+                        <div className="product-content">
+                            {images.map(image => (
+                                <img src={image} />
+                            ))}
+                        </div>
+                    </Content>
+                    <div className="product-sidebar">
+                        <Sticky
+                            id="product-sidebar"
+                            stickyClassName="sticky-product-sidebar"
+                            bottomEl={this._relatedProductRef}
+                            scrollRef={this.props.scrollRef}
+                            maxTop={this.props.isModal ? 0 : null}
+                        >
+                            <div className="product-brand">{product.brand && product.brand.name}</div>
+                            <h2 className="product-title">{product.title}</h2>
+                            <div className="product-price">${product.price}</div>
+                            <Button className="product-buy" variant={ButtonVariant.PRIMARY}>Buy Now</Button>
+                            <div className="divider" />
+                            <Callout>Detail</Callout>
+                            <div dangerouslySetInnerHTML={{ __html: product.description }} />
+                        </Sticky>
+                    </div>
+                </div>
+                    {/* <Sidebar>
                         {recentlyViewed &&
                             <Sticky id="recently-viewed-section" stickyClassName="sticky-sidebar-recently-viewed">
                                 <SidebarPostProductListSection title="Recently Viewed" items={recentlyViewed} />
@@ -133,49 +158,10 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                             </Carousel>
                         </ContentSection>
                     )}
-                </Content>
+                </Content> */}
             </div>
         );
     }
 
-    private _productId: string;
-
-    @autobind
-    private _renderProductFooter(product) {
-        return (
-        <div className="post-card-hover-footer">
-            <p className="post-card-hover-price">
-                {`$${product.price}`}
-            </p>
-            <ActionLinks
-                variant={ActionLinksVariant.PRODUCT}
-                id={product.id}
-                wishlisted={product.wishlisted}
-                hideShare
-            />
-        </div>);
-    }
-
-    @autobind
-    private _renderPostFooter(post: PostPreview) {
-        return (
-            <>
-                <div className="author-date">
-                    <Author author={post.author} />
-                    {formatTime(post.created)}
-                </div>
-                <div className="post-card-footer">
-                    <ActionLinks
-                        iconSize={IconSize.MEDIUM}
-                        variant={ActionLinksVariant.POST}
-                        id={post.id}
-                        wishlisted={post.wishlisted}
-                        liked={post.liked}
-                        likes={post.likes}
-                    />
-                </div>
-            </>
-        );
-    }
-
+    private _relatedProductRef: React.RefObject<HTMLDivElement>;
 }

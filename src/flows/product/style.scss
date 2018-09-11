@@ -1,113 +1,52 @@
 @import "../../styles/variables";
 
-.product-details {
-    margin-bottom: $base-spacing;
+.product-view-container {
+    max-width: 900px;
+    margin: auto;
+    padding-top: $section-spacing;
 
-    button {
-        margin-bottom: $base-spacing;
+    .product {
+        display: flex;
+        margin: auto;
+    }
+
+    .product-content {
+        img {
+            width: 100%;
+        }
     }
 
     .product-brand {
-        font-family: $font-family-serif;
-        font-weight: $font-weight-bold;
-        font-size: $font-size-2;
-        line-height: $line-height-2;
-        margin-bottom: $base-spacing * 2;
+        margin-bottom: $base-spacing;
     }
 
-    .product-name {
-        font-weight: $font-weight-bold;
-        line-height: $line-height-4;
-        font-size: $font-size-4;
-    }
-
-    .product-seller {
-        color: $text-faded;
-        font-size: $font-size-1;
-        line-height: $line-height-1;
+    .product-title {
+        margin-bottom: $section-spacing;
     }
 
     .product-price {
-        font-size: $font-size-2;
-        line-height: $line-height-2;
-        margin-bottom: $base-spacing * 4;
+        font-size: $font-size-h2;
+        margin-bottom: $section-spacing;
+    }
+
+    .product-buy {
+        margin-bottom: $section-spacing;
+    }
+
+    .product-sidebar {
+        display: inline-block;
+        width: $sidebar-width;
+        padding-left: $sidebar-padding;
+    }
+
+    .sticky-product-sidebar {
+        transform: translate3d(0, 0, 0);
+        position: fixed;
+        width: $sidebar-width;
     }
 
     .divider {
-        border-bottom: $standard-border-width solid $standard-border-color;
-    }
-
-    .product-information {
-        font-size: $font-size-2;
-        line-height: $line-height-2;
-        margin: $base-spacing * 4 0;
-
-        .product-information-title {
-            margin-bottom: $base-spacing * 2;
-            font-weight: $font-weight-bold;
-        }
-    }
-
-    select {
-        margin-bottom: $base-spacing;
-    }
-}
-
-.mobile-product {
-    padding: $mobile-page-spacing;
-}
-
-.product {
-    display: flex;
-
-    .product-view {
-        display: flex;
-        width: 100%;
-        margin-bottom: $base-spacing * 5;
-    }
-
-    .product-images,
-    .product-details {
-        display: inline-block;
-        width: 40%;
-    }
-
-    .product-images {
-        display: flex;
-        margin-right: $base-spacing * 2;
-        width: 60%;
-
-        .carousel-container {
-            width: 100px;
-            height: 400px;
-        }
-
-        .product-main-image {
-            width: 100%;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            grid-gap: $base-spacing * 2;
-            display: grid;
-            margin: auto;
-
-            img {
-                margin: auto;
-            }
-        }
-    }
-
-    .button-container {
-        display: flex;
-
-        button {
-            margin: 0 $base-spacing;
-
-            &:first-child {
-                margin-left: 0;
-            }
-
-            &:last-child {
-                margin-right: 0;
-            }
-        }
+        border-bottom: $standard-border-width solid $border-color;
+        margin-bottom: $section-spacing;
     }
 }

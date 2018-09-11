@@ -219,14 +219,13 @@ export default class App extends React.Component<Props, AppState> {
                             <Route path="/collections" component={CollectionsView} />
                             <Route path="/user/:userId/:pageName?" component={User} />
                             <Route path="/shop" exact component={ShopView} />
-                            <Route path="/shop/:category?/:subcategory?" component={ShopView} />
                             <Route path="/shop/discover" component={ShopDiscover} />
                             <Route path="/shop/brands" component={BrandView} />
                             <Route path="/shop/product/:productId" component={ProductView} />
                             <Route path="/shop/category/:categoryName" component={ShopDiscover} />
+                            <Route path="/shop/:category?/:subcategory?" component={ShopView} />
                             <Route path="/post/:postId" component={PostView} />
                             <Route path="/article/:articleId" component={Article} />
-                            <Route path="/product/:productId" component={ProductView} />
                             <Route path="/trending" component={Trending} />
                             <Route path="/:url*/share/:shareType?/:shareId?" render={(props) => <ShareView {...props} close={this._redirectCloseModal} />} />
                             <Route path="/:url*/about" component={AboutUs} />
@@ -245,6 +244,7 @@ export default class App extends React.Component<Props, AppState> {
                             <>
                                 <Route path="/login" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />}/>
                                 <Route path="/post/:postId" render={(props) => <PostView {...props} close={this._redirectCloseModal} />} />
+                                <Route path="/product/:productId" render={(props) => <ProductView {...props} close={this._redirectCloseModal} />} />
                             </>
                         )}
                     </div>

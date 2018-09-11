@@ -35,11 +35,11 @@ export default class PostView extends React.Component<PostProps, PostState> {
         loadingNext: false,
     };
 
-    async componentWillMount() {
+    componentWillMount() {
         this._isModal = this.props.location.state && this.props.location.state.modal;
         this._pageRef = React.createRef();
         this._scrollRef = React.createRef();
-        await this._fetchData(this.props);
+        this._fetchData(this.props);
     }
 
     componentWillReceiveProps(nextProps: PostProps) {

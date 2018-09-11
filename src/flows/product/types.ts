@@ -6,6 +6,8 @@ export interface ProductProps {
     postsForProduct: Array<PostPreview>;
     reviews: Array<any>;
     wishlisted: boolean;
+    scrollRef?: React.RefObject<HTMLDivElement>;
+    isModal?: boolean;
     toggleWishlist(): void;
     onProductClick(): void;
 }

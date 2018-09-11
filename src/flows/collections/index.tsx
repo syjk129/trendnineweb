@@ -1,5 +1,5 @@
 import { PropTypes } from "prop-types";
-import * as React from "React";
+import * as React from "react";
 
 import { Featured } from "../../api/models";
 import { AppContext } from "../../app";
