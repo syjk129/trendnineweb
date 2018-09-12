@@ -89,7 +89,7 @@ export default class ProductView extends React.Component<ProductProps, ProductSt
 
         this.setState({
             product,
-            relatedProducts,
+            relatedProducts: relatedProducts.slice(0, 9),
             postsForProduct,
             reviews,
             wishlisted,
