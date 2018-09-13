@@ -65,7 +65,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                 <div className="mobile-header-container" ref={this._headerRef} id="header">
                     <div className="mobile-header">
                         <div className="mobile-left-header">
-                            <NavLink url="/discover" pathname={pathname} selected={!isShop}>
+                            <NavLink url="/" pathname={pathname} selected={!isShop}>
                                 Discover
                             </NavLink>
                             <NavLink url="/shop" pathname={pathname} selected={isShop}>
@@ -94,7 +94,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                     </div>
                     <div className="mobile-app-header">
                         <IconButton icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this._toggleMenu} selected={false} />
-                        <Link className="nav-logo-container" to={isShop ? "/shop" : "/discover"} onClick={this._close}>
+                        <Link className="nav-logo-container" to={isShop ? "/shop" : "/"} onClick={this._close}>
                             <img
                                 className="nav-logo"
                                 src={Logo}

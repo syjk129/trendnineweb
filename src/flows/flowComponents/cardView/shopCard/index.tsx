@@ -14,7 +14,7 @@ import "./style.scss";
 interface ShopCardProps {
     product: Product;
     className?: string;
-    clearData?(): void;
+    clearData: boolean;
     onload?(): void;
 }
 

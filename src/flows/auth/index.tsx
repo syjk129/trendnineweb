@@ -128,7 +128,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         localStorage.removeItem("user");
         localStorage.removeItem("tn_auth_token");
         localStorage.removeItem("refresh_token");
-        this.props.history.push("/discover");
+        this.props.history.push("/");
     }
 
     private _setToken = (token: any) => {

@@ -137,6 +137,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
                                 relatedPosts={this.state.relatedPosts}
                                 scrollRef={this._scrollRef}
                                 isModal={this._isModal}
+                                redirectProduct={this._redirectProduct}
                             />
                         )
                     )}
@@ -150,6 +151,13 @@ export default class PostView extends React.Component<PostProps, PostState> {
     private _pageRef: React.RefObject<HTMLDivElement>;
     private _isModal: boolean;
     private _post: Post;
+
+    private _redirectProduct = (product) => {
+        this.props.history.push({
+            pathname: `/product/${product.id}?referrer_type=post&referrer_id=${this.state.post.id}`,
+            state: { refresh: true },
+        });
+    }
 
     private _fetchData = async (props: PostProps) => {
         this.setState({ isLoading: true });

@@ -109,7 +109,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     private _clearFilters = () => {
         switch (this.props.contentType) {
             case ContentType.POST:
-                this.props.history.push("/discover");
+                this.props.history.push("/");
                 break;
             case ContentType.PRODUCT:
             case ContentType.SHOP:

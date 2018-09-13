@@ -49,4 +49,25 @@
             padding-left: $base-spacing;
         }
     }
+
+    &.price-refine {
+        .refine-section-content {
+            padding: $base-spacing;
+        }
+
+        .price-slider {
+            margin-bottom: $base-spacing;
+        }
+
+        .price-input {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: $base-spacing;
+
+            input {
+                display: inline-block;
+                width: 70px;
+            }
+        }
+    }
 }

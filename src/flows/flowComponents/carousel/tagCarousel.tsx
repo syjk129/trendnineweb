@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
 import { PostTag, PostTagType } from "../../../api/models";
@@ -20,14 +21,21 @@ class CarouselTag extends React.Component<CarouselTagProps> {
 
         return (
             <div className={this.props.className}>
-                <div className="carousel-tag">
+                <Link
+                    to={{
+                        pathname: "/looks",
+                        state: { refresh: true },
+                        search: `tags=${this.props.tag.content}`,
+                    }}
+                    className="carousel-tag"
+                >
                     <div className="carousel-tag-image-container">
                         <img className="carousel-tag-image" src={this.props.tag.cover_image && this.props.tag.cover_image.small_image_url || "https://i.ytimg.com/vi/j6jT1RYHfPg/maxresdefault.jpg"} />
                     </div>
                     <div className="carousel-tag-name">
                         {this.props.tag.content}
                     </div>
-                </div>
+                </Link>
             </div>
         );
     }

@@ -86,7 +86,7 @@ export default class Shop extends React.Component<Props, ShopState> {
                             {this.state.products.map(product => (
                                 <FadeIn height={540} duration={150}>
                                     {onload => (
-                                        <ShopCard onload={onload} product={product} />
+                                        <ShopCard onload={onload} product={product} clearData />
                                     )}
                                 </FadeIn>
                             ))}

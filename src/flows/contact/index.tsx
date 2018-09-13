@@ -5,7 +5,6 @@ import { LinkButton } from "../../components/button";
 import Content from "../../components/content";
 import Sidebar from "../../components/sidebar";
 import PageNavigation from "../flowComponents/pageNavigation";
-import { SidebarSection } from "../flowComponents/section";
 
 import "./style.scss";
 
@@ -13,7 +12,7 @@ export default function ContatUs() {
     const pathname = location.pathname;
     const isShop = pathname.indexOf("/shop") > -1;
     const prevPage = isShop ? "Shop" : "Discover";
-    const prevPageUrl = isShop ? "/shop" : "/discover";
+    const prevPageUrl = isShop ? "/shop" : "/";
     const renderContent = () => {
         return (
             <div>

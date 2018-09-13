@@ -41,6 +41,7 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
             reviews,
             wishlisted,
             toggleWishlist,
+            onProductClick,
         } = this.props;
 
         const reviewsTitle = reviews && reviews.length > 0 ? (
@@ -83,8 +84,8 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                                     <div className="product-brand">{product.brand && product.brand.name}</div>
                                     <h2 className="product-title">{product.title}</h2>
                                     <div className="product-price">${product.price}</div>
-                                    <Button className="product-action" variant={ButtonVariant.PRIMARY}>Buy Now</Button>
-                                    <Button className="product-action" variant={ButtonVariant.OUTLINE}>Add to wishlist</Button>
+                                    <Button className="product-action" variant={ButtonVariant.PRIMARY} onClick={onProductClick}>Buy Now</Button>
+                                    <Button className="product-action" variant={ButtonVariant.OUTLINE} onClick={toggleWishlist}>{wishlisted ? " Remove from Wishlist" : "Add to wishlist"}</Button>
                                     <div className="divider" />
                                     <Callout>Detail</Callout>
                                     <div dangerouslySetInnerHTML={{ __html: product.description }} />
@@ -96,8 +97,8 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
                 <div ref={this._relatedProductRef}>
                     <Callout>You Might Like</Callout>
                     <CardContainer>
-                        {this.props.relatedProducts.map(product => (
-                            <ShopCard product={product} />
+                        {relatedProducts.map(product => (
+                            <ShopCard product={product} clearData />
                         ))}
                     </CardContainer>
                 </div>

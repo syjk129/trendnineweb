@@ -259,15 +259,6 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
         this.setState({ searchOpen: !this.state.searchOpen });
     }
 
-    private _onSearch = (value) => {
-        const isShop = this.props.location.pathname.indexOf("/shop") > -1;
-        this._toggleSearch();
-        this.props.history.push({
-            pathname: isShop ? "/shop/discover" : "/discover",
-            search: `?keyword=${value}`,
-        });
-    }
-
     private _onScroll = () => {
         const header = this._headerRef.current;
         const logo = this._logoRef.current;

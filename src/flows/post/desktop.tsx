@@ -2,7 +2,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 
-import { Comment, Post, PostPreview } from "../../api/models";
+import { Comment, Post, PostPreview, Product } from "../../api/models";
 import { AppContext } from "../../app";
 import Button, { ButtonVariant, IconButton } from "../../components/button";
 import Callout, { CalloutVariant } from "../../components/callout";
@@ -22,6 +22,7 @@ interface PostViewProps extends RouteProps {
     relatedPosts: Array<PostPreview>;
     scrollRef: React.RefObject<HTMLDivElement>;
     isModal: boolean;
+    redirectProduct(product: Product): void;
 }
 
 interface DesktopPostViewState {
@@ -127,7 +128,7 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
                                     </div>
                                     <Callout>Products in this post</Callout>
                                     {this.props.post.products.map(product => (
-                                        <div className="sidebar-product">
+                                        <div className="sidebar-product" onClick={() => this.props.redirectProduct(product)}>
                                             <img className="sidebar-product-image" src={product.image && product.image.thumbnail_image_url} />
                                             <div className="sidebar-product-details">
                                                 <b>{product.brand && product.brand.name}</b>

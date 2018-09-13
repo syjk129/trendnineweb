@@ -56,7 +56,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                 <div className="menu">
                     <div className="menu-header">
                         <span className="close" onClick={this.props.toggleMenu}>&times;</span>
-                        <Link to={isShop ? "/shop" : "/discover"}>
+                        <Link to={isShop ? "/shop" : "/"}>
                             <img
                                 className="nav-logo"
                                 src={LogoWhite}
@@ -69,7 +69,7 @@ class Menu extends React.Component<MenuProps, MenuState> {
                         <LinkButton
                             className="menu-link"
                             showSelected
-                            to={isShop ? "/shop/discover" : "/discover"}
+                            to={isShop ? "/shop" : "/"}
                             onClick={this.props.toggleMenu}
                         >
                             Trending

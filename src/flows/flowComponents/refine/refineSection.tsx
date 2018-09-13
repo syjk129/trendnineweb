@@ -4,6 +4,7 @@ import Icon, { IconSize, IconVariant } from "../../../components/icon";
 
 interface RefineSectionProps {
     isOpen?: boolean;
+    className?: string;
     name: string;
     children: React.ReactNode;
 }
@@ -18,8 +19,13 @@ export default class RefineSection extends React.Component<RefineSectionProps, R
     };
 
     render() {
+        let classes = "refine-section";
+        if (this.props.className) {
+            classes += ` ${this.props.className}`;
+        }
+
         return (
-            <div className="refine-section">
+            <div className={classes}>
                 <div className="refine-section-header" onClick={this._toggleOpen}>
                     {this.props.name}
                     <Icon

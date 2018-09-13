@@ -13,6 +13,7 @@ export enum InputType {
     FILE = "file",
     SUBMIT = "submit",
     SEARCH = "search",
+    NUMERIC = "number",
 }
 
 export enum InputVariant {

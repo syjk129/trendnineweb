@@ -37,7 +37,9 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     };
 
     async componentWillMount() {
-        if (!Cookies.cookieExists("dismissed_welcome")) {
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        if (!Cookies.cookieExists("dismissed_welcome") && !user) {
             this.setState({
                 bannerAction: <Button inline small variant={ButtonVariant.TOP}>Join Now</Button>,
                 bannerContent: <span className="banner-text">Your one-stop destination to <b>discover</b> and <b>shop</b> the hottest trends in social media.</span>,

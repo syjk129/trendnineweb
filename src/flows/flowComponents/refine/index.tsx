@@ -1,10 +1,14 @@
 import { PropTypes } from "prop-types";
+import { Range } from "rc-slider";
+import "rc-slider/assets/index.css";
 import * as React from "react";
 import { withRouter } from "react-router-dom";
 
 import { Brand, Category, PostTag, PostTagType, Retailer } from "../../../api/models";
 import { AppContext } from "../../../app";
-import { decodeCategoryUrl, encodeCategoryUrl } from "../../../util/urlUtil";
+import Button, { ButtonVariant } from "../../../components/button";
+import Input, { InputType } from "../../../components/input";
+import { decodeCategoryUrl } from "../../../util/urlUtil";
 import { PostParam } from "../../model";
 import RouteProps from "../../routeProps";
 import { SortQueryParamMap, SortType } from "../contentToolbar/types";
@@ -29,6 +33,7 @@ interface RefineState {
     brands: Array<Brand>;
     styles: Array<PostTag>;
     occasions: Array<PostTag>;
+    priceRange: Array<number>;
 }
 
 class Refine extends React.Component<RefineProps, RefineState> {
@@ -41,6 +46,7 @@ class Refine extends React.Component<RefineProps, RefineState> {
         brands: [],
         styles: [],
         occasions: [],
+        priceRange: [0, 5000],
     };
 
     componentWillMount() {
@@ -112,8 +118,29 @@ class Refine extends React.Component<RefineProps, RefineState> {
                         ))}
                     </RefineSection>
                 )}
-                <RefineSection name="Price">
-                    Price
+                <RefineSection name="Price" className="price-refine">
+                    <div className="price-input">
+                        <Input
+                            type={InputType.NUMERIC}
+                            value={this.state.priceRange[0].toString()}
+                            onChange={(value) => this._priceInputChange(value, null)}
+                        />
+                        <Input
+                            type={InputType.NUMERIC}
+                            value={this.state.priceRange[1].toString()}
+                            onChange={(value) => this._priceInputChange(null, value)}
+                        />
+                    </div>
+                    <Range
+                        className="price-slider"
+                        min={0}
+                        max={5000}
+                        step={10}
+                        allowCross={false}
+                        value={this.state.priceRange}
+                        onChange={this._priceSliderChange}
+                    />
+                    <Button variant={ButtonVariant.OUTLINE} onClick={this._applyPriceFilter}>Apply</Button>
                 </RefineSection>
                 <RefineSection
                     name="Styles"
@@ -198,6 +225,31 @@ class Refine extends React.Component<RefineProps, RefineState> {
     private _getOccasions = async () => {
         const occasions = await this.context.api.getPostTags(PostTagType.OCCASION);
         this.setState({ occasions });
+    }
+
+    private _priceSliderChange = (priceRange: Array<number>) => {
+        this.setState({ priceRange });
+    }
+
+    private _priceInputChange = (price1: string | null, price2: string | null) => {
+        let priceRange = this.state.priceRange;
+        if (price1) {
+            priceRange[0] = parseFloat(price1);
+        }
+        if (price2) {
+            priceRange[1] = parseFloat(price2);
+        }
+
+        console.log(priceRange);
+        this.setState({ priceRange });
+    }
+
+    private _applyPriceFilter = () => {
+        let filterParam = this.state.filterParam;
+        filterParam.filters.minPrice = this.state.priceRange[0].toString();
+        filterParam.filters.maxPrice = this.state.priceRange[1].toString();
+        this.setState({ filterParam });
+        this.props.onRefine(filterParam);
     }
 
     private _toggleCategory = (category: Category, parentCategory?: Category) => {

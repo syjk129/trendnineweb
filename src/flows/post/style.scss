@@ -95,6 +95,10 @@
     display: flex;
     margin-bottom: $base-spacing;
 
+    &:hover {
+        cursor: pointer;
+    }
+
     .sidebar-product-image {
         width: 90px;
         height: 90px;

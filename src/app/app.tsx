@@ -208,18 +208,16 @@ export default class App extends React.Component<Props, AppState> {
                     </Helmet>
                     <Header loggedIn={this.state.loggedIn} />
                     <div className={`main-content ${isMobile && "mobile-view"}`} id="main-content" ref={this._mainContentRef}>
-                        {/* <Route exact path="/" render={() => <Redirect to="/discover" />} /> */}
                         <Switch location={isModal ? this._previousLocation : this.props.location}>
                             <Route exact path="/" component={HomeView} />
                             <Route path="/looks:query?" component={LooksView} />
-                            <Route path="/discover:query?/:category?/:categoryName?" component={Discover} />
+                            <Route path="/product/:productId" component={ProductView} />
                             <Route path="/feed" component={Discover} />
                             <Route path="/brands" component={BrandView} />
                             <Route path="/editorials" component={ArticlesView} />
                             <Route path="/collections" component={CollectionsView} />
                             <Route path="/user/:userId/:pageName?" component={User} />
                             <Route path="/shop" exact component={ShopView} />
-                            <Route path="/shop/discover" component={ShopDiscover} />
                             <Route path="/shop/brands" component={BrandView} />
                             <Route path="/shop/product/:productId" component={ProductView} />
                             <Route path="/shop/category/:categoryName" component={ShopDiscover} />
@@ -296,7 +294,7 @@ export default class App extends React.Component<Props, AppState> {
             });
         } else {
             this.props.history.push({
-                pathname: "/discover",
+                pathname: "/",
                 state: { modalClose: true },
             });
         }
