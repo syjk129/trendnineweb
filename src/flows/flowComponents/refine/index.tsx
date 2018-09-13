@@ -23,6 +23,7 @@ enum RefineContext {
 }
 
 interface RefineProps extends RouteProps {
+    noTagFilter?: boolean;
     onRefine(filterParam: PostParam): void;
 }
 
@@ -142,26 +143,30 @@ class Refine extends React.Component<RefineProps, RefineState> {
                     />
                     <Button variant={ButtonVariant.OUTLINE} onClick={this._applyPriceFilter}>Apply</Button>
                 </RefineSection>
-                <RefineSection
-                    name="Styles"
-                >
-                    {this.state.styles.map(style => (
-                        <RefineItem
-                            name={style.content}
-                            selected={this.state.filterParam.filters.tagIds.has(style.content)}
-                            onSelect={() => this._toggleTag(style)}
-                        />
-                    ))}
-                </RefineSection>
-                <RefineSection name="Occasions">
-                    {this.state.occasions.map(occasion => (
-                        <RefineItem
-                            name={occasion.content}
-                            selected={this.state.filterParam.filters.tagIds.has(occasion.content)}
-                            onSelect={() => this._toggleTag(occasion)}
-                        />
-                    ))}
-                </RefineSection>
+                {!this.props.noTagFilter && (
+                    <>
+                        <RefineSection
+                            name="Styles"
+                        >
+                            {this.state.styles.map(style => (
+                                <RefineItem
+                                    name={style.content}
+                                    selected={this.state.filterParam.filters.tagIds.has(style.content)}
+                                    onSelect={() => this._toggleTag(style)}
+                                />
+                            ))}
+                        </RefineSection>
+                        <RefineSection name="Occasions">
+                            {this.state.occasions.map(occasion => (
+                                <RefineItem
+                                    name={occasion.content}
+                                    selected={this.state.filterParam.filters.tagIds.has(occasion.content)}
+                                    onSelect={() => this._toggleTag(occasion)}
+                                />
+                            ))}
+                        </RefineSection>
+                    </>
+                )}
                 <RefineSection
                     name="Brand"
                     isOpen={this.state.filterParam.filters.brandIds.size > 0}

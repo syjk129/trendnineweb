@@ -9,6 +9,7 @@ import CarouselArrow from "./carouselArrow";
 
 interface CarouselTagProps {
     tag: PostTag;
+    selected: boolean;
     className?: string;
 }
 
@@ -29,7 +30,7 @@ class CarouselTag extends React.Component<CarouselTagProps> {
                     }}
                     className="carousel-tag"
                 >
-                    <div className="carousel-tag-image-container">
+                    <div className={`carousel-tag-image-container${this.props.selected ? " selected" : ""}`}>
                         <img className="carousel-tag-image" src={this.props.tag.cover_image && this.props.tag.cover_image.small_image_url || "https://i.ytimg.com/vi/j6jT1RYHfPg/maxresdefault.jpg"} />
                     </div>
                     <div className="carousel-tag-name">
@@ -43,15 +44,18 @@ class CarouselTag extends React.Component<CarouselTagProps> {
 
 interface TagCarouselProps {
     tags: Array<PostTag>;
+    selectedTag?: string;
     className?: string;
 }
 
 export default class TagCarousel extends React.Component<TagCarouselProps> {
     render() {
+        const initialIndex = this.props.tags.findIndex(tag => tag.content === this.props.selectedTag);
         const settings = {
             arrows: true,
             prevArrow: <CarouselArrow icon={IconVariant.ARROW_LEFT} />,
             nextArrow: <CarouselArrow icon={IconVariant.ARROW_RIGHT} />,
+            initialSlide: initialIndex,
             infinite: true,
             slidesToShow: 6,
             variableWidth: false,
@@ -87,7 +91,7 @@ export default class TagCarousel extends React.Component<TagCarouselProps> {
             <div className={classes}>
                 <Slider { ...settings }>
                     {this.props.tags.map(tag => (
-                        <CarouselTag tag={tag} />
+                        <CarouselTag tag={tag} selected={this.props.selectedTag === tag.content}/>
                     ))}
                 </Slider>
             </div>

@@ -35,11 +35,15 @@
         padding: $base-spacing;
         margin-bottom: $element-spacing;
 
-        &:hover {
-            cursor: pointer;
+        &:hover,
+        &.selected {
             padding: $base-spacing - 1px;
             border: 1px solid $border-color;
             border-radius: 100%;
+        }
+
+        &:hover {
+            cursor: pointer;
         }
     }
 

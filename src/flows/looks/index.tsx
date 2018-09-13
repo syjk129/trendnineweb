@@ -93,10 +93,16 @@ export default class Looks extends React.Component<Props, LooksState> {
     render() {
         return (
             <>
-                <TagCarousel className="looks-tag-carousel" tags={this.state.tags} />
+                {!this.state.loadingContent && (
+                    <TagCarousel
+                        className="looks-tag-carousel"
+                        tags={this.state.tags}
+                        selectedTag={this._getSelectedTag()}
+                    />
+                )}
                 <div className="looks" ref={this._pageRef}>
                     <Sidebar>
-                        <Refine onRefine={this._onRefine}/>
+                        <Refine noTagFilter onRefine={this._onRefine}/>
                     </Sidebar>
                     <Content>
                         <div className="look-tabs">
@@ -130,6 +136,12 @@ export default class Looks extends React.Component<Props, LooksState> {
     private _pageSize = 12;
     private _lookType: LookType;
     private _lookSelection: string;
+
+    private _getSelectedTag = () => {
+        const params = new URLSearchParams(this.props.location.search);
+        const postParam = new PostParam(params);
+        return postParam.filters.tagIds.values().next().value;
+    }
 
     private _selectTab = async (tabType: LookTab) => {
         this.setState({ selectedTab: tabType });
