@@ -5,6 +5,7 @@
     margin-bottom: $element-spacing;
 
     .article-card-image {
+        flex-shrink: 0;
         width: 50%;
         margin-right: $element-spacing;
     }

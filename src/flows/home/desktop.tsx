@@ -23,8 +23,11 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
         this._mainLeftRef = React.createRef();
         this._mainRight1Ref = React.createRef();
         this._mainRight2Ref = React.createRef();
-        this._setFeaturedSize();
         window.addEventListener("resize", this._setFeaturedSize);
+    }
+
+    componentDidMount() {
+        this._setFeaturedSize();
     }
 
     componentWillUnmount() {
