@@ -48,7 +48,7 @@ export default function UserTabs({ user, userId, isSelf, profile, pathname, setC
             }
             {isSelf &&
                 <NavLink
-                    url={`/user/${userId}/`}
+                    url={`/user/${userId}`}
                     pathname={pathname}
                     selected={pathname === `/user/${userId}` || pathname === `/user/${userId}/bookmarks`}
                     onClick={() => setContent(UserContentType.POST_WISHLIST)}

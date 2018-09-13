@@ -123,6 +123,10 @@
 .user-nav {
     border-bottom: $standard-border-width solid $standard-border-color;
 
+    .nav-link {
+        margin-right: $base-spacing;
+    }
+
     &.mobile {
         display: flex;
         flex-wrap: nowrap;

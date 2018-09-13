@@ -113,6 +113,7 @@ export default class PostEditor extends React.Component<PostEditorProps, PostEdi
                     [{"list": "ordered"}, {"list": "bullet"}, {"indent": "-1"}, {"indent": "+1"}],
                     ["link", "image"],
                     ["clean"],
+                    [{ align: "" }, { align: "center" }, { align: "right" }, { align: "justify" }],
                 ],
                 handlers: {
                     image: this._uploadImageHandler,
@@ -128,6 +129,7 @@ export default class PostEditor extends React.Component<PostEditorProps, PostEdi
             "bold", "italic", "underline", "strike", "blockquote",
             "list", "bullet", "indent",
             "link", "image",
+            "align",
         ];
     }
 }

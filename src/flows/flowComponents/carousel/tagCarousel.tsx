@@ -2,9 +2,8 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
-import { PostTag, PostTagType } from "../../../api/models";
+import { PostTag } from "../../../api/models";
 import { IconVariant } from "../../../components/icon";
-import Image from "../../../components/image";
 import CarouselArrow from "./carouselArrow";
 
 interface CarouselTagProps {
@@ -15,11 +14,6 @@ interface CarouselTagProps {
 
 class CarouselTag extends React.Component<CarouselTagProps> {
     render() {
-        let classes = "carousel-tag";
-        if (this.props.className) {
-            classes += ` ${this.props.className}`;
-        }
-
         return (
             <div className={this.props.className}>
                 <Link
