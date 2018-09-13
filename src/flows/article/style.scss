@@ -4,6 +4,7 @@
     max-width: 900px;
     margin: auto;
     margin-top: $section-spacing;
+    margin-bottom: $section-spacing * 3;
 
     .article-content {
         img {
@@ -12,6 +13,10 @@
 
         p {
             margin: 0;
+        }
+
+        a {
+            text-decoration: underline;
         }
     }
 
