@@ -128,4 +128,18 @@
             }
         }
     }
+
+    &.mobile {
+        border-bottom: $standard-border-width solid $border-color;
+        margin-bottom: $base-spacing;
+
+        .featured-section-header {
+            padding: $mobile-base-spacing;
+            margin-bottom: $base-spacing;
+
+            .header-text {
+                display: block;
+            }
+        }
+    }
 }

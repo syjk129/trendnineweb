@@ -36,7 +36,8 @@
         padding-bottom: $border-width;
     }
 
-    &:hover {
+    &:hover,
+    &.mobile {
         .featured-caption {
             display: block;
         }
@@ -44,6 +45,11 @@
         .featured-title h3 {
             display: inline-block;
             padding-bottom: 0;
+        }
+    }
+
+    &:hover {
+        .featured-title h3 {
             border-bottom: $border-width solid $color-brand;
         }
     }

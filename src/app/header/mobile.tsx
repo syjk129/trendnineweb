@@ -8,6 +8,7 @@ import { IconSize, IconVariant } from "../../components/icon";
 import NavLink from "../../components/navLink";
 import { noScroll, removeNoScroll } from "../../util/scroll";
 import * as Logo from "../logo.png";
+import Banner from "./banner";
 import Menu from "./menu";
 import Search from "./search";
 import { HeaderProps } from "./types";
@@ -29,21 +30,8 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
         showSearch: false,
     };
 
-    componentWillMount() {
-        this._headerRef = React.createRef();
-
-        window.addEventListener("scroll", this._onScroll);
-        window.addEventListener("touchmove", this._onScroll);
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("scroll", this._onScroll);
-        window.removeEventListener("touchmove", this._onScroll);
-    }
-
     componentWillReceiveProps(nextProps: HeaderProps) {
         if (this.props.location.pathname !== nextProps.location.pathname && (!nextProps.location.state || !nextProps.location.state.modal)) {
-            this._lastScrollTop = 0;
             this._close();
         }
     }
@@ -62,7 +50,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                     isShop={isShop}
                     subscribe={this._subscribe}
                 />
-                <div className="mobile-header-container" ref={this._headerRef} id="header">
+                <div className="mobile-header-container" id="header">
                     {/* <div className="mobile-header">
                         <div className="mobile-left-header">
                             <NavLink url="/" pathname={pathname} selected={!isShop}>
@@ -92,6 +80,11 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                             )}
                         </div>
                     </div> */}
+                    {/* {this.props.bannerAction && this.props.bannerContent && (
+                        <Banner actionButton={this.props.bannerAction} onDismiss={this.props.dismissBanner}>
+                            {this.props.bannerContent}
+                        </Banner>
+                    )} */}
                     <div className="mobile-app-header">
                         <IconButton icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this._toggleMenu} selected={false} />
                         <Link className="nav-logo-container" to={isShop ? "/shop" : "/"} onClick={this._close}>
@@ -116,31 +109,6 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                 </div>
             </div>
         );
-    }
-
-    private _headerRef: React.RefObject<HTMLDivElement>;
-    private _lastScrollTop: number = 0;
-
-    private _onScroll = () => {
-        const header = this._headerRef.current;
-        const scrollDelta = 5;
-
-        if (header) {
-            const rect = header.getBoundingClientRect();
-            const scrollTop = window.scrollY;
-            if (Math.abs(this._lastScrollTop - scrollTop) <= scrollDelta) {
-                return;
-            }
-
-            if (Math.abs(scrollTop - this._lastScrollTop) < 300 && scrollTop > this._lastScrollTop && scrollTop > rect.height) {
-                header.classList.add("nav-hidden");
-            } else if (scrollTop + window.innerHeight < document.body.scrollHeight) {
-                header.classList.remove("nav-hidden");
-                header.classList.remove("no-animation");
-            }
-
-            this._lastScrollTop = scrollTop;
-        }
     }
 
     private _close = () => {

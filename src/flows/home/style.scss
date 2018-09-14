@@ -1,5 +1,44 @@
 @import "../../styles/variables";
 
+.mobile-home {
+    .main-featured {
+        position: relative;
+
+        img {
+            filter: brightness(75%);
+        }
+
+        .main-featured-content {
+            color: #fff;
+            position: absolute;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+
+            .title {
+                font-size: $mobile-font-size-h1;
+                margin-bottom: $base-spacing * 2;
+            }
+
+            .subtitle {
+                margin-bottom: $base-spacing * 2;
+            }
+        }
+    }
+
+    .featured-articles {
+        padding: $mobile-base-spacing;
+    }
+
+    .featured-collection {
+        margin-bottom: $section-spacing;
+    }
+}
+
 .home {
     display: block;
     padding-top: $section-spacing;

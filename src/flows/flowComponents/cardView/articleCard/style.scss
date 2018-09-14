@@ -31,6 +31,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         vertical-align: top;
+        width: 100%;
     }
 
     .article-title {
@@ -44,5 +45,23 @@
     .article-read {
         text-transform: uppercase;
         font-weight: $font-weight-bold;
+    }
+
+    &.mobile {
+        display: block;
+        box-shadow: 0 0 5px rgba(149, 149, 149, 0.5);
+        margin-bottom: $mobile-base-spacing;
+
+        .article-card-image {
+            margin-right: 0;
+        }
+
+        .article-details {
+            padding: $mobile-base-spacing;
+        }
+
+        .article-caption {
+            margin-bottom: 0;
+        }
     }
 }

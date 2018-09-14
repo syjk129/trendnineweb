@@ -7,6 +7,7 @@ import { AppContext } from "../../app";
 import { PostType } from "../cms/types";
 import RouteProps from "../routeProps";
 import DesktopHome from "./desktop";
+import MobileHome from "./mobile";
 
 import "./style.scss";
 
@@ -59,7 +60,7 @@ export default class Home extends React.Component<Props, HomeState> {
         return (
             <>
                 {isMobile ? (
-                    <div />
+                    <MobileHome {...this.state} />
                 ) : (
                     <DesktopHome {...this.state} />
                 )}

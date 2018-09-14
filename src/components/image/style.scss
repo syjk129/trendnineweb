@@ -60,7 +60,8 @@
     &.post-cover-ratio,
     &.product-image-ratio,
     &.look-cover-ratio,
-    &.article-cover-ratio {
+    &.article-cover-ratio,
+    &.featured-cover-ratio {
         &::before {
             content: "";
             display: block;
@@ -92,6 +93,10 @@
 
     &.look-cover-ratio::before {
         padding-top: 133%;
+    }
+
+    &.featured-cover-ratio::before {
+        padding-top: 75%;
     }
 
     &.circle-image img {

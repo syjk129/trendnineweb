@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import "./style.scss";
 
@@ -10,7 +11,7 @@ interface BannerProps {
 
 export default function Banner({ children, actionButton, onDismiss }: BannerProps) {
     return (
-        <div className="banner">
+        <div className={`banner${isMobile ? " mobile" : ""}`}>
             <div className="banner-content">
                 <div className="banner-text">
                     {children}
