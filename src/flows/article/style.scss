@@ -6,6 +6,10 @@
     margin-top: $section-spacing;
     margin-bottom: $section-spacing * 3;
 
+    &.mobile {
+        padding: $mobile-base-spacing;
+    }
+
     .article-content {
         img {
             width: 100%;

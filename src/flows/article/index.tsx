@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import { Featured } from "../../api/models";
 import { AppContext } from "../../app";
@@ -43,7 +44,7 @@ export default class ArticleView extends React.Component<Props, ArticleState> {
         }
 
         return (
-            <div className="article">
+            <div className={`article${isMobile ? " mobile" : ""}`}>
                 <div className="article-header">
                     <div>
                         <Callout inline>Looks</Callout>
