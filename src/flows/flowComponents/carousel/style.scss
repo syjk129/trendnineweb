@@ -59,3 +59,13 @@
         font-weight: $font-weight-bold;
     }
 }
+
+.tag-carousel {
+    &.mobile {
+        display: flex;
+        overflow-y: scroll;
+        width: 100%;
+        padding: $base-spacing 0;
+        margin-bottom: $base-spacing;
+    }
+}

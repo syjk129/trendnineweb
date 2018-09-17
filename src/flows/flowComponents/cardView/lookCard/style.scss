@@ -6,6 +6,10 @@
     position: relative;
     display: block;
 
+    &.mobile {
+        margin: 0;
+    }
+
     .look-card-details {
         position: relative;
         display: flex;
@@ -141,11 +145,13 @@
 }
 
 .look-card-container {
-    &:hover {
-        border: 1px solid $border-color;
+    &:not(&.mobile) {
+        &:hover {
+            border: 1px solid $border-color;
 
-        .look-card {
-            margin: $base-spacing - 1px;
+            .look-card {
+                margin: $base-spacing - 1px;
+            }
         }
     }
 }

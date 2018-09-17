@@ -37,6 +37,19 @@
     .featured-collection {
         margin-bottom: $section-spacing;
     }
+
+    .trending-looks,
+    .style-occasion {
+        overflow-y: scroll;
+        display: flex;
+        margin-bottom: $base-spacing;
+    }
+
+    .trending-looks {
+        .look-card-container {
+            min-width: 180px;
+        }
+    }
 }
 
 .home {

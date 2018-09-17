@@ -46,10 +46,14 @@ class LookCard extends React.Component<LookCardProps, LookCardState> {
             classes += ` ${className}`;
         }
 
+        if (isMobile) {
+            classes += " mobile";
+        }
+
         const imageUrl = look.cover_image && (isMobile ? look.cover_image.small_image_url : look.cover_image.thumbnail_image_url);
 
         return (
-            <div className="look-card-container">
+            <div className={`look-card-container${isMobile ? " mobile" : ""}`}>
                 <div
                     className={classes}
                     onMouseEnter={this._onCardMouseEnter}

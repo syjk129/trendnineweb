@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
@@ -12,7 +13,7 @@ interface CarouselTagProps {
     className?: string;
 }
 
-class CarouselTag extends React.Component<CarouselTagProps> {
+export class CarouselTag extends React.Component<CarouselTagProps> {
     render() {
         return (
             <div className={this.props.className}>
@@ -79,6 +80,18 @@ export default class TagCarousel extends React.Component<TagCarouselProps> {
 
         if (this.props.className) {
             classes += ` ${this.props.className}`;
+        }
+
+        if (isMobile) {
+            classes += " mobile";
+
+            return (
+                <div className={classes}>
+                    {this.props.tags.map(tag => (
+                        <CarouselTag tag={tag} selected={this.props.selectedTag === tag.content}/>
+                    ))}
+                </div>
+            );
         }
 
         return (

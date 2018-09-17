@@ -1,6 +1,6 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import FadeIn from "react-lazyload-fadein";
+import { isMobile } from "react-device-detect";
 
 import { PostPreview, PostTag, PostTagType } from "../../api/models";
 import { AppContext } from "../../app";
@@ -91,6 +91,8 @@ export default class Looks extends React.Component<Props, LooksState> {
     }
 
     render() {
+        let ContentEl = isMobile ? "div" : Content;
+
         return (
             <>
                 {!this.state.loadingContent && (
@@ -101,10 +103,12 @@ export default class Looks extends React.Component<Props, LooksState> {
                     />
                 )}
                 <div className="looks" ref={this._pageRef}>
-                    <Sidebar>
-                        <Refine noTagFilter onRefine={this._onRefine}/>
-                    </Sidebar>
-                    <Content>
+                    {!isMobile && (
+                        <Sidebar>
+                            <Refine noTagFilter onRefine={this._onRefine}/>
+                        </Sidebar>
+                    )}
+                    <ContentEl className="look-content">
                         <div className="look-tabs">
                             <Tab
                                 selected={this.state.selectedTab === LookTab.LATEST}
@@ -126,7 +130,7 @@ export default class Looks extends React.Component<Props, LooksState> {
                                 ))}
                             </CardContainer>
                         )}
-                    </Content>
+                    </ContentEl>
                 </div>
             </>
         );

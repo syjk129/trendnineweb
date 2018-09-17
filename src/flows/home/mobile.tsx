@@ -1,9 +1,10 @@
 import * as React from "react";
 
 import { Featured, PostPreview, PostTag } from "../../api/models";
-import Button, { LinkButton, ButtonVariant } from "../../components/button";
+import Button, { ButtonVariant, LinkButton } from "../../components/button";
 import Image, { ImageRatioVariant } from "../../components/image";
-import { ArticleCard, FeaturedCard } from "../flowComponents/cardView";
+import { ArticleCard, FeaturedCard, LookCard } from "../flowComponents/cardView";
+import { CarouselTag } from "../flowComponents/carousel/tagCarousel";
 import { FeaturedSection } from "../flowComponents/section";
 
 interface MobileHomeProps {
@@ -34,6 +35,23 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                         <ArticleCard featured article={article} />
                     ))}
                 </div>
+                <FeaturedSection
+                    title="Trending Looks"
+                    subtitle="Our favorite posts from the influencers"
+                    cta={(<LinkButton url="/collections" className="view-all-button">View All</LinkButton>)}
+                >
+                    <div className="trending-looks">
+                        {this.props.trendingLooks.map(look => <LookCard look={look} />)}
+                    </div>
+                </FeaturedSection>
+                <FeaturedSection
+                    title="Style & Occasion"
+                    subtitle="Discover Influencer posts by style and occasion"
+                >
+                    <div className="style-occasion">
+                        {this.props.tags.map(tag => <CarouselTag selected={false} tag={tag} />)}
+                    </div>
+                </FeaturedSection>
                 <FeaturedSection
                     title="Featured Collections"
                     subtitle="Curated gallery of the hottest trends"
