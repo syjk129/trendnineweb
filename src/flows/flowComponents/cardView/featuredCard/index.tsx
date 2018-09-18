@@ -27,12 +27,14 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
         if (this.props.post.type === FeaturedType.ARTICLE) {
             return (
                 <Link to={`/article/${this.props.post.id}`} className={classes}>
-                    {/* <img src={this.props.post.cover_image && this.props.post.cover_image.small_image_url} /> */}
-                    <Image
-                        // ratio={ImageRatioVariant.SQUARE}
-                        square
-                        src={this.props.post.cover_image && this.props.post.cover_image.small_image_url}
-                    />
+                    {isMobile ? (
+                        <Image
+                            square
+                            src={this.props.post.cover_image && this.props.post.cover_image.small_image_url}
+                        />
+                    ) : (
+                        <img src={this.props.post.cover_image && this.props.post.cover_image.small_image_url} />
+                    )}
                     <div className="featured-card-banner">
                         <Callout>Read & Shop</Callout>
                         <div className="featured-title">
@@ -45,12 +47,14 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
         } else {
             return (
                 <div className={classes}>
-                    {/* <img src={this.props.post.cover_image && this.props.post.cover_image.small_image_url} /> */}
-                    <Image
-                        // ratio={ImageRatioVariant.SQUARE}
-                        square
-                        src={this.props.post.cover_image && this.props.post.cover_image.small_image_url}
-                    />
+                    {isMobile ? (
+                        <Image
+                            square
+                            src={this.props.post.cover_image && this.props.post.cover_image.small_image_url}
+                        />
+                    ) : (
+                        <img src={this.props.post.cover_image && this.props.post.cover_image.small_image_url} />
+                    )}
                     <div className="featured-card-banner">
                         <Callout>Collection</Callout>
                         <div className="featured-title">
