@@ -66,30 +66,30 @@ class Menu extends React.Component<MenuProps, MenuState> {
                     </div>
                     <div className="menu-content">
                         <div className="nav-items">
-                            <div className="menu-item">
+                            <Link to="/looks" className="menu-item">
                                 <div className="menu-item-text">
                                     Looks
                                 </div>
                                 <Icon variant={IconVariant.ARROW_RIGHT} />
-                            </div>
-                            <div className="menu-item">
+                            </Link>
+                            <Link to="/collections" className="menu-item">
                                 <div className="menu-item-text">
                                     Collections
                                 </div>
                                 <Icon variant={IconVariant.ARROW_RIGHT} />
-                            </div>
-                            <div className="menu-item">
+                            </Link>
+                            <Link to="/editorials" className="menu-item">
                                 <div className="menu-item-text">
                                     Editorials
                                 </div>
                                 <Icon variant={IconVariant.ARROW_RIGHT} />
-                            </div>
-                            <div className="menu-item">
+                            </Link>
+                            <Link to="/shop" className="menu-item">
                                 <div className="menu-item-text">
                                     Shop
                                 </div>
                                 <Icon variant={IconVariant.ARROW_RIGHT} />
-                            </div>
+                            </Link>
                         </div>
                         <div className="follow-items">
                             <div className="menu-item-text">
