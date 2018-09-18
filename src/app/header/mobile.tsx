@@ -101,8 +101,6 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                     </div>
                     {this.state.showSearch && (
                         <Search
-                            searchString={this.state.searchString}
-                            onSearchStringChange={this._onSearchStringChange}
                             search={this._onSearch}
                         />
                     )}

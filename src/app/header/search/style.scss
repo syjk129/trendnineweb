@@ -3,23 +3,31 @@
 .mobile-search-container {
     position: fixed;
     padding: $mobile-page-spacing;
-    padding-top: $mobile-page-spacing * 3;
     box-sizing: border-box;
     width: 100%;
+    height: 100%;
+    overflow-y: scroll;
     background-color: #fff;
     bottom: 0;
 
     .mobile-search {
         display: flex;
-        border-bottom: $standard-border-width solid $standard-border-color;
+        border: $standard-border-width solid #000;
+        border-radius: $border-radius;
+        margin-bottom: $section-spacing;
 
         .icon-button {
             display: flex;
-            padding-right: $mobile-page-spacing;
+            padding-left: $mobile-base-spacing;
+            padding-right: $base-spacing;
         }
     }
 
     .search-input {
         font-size: $mobile-font-size-2;
+    }
+
+    .search-tabs {
+        margin-bottom: $base-spacing * 2;
     }
 }

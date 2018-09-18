@@ -32,7 +32,7 @@ class LookCard extends React.Component<LookCardProps, LookCardState> {
 
     state: LookCardState = {
         showDetails: false,
-        focusedProduct: this.props.look.products[0],
+        focusedProduct: this.props.look.products ? this.props.look.products[0] : null,
         wishlisted: this.props.look.wishlisted,
         wishlistedProducts: new Set(),
     };
@@ -56,8 +56,8 @@ class LookCard extends React.Component<LookCardProps, LookCardState> {
             <div className={`look-card-container${isMobile ? " mobile" : ""}`}>
                 <div
                     className={classes}
-                    onMouseEnter={this._onCardMouseEnter}
-                    onMouseLeave={this._onCardMouseLeave}
+                    onMouseEnter={!isMobile && this._onCardMouseEnter}
+                    onMouseLeave={!isMobile && this._onCardMouseLeave}
                 >
                     <Link
                         to={{
