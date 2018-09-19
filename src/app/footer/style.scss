@@ -1,5 +1,29 @@
 @import "../../styles/variables";
 
+.mobile-newsletter {
+    padding: $base-spacing * 2 $mobile-base-spacing;
+    background-color: $_color-grey-5;
+    text-align: center;
+    font-size: $mobile-font-size-callout;
+    color: $color-secondary;
+
+    b {
+        color: #000;
+        margin-bottom: $base-spacing * 2;
+        font-size: $mobile-font-size-subtitle;
+        display: block;
+    }
+
+    .newsletter-email {
+        background-color: #fff;
+        border-radius: $border-radius;
+    }
+
+    .newsletter-info {
+        margin-bottom: $base-spacing * 2;
+    }
+}
+
 .mobile-footer {
     background-color: $color-brand;
     color: #fff;
