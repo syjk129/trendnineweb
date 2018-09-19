@@ -11,8 +11,9 @@ import Spinner from "../../components/spinner";
 import Tab from "../../components/tab";
 import LookCard from "../flowComponents/cardView/lookCard";
 import { TagCarousel } from "../flowComponents/carousel";
+import ContentToolbar from "../flowComponents/contentToolbar";
 import Refine from "../flowComponents/refine";
-import { PostParam } from "../model";
+import { ContentType, PostParam } from "../model";
 import RouteProps from "../routeProps";
 import { LookType } from "./types";
 
@@ -32,6 +33,7 @@ interface LooksState {
     loadingNext: boolean;
     selectedTab: LookTab;
     tags: Array<PostTag>;
+    gridSize: number;
 }
 
 export default class Looks extends React.Component<Props, LooksState> {
@@ -44,6 +46,7 @@ export default class Looks extends React.Component<Props, LooksState> {
         loadingNext: false,
         selectedTab: LookTab.LATEST,
         tags: [],
+        gridSize: 2,
     };
 
     async componentWillMount() {
@@ -92,6 +95,7 @@ export default class Looks extends React.Component<Props, LooksState> {
 
     render() {
         let ContentEl = isMobile ? "div" : Content;
+        const user = JSON.parse(localStorage.getItem("user"));
 
         return (
             <>
@@ -109,22 +113,34 @@ export default class Looks extends React.Component<Props, LooksState> {
                         </Sidebar>
                     )}
                     <ContentEl className="look-content">
-                        <div className="look-tabs">
-                            <Tab
-                                selected={this.state.selectedTab === LookTab.LATEST}
-                                label="Most Recent"
-                                onSelect={() => this._selectTab(LookTab.LATEST)}
+                        {isMobile ? (
+                            <ContentToolbar
+                                location={this.props.location}
+                                history={this.props.history}
+                                match={this.props.match}
+                                gridSize={this.state.gridSize}
+                                loggedIn={!!user}
+                                contentType={ContentType.POST}
+                                setGridSize={this._setGridSize}
                             />
-                            <Tab
-                                selected={this.state.selectedTab === LookTab.POPULAR}
-                                label="Most Popular"
-                                onSelect={() => this._selectTab(LookTab.POPULAR)}
-                            />
-                        </div>
+                        ) : (
+                            <div className="look-tabs">
+                                <Tab
+                                    selected={this.state.selectedTab === LookTab.LATEST}
+                                    label="Most Recent"
+                                    onSelect={() => this._selectTab(LookTab.LATEST)}
+                                />
+                                <Tab
+                                    selected={this.state.selectedTab === LookTab.POPULAR}
+                                    label="Most Popular"
+                                    onSelect={() => this._selectTab(LookTab.POPULAR)}
+                                />
+                            </div>
+                        )}
                         {this.state.loadingContent ? (
                             <Spinner />
                         ) : (
-                            <CardContainer>
+                            <CardContainer gridSize={this.state.gridSize}>
                                 {this.state.looks.map(look => (
                                     <LookCard onload={onload} look={look} />
                                 ))}
@@ -140,6 +156,10 @@ export default class Looks extends React.Component<Props, LooksState> {
     private _pageSize = 12;
     private _lookType: LookType;
     private _lookSelection: string;
+
+    private _setGridSize = (gridSize: number) => {
+        this.setState({ gridSize });
+    }
 
     private _getSelectedTag = () => {
         const params = new URLSearchParams(this.props.location.search);
@@ -170,7 +190,7 @@ export default class Looks extends React.Component<Props, LooksState> {
 
     private _populateNext = async () => {
         const page = this._pageRef.current;
-        if (!page || page.getBoundingClientRect().bottom > window.innerHeight || this.state.loadingNext || !this.state.nextToken) {
+        if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 100 || this.state.loadingNext || !this.state.nextToken) {
             return;
         }
 

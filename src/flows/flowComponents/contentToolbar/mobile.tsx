@@ -99,12 +99,6 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                             size={IconSize.SMALL}
                             onClick={() => this.props.setGridSize(2)}
                         />
-                        <IconButton
-                            className={gridSize === 3 ? "selected" : ""}
-                            icon={IconVariant.GRID_SIZE_3}
-                            size={IconSize.SMALL}
-                            onClick={() => this.props.setGridSize(3)}
-                        />
                    </div>
                 </div>
                 {activeToolbar === ToolbarType.SORT &&
