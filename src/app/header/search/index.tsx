@@ -87,7 +87,7 @@ export default class Search extends React.Component<SearchProps, SearchState> {
                     {this.state.isLoading ? (
                         <Spinner />
                     ) : (
-                        <CardContainer>
+                        <CardContainer gridSize={2}>
                             {this._renderSearchResult()}
                         </CardContainer>
                     )}

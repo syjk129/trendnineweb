@@ -140,7 +140,7 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                             />
                             {hasChanged && (
                                 <div className="filter-toolbar">
-                                    <Button rounded onClick={() => this._toggleFilterActive(this.props.activeToolbar)}>View Results</Button>
+                                    <Button variant={ButtonVariant.OUTLINE} onClick={() => this._toggleFilterActive(this.props.activeToolbar)}>View Results</Button>
                                 </div>
                             )}
                         </FilterNavigation>

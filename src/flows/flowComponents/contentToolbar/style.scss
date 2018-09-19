@@ -35,11 +35,12 @@
 }
 
 .filter-toolbar {
+    background-color: #fff;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    margin: $mobile-page-spacing;
+    padding: $mobile-page-spacing;
 }
 
 .sticky-mobile-content-toolbar .active-filters {
@@ -73,18 +74,19 @@
 .filter-navigation {
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
 
     .filter-navigation-header {
+        flex-shrink: 0;
         display: flex;
+        align-items: center;
         padding: $mobile-page-spacing;
         position: relative;
         border-bottom: $standard-border-width solid $standard-border-color;
 
         .filter-navigation-title {
-            font-size: $mobile-font-size-2;
-            font-weight: $font-weight-bold;
-            text-transform: uppercase;
             flex-grow: 1;
             text-align: center;
         }
@@ -92,7 +94,8 @@
 
     .clear-filter {
         position: absolute;
-        text-decoration: underline;
+        text-decoration: none;
+        color: $color-warning;
         right: $mobile-page-spacing;
     }
 

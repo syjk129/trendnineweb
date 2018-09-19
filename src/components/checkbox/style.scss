@@ -10,7 +10,7 @@
 
     .checkbox-checkmark-outline {
         display: inline-block;
-        border: $standard-border-width solid $standard-border-color;
+        border: $standard-border-width solid #000;
         padding: 2px;
         box-sizing: border-box;
         position: absolute;
@@ -29,14 +29,6 @@
         }
     }
 
-    &:hover {
-        text-decoration: underline;
-
-        .checkbox-checkmark {
-            background-color: $color-muted;
-        }
-    }
-
     &.mobile {
         $checkbox-size: $mobile-checkbox-size - 2 * $standard-border-width;
 
@@ -46,6 +38,11 @@
         height: $mobile-checkbox-size;
 
         .checkbox-checkmark {
+            height: 12px;
+            width: 12px;
+        }
+
+        .checkbox-checkmark-outline {
             height: $checkbox-size;
             width: $checkbox-size;
         }
@@ -63,8 +60,13 @@
         }
     }
 
-    &.mobile input:checked ~ .checkbox-checkmark {
-        height: $mobile-checkbox-size;
-        width: $mobile-checkbox-size;
+    &:not(&.mobile) {
+        &:hover {
+            text-decoration: underline;
+
+            .checkbox-checkmark {
+                background-color: $color-muted;
+            }
+        }
     }
 }

@@ -2,7 +2,6 @@
 
 .filter-search-results {
     box-sizing: border-box;
-    padding: $mobile-page-spacing;
     overflow: auto;
 
     .checkbox-container {
@@ -24,7 +23,7 @@
 }
 
 .filter-search {
-    padding: $mobile-page-spacing;
+    margin-top: $mobile-page-spacing;
 
     input {
         box-sizing: border-box;
