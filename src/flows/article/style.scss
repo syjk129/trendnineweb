@@ -29,4 +29,10 @@
         border-bottom: $standard-border-width solid $border-color;
         margin-bottom: $section-spacing;
     }
+
+    .article-header {
+        .iconed-callout {
+            display: inline-block;
+        }
+    }
 }

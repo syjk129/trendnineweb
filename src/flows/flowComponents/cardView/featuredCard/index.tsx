@@ -4,6 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 
 import { Featured, FeaturedType } from "../../../../api/models";
 import Callout from "../../../../components/callout";
+import Icon, { IconVariant } from "../../../../components/icon";
 import Image from "../../../../components/image";
 
 import "./style.scss";
@@ -29,14 +30,18 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
                 <Link to={`/article/${this.props.post.id}`} className={classes}>
                     {isMobile ? (
                         <Image
+                            className="featured-image"
                             square
                             src={this.props.post.cover_image && this.props.post.cover_image.small_image_url}
                         />
                     ) : (
-                        <img src={this.props.post.cover_image && this.props.post.cover_image.small_image_url} />
+                        <img className="featured-image" src={this.props.post.cover_image && this.props.post.cover_image.small_image_url} />
                     )}
                     <div className="featured-card-banner">
-                        <Callout>Read & Shop</Callout>
+                        <div className="iconed-callout">
+                            <Icon variant={IconVariant.EDITORIAL} />
+                            <Callout>Read & Shop</Callout>
+                        </div>
                         <div className="featured-title">
                             <h3>{this.props.post.title}</h3>
                         </div>
@@ -46,23 +51,27 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
             );
         } else {
             return (
-                <div className={classes}>
+                <Link to={this.props.post.direct_url || ""} className={classes}>
                     {isMobile ? (
                         <Image
+                            className="featured-image"
                             square
                             src={this.props.post.cover_image && this.props.post.cover_image.small_image_url}
                         />
                     ) : (
-                        <img src={this.props.post.cover_image && this.props.post.cover_image.small_image_url} />
+                        <img className="featured-image" src={this.props.post.cover_image && this.props.post.cover_image.small_image_url} />
                     )}
                     <div className="featured-card-banner">
-                        <Callout>Collection</Callout>
+                        <div className="iconed-callout">
+                            <Icon variant={IconVariant.COLLECTION} />
+                            <Callout>Collection</Callout>
+                        </div>
                         <div className="featured-title">
                             <h3>{this.props.post.title}</h3>
                         </div>
                         <div className="featured-caption">{this.props.post.caption}</div>
                     </div>
-                </div>
+                </Link>
             );
         }
     }

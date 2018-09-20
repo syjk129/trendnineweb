@@ -4,9 +4,8 @@ import { isMobile } from "react-device-detect";
 
 import { Featured } from "../../api/models";
 import { AppContext } from "../../app";
-import { IconButton } from "../../components/button";
 import Callout, { CalloutVariant } from "../../components/callout";
-import { IconSize, IconVariant } from "../../components/icon";
+import Icon, { IconVariant } from "../../components/icon";
 import RouteProps from "../routeProps";
 
 import "./style.scss";
@@ -47,7 +46,10 @@ export default class ArticleView extends React.Component<Props, ArticleState> {
             <div className={`article${isMobile ? " mobile" : ""}`}>
                 <div className="article-header">
                     <div>
-                        <Callout inline>Looks</Callout>
+                        <div className="iconed-callout">
+                            <Icon variant={IconVariant.EDITORIAL} />
+                            <Callout inline>Read & Shop</Callout>
+                        </div>
                         <Callout inline variant={CalloutVariant.MUTED}>TODAY</Callout>
                     </div>
                 </div>

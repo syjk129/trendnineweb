@@ -8,7 +8,7 @@ import Button, { ButtonVariant, IconButton } from "../../components/button";
 import Callout, { CalloutVariant } from "../../components/callout";
 import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
-import { IconSize, IconVariant } from "../../components/icon";
+import Icon, { IconSize, IconVariant } from "../../components/icon";
 import Image from "../../components/image";
 import Sticky from "../../components/sticky";
 import LookCard from "../flowComponents/cardView/lookCard";
@@ -69,7 +69,10 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
                         <div className="post-content" ref="cover">
                             <div className="post-header">
                                 <div>
-                                    <Callout inline>Looks</Callout>
+                                    <div className="iconed-callout">
+                                        <Icon variant={IconVariant.LOOKS} />
+                                        <Callout inline>Looks</Callout>
+                                    </div>
                                     <Callout inline variant={CalloutVariant.MUTED}>TODAY</Callout>
                                 </div>
                                 <IconButton

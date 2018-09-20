@@ -58,6 +58,10 @@
 
         .article-details {
             padding: $mobile-base-spacing;
+
+            .icon {
+                margin-right: $base-spacing;
+            }
         }
 
         .article-caption {

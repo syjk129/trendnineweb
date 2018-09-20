@@ -13,13 +13,17 @@ import * as Bookmark from "./icons/bookmark.png";
 import * as BookmarkFilled from "./icons/bookmark_filled.png";
 import * as Branding from "./icons/branding.png";
 import * as Close from "./icons/close.png";
+import * as Collection from "./icons/collection.png";
 import * as Comments from "./icons/comments.png";
+import * as Editorial from "./icons/editorial.png";
 import * as Girl from "./icons/girl.png";
 import * as Like from "./icons/like.png";
 import * as LikeFilled from "./icons/like_filled.png";
+import * as Looks from "./icons/looks.png";
 import * as Menu from "./icons/menu.png";
 import * as MinusClose from "./icons/minus_close.png";
 import * as Monetize from "./icons/monetize.png";
+import * as MyPage from "./icons/my_page.png";
 import * as PlusOpen from "./icons/plus_open.png";
 import * as Preview1 from "./icons/preview1.png";
 import * as Preview2 from "./icons/preview2.png";
@@ -28,6 +32,7 @@ import * as Profile from "./icons/profile.png";
 import * as Search from "./icons/search.png";
 import * as Share from "./icons/share.png";
 import * as ShareFilled from "./icons/share_filled.png";
+import * as Shop from "./icons/shop.png";
 import * as Time from "./icons/time.png";
 import * as Wishlist from "./icons/wishlist.png";
 import * as WishlistFilled from "./icons/wishlist_filled.png";
@@ -66,20 +71,28 @@ export default function getIconForVariant(variant: IconVariant) {
             return Branding;
         case IconVariant.CLOSE:
             return Close;
+        case IconVariant.COLLECTION:
+            return Collection;
         case IconVariant.COMMENT:
             return Comments;
+        case IconVariant.EDITORIAL:
+            return Editorial;
         case IconVariant.GIRL:
             return Girl;
         case IconVariant.LIKE:
             return Like;
         case IconVariant.LIKE_FILLED:
             return LikeFilled;
+        case IconVariant.LOOKS:
+            return Looks;
         case IconVariant.MENU:
             return Menu;
         case IconVariant.MINUS_CLOSE:
             return MinusClose;
         case IconVariant.MONETIZE:
             return Monetize;
+        case IconVariant.MY_PAGE:
+            return MyPage;
         case IconVariant.PLUS_OPEN:
             return PlusOpen;
         case IconVariant.PROFILE:
@@ -96,6 +109,8 @@ export default function getIconForVariant(variant: IconVariant) {
             return Share;
         case IconVariant.SHARE_FILLED:
             return ShareFilled;
+        case IconVariant.SHOP:
+            return Shop;
         case IconVariant.TIME:
             return Time;
         case IconVariant.WISHLIST:

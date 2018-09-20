@@ -4,6 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 
 import { Featured } from "../../../../api/models";
 import Callout, { CalloutVariant } from "../../../../components/callout";
+import Icon, { IconVariant } from "../../../../components/icon";
 import Image, { ImageRatioVariant } from "../../../../components/image";
 import LinkButton from "../../../../components/linkButton";
 
@@ -26,7 +27,10 @@ class ArticleCard extends React.Component<ArticleCardProps> {
                 </Link>
                 <div className="article-details">
                     <div>
-                        <Callout inline>Read & Shop</Callout>
+                        <div className="iconed-callout">
+                            <Icon variant={IconVariant.EDITORIAL} />
+                            <Callout inline>Read & Shop</Callout>
+                        </div>
                         {!this.props.featured && (
                             <Callout inline variant={CalloutVariant.MUTED}>Today</Callout>
                         )}

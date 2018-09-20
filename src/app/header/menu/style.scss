@@ -87,12 +87,18 @@
             padding: $base-spacing * 2 0;
             align-items: center;
 
+            .icon {
+                margin-right: $base-spacing;
+            }
+
             &:not(:last-of-type) {
                 border-bottom: $standard-border-width solid $border-color;
             }
         }
 
         .menu-item-text {
+            display: flex;
+            align-items: center;
             font-weight: $font-weight-bold;
             font-size: $mobile-font-size-3;
         }

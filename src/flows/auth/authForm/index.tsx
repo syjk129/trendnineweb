@@ -2,7 +2,7 @@ import * as React from "react";
 import { isMobile } from "react-device-detect";
 import { GoogleLogin, GoogleLoginResponseOffline } from "react-google-login";
 
-import Button, { LinkButton } from "../../../components/button";
+import Button, { ButtonVariant, LinkButton } from "../../../components/button";
 import Input, { InputType } from "../../../components/input";
 import RouteProps from "../../routeProps";
 import FacebookLogin from "../facebookLogin";
@@ -47,7 +47,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
                         <p className="form-name">Welcome Back</p>
                     )}
                     <GoogleLogin
-                        className="google-login button button-primary"
+                        className="google-login button"
                         clientId="174930742509-kvp3mkdgdb5c8staoesefgltj377tgsq.apps.googleusercontent.com"
                         responseType="code"
                         buttonText={this.state.isNewUser ? "Sign up with Google" : "Sign in with Google"}
@@ -147,7 +147,7 @@ export default class AuthForm extends React.Component<AuthFormProps, AuthFormSta
                                 </div>
                             )}
                             <input type="submit" style={{ display: "none" }} />
-                            <Button className="submit-button" rounded onClick={this._onSubmit}>Sign in</Button>
+                            <Button className="submit-button" onClick={this._onSubmit}>Sign in</Button>
                             <p className="switch">Don't have an account?&nbsp;<LinkButton onClick={this._toggleNewUser}>Sign up</LinkButton></p>
                         </>
                     )}

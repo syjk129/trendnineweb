@@ -68,24 +68,28 @@ class Menu extends React.Component<MenuProps, MenuState> {
                         <div className="nav-items">
                             <Link to="/looks" className="menu-item">
                                 <div className="menu-item-text">
+                                    <Icon variant={IconVariant.LOOKS} />
                                     Looks
                                 </div>
                                 <Icon variant={IconVariant.ARROW_RIGHT} />
                             </Link>
                             <Link to="/collections" className="menu-item">
                                 <div className="menu-item-text">
+                                    <Icon variant={IconVariant.COLLECTION} />
                                     Collections
                                 </div>
                                 <Icon variant={IconVariant.ARROW_RIGHT} />
                             </Link>
                             <Link to="/editorials" className="menu-item">
                                 <div className="menu-item-text">
+                                    <Icon variant={IconVariant.EDITORIAL} />
                                     Editorials
                                 </div>
                                 <Icon variant={IconVariant.ARROW_RIGHT} />
                             </Link>
                             <Link to="/shop" className="menu-item">
                                 <div className="menu-item-text">
+                                    <Icon variant={IconVariant.SHOP} />
                                     Shop
                                 </div>
                                 <Icon variant={IconVariant.ARROW_RIGHT} />

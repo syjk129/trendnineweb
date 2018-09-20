@@ -2,7 +2,7 @@ import autobind from "autobind-decorator";
 import * as React from "react";
 import { ChangeEvent } from "react";
 
-import Button, { IconButton } from "../../components/button";
+import Button, { ButtonVariant } from "../../components/button";
 
 import "./style.scss";
 
@@ -29,7 +29,7 @@ export default class FacebookLogin extends React.Component<FacebookLoginProps, F
     render() {
         const buttonText = this.props.buttonText ? this.props.buttonText : "Login with Facebook";
         return (
-            <Button className="facebook-login" onClick={this._openLoginWindow} disabled={this.props.disabled}>{buttonText}</Button>
+            <Button variant={ButtonVariant.OUTLINE} className="facebook-login" onClick={this._openLoginWindow} disabled={this.props.disabled}>{buttonText}</Button>
         );
     }
 

@@ -112,7 +112,7 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
             case FeaturedType.ARTICLE:
                 return (
                     <Link to={`/article/${featured.id}`} className="main-featured-card-left">
-                        <img src={featured.cover_image.small_image_url} />
+                        <img className="featured-image" src={featured.cover_image.small_image_url} />
                         <div className="main-featured-left-content">
                             <h1>{featured.title}</h1>
                             <div className="main-featured-left-caption">{featured.caption}</div>
@@ -123,7 +123,7 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
             case FeaturedType.CTA:
                 return (
                     <div className="main-featured-card-left">
-                        <img src={featured.cover_image.small_image_url} />
+                        <img className="featured-image" src={featured.cover_image.small_image_url} />
                         <div className="main-featured-left-content">
                             <h1>{featured.title}</h1>
                             <div className="main-featured-left-caption">{featured.caption}</div>
