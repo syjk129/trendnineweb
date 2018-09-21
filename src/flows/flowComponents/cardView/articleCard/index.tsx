@@ -22,7 +22,7 @@ class ArticleCard extends React.Component<ArticleCardProps> {
                 <Link className="article-card-image" to={`/article/${this.props.article.id}`}>
                     <Image
                         ratio={ImageRatioVariant.ARTICLE_COVER}
-                        src={this.props.article.cover_image.small_image_url}
+                        src={this.props.article.cover_image && this.props.article.cover_image.small_image_url}
                     />
                 </Link>
                 <div className="article-details">

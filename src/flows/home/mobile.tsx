@@ -22,7 +22,7 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                 <div className="main-featured">
                     <Image
                         ratio={ImageRatioVariant.FEATURED_COVER}
-                        src={this._getFeaturedAtLevel(1).cover_image.small_image_url}
+                        src={this._getFeaturedAtLevel(1).cover_image && this._getFeaturedAtLevel(1).cover_image.small_image_url}
                     />
                     <div className="main-featured-content">
                         <div className="title">{this._getFeaturedAtLevel(1).title}</div>

@@ -56,13 +56,15 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
         return (
             <div className="mobile-post" ref={this._postViewRef}>
                 <div className="post-content">
-                    <Image
-                        className="post-cover"
-                        width={post.cover_image.original_image_width}
-                        height={post.cover_image.original_image_height}
-                        src={post.cover_image.small_image_url}
-                        previewSrc={post.cover_image.thumbnail_image_url}
-                    />
+                    {post.cover_image && (
+                        <Image
+                            className="post-cover"
+                            width={post.cover_image.original_image_width}
+                            height={post.cover_image.original_image_height}
+                            src={post.cover_image.small_image_url}
+                            previewSrc={post.cover_image.thumbnail_image_url}
+                        />
+                    )}
                     <p className="post-title">
                         {post.title}
                     </p>
