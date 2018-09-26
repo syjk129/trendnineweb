@@ -106,7 +106,7 @@ export default class Looks extends React.Component<Props, LooksState> {
                         selectedTag={this._getSelectedTag()}
                     />
                 )}
-                <div className="looks" ref={this._pageRef}>
+                <div className={`looks${isMobile ? " mobile" : ""}`} ref={this._pageRef}>
                     {!isMobile && (
                         <Sidebar>
                             <Refine noTagFilter onRefine={this._onRefine}/>

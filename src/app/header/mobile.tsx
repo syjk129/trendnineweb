@@ -87,7 +87,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                     )} */}
                     <div className="mobile-app-header">
                         <IconButton icon={IconVariant.MENU} size={IconSize.MEDIUM} onClick={this._toggleMenu} selected={false} />
-                        <Link className="nav-logo-container" to={isShop ? "/shop" : "/"} onClick={this._close}>
+                        <Link className="nav-logo-container" to="/" onClick={this._close}>
                             <img
                                 className="nav-logo"
                                 src={Logo}

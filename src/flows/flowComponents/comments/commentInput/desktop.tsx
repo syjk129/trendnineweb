@@ -8,11 +8,6 @@ import { CommentInputProps } from "./types";
 export default function DesktopCommentInput({ comment, placeholder, user, onChange, submitComment }: CommentInputProps) {
     return (
         <div className="comment-input-container">
-            {user && user.profile_small_image_url ? (
-                <img src={user.profile_small_image_url} />
-            ) : (
-                <Icon variant={IconVariant.PROFILE} />
-            )}
             <div className="comment-input">
                 <TextArea
                     rounded
@@ -25,7 +20,7 @@ export default function DesktopCommentInput({ comment, placeholder, user, onChan
                 <div>
                     <Button
                         inline
-                        rounded
+                        variant={ButtonVariant.OUTLINE}
                         onClick={submitComment}
                     >
                         Post

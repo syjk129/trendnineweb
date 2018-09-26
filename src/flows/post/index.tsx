@@ -62,7 +62,6 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 scrollRef: this._scrollRef,
                 close: this.props.close,
                 fullScreen: isMobile,
-                hideClose: !isMobile,
             };
         } else {
             props = { ref: this._pageRef };

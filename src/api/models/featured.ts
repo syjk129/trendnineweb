@@ -13,4 +13,5 @@ export default class Featured {
     tags: Array<string>;
     occasion_tags: Array<any>;
     style_tags: Array<any>;
+    created: string;
 }

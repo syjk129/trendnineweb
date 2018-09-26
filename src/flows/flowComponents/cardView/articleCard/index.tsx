@@ -7,6 +7,7 @@ import Callout, { CalloutVariant } from "../../../../components/callout";
 import Icon, { IconVariant } from "../../../../components/icon";
 import Image, { ImageRatioVariant } from "../../../../components/image";
 import LinkButton from "../../../../components/linkButton";
+import formatTime from "../../../../util/formatTime";
 
 import "./style.scss";
 
@@ -32,7 +33,7 @@ class ArticleCard extends React.Component<ArticleCardProps> {
                             <Callout inline>Read & Shop</Callout>
                         </div>
                         {!this.props.featured && (
-                            <Callout inline variant={CalloutVariant.MUTED}>Today</Callout>
+                            <Callout inline variant={CalloutVariant.MUTED}>{formatTime(this.props.article.created)}</Callout>
                         )}
                     </div>
                     <Link className="article-title-container" to={`/article/${this.props.article.id}`}>

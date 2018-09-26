@@ -53,7 +53,7 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
                         </span>
                     </div>
                     <p className="comment-content">{this.props.comment.content}</p>
-                    <div className="comment-item-actions">
+                    {/* <div className="comment-item-actions">
                         {this.props.likeComment &&
                             <div className="like-button">
                                 <IconButton
@@ -93,7 +93,7 @@ export default class CommentItem extends React.Component<CommentItemProps, Comme
                                 />
                             ))}
                         </div>
-                    )}
+                    )} */}
                 </div>
             </div>
         );

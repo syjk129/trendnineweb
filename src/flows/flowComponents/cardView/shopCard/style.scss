@@ -6,6 +6,10 @@
         box-shadow: 0 0 5px rgba(149, 149, 149, 0.5);
         display: block;
         position: relative;
+
+        &.mobile {
+            margin: 0;
+        }
     }
 
     .shop-card-details {

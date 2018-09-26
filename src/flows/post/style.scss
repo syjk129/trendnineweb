@@ -148,6 +148,7 @@
 
     .user-posts {
         display: flex;
+        margin-bottom: $base-spacing * 2;
 
         .image-container {
             &:not(:last-of-type) {

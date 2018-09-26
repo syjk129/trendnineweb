@@ -40,7 +40,7 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
                     <div className="featured-card-banner">
                         <div className="iconed-callout">
                             <Icon variant={IconVariant.EDITORIAL} />
-                            <Callout>Read & Shop</Callout>
+                            <Callout inline>Read & Shop</Callout>
                         </div>
                         <div className="featured-title">
                             <h3>{this.props.post.title}</h3>
@@ -64,7 +64,7 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
                     <div className="featured-card-banner">
                         <div className="iconed-callout">
                             <Icon variant={IconVariant.COLLECTION} />
-                            <Callout>Collection</Callout>
+                            <Callout inline>Collection</Callout>
                         </div>
                         <div className="featured-title">
                             <h3>{this.props.post.title}</h3>

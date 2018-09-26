@@ -6,6 +6,7 @@ import { Featured } from "../../api/models";
 import { AppContext } from "../../app";
 import Callout, { CalloutVariant } from "../../components/callout";
 import Icon, { IconVariant } from "../../components/icon";
+import formatTime from "../../util/formatTime";
 import RouteProps from "../routeProps";
 
 import "./style.scss";
@@ -50,7 +51,7 @@ export default class ArticleView extends React.Component<Props, ArticleState> {
                             <Icon variant={IconVariant.EDITORIAL} />
                             <Callout inline>Read & Shop</Callout>
                         </div>
-                        <Callout inline variant={CalloutVariant.MUTED}>TODAY</Callout>
+                        <Callout inline variant={CalloutVariant.MUTED}>{formatTime(this.state.article.created)}</Callout>
                     </div>
                 </div>
                 <h2 className="article-title">{this.state.article.title}</h2>

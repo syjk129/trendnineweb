@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { Category } from "../../api/models";
-import { LinkButton } from "../../components/button";
+import Button, { ButtonVariant, LinkButton } from "../../components/button";
 import Callout, { CalloutVariant } from "../../components/callout";
 import Icon, { IconSize, IconVariant, SocialIcon, SocialIconType } from "../../components/icon";
 import NavLink from "../../components/navLink";
@@ -78,15 +78,17 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                             </Link>
                             <div className="user-buttons">
                                 {(!loggedIn || !user) &&
-                                    <LinkButton
+                                    <Button
+                                        small
                                         className="login-button"
-                                        to={{
+                                        variant={ButtonVariant.OUTLINE}
+                                        url={{
                                             pathname: "/login",
                                             state: { modal: true },
                                         }}
                                     >
                                         Sign In / Join
-                                    </LinkButton>
+                                    </Button>
                                 }
                                 {loggedIn && user &&
                                     <div className="user-logged-in-buttons">
@@ -137,15 +139,17 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                             </div>
                             <div className="user-buttons" ref={this._userButtonRef}>
                                 {(!loggedIn || !user) &&
-                                    <LinkButton
+                                    <Button
                                         className="login-button"
-                                        to={{
+                                        small
+                                        variant={ButtonVariant.OUTLINE}
+                                        url={{
                                             pathname: "/login",
                                             state: { modal: true },
                                         }}
                                     >
                                         Sign In / Join
-                                    </LinkButton>
+                                    </Button>
                                 }
                                 {loggedIn && user &&
                                     <div className="user-logged-in-buttons">

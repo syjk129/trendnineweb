@@ -55,6 +55,10 @@
 
     .menu-nav {
         padding: $base-spacing * 2 $mobile-base-spacing;
+
+        .link-button {
+            letter-spacing: 0;
+        }
     }
 
     .menu-content {

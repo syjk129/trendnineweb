@@ -11,6 +11,7 @@ import Content from "../../components/content";
 import Icon, { IconSize, IconVariant } from "../../components/icon";
 import Image from "../../components/image";
 import Sticky from "../../components/sticky";
+import formatTime from "../../util/formatTime";
 import LookCard from "../flowComponents/cardView/lookCard";
 import Comments from "../flowComponents/comments";
 import { ContentSection } from "../flowComponents/section";
@@ -73,7 +74,7 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
                                         <Icon variant={IconVariant.LOOKS} />
                                         <Callout inline>Looks</Callout>
                                     </div>
-                                    <Callout inline variant={CalloutVariant.MUTED}>TODAY</Callout>
+                                    <Callout inline variant={CalloutVariant.MUTED}>{formatTime(this.props.post.created)}</Callout>
                                 </div>
                                 <IconButton
                                     icon={IconVariant.SHARE}
@@ -93,14 +94,12 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
                                 <div dangerouslySetInnerHTML={{ __html: this.props.post.content }} />
                             </div>
                         </div>
-                        <ContentSection title="Comments">
-                            <Comments
-                                comments={this.state.comments}
-                                likeComment={this._likeComment}
-                                unlikeComment={this._unlikeComment}
-                                submitComment={this._submitComment}
-                            />
-                        </ContentSection>
+                        <Comments
+                            comments={this.state.comments}
+                            likeComment={this._likeComment}
+                            unlikeComment={this._unlikeComment}
+                            submitComment={this._submitComment}
+                        />
                     </Content>
                     <div className="post-sidebar">
                         {this.props.post.products.length > 0 && (
@@ -121,13 +120,13 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
                                                     <b>{this.props.post.author.username}</b>
                                                 </div>
                                             </div>
-                                            <Button className="user-follow" inline variant={ButtonVariant.OUTLINE}>FOLLOW</Button>
                                         </div>
                                         <div className="user-posts">
                                             {this.state.authorPosts.slice(0, 3).map(post => (
                                                 <Image square src={post.cover_image.thumbnail_image_url} />
                                             ))}
                                         </div>
+                                        <Button className="user-follow" variant={ButtonVariant.OUTLINE}>FOLLOW</Button>
                                     </div>
                                     <Callout>Products in this post</Callout>
                                     {this.props.post.products.map(product => (

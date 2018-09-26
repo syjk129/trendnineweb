@@ -111,6 +111,8 @@
 
 .featured-section {
     margin-bottom: $section-spacing;
+    padding-bottom: $section-spacing;
+    border-bottom: $standard-border-width solid $border-color;
 
     .featured-section-header {
         display: flex;

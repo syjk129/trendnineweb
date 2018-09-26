@@ -159,15 +159,6 @@
     transform: translate3d(0, 0, 0);
     border-bottom: $standard-border-width solid $border-color;
 
-    .login-button {
-        height: 24px;
-        padding-left: $base-spacing;
-        font-size: $font-size-1;
-        font-weight: $font-weight-semibold;
-        text-transform: uppercase;
-        border-color: $color-grey-4;
-    }
-
     .header-content {
         max-width: $max-page-width;
         min-width: $min-page-width;

@@ -38,6 +38,10 @@ class ShopCard extends React.Component<ShopCardProps, ShopCardState> {
             classes += ` ${className}`;
         }
 
+        if (isMobile) {
+            classes += " mobile";
+        }
+
         const imageUrl = product.image && (isMobile ? product.image.small_image_url : product.image.thumbnail_image_url);
 
         return (

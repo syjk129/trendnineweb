@@ -52,7 +52,7 @@ export default class TagCarousel extends React.Component<TagCarouselProps> {
             nextArrow: <CarouselArrow icon={IconVariant.ARROW_RIGHT} />,
             initialSlide: initialIndex,
             infinite: true,
-            slidesToShow: 6,
+            slidesToShow: 5,
             variableWidth: false,
             responsive: [
                 {

@@ -12,7 +12,7 @@ import "./style.scss";
 interface ButtonProps {
     className?: string;
     inline?: boolean;
-    url?: string;
+    url?: any;
     rounded?: boolean;
     small?: boolean;
     white?: boolean;

@@ -67,5 +67,9 @@
         width: 100%;
         padding: $base-spacing 0;
         margin-bottom: 0;
+
+        .carousel-tag-image-container {
+            margin-bottom: $element-spacing / 2 - $base-spacing;
+        }
     }
 }

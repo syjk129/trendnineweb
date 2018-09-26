@@ -4,6 +4,10 @@
     display: flex;
     padding-top: $base-spacing;
 
+    &.mobile {
+        padding-top: 0;
+    }
+
     .sticky-looks-refine {
         position: fixed;
         width: $sidebar-width;
@@ -22,4 +26,9 @@
 
 .looks-tag-carousel {
     margin-bottom: $section-spacing;
+
+    &.mobile {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
 }

@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 import FadeIn from "react-lazyload-fadein";
 
 import { Product } from "../../api/models";
@@ -10,9 +11,12 @@ import Sidebar from "../../components/sidebar";
 import Spinner from "../../components/spinner";
 import { decodeCategoryUrl } from "../../util/urlUtil";
 import ShopCard from "../flowComponents/cardView/shopCard";
+import ContentToolbar from "../flowComponents/contentToolbar";
 import Refine from "../flowComponents/refine";
-import { PostParam } from "../model";
+import { ContentType, PostParam } from "../model";
 import RouteProps from "../routeProps";
+
+import "./style.scss";
 
 type Props = RouteProps;
 
@@ -21,6 +25,7 @@ interface ShopState {
     nextToken: string | null;
     loadingContent: boolean;
     loadingNext: boolean;
+    gridSize: number;
 }
 
 export default class Shop extends React.Component<Props, ShopState> {
@@ -31,6 +36,7 @@ export default class Shop extends React.Component<Props, ShopState> {
         nextToken: null,
         loadingContent: false,
         loadingNext: false,
+        gridSize: 2,
     };
 
     async componentWillMount() {
@@ -73,16 +79,32 @@ export default class Shop extends React.Component<Props, ShopState> {
     }
 
     render() {
+        let ContentEl = isMobile ? "div" : Content;
+        const user = JSON.parse(localStorage.getItem("user"));
+
         return (
             <div className="shop" ref={this._pageRef}>
-                <Sidebar>
-                    <Refine onRefine={this._onRefine}/>
-                </Sidebar>
-                <Content>
+                {!isMobile && (
+                    <Sidebar>
+                        <Refine onRefine={this._onRefine}/>
+                    </Sidebar>
+                )}
+                <ContentEl className="shop-content">
+                    {isMobile && (
+                        <ContentToolbar
+                            location={this.props.location}
+                            history={this.props.history}
+                            match={this.props.match}
+                            gridSize={this.state.gridSize}
+                            loggedIn={!!user}
+                            contentType={ContentType.POST}
+                            setGridSize={this._setGridSize}
+                        />
+                    )}
                     {this.state.loadingContent ? (
                         <Spinner />
                     ) : (
-                        <CardContainer>
+                        <CardContainer gridSize={this.state.gridSize}>
                             {this.state.products.map(product => (
                                 <FadeIn height={540} duration={150}>
                                     {onload => (
@@ -92,7 +114,7 @@ export default class Shop extends React.Component<Props, ShopState> {
                             ))}
                         </CardContainer>
                     )}
-                </Content>
+                </ContentEl>
             </div>
         );
     }
@@ -101,6 +123,10 @@ export default class Shop extends React.Component<Props, ShopState> {
     private _pageSize = 12;
     private _category: string;
     private _subcategory: string;
+
+    private _setGridSize = (gridSize: number) => {
+        this.setState({ gridSize });
+    }
 
     private _fetchContent = (props: Props, nextToken?: string) => {
         const params = new URLSearchParams(props.location.search);
