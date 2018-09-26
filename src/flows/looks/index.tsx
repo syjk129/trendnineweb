@@ -13,6 +13,7 @@ import LookCard from "../flowComponents/cardView/lookCard";
 import { TagCarousel } from "../flowComponents/carousel";
 import ContentToolbar from "../flowComponents/contentToolbar";
 import Refine from "../flowComponents/refine";
+import SearchResult from "../flowComponents/searchResult";
 import { ContentType, PostParam } from "../model";
 import RouteProps from "../routeProps";
 import { LookType } from "./types";
@@ -58,6 +59,13 @@ export default class Looks extends React.Component<Props, LooksState> {
         this._lookType = this.props.match.params.lookType;
         this._lookSelection = this.props.match.params.lookSelection;
 
+        if (this.props.location.search) {
+            const params = new URLSearchParams(this.props.location.search);
+            const postParam = new PostParam(params);
+            this._searchString = postParam.keyword !== "" ? postParam.keyword : null;
+        }
+
+
         this.setState({ loadingContent: true });
         const [
             looks,
@@ -86,6 +94,12 @@ export default class Looks extends React.Component<Props, LooksState> {
         this._lookType = nextProps.match.params.lookType;
         this._lookSelection = nextProps.match.params.lookSelection;
 
+        if (nextProps.location.search) {
+            const params = new URLSearchParams(nextProps.location.search);
+            const postParam = new PostParam(params);
+            this._searchString = postParam.keyword !== "" ? postParam.keyword : null;
+        }
+
         if (nextProps.location.state && nextProps.location.state.refresh) {
             this.setState({ loadingContent: true });
             const looks = await this._fetchContent(nextProps);
@@ -99,7 +113,7 @@ export default class Looks extends React.Component<Props, LooksState> {
 
         return (
             <>
-                {!this.state.loadingContent && (
+                {!this.state.loadingContent && !this._searchString && (
                     <TagCarousel
                         className="looks-tag-carousel"
                         tags={this.state.tags}
@@ -113,6 +127,7 @@ export default class Looks extends React.Component<Props, LooksState> {
                         </Sidebar>
                     )}
                     <ContentEl className="look-content">
+                        {this._searchString && <SearchResult value={this._searchString} /> }
                         {isMobile ? (
                             <ContentToolbar
                                 location={this.props.location}
@@ -152,6 +167,7 @@ export default class Looks extends React.Component<Props, LooksState> {
         );
     }
 
+    private _searchString: string;
     private _pageRef: React.RefObject<HTMLDivElement>;
     private _pageSize = 12;
     private _lookType: LookType;

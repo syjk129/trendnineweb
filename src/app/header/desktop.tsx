@@ -2,10 +2,12 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import { Category } from "../../api/models";
-import Button, { ButtonVariant, LinkButton } from "../../components/button";
+import Button, { ButtonVariant, IconButton, LinkButton } from "../../components/button";
 import Callout, { CalloutVariant } from "../../components/callout";
 import Icon, { IconSize, IconVariant, SocialIcon, SocialIconType } from "../../components/icon";
+import Input, { InputVariant } from "../../components/input";
 import NavLink from "../../components/navLink";
+import Tab from "../../components/tab";
 import { encodeCategoryUrl } from "../../util/urlUtil";
 import * as Logo from "../logo.png";
 import Banner from "./banner";
@@ -16,12 +18,22 @@ import { HeaderProps } from "./types";
 interface DesktopHeaderState {
     searchOpen: boolean;
     categories: Array<Category>;
+    searchString: string;
+    searchType: SearchTabs;
+}
+
+enum SearchTabs {
+    LOOKS = "Looks",
+    PRODUCTS = "Products",
+    // INFLUENCERS = "Influencers",
 }
 
 export default class DesktopHeader extends React.Component<HeaderProps, DesktopHeaderState> {
     state: DesktopHeaderState = {
         searchOpen: false,
         categories: [],
+        searchString: "",
+        searchType: SearchTabs.LOOKS,
     };
 
     componentWillMount() {
@@ -92,12 +104,35 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                                 }
                                 {loggedIn && user &&
                                     <div className="user-logged-in-buttons">
+                                        <IconButton icon={IconVariant.SEARCH} size={IconSize.LARGE} onClick={this._toggleSearch}/>
                                         <LinkButton to={`/user/${user.username}/wishlist`}>
                                             <Icon variant={IconVariant.WISHLIST} size={IconSize.LARGE} />
                                         </LinkButton>
                                         <LinkButton to={`/user/${user.username}`}>
                                             <Icon variant={IconVariant.PROFILE} size={IconSize.LARGE} />
                                         </LinkButton>
+                                        {this.state.searchOpen && (
+                                            <div className="search-box-container">
+                                                <div className="search-tabs">
+                                                    {Object.keys(SearchTabs).map(key => (
+                                                        <Tab
+                                                            selected={this.state.searchType === SearchTabs[key]}
+                                                            label={SearchTabs[key]}
+                                                            onSelect={() => this._selectSearchType(SearchTabs[key])}
+                                                        />
+                                                    ))}
+                                                </div>
+                                                <div className="search-box">
+                                                    <Input
+                                                        value={this.state.searchString}
+                                                        onChange={this._onSearchStringChange}
+                                                        variant={InputVariant.BLANK}
+                                                        onEnterPress={this._onSearch}
+                                                    />
+                                                    <span className="close" onClick={this._toggleSearch}>&times;</span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 }
                             </div>
@@ -153,12 +188,35 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                                 }
                                 {loggedIn && user &&
                                     <div className="user-logged-in-buttons">
+                                        <IconButton icon={IconVariant.SEARCH} size={IconSize.LARGE} onClick={this._toggleSearch} />
                                         <LinkButton to={`/user/${user.username}/wishlist`}>
                                             <Icon variant={IconVariant.WISHLIST} size={IconSize.LARGE} />
                                         </LinkButton>
                                         <LinkButton to={`/user/${user.username}`}>
                                             <Icon variant={IconVariant.PROFILE} size={IconSize.LARGE} />
                                         </LinkButton>
+                                        {this.state.searchOpen && (
+                                            <div className="search-box-container">
+                                                <div className="search-tabs">
+                                                    {Object.keys(SearchTabs).map(key => (
+                                                        <Tab
+                                                            selected={this.state.searchType === SearchTabs[key]}
+                                                            label={SearchTabs[key]}
+                                                            onSelect={() => this._selectSearchType(SearchTabs[key])}
+                                                        />
+                                                    ))}
+                                                </div>
+                                                <div className="search-box">
+                                                    <Input
+                                                        value={this.state.searchString}
+                                                        onChange={this._onSearchStringChange}
+                                                        variant={InputVariant.BLANK}
+                                                        onEnterPress={this._onSearch}
+                                                    />
+                                                    <span className="close" onClick={this._toggleSearch}>&times;</span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 }
                             </div>
@@ -257,6 +315,35 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                 </div>
             </div>
         );
+    }
+
+    private _selectSearchType = (searchType: SearchTabs) => {
+        this.setState({ searchType });
+    }
+
+    private _onSearch = () => {
+        this._toggleSearch();
+        switch (this.state.searchType) {
+            case SearchTabs.PRODUCTS:
+                this.props.history.push({
+                    pathname: "/shop",
+                    search: `keyword=${this.state.searchString}`,
+                    state: { refresh: true },
+                });
+                break;
+            case SearchTabs.LOOKS:
+            default:
+                this.props.history.push({
+                    pathname: "/looks",
+                    search: `keyword=${this.state.searchString}`,
+                    state: { refresh: true },
+                });
+                break;
+        }
+    }
+
+    private _onSearchStringChange = (searchString: string) => {
+        this.setState({ searchString });
     }
 
     private _toggleSearch = () => {

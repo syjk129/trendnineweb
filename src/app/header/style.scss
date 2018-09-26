@@ -129,12 +129,46 @@
 .user-logged-in-buttons {
     height: 100%;
     display: flex;
+    position: relative;
+
+    .search-box-container {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: calc(100% - 30px);
+        width: 250px;
+        background-color: #fff;
+        padding: $base-spacing;
+        box-shadow: 0 0 5px rgba(149, 149, 149, 0.5);
+
+        .search-box {
+            display: flex;
+            border-bottom: $standard-border-width solid $border-color;
+
+            input {
+                font-size: $font-size-body;
+            }
+
+            .close {
+                color: #000;
+                font-size: 35px;
+                font-weight: 200;
+                line-height: 35px;
+
+                &:hover,
+                &:focus {
+                    color: black;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
 
     .link-button {
         margin: auto;
 
-        &:first-of-type {
-            margin-right: $base-spacing;
+        &:not(:last-of-type) {
+            margin-right: $base-spacing * 2;
         }
     }
 

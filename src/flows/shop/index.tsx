@@ -13,6 +13,7 @@ import { decodeCategoryUrl } from "../../util/urlUtil";
 import ShopCard from "../flowComponents/cardView/shopCard";
 import ContentToolbar from "../flowComponents/contentToolbar";
 import Refine from "../flowComponents/refine";
+import SearchResult from "../flowComponents/searchResult";
 import { ContentType, PostParam } from "../model";
 import RouteProps from "../routeProps";
 
@@ -47,6 +48,12 @@ export default class Shop extends React.Component<Props, ShopState> {
             return;
         }
 
+        if (this.props.location.search) {
+            const params = new URLSearchParams(this.props.location.search);
+            const postParam = new PostParam(params);
+            this._searchString = postParam.keyword !== "" ? postParam.keyword : null;
+        }
+
         document.addEventListener("scroll", this._populateNext);
 
         this._category = decodeCategoryUrl(this.props.match.params.category);
@@ -65,6 +72,12 @@ export default class Shop extends React.Component<Props, ShopState> {
     }
 
     async componentWillReceiveProps(nextProps: Props) {
+        if (nextProps.location.search) {
+            const params = new URLSearchParams(nextProps.location.search);
+            const postParam = new PostParam(params);
+            this._searchString = postParam.keyword !== "" ? postParam.keyword : null;
+        }
+
         this._category = decodeCategoryUrl(nextProps.match.params.category);
         this._subcategory = decodeCategoryUrl(nextProps.match.params.subcategory);
         if (nextProps.location.state && nextProps.location.state.refresh && nextProps.location !== this.props.location) {
@@ -90,6 +103,7 @@ export default class Shop extends React.Component<Props, ShopState> {
                     </Sidebar>
                 )}
                 <ContentEl className="shop-content">
+                    {this._searchString && <SearchResult value={this._searchString} /> }
                     {isMobile && (
                         <ContentToolbar
                             location={this.props.location}
@@ -119,6 +133,7 @@ export default class Shop extends React.Component<Props, ShopState> {
         );
     }
 
+    private _searchString: string;
     private _pageRef: React.RefObject<HTMLDivElement>;
     private _pageSize = 12;
     private _category: string;
