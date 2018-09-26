@@ -98,11 +98,11 @@ export default class MobileDiscover extends React.Component<DiscoverProps, Mobil
                 {this.props.location.search.indexOf("keyword") === -1 && this.props.location.pathname !== "/feed" && !this._categoryName && (
                     <>
                         <Welcome loggedIn={!!user} {...this.props} />
-                        <FeaturedTrending
+                        {/* <FeaturedTrending
                             {...this.props}
                             featuredTrendnines={this.state.featuredTrendnines}
                             trendingPosts={this.state.trendingPosts}
-                        />
+                        /> */}
                     </>
                 )}
                 <div className="mobile-discover" id="mobile-discover" ref={this._pageRef}>
