@@ -114,6 +114,10 @@
             }
         }
     }
+
+    .articles {
+        max-width: $articles-max-width;
+    }
 }
 
 .featured-collections {
@@ -128,10 +132,6 @@
             margin-right: $element-spacing;
         }
     }
-}
-
-.articles {
-    max-width: $articles-max-width;
 }
 
 .view-all-button {

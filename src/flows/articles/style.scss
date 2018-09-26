@@ -1,7 +1,67 @@
 @import "../../styles/variables";
 
 .articles {
+    width: 100%;
+    margin-top: $page-spacing;
+    $featured-spacing: $element-spacing;
+
+    .item {
+        position: relative;
+        display: flex;
+    }
+
     .article-list {
         max-width: $articles-max-width;
+    }
+
+    .featured-articles {
+        display: flex;
+        padding-bottom: $page-spacing;
+        border-bottom: $standard-border-width solid $border-color;
+        margin-bottom: $page-spacing;
+
+        .featured-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .featured-articles-right {
+            margin-left: $featured-spacing;
+        }
+
+        .featured-articles-left {
+            .item:first-of-type {
+                margin-bottom: $featured-spacing;
+            }
+        }
+
+        .main-featured-card-left {
+            box-shadow: 0 0 5px rgba(149, 149, 149, 0.5);
+            width: 100%;
+            height: 100%;
+            position: relative;
+
+            img {
+                filter: brightness(75%);
+            }
+
+            .main-featured-left-content {
+                color: #fff;
+                position: absolute;
+                top: 0;
+                height: 100%;
+                max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding-left: $element-spacing * 2;
+
+                h1,
+                .main-featured-left-caption {
+                    margin-bottom: $element-spacing;
+                }
+            }
+        }
     }
 }

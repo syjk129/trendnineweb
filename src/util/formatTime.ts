@@ -11,11 +11,11 @@ export default function formatTime(date: string) {
     const timediff = +now - +time;
 
     if (timediff / MONTH >= 1) {
-        return `${Math.floor(timediff / MONTH)}month`;
+        return `${Math.floor(timediff / MONTH)} Month ago`;
     } else if (timediff / WEEK >= 1) {
-        return `${Math.floor(timediff / WEEK)}w`;
+        return `${Math.floor(timediff / WEEK)} Week ago`;
     } else if (timediff / DAY >= 1) {
-        return `${Math.floor(timediff / DAY)}d`;
+        return `${Math.floor(timediff / DAY)} Day ago`;
     } else {
         return "Today";
     }
