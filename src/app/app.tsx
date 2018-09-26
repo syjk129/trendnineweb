@@ -14,12 +14,10 @@ import AboutUs from "../flows/about";
 import Article from "../flows/article";
 import ArticlesView from "../flows/articles";
 import Auth from "../flows/auth";
-import BrandView from "../flows/brands";
 import CMSView from "../flows/cms";
 import PostUpload from "../flows/cms/postUpload";
 import CollectionsView from "../flows/collections";
 import ContactUs from "../flows/contact";
-import Discover from "../flows/discover";
 import HomeView from "../flows/home";
 import TermsAndConditions from "../flows/legal";
 import LooksView from "../flows/looks";
@@ -31,7 +29,6 @@ import ProductView from "../flows/product";
 import RouteProps from "../flows/routeProps";
 import ShareView from "../flows/share";
 import ShopView from "../flows/shop";
-import ShopDiscover from "../flows/shopDiscover";
 import Trending from "../flows/trending";
 import User from "../flows/user";
 import ErrorBoundary from "./errorBoundary";
@@ -212,15 +209,11 @@ export default class App extends React.Component<Props, AppState> {
                             <Route exact path="/" component={HomeView} />
                             <Route path="/looks:query?" component={LooksView} />
                             <Route path="/product/:productId" component={ProductView} />
-                            <Route path="/feed" component={Discover} />
-                            <Route path="/brands" component={BrandView} />
                             <Route path="/editorials" component={ArticlesView} />
                             <Route path="/collections" component={CollectionsView} />
                             <Route path="/user/:userId/:pageName?" component={User} />
                             <Route path="/shop" exact component={ShopView} />
-                            <Route path="/shop/brands" component={BrandView} />
                             <Route path="/shop/product/:productId" component={ProductView} />
-                            <Route path="/shop/category/:categoryName" component={ShopDiscover} />
                             <Route path="/shop/:category?/:subcategory?" component={ShopView} />
                             <Route path="/post/:postId" component={PostView} />
                             <Route path="/article/:articleId" component={Article} />

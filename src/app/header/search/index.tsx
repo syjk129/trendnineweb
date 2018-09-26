@@ -20,7 +20,6 @@ enum SearchTabs {
 }
 
 interface SearchProps {
-    search(): void;
 }
 
 interface SearchState {
@@ -58,12 +57,10 @@ export default class Search extends React.Component<SearchProps, SearchState> {
     }
 
     render() {
-        const { search } = this.props;
-
         return (
             <div className="mobile-search-container" ref={this._searchRef}>
                 <div className="mobile-search">
-                    <IconButton size={IconSize.MEDIUM} icon={IconVariant.SEARCH} onClick={search} />
+                    <IconButton size={IconSize.MEDIUM} icon={IconVariant.SEARCH} />
                     <Input
                         className="search-input"
                         type={InputType.SEARCH}

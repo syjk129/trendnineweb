@@ -43,7 +43,7 @@ export default class Opportunities extends React.Component<Props, OpportunitiesS
         const pathname = location.pathname;
         const isShop = pathname.indexOf("/shop") > -1;
         const prevPage = isShop ? "Shop" : "Discover";
-        const prevPageUrl = isShop ? "/shop" : "/discover";
+        const prevPageUrl = isShop ? "/shop" : "/";
 
         return (
             <>

@@ -100,9 +100,7 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
                         )}
                     </div>
                     {this.state.showSearch && (
-                        <Search
-                            search={this._onSearch}
-                        />
+                        <Search />
                     )}
                 </div>
             </div>
@@ -116,16 +114,6 @@ export default class MobileHeader extends React.Component<HeaderProps, MobileHea
 
     private _subscribe = (email: any) => {
         return this.context.api.subscribe(email);
-    }
-
-    private _onSearchStringChange = (searchString: string) => {
-        this.setState({ searchString });
-    }
-
-    private _onSearch = () => {
-        const isShop = this.props.location.pathname.indexOf("/shop") > -1;
-        this.props.history.push(`${isShop ? "/shop" : ""}/discover?keyword=${this.state.searchString}`);
-        this._toggleSearch();
     }
 
     private _toggleSearch = () => {
