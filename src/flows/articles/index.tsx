@@ -16,6 +16,7 @@ type Props = RouteProps;
 interface ArticlesState {
     articles: Array<Featured>;
     isLoading: boolean;
+    shouldReset: boolean;
 }
 
 export default class Articles extends React.Component<Props, ArticlesState> {
@@ -24,6 +25,7 @@ export default class Articles extends React.Component<Props, ArticlesState> {
     state: ArticlesState = {
         articles: [],
         isLoading: false,
+        shouldReset: false,
     };
 
     async componentWillMount() {
@@ -35,11 +37,18 @@ export default class Articles extends React.Component<Props, ArticlesState> {
 
         this.setState({ isLoading: true });
         const articles = await this.context.api.getFeaturedPosts(PostType.ARTICLE);
-        this.setState({ articles, isLoading: false });
+        this.setState({ articles, isLoading: false, shouldReset: true });
     }
 
     componentDidMount() {
         this._setFeaturedSize();
+    }
+
+    componentDidUpdate() {
+        if (this.state.shouldReset) {
+            this._setFeaturedSize();
+            this.setState({ shouldReset: false });
+        }
     }
 
     componentWillUnmount() {
