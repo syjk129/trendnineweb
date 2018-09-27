@@ -127,6 +127,11 @@ export default class User extends React.Component<Props, UserState> {
 
     @autobind
     private async _setContentType(contentType?: UserContentType) {
+        if (contentType === UserContentType.CMS) {
+            this.props.history.push("/cms");
+        } else if (contentType) {
+            this.props.history.push(`/user/${this._userId}/${contentType}`);
+        }
         this._updateContent(this.props, contentType);
     }
 

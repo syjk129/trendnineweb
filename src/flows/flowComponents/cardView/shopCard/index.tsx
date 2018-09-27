@@ -64,7 +64,7 @@ class ShopCard extends React.Component<ShopCardProps, ShopCardState> {
                         onload={onload}
                     />
                     <div className="shop-card-details">
-                        <b className="product-brand">{product.brand && product.brand.name}</b>
+                        <b className="product-brand">{product.brand && product.brand.name || "Product"}</b>
                         <div className="product-name">{product.title}</div>
                         <div className="product-price">${product.price}</div>
                     </div>

@@ -122,6 +122,7 @@
 
 .user-nav {
     border-bottom: $standard-border-width solid $standard-border-color;
+    margin-bottom: $base-spacing * 2;
 
     .nav-link {
         margin-right: $base-spacing;
@@ -136,17 +137,28 @@
 }
 
 .user {
-    display: flex;
+    margin-top: $page-spacing;
     margin-bottom: $base-spacing * 10;
 
-    .user-image {
-        padding: $base-spacing;
-        display: flex;
+    .top-tags {
+        text-transform: uppercase;
+        font-size: $font-size-callout;
+        letter-spacing: $letter-spacing-callout;
+        font-weight: $font-weight-bold;
+    }
 
-        .image-container {
-            height: 90px;
-            width: 90px;
-        }
+    .tag-container {
+        margin-bottom: $base-spacing * 2;
+    }
+
+    .influencer {
+        display: flex;
+    }
+
+    .user-image {
+        margin-right: $base-spacing * 3;
+        height: 150px;
+        width: 150px;
     }
 
     .introduction {
@@ -165,27 +177,31 @@
         }
     }
 
-    .activity-container {
+    .influencer-details {
         padding: $base-spacing;
-        padding-left: $base-spacing * 2;
-        line-height: $line-height-3;
+    }
+
+    .activity-container {
+        display: flex;
 
         .activity-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+            padding-right: $base-spacing * 2;
 
-        .identifier {
-            display: inline-block;
-            margin-right: $base-spacing;
-            font-size: $font-size-1;
-            line-height: $line-height-1;
+            &:not(:first-of-type) {
+                padding-left: $base-spacing * 2;
+                border-left: $standard-border-width solid $border-color;
+            }
         }
 
         .count {
-            font-size: $font-size-2;
-            line-height: $line-height-2;
+            display: block;
+            font-weight: $font-weight-bold;
+        }
+
+        .identifier {
+            font-size: $font-size-callout-small;
+            color: $color-secondary;
+            letter-spacing: $letter-spacing-callout;
         }
     }
 
@@ -229,26 +245,6 @@
 
     .follow-container {
         margin-bottom: $base-spacing * 2;
-    }
-
-    .activity-container {
-        border-top: $standard-border-width solid $standard-border-color;
-        border-bottom: $standard-border-width solid $standard-border-color;
-        margin: $base-spacing (-$mobile-page-spacing);
-        padding: $mobile-page-spacing;
-        display: flex;
-        justify-content: space-between;
-
-        .activity-item {
-            display: inline-block;
-            font-size: $font-size-2;
-
-            .identifier {
-                font-weight: $font-weight-bold;
-                margin-left: $base-spacing;
-                margin-right: $base-spacing * 2;
-            }
-        }
     }
 
     .user-nav {

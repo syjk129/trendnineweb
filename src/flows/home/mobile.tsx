@@ -49,9 +49,10 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                     subtitle="Curated gallery of the hottest trends"
                     cta={(<LinkButton url="/collections" className="view-all-button">View All</LinkButton>)}
                 >
-                    {this.props.collections.map(collection => (
+                    {this.props.collections.slice(0, 3).map(collection => (
                         <FeaturedCard className="featured-collection" post={collection} />
                     ))}
+                    <Button variant={ButtonVariant.OUTLINE} url="/collections">View All</Button>
                 </FeaturedSection>
                 <FeaturedSection
                     title="Articles"
@@ -59,7 +60,7 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                 >
                     <div className="featured-articles">
                         {this.props.articles.slice(0, 3).map(article => <ArticleCard featured article={article} />)}
-                        <Button variant={ButtonVariant.OUTLINE} url="">View All</Button>
+                        <Button variant={ButtonVariant.OUTLINE} url="/editorials">View All</Button>
                     </div>
                 </FeaturedSection>
             </div>
