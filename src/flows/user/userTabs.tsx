@@ -2,7 +2,7 @@ import * as React from "react";
 import { isMobile } from "react-device-detect";
 
 import { Person } from "../../api/models";
-import NavLink from "../../components/navLink";
+import Tab from "../../components/tab";
 import { UserContentType } from "./types";
 
 import "./style.scss";
@@ -28,87 +28,60 @@ export default function UserTabs({ user, userId, isSelf, profile, pathname, setC
     return (
         <div className={classes}>
             {profile && profile.blog_post_count > 0 &&
-                <NavLink
-                    url={`/user/${userId}/${UserContentType.POST}`}
-                    pathname={pathname}
-                    selected={pathname === `/user/${userId}`}
-                    onClick={() => setContent(UserContentType.POST)}
-                >
-                    <p>{`${profile.blog_post_count} `}POSTS</p>
-                </NavLink>
+                <Tab
+                    label={`${profile.blog_post_count} Looks`}
+                    selected={pathname.indexOf(UserContentType.POST) !== -1 || pathname === `/user/${userId}`}
+                    onSelect={() => setContent(UserContentType.POST)}
+                />
             }
             {profile && profile.product_count > 0 &&
-                <NavLink
-                    url={`/user/${userId}/${UserContentType.PRODUCT}`}
-                    pathname={pathname}
-                    onClick={() => setContent(UserContentType.PRODUCT)}
-                >
-                    <p>{`${profile.product_count} `}PRODUCTS</p>
-                </NavLink>
+                <Tab
+                    label={`${profile.product_count} Products`}
+                    selected={pathname.indexOf(UserContentType.PRODUCT) !== -1}
+                    onSelect={() => setContent(UserContentType.PRODUCT)}
+                />
             }
             {isSelf &&
-                <NavLink
-                    url={`/user/${userId}`}
-                    pathname={pathname}
+                <Tab
+                    label="Saved Posts"
                     selected={pathname === `/user/${userId}` || pathname === `/user/${userId}/bookmarks`}
-                    onClick={() => setContent(UserContentType.POST_WISHLIST)}
-                >
-                    <p>SAVED POSTS</p>
-                </NavLink>
+                    onSelect={() => setContent(UserContentType.POST_WISHLIST)}
+                />
             }
             {isSelf &&
-                <NavLink
-                    url={`/user/${userId}/${UserContentType.PRODUCT_WISHLIST}`}
-                    pathname={pathname}
-                    onClick={() => setContent(UserContentType.PRODUCT_WISHLIST)}
-                >
-                    <p>WISHLIST</p>
-                </NavLink>
+                <Tab
+                    label="Wishlist"
+                    selected={pathname.indexOf(UserContentType.PRODUCT_WISHLIST) !== -1}
+                    onSelect={() => setContent(UserContentType.PRODUCT_WISHLIST)}
+                />
             }
-            {/* {!isSelf &&
-                <NavLink
-                    url={`/user/${userId}/${UserContentType.FOLLOWER}`}
-                    pathname={pathname}
-                    onClick={() => setContent(UserContentType.FOLLOWER)}
-                >
-                    <p>FOLLOWERS</p>
-                    <p>{profile.follower_count || 0}</p>
-                </NavLink>
-            } */}
-            {isSelf &&
-                <NavLink
-                    url={`/user/${userId}/${UserContentType.FOLLOWING}`}
-                    pathname={pathname}
-                    onClick={() => setContent(UserContentType.FOLLOWING)}
-                >
-                    <p>{profile && `${profile.following_count} `}FOLLOWING</p>
-                </NavLink>
+            {isSelf && profile && profile.following_count &&
+                <Tab
+                    label={`${profile.following_count} Following`}
+                    selected={pathname.indexOf(UserContentType.FOLLOWING) !== -1}
+                    onSelect={() => setContent(UserContentType.FOLLOWING)}
+                />
             }
             {isSelf &&
-                <NavLink
-                    url={`/user/${userId}/${UserContentType.SETTINGS}`}
-                    pathname={pathname}
-                    onClick={() => setContent(UserContentType.SETTINGS)}
-                >
-                    <p>Settings</p>
-                </NavLink>
+                <Tab
+                    label="Settings"
+                    selected={pathname.indexOf(UserContentType.SETTINGS) !== -1}
+                    onSelect={() => setContent(UserContentType.SETTINGS)}
+                />
             }
             {isSelf && isInfluencer &&
-                <NavLink
-                    url={`/user/${userId}/${UserContentType.ANALYTICS}`}
-                    pathname={pathname}
-                    onClick={() => setContent(UserContentType.ANALYTICS)}
-                >
-                    <p>Analytics</p>
-                </NavLink>
+                <Tab
+                    label="Analytics"
+                    selected={pathname.indexOf(UserContentType.ANALYTICS) !== -1}
+                    onSelect={() => setContent(UserContentType.ANALYTICS)}
+                />
             }
             {isSelf && (isInfluencer || isManager) && (
-                <NavLink
-                    url="/cms"
-                    pathname={pathname}
-                >
-                    <p>CMS</p>
-                </NavLink>
+                <Tab
+                    label="CMS"
+                    selected={pathname === "/cms"}
+                    onSelect={() => setContent(UserContentType.CMS)}
+                />
             )}
         </div>
     );
