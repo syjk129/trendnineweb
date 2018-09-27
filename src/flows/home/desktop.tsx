@@ -63,8 +63,8 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                     </div>
                 </div> */}
                 <FeaturedSection
-                    title="Trending Looks"
-                    subtitle="Our favorite looks from the influencers"
+                    title="Latest Looks"
+                    subtitle="Our latest looks from the influencers"
                     cta={(<LinkButton url="/looks" className="view-all-button">View All</LinkButton>)}
                 >
                     <LooksCarousel looks={this.props.trendingLooks} />

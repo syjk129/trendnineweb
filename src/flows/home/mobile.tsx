@@ -36,9 +36,9 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                     ))}
                 </div>
                 <FeaturedSection
-                    title="Trending Looks"
-                    subtitle="Our favorite posts from the influencers"
-                    cta={(<LinkButton url="/collections" className="view-all-button">View All</LinkButton>)}
+                    title="Latest Looks"
+                    subtitle="Our latest looks from the influencers"
+                    cta={(<LinkButton url="/looks" className="view-all-button">View All</LinkButton>)}
                 >
                     <div className="trending-looks">
                         {this.props.trendingLooks.map(look => <LookCard look={look} />)}
