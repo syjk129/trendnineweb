@@ -1,40 +1,44 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import Slider from "react-slick";
+import { withRouter } from "react-router-dom";
 
-import { Comment, Post, PostPreview } from "../../api/models";
+import { Comment, Post, PostPreview, Product } from "../../api/models";
 import { AppContext } from "../../app";
-import { IconButton } from "../../components/button";
+import Button, { ButtonVariant, IconButton } from "../../components/button";
+import Callout, { CalloutVariant } from "../../components/callout";
+import { CardContainer } from "../../components/card";
 import Content from "../../components/content";
-import { IconSize, IconVariant } from "../../components/icon";
+import Icon, { IconSize, IconVariant } from "../../components/icon";
 import Image from "../../components/image";
 import Sticky from "../../components/sticky";
-import { PostCard } from "../flowComponents/cardView";
+import formatTime from "../../util/formatTime";
+import LookCard from "../flowComponents/cardView/lookCard";
 import Comments from "../flowComponents/comments";
-import { ContentSection, SidebarPostProductListSection } from "../flowComponents/section";
-import PostAuthorDetails from "./postAuthorDetails";
+import { ContentSection } from "../flowComponents/section";
+import RouteProps from "../routeProps";
 
-interface PostViewProps {
+interface PostViewProps extends RouteProps {
     isManager?: boolean;
     post: Post;
+    relatedPosts: Array<PostPreview>;
     scrollRef: React.RefObject<HTMLDivElement>;
     isModal: boolean;
-    setCurrentPost(): void;
+    redirectProduct(product: Product): void;
 }
 
 interface DesktopPostViewState {
     comments: Array<Comment>;
-    relatedPosts: Array<PostPreview>;
     saved: boolean;
+    authorPosts: Array<PostPreview>;
 }
 
-export default class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewState> {
+class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewState> {
     static contextTypes: AppContext;
 
     state: DesktopPostViewState = {
         comments: [],
-        relatedPosts: [],
         saved: false,
+        authorPosts: [],
     };
 
     async componentWillMount() {
@@ -42,33 +46,43 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
         this._postViewRef = React.createRef();
         this._nextPostRef = React.createRef();
 
-        if (this.props.scrollRef && this.props.scrollRef.current) {
-            this.props.scrollRef.current.addEventListener("scroll", this._onScroll);
-            this.props.scrollRef.current.addEventListener("touchmove", this._onScroll);
-        } else {
-            document.addEventListener("scroll", this._onScroll);
-            document.addEventListener("touchmove", this._onScroll);
-        }
-        const relatedPosts = await this.context.api.getRelatedPosts(this._postId);
-        this.setState({ relatedPosts });
-    }
-
-    componentWillUnmount() {
-        if (this.props.scrollRef && this.props.scrollRef.current) {
-            this.props.scrollRef.current.removeEventListener("scroll", this._onScroll);
-            this.props.scrollRef.current.removeEventListener("touchmove", this._onScroll);
-        } else {
-            document.removeEventListener("scroll", this._onScroll);
-            document.removeEventListener("touchmove", this._onScroll);
-        }
+        const [
+            authorPosts,
+        ] = await Promise.all([
+            this.context.api.getPostsForUser(this.props.post.author.id),
+        ]);
+        this.setState({ authorPosts: authorPosts.list });
     }
 
     render() {
+        let shareUrl;
+        const pathname = window.location.pathname.split("/").filter(path => path !== "");
+        if (pathname.length === 2) {
+            shareUrl = `${window.location.pathname}/share`;
+        } else {
+            shareUrl = `/share/post/${this._postId}`;
+        }
+
         return (
             <div className="post-view-container">
                 <div className="post" ref={this._postViewRef}>
                     <Content>
                         <div className="post-content" ref="cover">
+                            <div className="post-header">
+                                <div>
+                                    <div className="iconed-callout">
+                                        <Icon variant={IconVariant.LOOKS} />
+                                        <Callout inline>Looks</Callout>
+                                    </div>
+                                    <Callout inline variant={CalloutVariant.MUTED}>{formatTime(this.props.post.created)}</Callout>
+                                </div>
+                                <IconButton
+                                    icon={IconVariant.SHARE}
+                                    size={IconSize.LARGE}
+                                    onClick={() => this.props.history.push(shareUrl)}
+                                />
+                            </div>
+                            <h2 className="post-title">{this.props.post.title}</h2>
                             <Image
                                 className="post-cover"
                                 width={this.props.post.cover_image.original_image_width}
@@ -76,32 +90,16 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
                                 src={this.props.post.cover_image.original_image_url}
                                 previewSrc={this.props.post.cover_image.thumbnail_image_url}
                             />
-                            <p className="post-title">
-                                {this.props.post.title}
-                            </p>
-                            <div className="post-subtitle">
-                                <PostAuthorDetails
-                                    author={this.props.post.author}
-                                    iconSize={IconSize.LARGE}
-                                    postDate={new Date(this.props.post.created)}
-                                    postId={this.props.post.id}
-                                    wishlisted={this.state.saved}
-                                    toggleWishlist={this._toggleWishlist}
-                                />
-                            </div>
                             <div className="post-details">
-                                {/* TODO: Don't use dangerouslySetInnerHTML. Make this safer */}
                                 <div dangerouslySetInnerHTML={{ __html: this.props.post.content }} />
                             </div>
                         </div>
-                        <ContentSection title="Comments">
-                            <Comments
-                                comments={this.state.comments}
-                                likeComment={this._likeComment}
-                                unlikeComment={this._unlikeComment}
-                                submitComment={this._submitComment}
-                            />
-                        </ContentSection>
+                        <Comments
+                            comments={this.state.comments}
+                            likeComment={this._likeComment}
+                            unlikeComment={this._unlikeComment}
+                            submitComment={this._submitComment}
+                        />
                     </Content>
                     <div className="post-sidebar">
                         {this.props.post.products.length > 0 && (
@@ -112,27 +110,51 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
                                 scrollRef={this.props.scrollRef}
                                 maxTop={this.props.isModal ? 0 : null}
                             >
-                                <SidebarPostProductListSection
-                                    title="Products in This Post"
-                                    items={this.props.post.products.map(product => ({
-                                        type: "Product",
-                                        content: product,
-                                        postId: this.props.post.id,
-                                    }))}
-                                />
+                                <div>
+                                    <div className="user-more">
+                                        <div className="user-follow-container">
+                                            <div className="user-details">
+                                                <img className="user-image" src={this.props.post.author.profile_small_image_url} />
+                                                <div className="username">
+                                                    <p className="more-from">More from</p>
+                                                    <b>{this.props.post.author.username}</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="user-posts">
+                                            {this.state.authorPosts.slice(0, 3).map(post => (
+                                                <Image square src={post.cover_image.thumbnail_image_url} />
+                                            ))}
+                                        </div>
+                                        <Button className="user-follow" variant={ButtonVariant.OUTLINE}>FOLLOW</Button>
+                                    </div>
+                                    <Callout>Products in this post</Callout>
+                                    {this.props.post.products.map(product => (
+                                        <div className="sidebar-product" onClick={() => this.props.redirectProduct(product)}>
+                                            <img className="sidebar-product-image" src={product.image && product.image.thumbnail_image_url} />
+                                            <div className="sidebar-product-details">
+                                                <b>{product.brand && product.brand.name}</b>
+                                                <div className="sidebar-product-name">
+                                                    {product.title}
+                                                </div>
+                                                <div className="price">
+                                                    ${product.price}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </Sticky>
                         )}
                     </div>
                 </div>
                 <div ref={this._nextPostRef}>
-                    {this.state.relatedPosts && (
-                        this._renderRelatedPosts()
-                    )}
-                    <div className={`next-post-container${!this.props.isModal ? " full-screen" : ""}`} ref={this._nextPostRef}>
-                        <div className="next-post-text">
-                            Next Post
-                        </div>
-                    </div>
+                    <Callout>Related Looks</Callout>
+                    <CardContainer>
+                        {this.props.relatedPosts.map(post => (
+                            <LookCard look={post} />
+                        ))}
+                    </CardContainer>
                 </div>
             </div>
         );
@@ -141,53 +163,6 @@ export default class DesktopPostView extends React.Component<PostViewProps, Desk
     private _postId: string;
     private _postViewRef: React.RefObject<HTMLDivElement>;
     private _nextPostRef: React.RefObject<HTMLDivElement>;
-
-    private _renderRelatedPosts = () => {
-        const settings = {
-            arrows: true,
-            prevArrow: <IconButton icon={IconVariant.ARROW_LEFT} />,
-            nextArrow: <IconButton icon={IconVariant.ARROW_RIGHT} />,
-            infinite: true,
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            variableWidth: false,
-            centerMode: true,
-            responsive: [{
-                breakpoint: 1543,
-                settings: {
-                    slidesToShow: 3,
-                },
-            },
-            {
-                breakpoint: 1300,
-                settings: {
-                    slidesToShow: 2,
-                },
-            }],
-        };
-
-        return (
-            <ContentSection title="You May Also Like">
-                <Slider {...settings} className="related-post-container">
-                    {this.state.relatedPosts && this.state.relatedPosts.map(post => (
-                        <div>
-                            <PostCard post={post} noHover clearData />
-                        </div>
-                    ))}
-                </Slider>
-            </ContentSection>
-        );
-    }
-
-    private _onScroll = () => {
-        const postView = this._postViewRef.current;
-        if (postView) {
-            const rect = postView.getBoundingClientRect();
-            if (rect.top > 0 && rect.top < 200 && rect.bottom > 200 || rect.bottom < window.innerHeight - 200 && rect.bottom > 200) {
-                this.props.setCurrentPost();
-            }
-        }
-    }
 
     private _toggleWishlist = () => {
         this.setState({ saved: !this.state.saved });
@@ -218,3 +193,5 @@ DesktopPostView.contextTypes = {
     setError: PropTypes.func,
     openModal: PropTypes.func,
 };
+
+export default withRouter(DesktopPostView);

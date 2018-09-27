@@ -71,38 +71,39 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
         const postDraft = JSON.parse(localStorage.getItem("post_draft")) as PostDraft;
 
         if (this._postId) { // Update Flow
-            const post = await this.context.api.getPost(this._postId);
-            const productTags = post.product_tags.map(tag => {
-                const product = post.products.find(product => product.id === tag.product_id);
-                if (product) {
-                    return {
-                        id: product.id,
-                        brand: product.brand && product.brand.name,
-                        merchant: product.merchant && product.merchant.name,
-                        category: product.category && product.category.display_name,
-                        title: product.title,
-                        price: product.price,
-                        image: product.image && product.image.original_image_url,
-                        url: product.url,
-                    } as ProductSearchTag;
-                }
-            });
-            this.setState({
-                type: this._postType,
-                title: post.title,
-                content: post.content,
-                coverImage: post.cover_image.original_image_url,
-                tags: post.tags.reduce((result, tag) => result ? `${result},${tag.content}` : tag.content, ""),
-                productTags,
-            });
-            localStorage.setItem("post_draft", JSON.stringify({
-                type: this._postType,
-                title: post.title,
-                tags: post.tags.reduce((result, tag) => result ? `${result},${tag.content}` : tag.content, ""),
-                content: post.content,
-                coverImage: post.cover_image.original_image_url,
-                previewImage: this.state.previewImage,
-            }));
+            // const post = await this.context.api.getPost(this._postId);
+            // const productTags = post.product_tags.map(tag => {
+            //     const product = post.products.find(product => product.id === tag.product_id);
+            //     if (product) {
+            //         return {
+            //             id: product.id,
+            //             brand: product.brand && product.brand.name,
+            //             merchant: product.merchant && product.merchant.name,
+            //             category: product.category && product.category.display_name,
+            //             title: product.title,
+            //             price: product.price,
+            //             image: product.image && product.image.original_image_url,
+            //             url: product.url,
+            //         } as ProductSearchTag;
+            //     }
+            // });
+            // this.setState({
+            //     type: this._postType,
+            //     title: post.title,
+            //     content: post.content,
+            //     coverImage: post.cover_image.original_image_url,
+            //     tags: post.tags.reduce((result, tag) => result ? `${result},${tag.content}` : tag.content, ""),
+            //     productTags,
+            // });
+            // localStorage.setItem("post_draft", JSON.stringify({
+            //     type: this._postType,
+            //     title: post.title,
+            //     tags: post.tags.reduce((result, tag) => result ? `${result},${tag.content}` : tag.content, ""),
+            //     content: post.content,
+            //     coverImage: post.cover_image.original_image_url,
+            //     previewImage: this.state.previewImage,
+            // }));
+            this._populatePost();
         } else if (postDraft) { // Draft Flow
             this.setState({ ...postDraft });
         } else { // Fresh Flow
@@ -163,7 +164,7 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                         <Input
                             id="post-upload-cta"
                             value={this.state.ctaUrl}
-                            placeholder="Caption"
+                            placeholder="CTA Url"
                             onChange={this._onCtaUrlChange}
                             error={this.state.errors && this.state.errors["cta_url"]}
                         />
@@ -255,6 +256,50 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
     private _postId: string;
     private _postFields: Array<PostField>;
 
+    private _populatePost = async () => {
+        let post;
+        let productTags;
+        switch (this._postType) {
+            case PostType.ARTICLE:
+            case PostType.COLLECTION:
+                post = await this.context.api.getFeaturedPost(this._postId);
+                break;
+            case PostType.BLOG:
+                post = await this.context.api.getPost(this._postId);
+                productTags = post.product_tags.map(tag => {
+                    const product = post.products.find(product => product.id === tag.product_id);
+                    if (product) {
+                        return {
+                            id: product.id,
+                            brand: product.brand && product.brand.name,
+                            merchant: product.merchant && product.merchant.name,
+                            category: product.category && product.category.display_name,
+                            title: product.title,
+                            price: product.price,
+                            image: product.image && product.image.original_image_url,
+                            url: product.url,
+                        } as ProductSearchTag;
+                    }
+                });
+                break;
+        }
+        const draft = {
+            type: this._postType,
+            title: post.title,
+            caption: post.caption || "",
+            ctaUrl: post.cta_url || "",
+            content: post.content,
+            coverImage: post.cover_image.original_image_url,
+            selectedStyles: post.style_tags || [],
+            selectedOccasions: post.occasion_tags || [],
+            tags: post.tags.reduce((result, tag) => result ? `${result},${tag.content}` : tag.content, ""),
+            productTags: productTags || [],
+        };
+
+        this.setState(draft);
+        localStorage.setItem("post_draft", JSON.stringify(draft));
+    }
+
     private _submit = async () => {
         const productTags = this.state.productTags.map(product => ({
             product_id: product.id,
@@ -290,23 +335,24 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
                     product_tags: productTags,
                 } as PostRequest;
                 break;
-            case PostType.RESULT:
+            case PostType.COLLECTION:
                 request = {
                     type: this._postType.toUpperCase(),
                     title: this.state.title,
                     caption: this.state.caption,
+                    content: "content",
                     tag_list: this.state.tags.split(",").map(tag => tag.trim()),
                     style_tag_list: this.state.selectedStyles.map(style => style.content),
                     occasion_tag_list: this.state.selectedOccasions.map(occasion => occasion.content),
                     cover_image_url: this.state.coverImage,
-                    cta_url: this.state.ctaUrl,
+                    direct_url: this.state.ctaUrl,
                     priority_level: 0,
                 } as ResultRequest;
                 break;
         }
         let response;
         if (this._postId) {
-            response = await this.context.api.updatePost(this._postId, request);
+            response = await this.context.api.updatePost(this._postType, this._postId, request);
         } else {
             response = await this.context.api.createPost(this._postType, request);
         }

@@ -9,32 +9,22 @@
     height: 100%;
     box-sizing: border-box;
     z-index: 5;
-    transition: 0.25s;
     left: 0;
     overflow: hidden;
 
-    .menu-peek {
-        content: "";
-        width: calc(100% - 330px);
-    }
-
     .menu {
-        background-color: #000;
-        color: #fff;
+        width: 100%;
+        background-color: #fff;
         font-weight: $font-weight-light;
     }
 
-    .link-button {
-        color: #fff;
-    }
-
     .menu-header {
-        border-bottom: $standard-border-width solid #fff;
+        border-bottom: $standard-border-width solid $border-color;
         padding: $mobile-page-spacing;
         text-align: center;
 
         .close {
-            color: #fff;
+            color: #000;
             position: absolute;
             float: left;
             top: $mobile-page-spacing + 4;
@@ -52,36 +42,69 @@
     }
 
     .nav-logo {
-        width: 150px;
+        width: 145px;
         object-fit: contain;
-        height: $mobile-icon-large;
     }
 
-    .social-icons {
-        display: flex;
+    .nav-item {
+        font-size: $mobile-font-size-3;
+        color: $color-secondary;
+        text-decoration: none;
+        margin-bottom: $base-spacing * 2;
+    }
 
-        .social-icon {
-            width: $mobile-icon-large;
-            height: $mobile-icon-large;
-            margin-right: $base-spacing * 2;
+    .menu-nav {
+        padding: $base-spacing * 2 $mobile-base-spacing;
+
+        .link-button {
+            letter-spacing: 0;
         }
     }
 
     .menu-content {
-        padding: $mobile-page-spacing $mobile-icon-large + $mobile-page-spacing;
         height: calc(100% - 60px);
         overflow: scroll;
         box-sizing: border-box;
 
-        .link-button {
-            font-weight: $font-weight-light;
-            text-transform: uppercase;
-            font-size: $mobile-font-size-2;
-            padding: $large-spacing 0;
+        .follow-items {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: $base-spacing * 2 $mobile-base-spacing;
+            border-bottom: $standard-border-width solid $border-color;
 
-            &.selected {
-                font-weight: $font-weight-bold;
+            .social-icon {
+                &:not(:last-of-type) {
+                    margin-right: $base-spacing;
+                }
             }
+        }
+
+        .nav-items {
+            padding: 0 $mobile-base-spacing;
+            border-bottom: $standard-border-width solid $border-color;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: $base-spacing * 2 0;
+            align-items: center;
+
+            .icon {
+                margin-right: $base-spacing;
+            }
+
+            &:not(:last-of-type) {
+                border-bottom: $standard-border-width solid $border-color;
+            }
+        }
+
+        .menu-item-text {
+            display: flex;
+            align-items: center;
+            font-weight: $font-weight-bold;
+            font-size: $mobile-font-size-3;
         }
     }
 

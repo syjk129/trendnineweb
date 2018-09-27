@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import "./style.scss";
-
 interface TabbedSectionProps {
     selected: any;
     sections: Array<any>;

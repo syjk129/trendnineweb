@@ -3,8 +3,7 @@
 .content {
     display: inline-block;
     flex: 1;
+    width: 100%;
     max-width: calc(100% - #{$sidebar-width} - #{$sidebar-padding});
     // min-width: $min-card-width-with-border * $min-card-per-row + $card-spacing * ($min-card-per-row - 1);
-    min-width: 500px;
-    padding-top: $base-spacing * 3.5;
 }

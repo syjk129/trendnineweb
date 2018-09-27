@@ -1,3 +1,4 @@
+import { SortQueryParamMap, SortType } from "../flowComponents/contentToolbar/types";
 import { FilterConstants } from "../flowComponents/filter/filterComponents/types";
 import { SortConstants } from "../flowComponents/sort/types";
 import Filters from "./filters";
@@ -9,8 +10,10 @@ enum PostParamKey {
     PRICE_LOW = "price_low",
     CATEGORIES = "categories",
     BRANDS = "brands",
-    RETAILERS = "retailers",
+    RETAILERS = "merchant_ids",
     TAGS = "tags",
+    STYLE = "style_tags",
+    OCCASION = "occasion_tags",
 }
 
 export default class PostParam {
@@ -19,17 +22,17 @@ export default class PostParam {
     keyword: string;
     sort: string;
     filters: Filters;
-    categoryName: string;
+    parentCategory: string;
 
     constructor(urlParams: URLSearchParams) {
         this.keyword = this._parseStringFromParam(urlParams, PostParamKey.KEYWORD);
-        this.sort = this._parseStringFromParam(urlParams, PostParamKey.SORT);
+        this.sort = this._parseStringFromParam(urlParams, PostParamKey.SORT) || SortQueryParamMap[SortType.LATEST];
 
         this.filters = new Filters();
-        this.filters.categoryIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.CATEGORIES).split(PostParam.FILTER_SPLITTER));
-        this.filters.brandIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.BRANDS).split(PostParam.FILTER_SPLITTER));
-        this.filters.retailerIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.RETAILERS).split(PostParam.FILTER_SPLITTER));
-        this.filters.tagIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.TAGS).split(PostParam.FILTER_SPLITTER));
+        this.filters.categoryIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.CATEGORIES).split(PostParam.FILTER_SPLITTER).filter(i => i !== ""));
+        this.filters.brandIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.BRANDS).split(PostParam.FILTER_SPLITTER).filter(i => i !== ""));
+        this.filters.retailerIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.RETAILERS).split(PostParam.FILTER_SPLITTER).filter(i => i !== ""));
+        this.filters.tagIds = new Set(this._parseStringFromParam(urlParams, PostParamKey.TAGS).split(PostParam.FILTER_SPLITTER).filter(i => i !== ""));
         this.filters.maxPrice = this._parseStringFromParam(urlParams, PostParamKey.PRICE_HIGH);
         this.filters.minPrice = this._parseStringFromParam(urlParams, PostParamKey.PRICE_LOW);
     }
@@ -37,7 +40,9 @@ export default class PostParam {
     public convertToUrlParamString() {
         let urlParam = "";
         urlParam += this._appendQueryOrParam(urlParam, PostParamKey.KEYWORD, this.keyword);
-        urlParam += this._appendQueryOrParam(urlParam, PostParamKey.SORT, this.sort);
+        if (this.sort !== SortQueryParamMap[SortType.LATEST]) {
+            urlParam += this._appendQueryOrParam(urlParam, PostParamKey.SORT, this.sort);
+        }
         urlParam += this._appendQueryOrParam(urlParam, PostParamKey.CATEGORIES, this._convertFilterList(this.filters.categoryIds));
         urlParam += this._appendQueryOrParam(urlParam, PostParamKey.BRANDS, this._convertFilterList(this.filters.brandIds));
         urlParam += this._appendQueryOrParam(urlParam, PostParamKey.RETAILERS, this._convertFilterList(this.filters.retailerIds));
@@ -50,7 +55,11 @@ export default class PostParam {
     public convertUrlParamToQueryString() {
         let queryString = "";
         queryString += this._appendQueryOrParam(queryString, "keyword", this.keyword);
-        queryString += this._appendQueryOrParam(queryString, SortConstants.SORT_PARAM_STRING, this.sort);
+        if (this.sort && this.sort.length > 0) {
+            queryString += this._appendQueryOrParam(queryString, SortConstants.SORT_PARAM_STRING, this.sort);
+        } else {
+            queryString += this._appendQueryOrParam(queryString, SortConstants.SORT_PARAM_STRING, SortQueryParamMap[SortType.LATEST]);
+        }
         queryString += this._appendQueryOrParam(queryString, FilterConstants.CATEGORY_PARAM_STRING, this._convertFilterList(this.filters.categoryIds));
         queryString += this._appendQueryOrParam(queryString, FilterConstants.BRAND_PARAM_STRING, this._convertFilterList(this.filters.brandIds));
         queryString += this._appendQueryOrParam(queryString, FilterConstants.RETAILER_PARAM_STRING, this._convertFilterList(this.filters.retailerIds));
@@ -61,7 +70,7 @@ export default class PostParam {
     }
 
     private _convertFilterList(filters: Set<string>) {
-        return filters ? Array.from(filters).join(PostParam.FILTER_SPLITTER) : "";
+        return filters && filters.size > 0 ? Array.from(filters).filter(filter => filter !== "").join(PostParam.FILTER_SPLITTER) : "";
     }
 
     private _parseStringFromParam(urlParams: URLSearchParams, key: string) {

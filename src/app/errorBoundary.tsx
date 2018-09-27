@@ -37,12 +37,12 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps> {
                 this.props.history.push({ pathname: "/login", state: { modal: true } });
             }
         } else if (isPermissionError(error)) {
-            this.props.history.push("/discover");
+            this.props.history.push("/");
         } else if (isCorruptedUserError(error)) {
             localStorage.removeItem("user");
             localStorage.removeItem("tn_auth_token");
             localStorage.removeItem("refresh_token");
-            this.props.history.push("/discover");
+            this.props.history.push("/");
         }
         // for now, remove all errors
         this.props.removeError(error);

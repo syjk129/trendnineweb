@@ -44,7 +44,7 @@ export default function DesktopOnboarding({
                     <Button rounded size={ButtonSize.WIDE} variant={ButtonVariant.OUTLINE} onClick={unfollowAll}>Unfollow All</Button>
                 </div>
                 <div className="button-container">
-                    <Button rounded size={ButtonSize.WIDE} variant={ButtonVariant.OUTLINE} onClick={() => close("/discover")}>Get Started</Button>
+                    <Button rounded size={ButtonSize.WIDE} variant={ButtonVariant.OUTLINE} onClick={() => close("/")}>Get Started</Button>
                 </div>
             </div>
         </div>

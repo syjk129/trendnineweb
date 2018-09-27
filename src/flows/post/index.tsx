@@ -19,9 +19,8 @@ interface PostProps extends RouteProps {
 }
 
 interface PostState {
-    currentPost: Post;
-    posts: Array<Post>;
-    nextPosts: Array<PostPreview>;
+    post: Post;
+    relatedPosts: Array<PostPreview>;
     isLoading: boolean;
     loadingNext: boolean;
 }
@@ -30,41 +29,23 @@ export default class PostView extends React.Component<PostProps, PostState> {
     static contextTypes: AppContext;
 
     state: PostState = {
-        currentPost: null,
-        posts: [],
-        nextPosts: [],
+        post: null,
+        relatedPosts: [],
         isLoading: false,
         loadingNext: false,
     };
 
-    async componentWillMount() {
+    componentWillMount() {
         this._isModal = this.props.location.state && this.props.location.state.modal;
         this._pageRef = React.createRef();
         this._scrollRef = React.createRef();
-        await this._fetchData(this.props);
-
-        if (isMobile && this._isModal) {
-            this._scrollListener = this._pageRef.current;
-        } else if (this._isModal) {
-            this._scrollListener = this._scrollRef.current;
-        } else {
-            this._scrollListener = document;
-        }
-        this._scrollListener.addEventListener("scroll", this._populateNextPost);
-        this._scrollListener.addEventListener("touchmove", this._populateNextPost);
-    }
-
-    componentWillUnmount() {
-        this._scrollListener.removeEventListener("scroll", this._populateNextPost);
-        this._scrollListener.removeEventListener("touchmove", this._populateNextPost);
+        this._fetchData(this.props);
     }
 
     componentWillReceiveProps(nextProps: PostProps) {
         if (nextProps.location.state && nextProps.location.state.clearData) {
             this.setState({
-                posts: [],
-                currentPost: null,
-                nextPosts: [],
+                post: null,
                 loadingNext: false,
             });
             this._fetchData(nextProps);
@@ -140,28 +121,25 @@ export default class PostView extends React.Component<PostProps, PostState> {
                 )}
                 <ContainerEl {...props} isOpen>
                     <PageNavigation />
-                    {this.state.isLoading && (
+                    {this.state.isLoading ? (
                         <Spinner />
+                    ) : (
+                        isMobile ? (
+                            <MobilePost
+                                post={this.state.post}
+                                scrollRef={this._scrollRef}
+                                isModal={this._isModal}
+                            />
+                        ) : (
+                            <DesktopPost
+                                post={this.state.post}
+                                relatedPosts={this.state.relatedPosts}
+                                scrollRef={this._scrollRef}
+                                isModal={this._isModal}
+                                redirectProduct={this._redirectProduct}
+                            />
+                        )
                     )}
-                    {this.state.posts.map(post => (
-                        <>
-                            {isMobile ? (
-                                <MobilePost
-                                    post={post}
-                                    setCurrentPost={() => this._setCurrentPost(post)}
-                                    scrollRef={this._scrollRef}
-                                    isModal={this._isModal}
-                                />
-                            ) : (
-                                <DesktopPost
-                                    post={post}
-                                    setCurrentPost={() => this._setCurrentPost(post)}
-                                    scrollRef={this._scrollRef}
-                                    isModal={this._isModal}
-                                />
-                            )}
-                        </>
-                    ))}
                     {this.state.loadingNext && <Spinner/>}
                 </ContainerEl>
             </>
@@ -170,19 +148,25 @@ export default class PostView extends React.Component<PostProps, PostState> {
 
     private _scrollRef: React.RefObject<HTMLDivElement>;
     private _pageRef: React.RefObject<HTMLDivElement>;
-    private _scrollListener: any;
     private _isModal: boolean;
     private _post: Post;
+
+    private _redirectProduct = (product) => {
+        this.props.history.push({
+            pathname: `/product/${product.id}?referrer_type=post&referrer_id=${this.state.post.id}`,
+            state: { refresh: true },
+        });
+    }
 
     private _fetchData = async (props: PostProps) => {
         this.setState({ isLoading: true });
 
         const [
             post,
-            nextPosts,
+            relatedPosts,
         ] = await Promise.all([
             this.context.api.getPost(props.match.params.postId),
-            this.context.api.getLatestPosts(),
+            this.context.api.getRelatedPosts(props.match.params.postId),
         ]);
 
         if (!this._post) {
@@ -190,44 +174,10 @@ export default class PostView extends React.Component<PostProps, PostState> {
         }
 
         this.setState({
-            posts: [post],
-            currentPost: post,
-            nextPosts: nextPosts.list,
+            post,
+            relatedPosts: relatedPosts.slice(0, 9),
             isLoading: false,
         });
-    }
-
-    private _setCurrentPost = (post: Post) => {
-        if (this.state.currentPost.id !== post.id) {
-            this.setState({ currentPost: post });
-            this.props.history.push({
-                pathname: `/post/${post.id}`,
-                state: {
-                    modal: this._isModal,
-                    noScroll: true,
-                },
-            });
-        }
-    }
-
-    private _populateNextPost = async () => {
-        if (!this.state.loadingNext) {
-            const page = this._pageRef.current;
-            if (!page || page.getBoundingClientRect().bottom > window.innerHeight + 500) {
-                return;
-            }
-            let nextPosts = this.state.nextPosts;
-            const nextPost = this.state.nextPosts.pop();
-            if (!nextPost) {
-                return;
-            }
-            this.setState({ loadingNext: true });
-            const post = await this.context.api.getPost(nextPost.id);
-            // const post = await this.context.api.getPost();
-            let posts = this.state.posts;
-            posts.push(post);
-            this.setState({ posts, loadingNext: false, nextPosts });
-        }
     }
 
     private _getPostContentPreview = (content: string) => {

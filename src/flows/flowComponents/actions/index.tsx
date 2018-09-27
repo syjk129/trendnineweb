@@ -51,7 +51,7 @@ class ActionLinks extends React.Component<ActionLinksProps, ActionLinksState>  {
         if (pathname.length === 2) {
             shareUrl = `${window.location.pathname}/share`;
         } else {
-            shareUrl = `discover/share/${ActionLinksVariantMap[this.props.variant]}/${this.props.id}`;
+            shareUrl = `looks/share/${ActionLinksVariantMap[this.props.variant]}/${this.props.id}`;
         }
 
         return (

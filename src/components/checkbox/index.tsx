@@ -28,14 +28,17 @@ export default class Checkbox extends React.Component<CheckboxProps, never> {
         }
 
         return (
-            <label className={classes}> {this.props.label}
+            <label className={classes}>
+                {this.props.label}
                 <Input
                     className="checkbox"
                     type={InputType.CHECKBOX}
                     value={this.props.value}
                     checked={this.props.checked}
                     onChange={this._handleChange} />
-                <span className="checkbox-checkmark"></span>
+                <div className="checkbox-checkmark-outline">
+                    <span className="checkbox-checkmark"></span>
+                </div>
             </label>
         );
     }

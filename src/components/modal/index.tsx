@@ -85,11 +85,11 @@ export default class Modal extends React.Component<ModalProps> {
         return (
             <div className={containerClasses} ref={this.props.scrollRef || this._modalRef} style={style}>
                 <div className={classes} ref={this.props.contentRef}>
-                    <div className="modal-header">
-                        {!hideClose && (
+                    {!hideClose && (
+                        <div className="modal-header">
                             <span className="close" onClick={this._close}>&times;</span>
-                        )}
-                    </div>
+                        </div>
+                    )}
                     {children}
                 </div>
             </div>

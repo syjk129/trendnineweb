@@ -1,0 +1,38 @@
+@import "../../styles/variables";
+
+.article {
+    max-width: 900px;
+    margin: auto;
+    margin-top: $section-spacing;
+    margin-bottom: $section-spacing * 3;
+
+    &.mobile {
+        padding: $mobile-base-spacing;
+    }
+
+    .article-content {
+        img {
+            width: 100%;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    }
+
+    .article-title {
+        padding-bottom: $base-spacing * 2;
+        border-bottom: $standard-border-width solid $border-color;
+        margin-bottom: $section-spacing;
+    }
+
+    .article-header {
+        .iconed-callout {
+            display: inline-block;
+        }
+    }
+}

@@ -25,7 +25,7 @@ class Tag extends React.Component<TagProps> {
         return (
             <LinkButton
                 className={classes}
-                to={`/discover?tags=${tag.content}`}
+                to={`/looks?tags=${tag.content}`}
                 inline={inline}
             >
                 {tag.content}

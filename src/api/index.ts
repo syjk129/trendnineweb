@@ -13,6 +13,7 @@ import {
     Post,
     PostPreview,
     Posts,
+    PostTag,
     PostTagType,
     Products,
     Retailer,
@@ -88,10 +89,6 @@ export default class Api {
         return this._GET(url);
     }
 
-    getFeatured(type: string): Promise<Array<Featured>> {
-        return this._GET(`/api/v1/featured${type}`);
-    }
-
     getRetailers(keyword?: string): Promise<Array<Retailer>> {
         let url = "/api/v1/marketplace/products/merchants";
 
@@ -117,14 +114,20 @@ export default class Api {
         return this._POST("/api/v1/s3_presigned_post", request);
     }
 
-    updatePost(postId: string, request: PostRequest): Promise<void> {
-        return this._PUT(`/api/v1/posts/${postId}`, request);
+    updatePost(postType: PostType, postId: string, request: PostRequest): Promise<void> {
+        switch (postType) {
+            case PostType.ARTICLE:
+            case PostType.COLLECTION:
+                return this._PUT(`/api/v1/featured/${postId}`, request);
+            case PostType.BLOG:
+                return this._PUT(`/api/v1/posts/${postId}`, request);
+        }
     }
 
     createPost(postType: PostType, request: PostRequest | ArticleRequest | ResultRequest): Promise<void> {
         switch (postType) {
             case PostType.ARTICLE:
-            case PostType.RESULT:
+            case PostType.COLLECTION:
                 return this._POST("/api/v1/featured", request);
             case PostType.BLOG:
             return this._POST("/api/v1/posts", request);
@@ -134,7 +137,7 @@ export default class Api {
     deletePost(postId: string, postType: PostType): Promise<void> {
         switch (postType) {
             case PostType.ARTICLE:
-            case PostType.RESULT:
+            case PostType.COLLECTION:
                 return this._DELETE(`/api/v1/featured/${postId}`);
             case PostType.BLOG:
                 return this._DELETE(`/api/v1/posts/${postId}`);
@@ -145,8 +148,16 @@ export default class Api {
         return this._PUT(`/api/v1/featured/${postId}`, request);
     }
 
-    getFeaturedPosts(postType?: PostType): Promise<void> {
-        return this._GET(`/api/v1/featured${postType ? `?type=${postType}` : ""}`);
+    getFeaturedPosts(postType?: PostType, queryString?: string): Promise<Array<Featured>> {
+        let query = `?${queryString || ""}`;
+        if (postType) {
+            query += `&type=${postType}`;
+        }
+        return this._GET(`/api/v1/featured${query}`);
+    }
+
+    getFeaturedPost(postId: string): Promise<Featured> {
+        return this._GET(`/api/v1/featured/${postId}`);
     }
 
     getLatestPosts(queryString?: string, nextToken?: string): Promise<Post> {
@@ -169,7 +180,7 @@ export default class Api {
         return this._GET_PAGINATION(url, nextToken);
     }
 
-    getPostTags(postTagType: PostTagType): Promise<void> {
+    getPostTags(postTagType: PostTagType): Promise<PostTag> {
         return this._GET(`/api/v1/posts/tags?type=${postTagType}`);
     }
 

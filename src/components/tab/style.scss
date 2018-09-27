@@ -1,0 +1,26 @@
+@import "../../styles/variables";
+
+.tab {
+    font-size: $font-size-callout;
+    line-height: $line-height-callout-small;
+    color: $color-secondary;
+    display: inline-block;
+    text-transform: uppercase;
+    padding: $base-spacing / 2 0;
+    font-weight: $font-weight-bold;
+    letter-spacing: $letter-spacing-callout;
+
+    &:hover {
+        cursor: pointer;
+        border-bottom: 3px solid $color-brand;
+    }
+
+    &:not(:last-of-type) {
+        margin-right: $element-spacing;
+    }
+
+    &.selected {
+        color: $color-primary;
+        border-bottom: 3px solid $color-brand;
+    }
+}

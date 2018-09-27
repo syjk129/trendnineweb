@@ -10,7 +10,7 @@ export default function PrivacyPolicy() {
     const pathname = location.pathname;
     const isShop = pathname.indexOf("/shop") > -1;
     const prevPage = isShop ? "Shop" : "Discover";
-    const prevPageUrl = isShop ? "/shop" : "/discover";
+    const prevPageUrl = isShop ? "/shop" : "/";
     const renderContent = () => {
         return (
             <div>

@@ -1,0 +1,34 @@
+@import "../../styles/variables";
+
+.looks {
+    display: flex;
+    padding-top: $base-spacing;
+
+    &.mobile {
+        padding-top: 0;
+    }
+
+    .sticky-looks-refine {
+        position: fixed;
+        width: $sidebar-width;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .look-tabs {
+        margin-bottom: $section-spacing;
+    }
+
+    .look-content {
+        width: 100%;
+        padding: $mobile-base-spacing;
+    }
+}
+
+.looks-tag-carousel {
+    margin-bottom: $section-spacing;
+
+    &.mobile {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+}

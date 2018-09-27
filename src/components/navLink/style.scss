@@ -3,47 +3,45 @@
 .nav-link {
     display: inline-block;
     padding: $base-spacing / 2 0;
-    margin: 0 $large-spacing;
-    font-weight: $font-weight-semibold;
+    font-size: $font-size-callout;
+    letter-spacing: $letter-spacing-callout;
 
     a {
-        font-size: $font-size-1;
-        letter-spacing: 0.1em;
         text-transform: uppercase;
         text-decoration: none;
     }
 
-    &.large {
-        margin-left: 0;
-        margin-right: $large-spacing * 2;
-
+    &.small {
         a {
-            font-size: $font-size-2;
-            line-height: $line-height-2;
-        }
-
-        @media (max-width: 1300px) {
-            margin-right: $large-spacing;
-
-            a {
-                font-size: $font-size-1;
-            }
+            font-size: $font-size-callout-small;
         }
     }
 
     &:hover {
         a {
             color: $text-primary;
+            text-decoration: underline;
         }
     }
 
     &.selected {
         a {
             color: $text-primary;
+            text-decoration: underline;
         }
 
         // margin-bottom: $standard-border-width * -2;
-        border-bottom: ($standard-border-width * 2) solid $color-accent;
+        // border-bottom: ($standard-border-width * 2) solid $color-accent;
+    }
+
+    &.muted {
+        a {
+            color: $color-secondary;
+        }
+
+        &:hover a {
+            color: $color-primary;
+        }
     }
 
     &:first-child {

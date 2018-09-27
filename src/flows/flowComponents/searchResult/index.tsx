@@ -43,8 +43,9 @@ class SearchResult extends React.Component<SearchResultProps, SearchResultState>
         const isShop = this.props.location.pathname.indexOf("/shop") > -1;
 
         this.props.history.push({
-            pathname: isShop ? "/shop/discover" : "/discover",
+            pathname: isShop ? "/shop" : "/looks",
             search: `?keyword=${this.state.value}`,
+            state: { refresh: true },
         });
     }
 }

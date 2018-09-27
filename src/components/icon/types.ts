@@ -32,6 +32,11 @@ export enum IconVariant {
     AUTOMATED = "automated",
     ANALYTICS = "analytics",
     PROFILE = "profile",
+    LOOKS = "looks",
+    COLLECTION = "collection",
+    EDITORIAL = "editorial",
+    MY_PAGE = "my_page",
+    SHOP = "shop",
 }
 
 export enum IconSize {
@@ -75,6 +80,11 @@ export const IconMap = {
     [IconVariant.AUTOMATED]: IconVariant.AUTOMATED,
     [IconVariant.ANALYTICS]: IconVariant.ANALYTICS,
     [IconVariant.PROFILE]: IconVariant.PROFILE,
+    [IconVariant.LOOKS]: IconVariant.LOOKS,
+    [IconVariant.COLLECTION]: IconVariant.COLLECTION,
+    [IconVariant.EDITORIAL]: IconVariant.EDITORIAL,
+    [IconVariant.MY_PAGE]: IconVariant.MY_PAGE,
+    [IconVariant.SHOP]: IconVariant.SHOP,
 };
 
 export enum SocialIconType {

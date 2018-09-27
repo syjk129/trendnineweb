@@ -1,0 +1,23 @@
+@import "../../styles/variables";
+
+.callout {
+    text-transform: uppercase;
+    color: $color-brand;
+    letter-spacing: $letter-spacing-callout;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-callout;
+    margin-bottom: $base-spacing;
+
+    &.inline {
+        display: inline-block;
+        margin-right: $base-spacing;
+    }
+
+    &.muted {
+        color: $color-secondary;
+    }
+
+    &.secondary {
+        color: #000;
+    }
+}

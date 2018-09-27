@@ -4,23 +4,33 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import "./style.scss";
 
 interface NavLinkProps {
-    url: string;
+    url: string | any;
     pathname: string;
-    large?: boolean;
+    className?: string;
+    small?: boolean;
+    muted?: boolean;
     selected?: boolean;
     children?: React.ReactNode;
     onClick?(): void;
 }
 
-export default function NavLink({ url, pathname, large, selected, children, onClick }: NavLinkProps) {
+export default function NavLink({ url, className, small, muted, selected, children, onClick }: NavLinkProps) {
     let classes = "nav-link";
 
-    if (pathname === url || selected) {
+    if (className) {
+        classes += ` ${className}`;
+    }
+
+    if (selected) {
         classes += " selected";
     }
 
-    if (large) {
-        classes += " large";
+    if (small) {
+        classes += " small";
+    }
+
+    if (muted) {
+        classes += " muted";
     }
 
     return (

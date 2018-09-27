@@ -1,10 +1,11 @@
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 import { PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
+import Modal from "../../components/modal";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import RouteProps from "../routeProps";
 import DesktopProduct from "./desktop";
@@ -12,7 +13,9 @@ import MobileProduct from "./mobile";
 
 import "./style.scss";
 
-type Props = RouteProps;
+interface ProductProps extends RouteProps {
+    close(): void;
+}
 
 interface ProductState {
     product: any;
@@ -20,9 +23,10 @@ interface ProductState {
     postsForProduct: Array<PostPreview>;
     reviews: Array<any>;
     wishlisted: boolean;
+    isLoading: boolean;
 }
 
-export default class ProductView extends React.Component<Props, ProductState> {
+export default class ProductView extends React.Component<ProductProps, ProductState> {
     static contextTypes: AppContext;
 
     state: ProductState = {
@@ -31,13 +35,18 @@ export default class ProductView extends React.Component<Props, ProductState> {
         postsForProduct: [],
         reviews: [],
         wishlisted: false,
+        isLoading: false,
     };
 
     componentWillMount() {
+        this._isModal = this.props.location.state && this.props.location.state.modal;
+        this._pageRef = React.createRef();
+        this._scrollRef = React.createRef();
+
         this.refreshContent(this.props);
     }
 
-    componentWillReceiveProps(nextProps: Props) {
+    componentWillReceiveProps(nextProps: ProductProps) {
         if (nextProps.location !== this.props.location &&
             !nextProps.location.pathname.includes("share") && !nextProps.location.pathname.includes("login") && !nextProps.location.pathname.includes("onboarding")
         ) {
@@ -45,7 +54,8 @@ export default class ProductView extends React.Component<Props, ProductState> {
         }
     }
 
-    async refreshContent(props: Props) {
+    async refreshContent(props: ProductProps) {
+        this.setState({ isLoading: true });
         const productId = props.match.params.productId;
         const [
             product,
@@ -79,41 +89,64 @@ export default class ProductView extends React.Component<Props, ProductState> {
 
         this.setState({
             product,
-            relatedProducts,
+            relatedProducts: relatedProducts.slice(0, 9),
             postsForProduct,
             reviews,
             wishlisted,
+            isLoading: false,
         });
 
         localStorage.setItem("recentlyViewed", JSON.stringify(recentlyViewedArray.slice(0, 5)));
     }
 
     render() {
-        if (!this.state.product) {
-            return <SpinnerContainer><Spinner /></SpinnerContainer>;
+        const ContainerEl = this._isModal ? Modal : "div";
+        let props;
+        if (this._isModal) {
+            props = {
+                className: "post-modal",
+                contentRef: this._pageRef,
+                scrollRef: this._scrollRef,
+                close: this.props.close,
+                fullScreen: isMobile,
+            };
+        } else {
+            props = { ref: this._pageRef };
         }
 
         return (
-            <div>
-                <BrowserView device={isBrowser}>
-                    <DesktopProduct
-                        {...this.state}
-                        toggleWishlist={this._toggleWishlist}
-                        onProductClick={this._onProductClick}
-                    />
-                </BrowserView>
-                <MobileView device={isMobile}>
-                    <MobileProduct
-                        {...this.state}
-                        toggleWishlist={this._toggleWishlist}
-                        onProductClick={this._onProductClick}
-                    />
-                </MobileView>
-            </div>
+            <>
+                <ContainerEl {...props} isOpen>
+                    {this.state.isLoading ? (
+                        <Spinner />
+                    ) : (
+                        isMobile ? (
+                            <MobileProduct
+                                {...this.state}
+                                scrollRef={this._scrollRef}
+                                isModal={this._isModal}
+                                toggleWishlist={this._toggleWishlist}
+                                onProductClick={this._onProductClick}
+                            />
+                        ) : (
+                            <DesktopProduct
+                                {...this.state}
+                                scrollRef={this._scrollRef}
+                                isModal={this._isModal}
+                                toggleWishlist={this._toggleWishlist}
+                                onProductClick={this._onProductClick}
+                            />
+                        )
+                    )}
+                </ContainerEl>
+            </>
         );
     }
 
+    private _pageRef: React.RefObject<HTMLDivElement>;
+    private _scrollRef: React.RefObject<HTMLDivElement>;
     private _productId: string;
+    private _isModal: boolean;
 
     @autobind
     private _toggleWishlist() {

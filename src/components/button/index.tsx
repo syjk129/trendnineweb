@@ -12,8 +12,9 @@ import "./style.scss";
 interface ButtonProps {
     className?: string;
     inline?: boolean;
-    url?: string;
+    url?: any;
     rounded?: boolean;
+    small?: boolean;
     white?: boolean;
     variant?: ButtonVariant;
     size?: ButtonSize;
@@ -26,6 +27,7 @@ export default function Button({
     className,
     inline,
     rounded,
+    small,
     url,
     white,
     variant,
@@ -48,18 +50,22 @@ export default function Button({
     }
 
     switch (variant) {
-        case ButtonVariant.PRIMARY:
-            classes += " button-primary";
-            break;
         case ButtonVariant.SECONDARY:
             classes += " button-secondary";
             break;
         case ButtonVariant.OUTLINE:
             classes += " button-outline";
             break;
+        case ButtonVariant.SECONDARY_OUTLINE:
+            classes += " button-secondary-outline";
+            break;
         case ButtonVariant.BLANK:
             classes += " button-blank";
             break;
+        case ButtonVariant.TOP:
+            classes += " button-top";
+            break;
+        case ButtonVariant.PRIMARY:
         default:
             classes += " button-primary";
             break;
@@ -75,6 +81,10 @@ export default function Button({
         case ButtonSize.VERY_SMALL:
             classes += " button-very-small";
             break;
+    }
+
+    if (small) {
+        classes += " small";
     }
 
     if (white) {

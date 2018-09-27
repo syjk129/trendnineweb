@@ -1,4 +1,5 @@
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import "./style.scss";
 
@@ -16,6 +17,10 @@ export default function CardContainer({ gridSize, children, className }: CardCon
 
     if (gridSize) {
         classes += ` grid-size-${gridSize}`;
+    }
+
+    if (isMobile) {
+        classes += " mobile";
     }
 
     return (

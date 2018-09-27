@@ -7,17 +7,26 @@
     cursor: pointer;
     user-select: none;
     line-height: $checkbox-size;
-    height: $checkbox-size;
 
-    .checkbox-checkmark {
+    .checkbox-checkmark-outline {
+        display: inline-block;
+        border: $standard-border-width solid #000;
+        padding: 2px;
+        box-sizing: border-box;
         position: absolute;
         top: 0;
         left: 0;
-        height: $checkbox-size - 2 * $standard-border-width;
-        width: $checkbox-size - 2 * $standard-border-width;
+        height: $checkbox-size;
+        width: $checkbox-size;
         background-color: transparent;
-        border: $standard-border-width solid $standard-border-color;
         border-radius: 3px;
+
+        .checkbox-checkmark {
+            display: block;
+            border-radius: $standard-border-radius;
+            width: 100%;
+            height: 100%;
+        }
     }
 
     &.mobile {
@@ -29,6 +38,11 @@
         height: $mobile-checkbox-size;
 
         .checkbox-checkmark {
+            height: 12px;
+            width: 12px;
+        }
+
+        .checkbox-checkmark-outline {
             height: $checkbox-size;
             width: $checkbox-size;
         }
@@ -40,16 +54,19 @@
         width: 0;
         cursor: pointer;
 
-        &:checked ~ .checkbox-checkmark {
+        &:checked ~ .checkbox-checkmark-outline .checkbox-checkmark {
             background-color: $color-accent;
-            height: $checkbox-size;
-            width: $checkbox-size;
             border: 0;
         }
     }
 
-    &.mobile input:checked ~ .checkbox-checkmark {
-        height: $mobile-checkbox-size;
-        width: $mobile-checkbox-size;
+    &:not(&.mobile) {
+        &:hover {
+            text-decoration: underline;
+
+            .checkbox-checkmark {
+                background-color: $color-muted;
+            }
+        }
     }
 }

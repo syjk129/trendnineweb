@@ -1,0 +1,59 @@
+@import "../../../../styles/variables";
+
+.shop-card-container {
+    .shop-card {
+        margin: $base-spacing;
+        box-shadow: 0 0 5px rgba(149, 149, 149, 0.5);
+        display: block;
+        position: relative;
+
+        &.mobile {
+            margin: 0;
+        }
+    }
+
+    .shop-card-details {
+        padding: $base-spacing;
+        background-color: #fff;
+        font-size: $font-size-body-small;
+
+        .product-brand {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-bottom: $base-spacing;
+        }
+
+        .product-name {
+            height: $line-height-body-small * 2;
+            overflow: hidden;
+            margin-bottom: $base-spacing;
+            color: $color-secondary;
+        }
+
+        .product-price {
+            color: $color-secondary;
+        }
+    }
+
+    .wishlist {
+        position: absolute;
+        top: $base-spacing;
+        right: $base-spacing;
+        border-radius: 100%;
+        width: 30px;
+        height: 30px;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &:hover {
+        border: 1px solid $border-color;
+
+        .shop-card {
+            margin: $base-spacing - 1px;
+        }
+    }
+}

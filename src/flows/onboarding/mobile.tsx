@@ -50,7 +50,7 @@ export default function MobileOnboarding({
                     <Button rounded size={ButtonSize.SMALL} variant={ButtonVariant.OUTLINE} onClick={unfollowAll}>Unfollow All</Button>
                 </div>
                 <div className="button-container">
-                    <Button rounded size={ButtonSize.SMALL} variant={ButtonVariant.OUTLINE} onClick={() => close("/discover")}>Get Started</Button>
+                    <Button rounded size={ButtonSize.SMALL} variant={ButtonVariant.OUTLINE} onClick={() => close("/")}>Get Started</Button>
                 </div>
             </div>
         </div>

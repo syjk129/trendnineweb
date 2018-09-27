@@ -77,7 +77,7 @@ export default function getUploadRequirements(postType: PostType): Array<PostFie
                     required: true,
                 },
             ];
-        case PostType.RESULT:
+        case PostType.COLLECTION:
             return [
                 {
                     type: PostFieldType.TITLE,

@@ -109,7 +109,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     private _clearFilters = () => {
         switch (this.props.contentType) {
             case ContentType.POST:
-                this.props.history.push("/discover");
+                this.props.history.push("/");
                 break;
             case ContentType.PRODUCT:
             case ContentType.SHOP:
@@ -245,7 +245,9 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 filterParams += `&price_low=${selectedFilter.minValue}`;
             } else if (isTreeSelectFilter(selectedFilter)) {
                 selectedFilter.selectedTree.categories = this.state.filters[FilterType.CATEGORY];
-                filterParams = `categories=${selectedFilter.selectedTree.getQueryString()}`;
+                if (selectedFilter.selectedTree.getQueryString()) {
+                    filterParams = `categories=${selectedFilter.selectedTree.getQueryString()}`;
+                }
             } else {
                 const selectedIds = selectedFilter.selectedIds.filter(id => id !== "").join(",");
                 if (selectedIds.length === 0) return result;
@@ -255,6 +257,9 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
             return `${result}${result.length !== 0 ? "&" : ""}${filterParams}`;
         }, "");
 
+        if (!queryString) {
+            queryString = "";
+        }
         // Apply sort query param
         if (this.state.currentSortType !== SortType.RELEVANCE) {
             queryString += `${queryString.length === 0 ? "" : "&"}sort=${SortQueryParamMap[this.state.currentSortType]}`;
@@ -263,6 +268,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         this.props.history.push({
             pathname: this.props.location.pathname,
             search: `?${queryString}`,
+            state: { refresh: true },
         });
     }
 
@@ -298,7 +304,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     @autobind
     private _selectSortType(sortType: SortType) {
-        this.setState({ currentSortType: sortType }, () => this._applyFilters());
+        this.setState({ currentSortType: sortType, activeToolbar: null }, () => this._applyFilters());
     }
 
     private _getFilterTypes(contentType: ContentType | UserContentType) {
@@ -327,6 +333,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
 
     @autobind
     private _getSortTypes() {
+        const isLook = this.props.location.pathname.indexOf("looks") !== -1;
         // Update once we have different sort types by context
         if (this.props.loggedIn) {
             return [
@@ -335,6 +342,12 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                 SortType.POPULARITY,
                 SortType.PRICE_HIGH_TO_LOW,
                 SortType.PRICE_LOW_TO_HIGH,
+            ];
+        }
+        if (isLook) {
+            return [
+                SortType.LATEST,
+                SortType.POPULARITY,
             ];
         }
 

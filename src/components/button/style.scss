@@ -1,24 +1,19 @@
 @import "../../styles/variables";
 
 .button {
-    font-size: $font-size-2;
+    font-size: $font-size-callout;
     font-family: $font-family-sans-serif;
     text-transform: uppercase;
-    padding: $base-spacing $base-spacing * 2;
+    padding: 13px 20px;
     width: 100%;
-    letter-spacing: $letter-spacing-1;
+    letter-spacing: $letter-spacing-callout;
     outline: none;
-    border-radius: $standard-border-radius;
-    border: $standard-border-width solid transparent;
-    background-color: $color-accent;
-    color: $color-white;
+    border-radius: $border-radius;
+    border-color: $color-brand;
     text-align: center;
 
     &:hover {
         cursor: pointer;
-        background-color: transparent;
-        border: $brand-color solid $standard-border-width;
-        color: $brand-color;
     }
 
     &:disabled {
@@ -43,9 +38,24 @@
         }
     }
 
+    &.small {
+        padding: 8px 15px;
+    }
+
     &.button-inline {
         display: inline-block;
         width: auto;
+    }
+
+    &.button-primary {
+        background-color: $color-brand;
+        color: #fff;
+
+        &:hover {
+            background-color: transparent;
+            border-color: $color-brand;
+            color: $color-brand;
+        }
     }
 
     &.button-secondary {
@@ -59,13 +69,25 @@
         }
     }
 
-    &.button-outline {
+    &.button-top {
+        font-size: $font-size-callout-small;
+        color: #fff;
+        border-color: #fff;
         background-color: transparent;
-        border: $brand-color solid $standard-border-width;
-        color: $brand-color;
 
         &:hover {
-            background-color: $color-accent;
+            background-color: #fff;
+            color: $color-brand;
+        }
+    }
+
+    &.button-outline {
+        background-color: transparent;
+        border: $color-brand solid $standard-border-width;
+        color: $color-brand;
+
+        &:hover {
+            background-color: $color-brand;
             color: $color-white;
         }
 
@@ -75,7 +97,7 @@
 
             &:hover {
                 background-color: #fff;
-                color: $color-accent;
+                color: $color-brand;
             }
         }
     }
@@ -98,10 +120,6 @@
     &.button-wide {
         padding: 10px 50px;
     }
-
-    &.rounded {
-        border-radius: $button-height / 2;
-    }
 }
 
 .link-button {
@@ -111,6 +129,12 @@
     text-decoration: none;
     color: $color-grey-6;
     display: block;
+
+    &.icon-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     &:hover,
     &:focus {

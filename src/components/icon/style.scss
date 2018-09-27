@@ -6,7 +6,7 @@
     height: $icon-size-1;
     text-decoration: none;
     vertical-align: middle;
-    margin: auto;
+    // margin: auto;
     object-fit: contain;
 
     &.small {
@@ -86,5 +86,10 @@
 
     &:hover {
         cursor: pointer;
+    }
+
+    &.large {
+        width: 30px;
+        height: 30px;
     }
 }

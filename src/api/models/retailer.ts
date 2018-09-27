@@ -1,4 +1,5 @@
 export default class Retailer {
-    merchant: string;
+    id: string;
     item_count: number;
+    name: string;
 }

@@ -1,0 +1,75 @@
+@import "../../../styles/variables";
+
+.carousel-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $base-spacing;
+    border-radius: 100%;
+    background-color: #fff;
+    box-shadow: $drop-shadow;
+    transition: padding 0.1s;
+
+    .icon {
+        transition: width 0.1s, height 0.1s;
+    }
+
+    &:hover {
+        padding: $base-spacing * 1.5;
+
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}
+
+.carousel-tag {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .carousel-tag-image-container {
+        padding: $base-spacing;
+        margin-bottom: $element-spacing;
+
+        &:hover,
+        &.selected {
+            padding: $base-spacing - 1px;
+            border: 1px solid $border-color;
+            border-radius: 100%;
+        }
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .carousel-tag-image {
+        box-shadow: $drop-shadow;
+        width: 150px;
+        height: 150px;
+        border-radius: 100%;
+        object-fit: cover;
+    }
+
+    .carousel-tag-name {
+        font-weight: $font-weight-bold;
+    }
+}
+
+.tag-carousel {
+    &.mobile {
+        display: flex;
+        overflow-y: scroll;
+        width: 100%;
+        padding: $base-spacing 0;
+        margin-bottom: 0;
+
+        .carousel-tag-image-container {
+            margin-bottom: $element-spacing / 2 - $base-spacing;
+        }
+    }
+}

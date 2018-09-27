@@ -90,13 +90,12 @@
 }
 
 .card-container {
-    padding-top: $base-spacing;
     flex: 1;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width-1}, 1fr));
-    grid-gap: $card-spacing;
+    grid-gap: $element-spacing - $base-spacing;
 
-    &.grid-size-2 {
+    &.mobile.grid-size-2 {
         grid-template-columns: repeat(auto-fill, minmax(#{$min-card-width-2}, 1fr));
         grid-gap: 15px;
     }

@@ -15,30 +15,36 @@ import { SocialIconType } from "./types";
 interface SocialIconProps {
     icon: SocialIconType;
     white?: boolean;
+    large?: boolean;
 }
 
-export default function SocialIcon({ icon, white }: SocialIconProps) {
+export default function SocialIcon({ icon, large, white }: SocialIconProps) {
+    let classes = "social-icon";
+    if (large) {
+        classes += " large";
+    }
+
     if (white) {
         switch (icon) {
             case SocialIconType.FACEBOOK:
-                return <img className="social-icon" src={WhiteFacebookIcon} />;
+                return <img className={classes} src={WhiteFacebookIcon} />;
             case SocialIconType.TWITTER:
-                return <img className="social-icon" src={WhiteTwitterIcon} />;
+                return <img className={classes} src={WhiteTwitterIcon} />;
             case SocialIconType.INSTAGRAM:
-                return <img className="social-icon" src={WhiteInstagramIcon} />;
+                return <img className={classes} src={WhiteInstagramIcon} />;
             case SocialIconType.PINTEREST:
-                return <img className="social-icon" src={WhitePinterestIcon} />;
+                return <img className={classes} src={WhitePinterestIcon} />;
         }
     }
 
     switch (icon) {
         case SocialIconType.FACEBOOK:
-            return <img className="social-icon" src={FacebookIcon} />;
+            return <img className={classes} src={FacebookIcon} />;
         case SocialIconType.TWITTER:
-            return <img className="social-icon" src={TwitterIcon} />;
+            return <img className={classes} src={TwitterIcon} />;
         case SocialIconType.INSTAGRAM:
-            return <img className="social-icon" src={InstagramIcon} />;
+            return <img className={classes} src={InstagramIcon} />;
         case SocialIconType.PINTEREST:
-            return <img className="social-icon" src={PinterestIcon} />;
+            return <img className={classes} src={PinterestIcon} />;
     }
 }
