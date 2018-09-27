@@ -82,9 +82,9 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                     cta={(<LinkButton url="/collections" className="view-all-button">View All</LinkButton>)}
                 >
                     <div className="featured-collections">
-                        <FeaturedCard post={this._getFeaturedAtLevel(1)} />
-                        <FeaturedCard post={this._getFeaturedAtLevel(2)} />
-                        <FeaturedCard post={this._getFeaturedAtLevel(3)} />
+                        <FeaturedCard post={this._getFeaturedAtLevel(4)} />
+                        <FeaturedCard post={this._getFeaturedAtLevel(5)} />
+                        <FeaturedCard post={this._getFeaturedAtLevel(6)} />
                     </div>
                 </FeaturedSection>
                 <FeaturedSection

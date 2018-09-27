@@ -2,7 +2,7 @@ import { PropTypes } from "prop-types";
 import * as React from "react";
 import { isMobile } from "react-device-detect";
 
-import { ArticleRequest } from "../../api/requests";
+import { ArticleRequest, ResultRequest } from "../../api/requests";
 import { AppContext } from "../../app";
 import Button, { ButtonSize, ButtonVariant } from "../../components/button";
 import RouteProps from "../routeProps";
@@ -38,11 +38,11 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
         if (user["auth_level"] < 2) {
             this.props.history.push("/");
         }
-        this._isManager = user["auth_level"] >= 3;
+        this._isManager = user["auth_level"] >= 4;
         this._draft = JSON.parse(localStorage.getItem("post_draft")) as PostDraft;
 
         if (this._isManager) {
-            const content = await this.context.api.getFeaturedPosts();
+            const content = await this.context.api.getFeaturedPosts(null, "order_by=priority_level");
             const featured = content.filter(post => post.priority_level > 0);
             this.setState({ uploads: content, featured });
             // set uploads as edit/articles
@@ -211,6 +211,19 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                 priority_level: priorityLevel,
                 cta_url: post.cta_url,
             } as ArticleRequest;
+        } else if (post.type.toLowerCase() === PostType.COLLECTION) {
+            request = {
+                type: post.type,
+                title: post.title,
+                caption: post.caption,
+                content: post.content,
+                tag_list: post.tag_list,
+                occasion_tag_list: post.occasion_tag_list,
+                style_tag_list: post.style_tag_list,
+                cover_image_url: post.cover_image.original_image_url,
+                priority_level: priorityLevel,
+                direct_url: post.cta_url || "https://www.trendnine.com/looks",
+            } as ResultRequest;
         }
         this.context.api.updateFeaturedPost(post.id, request);
         let featured = this.state.featured;
