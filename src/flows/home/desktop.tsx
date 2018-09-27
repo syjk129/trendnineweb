@@ -116,7 +116,7 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                         <div className="main-featured-left-content">
                             <h1>{featured.title}</h1>
                             <div className="main-featured-left-caption">{featured.caption}</div>
-                            <div><Button inline>Read & Shop</Button></div>
+                            <div><Button inline url={`/article/${featured.id}`}>Read & Shop</Button></div>
                         </div>
                     </Link>
                 );
@@ -127,7 +127,7 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                         <div className="main-featured-left-content">
                             <h1>{featured.title}</h1>
                             <div className="main-featured-left-caption">{featured.caption}</div>
-                            <div><Button inline>View Collection</Button></div>
+                            <div><Button href={featured.direct_url} inline>View Collection</Button></div>
                         </div>
                     </div>
                 );

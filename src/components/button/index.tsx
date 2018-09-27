@@ -13,6 +13,7 @@ interface ButtonProps {
     className?: string;
     inline?: boolean;
     url?: any;
+    href?: string;
     rounded?: boolean;
     small?: boolean;
     white?: boolean;
@@ -29,6 +30,7 @@ export default function Button({
     rounded,
     small,
     url,
+    href,
     white,
     variant,
     size,
@@ -98,6 +100,16 @@ export default function Button({
                     {children}
                 </button>
             </Link>
+        );
+    }
+
+    if (href) {
+        return (
+            <a href={href}>
+                <button type="button" className={classes} onClick={onClick} disabled={disabled}>
+                    {children}
+                </button>
+            </a>
         );
     }
 

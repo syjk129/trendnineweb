@@ -1,6 +1,6 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import { BrowserView, isBrowser, isMobile, MobileView } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 import { Featured, PostPreview, PostTag, PostTagType } from "../../api/models";
 import { AppContext } from "../../app";
