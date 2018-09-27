@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Featured, PostPreview, PostTag } from "../../api/models";
+import { Featured, PostPreview, PostTag, FeaturedType } from "../../api/models";
 import Button, { ButtonVariant, LinkButton } from "../../components/button";
 import Image, { ImageRatioVariant } from "../../components/image";
 import { ArticleCard, FeaturedCard, LookCard } from "../flowComponents/cardView";
@@ -20,15 +20,7 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
         return (
             <div className="mobile-home">
                 <div className="main-featured">
-                    <Image
-                        ratio={ImageRatioVariant.FEATURED_COVER}
-                        src={this._getFeaturedAtLevel(1).cover_image && this._getFeaturedAtLevel(1).cover_image.small_image_url}
-                    />
-                    <div className="main-featured-content">
-                        <div className="title">{this._getFeaturedAtLevel(1).title}</div>
-                        <div className="subtitle">{this._getFeaturedAtLevel(1).caption}</div>
-                        <Button inline url="">Read & Shop</Button>
-                    </div>
+                    {this._renderMainFeatured()}
                 </div>
                 <div className="featured-articles">
                     {[this._getFeaturedAtLevel(2), this._getFeaturedAtLevel(3)].map(article => (
@@ -72,6 +64,41 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                 </FeaturedSection>
             </div>
         );
+    }
+
+    private _renderMainFeatured = () => {
+        const featured = this._getFeaturedAtLevel(1);
+
+        switch (featured.type) {
+            case FeaturedType.ARTICLE:
+                return (
+                    <>
+                        <Image
+                            ratio={ImageRatioVariant.FEATURED_COVER}
+                            src={this._getFeaturedAtLevel(1).cover_image && this._getFeaturedAtLevel(1).cover_image.small_image_url}
+                        />
+                        <div className="main-featured-content">
+                            <div className="title">{this._getFeaturedAtLevel(1).title}</div>
+                            <div className="subtitle">{this._getFeaturedAtLevel(1).caption}</div>
+                            <Button inline url={`/article/${featured.id}`}>Read & Shop</Button>
+                        </div>
+                    </>
+                );
+            case FeaturedType.CTA:
+                return (
+                    <>
+                        <Image
+                            ratio={ImageRatioVariant.FEATURED_COVER}
+                            src={this._getFeaturedAtLevel(1).cover_image && this._getFeaturedAtLevel(1).cover_image.small_image_url}
+                        />
+                        <div className="main-featured-content">
+                            <div className="title">{this._getFeaturedAtLevel(1).title}</div>
+                            <div className="subtitle">{this._getFeaturedAtLevel(1).caption}</div>
+                            <Button inline href={featured.direct_url}>View Collection</Button>
+                        </div>
+                    </>
+                );
+        }
     }
 
     private _getFeaturedAtLevel = (level: number) => {
