@@ -63,8 +63,8 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                     </div>
                 </div> */}
                 <FeaturedSection
-                    title="Trending Looks"
-                    subtitle="Our favorite looks from the influencers"
+                    title="Latest Looks"
+                    subtitle="Our latest looks from the influencers"
                     cta={(<LinkButton url="/looks" className="view-all-button">View All</LinkButton>)}
                 >
                     <LooksCarousel looks={this.props.trendingLooks} />
@@ -82,9 +82,9 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                     cta={(<LinkButton url="/collections" className="view-all-button">View All</LinkButton>)}
                 >
                     <div className="featured-collections">
-                        <FeaturedCard post={this._getFeaturedAtLevel(1)} />
-                        <FeaturedCard post={this._getFeaturedAtLevel(2)} />
-                        <FeaturedCard post={this._getFeaturedAtLevel(3)} />
+                        <FeaturedCard post={this._getFeaturedAtLevel(4)} />
+                        <FeaturedCard post={this._getFeaturedAtLevel(5)} />
+                        <FeaturedCard post={this._getFeaturedAtLevel(6)} />
                     </div>
                 </FeaturedSection>
                 <FeaturedSection

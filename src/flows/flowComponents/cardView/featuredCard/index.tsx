@@ -51,7 +51,7 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
             );
         } else {
             return (
-                <Link to={this.props.post.direct_url || ""} className={classes}>
+                <a href={this.props.post.direct_url || ""} className={classes}>
                     {isMobile ? (
                         <Image
                             className="featured-image"
@@ -71,7 +71,7 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
                         </div>
                         <div className="featured-caption">{this.props.post.caption}</div>
                     </div>
-                </Link>
+                </a>
             );
         }
     }
