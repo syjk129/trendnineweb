@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Featured, PostPreview, PostTag, FeaturedType } from "../../api/models";
+import { Featured, FeaturedType, PostPreview, PostTag } from "../../api/models";
 import Button, { ButtonVariant, LinkButton } from "../../components/button";
 import Image, { ImageRatioVariant } from "../../components/image";
 import { ArticleCard, FeaturedCard, LookCard } from "../flowComponents/cardView";
@@ -17,6 +17,8 @@ interface MobileHomeProps {
 
 export default class MobileHome extends React.Component<MobileHomeProps> {
     render() {
+        const user = localStorage.getItem("user");
+
         return (
             <div className="mobile-home">
                 <div className="main-featured">
@@ -44,6 +46,22 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                         {this.props.tags.map(tag => <CarouselTag selected={false} tag={tag} />)}
                     </div>
                 </FeaturedSection>
+                {!user && (
+                    <div className="welcome-banner">
+                        <Image
+                            className="welcome-banner-image"
+                            src={this._getFeaturedAtLevel(1).cover_image.small_image_url}
+                            previewSrc={this._getFeaturedAtLevel(1).cover_image.thumbnail_image_url}
+                            width={375}
+                            height={280}
+                        />
+                        <div className="welcome-banner-content">
+                            <h1>Welcome to TrendNine</h1>
+                            <div className="welcome-caption">Discover & Shop the looks from fashion influencers</div>
+                            <div><Button inline variant={ButtonVariant.OUTLINE} url="/login">Join Now</Button></div>
+                        </div>
+                    </div>
+                )}
                 <FeaturedSection
                     title="Featured Collections"
                     subtitle="Curated gallery of the hottest trends"

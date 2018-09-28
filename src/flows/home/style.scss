@@ -52,6 +52,36 @@
             min-width: 180px;
         }
     }
+
+    .welcome-banner {
+        margin-bottom: $section-spacing;
+        position: relative;
+
+        .welcome-banner-image {
+            filter: brightness(75%);
+        }
+
+        .welcome-banner-content {
+            color: #fff;
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+
+            h1 {
+                font-size: $mobile-font-size-h1;
+            }
+
+            .welcome-caption {
+                margin-block-end: $base-spacing * 2;
+            }
+        }
+    }
 }
 
 .home {
@@ -111,6 +141,34 @@
                 .main-featured-left-caption {
                     margin-bottom: $element-spacing;
                 }
+            }
+        }
+    }
+
+    .welcome-banner {
+        margin-bottom: $section-spacing;
+        position: relative;
+
+        .welcome-banner-image {
+            filter: brightness(75%);
+        }
+
+        .welcome-banner-content {
+            color: #fff;
+            position: absolute;
+            top: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: $section-spacing * 2;
+
+            h3 {
+                margin-bottom: $base-spacing * 2;
+            }
+
+            .welcome-caption {
+                margin-block-end: $base-spacing * 2;
             }
         }
     }

@@ -3,6 +3,7 @@ import * as React from "react";
 
 import { Category, FilterSearchResult } from "../../../api/models";
 import Button, { ButtonVariant, IconButton } from "../../../components/button";
+import Chip from "../../../components/chip";
 import { IconSize, IconVariant } from "../../../components/icon";
 import Modal from "../../../components/modal";
 import Sticky from "../../../components/sticky";
@@ -123,6 +124,11 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                             onClose={() => this._toggleFilterActive(this.props.activeToolbar)}
                             clearFilter={this._clearFilters}
                         >
+                            {/* <div className="filter-chips">
+                                {Object.keys(this.props.selectedFilters).map((selectedFilter: FilterType) => (
+                                    <Chip label={this._getFilterChipText(selectedFilter)} remove={() => {}}/>
+                                ))}
+                            </div> */}
                             <FilterView
                                 currentFilterType={currentFilterType}
                                 currentCategory={currentCategory}

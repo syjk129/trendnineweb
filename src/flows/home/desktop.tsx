@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import { Featured, FeaturedType, PostPreview, PostTag } from "../../api/models";
 import Button, { ButtonVariant } from "../../components/button";
+import Image from "../../components/image";
 import LinkButton from "../../components/linkButton";
 import ArticleCard from "../flowComponents/cardView/articleCard";
 import FeaturedCard from "../flowComponents/cardView/featuredCard";
@@ -35,6 +36,8 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
     }
 
     render() {
+        const user = localStorage.getItem("user");
+
         return (
             <div className="home" ref={this._homeRef}>
                 <div className="main-featured">
@@ -52,16 +55,6 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                         </div>
                     </div>
                 </div>
-                {/* <div className="welcome-banner">
-                    <Image
-                        src={this._getFeaturedAtLevel(1).cover_image.small_image_url}
-                        previewSrc={this._getFeaturedAtLevel(1).cover_image.thumbnail_image_url}
-                        width={1200}
-                        height={300}
-                    />
-                    <div className="welcome-banner-content">
-                    </div>
-                </div> */}
                 <FeaturedSection
                     title="Latest Looks"
                     subtitle="Our latest looks from the influencers"
@@ -76,6 +69,31 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                 >
                     <TagCarousel tags={this.props.tags} />
                 </FeaturedSection>
+                {!user && (
+                    <div className="welcome-banner">
+                        <Image
+                            className="welcome-banner-image"
+                            src={this._getFeaturedAtLevel(1).cover_image.small_image_url}
+                            previewSrc={this._getFeaturedAtLevel(1).cover_image.thumbnail_image_url}
+                            width={1200}
+                            height={400}
+                        />
+                        <div className="welcome-banner-content">
+                            <h1>Welcome to TrendNine</h1>
+                            <div className="welcome-caption">Discover & Shop the looks from fashion influencers</div>
+                            <div><Button
+                                inline
+                                variant={ButtonVariant.OUTLINE}
+                                url={{
+                                    pathname: "/login",
+                                    state: { modal: true },
+                                }}
+                            >
+                                Join Now
+                            </Button></div>
+                        </div>
+                    </div>
+                )}
                 <FeaturedSection
                     title="Featured Collections"
                     subtitle="Curated gallery of the hottest trends"

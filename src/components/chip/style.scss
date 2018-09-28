@@ -3,4 +3,23 @@
 .chip {
     display: inline-block;
     font-size: $font-size-1;
+    border: $standard-border-width solid $color-brand;
+    color: $color-brand;
+    border-radius: 30px;
+    padding: $base-spacing / 2 $base-spacing;
+
+    .label {
+        margin-right: $base-spacing / 2;
+    }
+
+    .dismiss {
+        color: $color-brand;
+        font-size: 20px;
+        font-weight: 200;
+    }
+
+    .chip-content {
+        display: flex;
+        align-items: center;
+    }
 }
