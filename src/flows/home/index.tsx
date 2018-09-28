@@ -4,6 +4,7 @@ import { isMobile } from "react-device-detect";
 
 import { Featured, PostPreview, PostTag, PostTagType } from "../../api/models";
 import { AppContext } from "../../app";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { PostType } from "../cms/types";
 import RouteProps from "../routeProps";
 import DesktopHome from "./desktop";
@@ -54,7 +55,9 @@ export default class Home extends React.Component<Props, HomeState> {
 
     render() {
         if (!this.state.featured || this.state.featured.length < 4) {
-            return null;
+            return (
+                <SpinnerContainer><Spinner/></SpinnerContainer>
+            );
         }
 
         return (
