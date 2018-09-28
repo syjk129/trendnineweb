@@ -136,9 +136,53 @@
     }
 }
 
-.user {
-    margin-top: $page-spacing;
-    margin-bottom: $base-spacing * 10;
+.user,
+.mobile-user {
+    margin-bottom: $base-spacing * 6;
+
+    .influencer {
+        .influencer-details {
+            padding: $base-spacing;
+        }
+
+        .activity-container {
+            display: flex;
+            margin-bottom: $base-spacing * 2;
+
+            .activity-item {
+                padding-right: $base-spacing * 2;
+
+                &:not(:first-of-type) {
+                    padding-left: $base-spacing * 2;
+                    border-left: $standard-border-width solid $border-color;
+                }
+            }
+
+            .count {
+                display: block;
+                font-weight: $font-weight-bold;
+            }
+
+            .identifier {
+                font-size: $font-size-callout-small;
+                color: $color-secondary;
+                letter-spacing: $letter-spacing-callout;
+            }
+        }
+    }
+
+    .user-image {
+        margin-right: $base-spacing * 3;
+        height: 150px;
+        width: 150px;
+    }
+
+    .follow-container {
+        button {
+            height: $button-height-sm;
+            padding: 0;
+        }
+    }
 
     .top-tags {
         text-transform: uppercase;
@@ -150,15 +194,14 @@
     .tag-container {
         margin-bottom: $base-spacing * 2;
     }
+}
+
+.user {
+    margin-top: $page-spacing;
+    margin-bottom: $base-spacing * 10;
 
     .influencer {
         display: flex;
-    }
-
-    .user-image {
-        margin-right: $base-spacing * 3;
-        height: 150px;
-        width: 150px;
     }
 
     .introduction {
@@ -166,43 +209,6 @@
         line-height: $line-height-1;
         padding: $base-spacing;
         padding-top: $base-spacing * 2;
-    }
-
-    .follow-container {
-        padding: $base-spacing;
-
-        button {
-            height: $button-height-sm;
-            padding: 0;
-        }
-    }
-
-    .influencer-details {
-        padding: $base-spacing;
-    }
-
-    .activity-container {
-        display: flex;
-
-        .activity-item {
-            padding-right: $base-spacing * 2;
-
-            &:not(:first-of-type) {
-                padding-left: $base-spacing * 2;
-                border-left: $standard-border-width solid $border-color;
-            }
-        }
-
-        .count {
-            display: block;
-            font-weight: $font-weight-bold;
-        }
-
-        .identifier {
-            font-size: $font-size-callout-small;
-            color: $color-secondary;
-            letter-spacing: $letter-spacing-callout;
-        }
     }
 
     .social-container {
