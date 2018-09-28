@@ -7,10 +7,6 @@ import { Person, PostPreview } from "../../api/models";
 import { AppContext, AppContextTypes } from "../../app";
 import Carousel, { CarouselItem } from "../../components/carousel";
 import Content from "../../components/content";
-import Sidebar from "../../components/sidebar";
-import { PostCard } from "../flowComponents/cardView";
-import Featured from "../flowComponents/featured";
-import Filter from "../flowComponents/filter";
 import { PostRank } from "../flowComponents/ranking";
 import { ContentSection } from "../flowComponents/section";
 

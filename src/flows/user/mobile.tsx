@@ -5,7 +5,8 @@ import { Person } from "../../api/models";
 import { CardContainer } from "../../components/card";
 import Image from "../../components/image";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
-import { PostCard, ProductCard, UserCard } from "../flowComponents/cardView";
+import { LookCard, ShopCard, UserCard } from "../flowComponents/cardView";
+import Tag from "../flowComponents/tag";
 import { Filters, PostParam } from "../model";
 import RouteProps from "../routeProps";
 import Analytics from "./analytics";
@@ -113,41 +114,50 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
 
         return (
             <>
-                <div className="user-name">
-                    {influencer.username}
-                </div>
-                <div className="user-details">
-                    <div className="user-image">
-                        <Image
-                            src={influencer.profile_small_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
-                            circle
-                            square
-                        />
-                    </div>
-                    <div className="introduction">
-                        {influencer.introduction}
-                    </div>
-                </div>
-                <div className="follow-container">
-                    <FollowButton
-                        followed={profile.followed}
-                        user={ influencer }
+                <div className="influencer">
+                    <Image
+                        className="user-image"
+                        src={influencer.profile_small_image_url || "https://www.shareicon.net/data/2016/05/26/771199_people_512x512.png"}
+                        circle
+                        square
                     />
+                    <div className="influencer-details">
+                        <h2>{`${influencer.first_name} ${influencer.last_name}`}</h2>
+                        <p>@{influencer.username}</p>
+                        <div className="activity-container">
+                            <div className="activity-item">
+                                <span className="count">{profile.follower_count}</span>
+                                <span className="identifier">FOLLOWERS</span>
+                            </div>
+                            <div className="activity-item">
+                                <span className="count">{profile.blog_post_count}</span>
+                                <span className="identifier">POSTS</span>
+                            </div>
+                            <div className="activity-item">
+                                <span className="count">{profile.product_count}</span>
+                                <span className="identifier">PRODUCTS</span>
+                            </div>
+                        </div>
+                        {this.props.user.id !== influencer.id && (
+                            <div className="follow-container">
+                                <FollowButton
+                                    followed={profile.followed}
+                                    user={ influencer }
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div className="activity-container">
-                    <div className="activity-item">
-                        <span className="identifier">FOLLOWERS</span>
-                        <span className="count">{profile.follower_count}</span>
-                    </div>
-                    <div className="activity-item">
-                        <span className="identifier">TODAY</span>
-                        <span className="count">{profile.today_view_count}</span>
-                    </div>
-                    <div className="activity-item">
-                        <span className="identifier">TOTAL</span>
-                        <span className="count">{profile.total_view_count}</span>
-                    </div>
-                </div>
+                {profile.top_post_tags && profile.top_post_tags.length > 0  &&
+                    <>
+                        <div className="top-tags">TOP TAGS</div>
+                        <div className="tag-container">
+                            {profile.top_post_tags.map(tag => (
+                                <Tag tag={tag} />
+                            ))}
+                        </div>
+                    </>
+                }
             </>
         );
     }
@@ -173,10 +183,10 @@ export default class MobileUser extends React.Component<MobileUserProps, MobileU
             switch (this.props.contentType) {
             case UserContentType.POST:
             case UserContentType.POST_WISHLIST:
-                return this.props.content.map(item => <PostCard isMobile post={item} gridSize={this.state.gridSize} />);
+                return this.props.content.map(item => <LookCard look={item} gridSize={this.state.gridSize} />);
             case UserContentType.PRODUCT:
             case UserContentType.PRODUCT_WISHLIST:
-                return this.props.content.map(item => <ProductCard isMobile product={item} gridSize={this.state.gridSize} referrerId={this.props.userId} />);
+                return this.props.content.map(item => <ShopCard product={item} gridSize={this.state.gridSize} referrerId={this.props.userId} />);
             case UserContentType.FOLLOWER:
             case UserContentType.FOLLOWING:
                 return this.props.content.map(item => <UserCard user={item} following={item.followed} />);

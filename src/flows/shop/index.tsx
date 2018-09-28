@@ -175,6 +175,9 @@ export default class Shop extends React.Component<Props, ShopState> {
         this.props.history.push(`${this.props.location.pathname}?${filterParam.convertToUrlParamString()}`);
         this.setState({ loadingContent: true });
 
+        if (filterParam.filters.categoryIds.size === 0) {
+            filterParam.filters.categoryIds = new Set([this._subcategory || this._category]);
+        }
         let queryString = `page_size=${this._pageSize}`;
         queryString += `&${filterParam.convertUrlParamToQueryString()}`;
         const products = await this.context.api.getLatestProducts(queryString);
