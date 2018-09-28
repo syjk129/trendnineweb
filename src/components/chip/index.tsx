@@ -1,7 +1,6 @@
 import * as React from "react";
 
-import { IconButton } from "../button";
-import { IconSize, IconVariant } from "../icon";
+import "./style.scss";
 
 interface ChipProps {
     label: string;
@@ -11,8 +10,10 @@ interface ChipProps {
 export default function Chip({ label, remove }: ChipProps) {
     return (
         <div className="chip">
-            <span>{label}</span>
-            <IconButton icon={IconVariant.CLOSE} onClick={remove} inline />
+            <div className="chip-content">
+                <span className="label">{label}</span>
+                <span className="dismiss" onClick={remove}>&times;</span>
+            </div>
         </div>
     );
 }

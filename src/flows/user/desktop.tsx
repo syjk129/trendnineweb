@@ -126,7 +126,7 @@ export default class DesktopUser extends React.Component<DesktopUserProps> {
                 />
                 {this._renderSettings()}
                 {this._renderAnalytics()}
-                <CardContainer>
+                <CardContainer gridSize={1}>
                     {this._renderContent()}
                 </CardContainer>
                 {nextToken && <ViewMore isLoading={loadingNext} onClick={fetchNextContent} />}
