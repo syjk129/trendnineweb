@@ -7,7 +7,6 @@ import { SocialIcon, SocialIconType } from "../../components/icon";
 import Image from "../../components/image";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { LookCard, ShopCard, UserCard } from "../flowComponents/cardView";
-import { SidebarSection } from "../flowComponents/section";
 import Tag from "../flowComponents/tag";
 import ViewMore from "../flowComponents/viewMore";
 import { Filters, PostParam } from "../model";
