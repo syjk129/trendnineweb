@@ -36,8 +36,12 @@ export default class Articles extends React.Component<Props, ArticlesState> {
         window.addEventListener("resize", this._setFeaturedSize);
 
         this.setState({ isLoading: true });
-        const articles = await this.context.api.getFeaturedPosts(PostType.ARTICLE);
-        this.setState({ articles, isLoading: false, shouldReset: true });
+        try {
+            const articles = await this.context.api.getFeaturedPosts(PostType.ARTICLE);
+            this.setState({ articles, isLoading: false, shouldReset: true });
+        } catch (err) {
+            console.warn(err);
+        }
     }
 
     componentDidMount() {

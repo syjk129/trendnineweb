@@ -34,23 +34,27 @@ export default class Home extends React.Component<Props, HomeState> {
     };
 
     async componentWillMount() {
-        const [
-            posts,
-            articles,
-            collections,
-            trendingLooks,
-            styles,
-            occasions,
-        ] = await Promise.all([
-            this.context.api.getFeaturedPosts(),
-            this.context.api.getFeaturedPosts(PostType.ARTICLE, "order_by=latest"),
-            this.context.api.getFeaturedPosts(PostType.COLLECTION),
-            this.context.api.getLatestPosts("order_by=latest&page_size=15"),
-            this.context.api.getPostTags(PostTagType.STYLE),
-            this.context.api.getPostTags(PostTagType.OCCASION),
-        ]);
-        const featured = posts.filter(post => post.priority_level > 0);
-        this.setState({ featured, articles, collections, trendingLooks: trendingLooks.list, tags: styles.concat(occasions) });
+        try {
+            const [
+                posts,
+                articles,
+                collections,
+                trendingLooks,
+                styles,
+                occasions,
+            ] = await Promise.all([
+                this.context.api.getFeaturedPosts(),
+                this.context.api.getFeaturedPosts(PostType.ARTICLE, "order_by=latest"),
+                this.context.api.getFeaturedPosts(PostType.COLLECTION),
+                this.context.api.getLatestPosts("order_by=latest&page_size=15"),
+                this.context.api.getPostTags(PostTagType.STYLE),
+                this.context.api.getPostTags(PostTagType.OCCASION),
+            ]);
+            const featured = posts.filter(post => post.priority_level > 0);
+            this.setState({ featured, articles, collections, trendingLooks: trendingLooks.list, tags: styles.concat(occasions) });
+        } catch (err) {
+            console.warn(err);
+        }
     }
 
     render() {
