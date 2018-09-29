@@ -8,6 +8,7 @@ import { IconSize, IconVariant } from "../../../components/icon";
 import Modal from "../../../components/modal";
 import Sticky from "../../../components/sticky";
 import { noScroll, removeNoScroll } from "../../../util/scroll";
+import { findCategory } from "../../shopDiscover/category-tree";
 import FilterView from "./filter";
 import FilterNavigation from "./filterNavigation";
 import SortView from "./sort";
@@ -28,12 +29,13 @@ interface MobileContentToolbarProps {
     setGridSize(size: number): void;
     selectFilterType(filterType: FilterType | null): void;
     selectCurrentCategory(category: Category | null): void;
-    toggleCategory(category: Category): void;
+    toggleCategory(category: Category, filterType?: FilterType): void;
+    removeCategory(categoryId: string): void;
     selectSortType(sortType: SortType): void;
-    toggleSelectFilterItem(filterId: string): void;
+    toggleSelectFilterItem(filterId: string, filterType?: FilterType): void;
     toggleActiveToolbar(toolbarType: ToolbarType | null): void;
     removeFilterItem(filterId: string): void;
-    onRangeFilterChange(min: number, max: number): void;
+    onRangeFilterChange(min?: number, max?: number): void;
     onSearchStringChange(searchString: string): void;
     clearFilters(): void;
 }
@@ -124,11 +126,13 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                             onClose={() => this._toggleFilterActive(this.props.activeToolbar)}
                             clearFilter={this._clearFilters}
                         >
-                            {/* <div className="filter-chips">
-                                {Object.keys(this.props.selectedFilters).map((selectedFilter: FilterType) => (
-                                    <Chip label={this._getFilterChipText(selectedFilter)} remove={() => {}}/>
-                                ))}
-                            </div> */}
+                            {!currentFilterType && Object.keys(this.props.selectedFilters).length > 0 && (
+                                <div className="filter-chips">
+                                    {Object.keys(this.props.selectedFilters).map((selectedFilter: FilterType) => (
+                                        this._renderFilterChip(selectedFilter)
+                                    ))}
+                                </div>
+                            )}
                             <FilterView
                                 currentFilterType={currentFilterType}
                                 currentCategory={currentCategory}
@@ -154,6 +158,45 @@ export default class MobileContentToolbar extends React.Component<MobileContentT
                 }
             </Sticky>
         );
+    }
+
+    private _renderFilterChip = (filterType: FilterType) => {
+        const filter = this.props.selectedFilters[filterType];
+        switch (filterType) {
+            case FilterType.CATEGORY:
+                filter.selectedTree.categories = this.props.filters[FilterType.CATEGORY];
+                return filter.selectedTree.getSanitizedCategories().map(selectedFilter => {
+                    const category = findCategory(selectedFilter, this.props.filters[FilterType.CATEGORY]);
+                    return (
+                        <Chip label={selectedFilter} remove={() => this.props.toggleCategory(category, FilterType.CATEGORY)}/>
+                    );
+                });
+            case FilterType.BRANDS:
+                return filter.selectedIds.map(selectedBrand => (
+                    <Chip label={this._getFilterName(selectedBrand, FilterType.BRANDS)} remove={() => this.props.toggleSelectFilterItem(selectedBrand, FilterType.BRANDS)} />
+                ));
+            case FilterType.RETAILER:
+                return filter.selectedIds.map(selectedRetailer => (
+                    <Chip label={this._getFilterName(selectedRetailer, FilterType.RETAILER)} remove={() => this.props.toggleSelectFilterItem(selectedRetailer, FilterType.RETAILER)} />
+                ));
+            case FilterType.PRICE_RANGE:
+                let priceRangeText = "";
+                if (filter.minValue && (!filter.maxValue || filter.maxValue === 5000)) {
+                    priceRangeText = `Price: $${filter.minValue}+`;
+                } else if (filter.maxValue && (!filter.minValue || filter.minValue === 0)) {
+                    priceRangeText = `Price: $0 - $${filter.maxValue}`;
+                } else {
+                    priceRangeText = `Price: $${filter.minValue} - $${filter.maxValue}`;
+                }
+                return (
+                    <Chip label={priceRangeText} remove={() => this.props.onRangeFilterChange()} />
+                );
+        }
+    }
+
+    private _getFilterName = (selectedId: string, filterType: FilterType) => {
+        const filters = this.props.filters[filterType];
+        return filters.find(item => item.id === selectedId).name;
     }
 
     private _navigationBackHandler = () => {

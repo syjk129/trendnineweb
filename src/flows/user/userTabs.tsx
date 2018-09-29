@@ -29,14 +29,14 @@ export default function UserTabs({ user, userId, isSelf, profile, pathname, setC
         <div className={classes}>
             {profile && profile.blog_post_count > 0 &&
                 <Tab
-                    label={`${profile.blog_post_count} Looks`}
+                    label="Looks"
                     selected={pathname.indexOf(UserContentType.POST) !== -1 || pathname === `/user/${userId}`}
                     onSelect={() => setContent(UserContentType.POST)}
                 />
             }
             {profile && profile.product_count > 0 &&
                 <Tab
-                    label={`${profile.product_count} Products`}
+                    label="Products"
                     selected={pathname.indexOf(UserContentType.PRODUCT) !== -1}
                     onSelect={() => setContent(UserContentType.PRODUCT)}
                 />

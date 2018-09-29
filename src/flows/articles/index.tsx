@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 import { Link } from "react-router-dom";
 
 import { Featured } from "../../api/models";
@@ -66,28 +67,30 @@ export default class Articles extends React.Component<Props, ArticlesState> {
 
         return (
             <div className="articles" ref={this._articlesRef}>
-                <div className="featured-articles">
-                    <div className="featured-articles-left">
-                        <div className="item" ref={this._mainLeft1Ref}>
-                            <FeaturedCard post={this.state.articles[1]} />
+                {!isMobile && (
+                    <div className="featured-articles">
+                        <div className="featured-articles-left">
+                            <div className="item" ref={this._mainLeft1Ref}>
+                                <FeaturedCard post={this.state.articles[1]} />
+                            </div>
+                            <div className="item" ref={this._mainLeft2Ref}>
+                                <FeaturedCard post={this.state.articles[2]} />
+                            </div>
                         </div>
-                        <div className="item" ref={this._mainLeft2Ref}>
-                            <FeaturedCard post={this.state.articles[2]} />
+                        <div className="featured-articles-right">
+                            <div className="item" ref={this._mainRightRef}>
+                                <Link to={`/article/${this.state.articles[0].id}`} className="main-featured-card-left">
+                                    <img className="featured-image" src={this.state.articles[0].cover_image.small_image_url} />
+                                    <div className="main-featured-left-content">
+                                        <h1>{this.state.articles[0].title}</h1>
+                                        <div className="main-featured-left-caption">{this.state.articles[0].caption}</div>
+                                        <div><Button inline>Read & Shop</Button></div>
+                                    </div>
+                                </Link>
+                            </div>
                         </div>
                     </div>
-                    <div className="featured-articles-right">
-                        <div className="item" ref={this._mainRightRef}>
-                            <Link to={`/article/${this.state.articles[0].id}`} className="main-featured-card-left">
-                                <img className="featured-image" src={this.state.articles[0].cover_image.small_image_url} />
-                                <div className="main-featured-left-content">
-                                    <h1>{this.state.articles[0].title}</h1>
-                                    <div className="main-featured-left-caption">{this.state.articles[0].caption}</div>
-                                    <div><Button inline>Read & Shop</Button></div>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
+                )}
                 <div className="article-list">
                     {this.state.articles.map(article => (
                         <ArticleCard article={article} />

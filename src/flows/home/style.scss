@@ -131,7 +131,7 @@
                 position: absolute;
                 top: 0;
                 height: 100%;
-                max-width: 100%;
+                width: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -140,6 +140,7 @@
                 h1,
                 .main-featured-left-caption {
                     margin-bottom: $element-spacing;
+                    max-width: 80%;
                 }
             }
         }
