@@ -91,6 +91,7 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
                         selectSortType={this._selectSortType}
                         selectCurrentCategory={this._selectCurrentCategory}
                         toggleCategory={this._toggleCategory}
+                        removeCategory={this._removeCategory}
                         toggleSelectFilterItem={this._toggleSelectFilterItem}
                         toggleActiveToolbar={this._toggleActiveToolbar}
                         onSearchStringChange={this._onSearchStringChange}
@@ -119,14 +120,17 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         this.setState({ activeToolbar: null });
     }
 
-    private _onRangeFilterChange = (min: number, max: number) => {
+    private _onRangeFilterChange = (min?: number, max?: number) => {
         const selectedFilters = this.state.selectedFilters;
-        let selectFilter = selectedFilters[this.state.currentFilterType] || new RangeValueFilter;
+        if (!min || !max) {
+            delete selectedFilters[FilterType.PRICE_RANGE];
+        } else {
+            let selectFilter = selectedFilters[this.state.currentFilterType] || new RangeValueFilter;
 
-        selectFilter.minValue = min;
-        selectFilter.maxValue = max;
-        selectedFilters[this.state.currentFilterType] = selectFilter;
-
+            selectFilter.minValue = min;
+            selectFilter.maxValue = max;
+            selectedFilters[this.state.currentFilterType] = selectFilter;
+        }
         this.setState({ selectedFilters, hasChanged: true });
     }
 
@@ -219,9 +223,9 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
     }
 
     @autobind
-    private _toggleSelectFilterItem(filterId: string) {
+    private _toggleSelectFilterItem(filterId: string, filterType?: FilterType) {
         const selectedFilters = this.state.selectedFilters;
-        let selectFilter = selectedFilters[this.state.currentFilterType] || new SelectFilter;
+        let selectFilter = selectedFilters[filterType || this.state.currentFilterType] || new SelectFilter;
 
         // Toggle
         if (selectFilter.selectedIds.includes(filterId)) {
@@ -241,8 +245,12 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
             let filterParams = "";
             const selectedFilter = this.state.selectedFilters[filterType];
             if (isRangeValueFilter(selectedFilter)) {
-                filterParams += `price_high=${selectedFilter.maxValue}`;
-                filterParams += `&price_low=${selectedFilter.minValue}`;
+                if (selectedFilter.maxValue !== 5000) {
+                    filterParams += `price_high=${selectedFilter.maxValue}&`;
+                }
+                if (selectedFilter.minValue !== 0) {
+                    filterParams += `price_low=${selectedFilter.minValue}`;
+                }
             } else if (isTreeSelectFilter(selectedFilter)) {
                 selectedFilter.selectedTree.categories = this.state.filters[FilterType.CATEGORY];
                 if (selectedFilter.selectedTree.getQueryString()) {
@@ -280,11 +288,17 @@ export default class ContentToolbar extends React.Component<ContentToolbarProps,
         });
     }
 
-    private _toggleCategory = (category: Category) => {
+    private _removeCategory = (categoryId: string) => {
         let selectedFilters = this.state.selectedFilters;
-        let tree = selectedFilters[this.state.currentFilterType] || new TreeSelectFilter;
+        selectedFilters[FilterType.CATEGORY].selectedTree.selectedCategories.delete(categoryId);
+        this.setState({ selectedFilters, hasChanged: true });
+    }
+
+    private _toggleCategory = (category: Category, filterType?: FilterType) => {
+        let selectedFilters = this.state.selectedFilters;
+        let tree = selectedFilters[filterType || this.state.currentFilterType] || new TreeSelectFilter;
         tree.selectedTree.toggleCategory(category);
-        selectedFilters[this.state.currentFilterType] = tree;
+        selectedFilters[filterType || this.state.currentFilterType] = tree;
         this.setState({ selectedFilters, hasChanged: true });
     }
 

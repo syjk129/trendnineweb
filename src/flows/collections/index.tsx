@@ -1,8 +1,15 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
+import { Link } from "react-router-dom";
 
 import { Featured } from "../../api/models";
 import { AppContext } from "../../app";
+import { LinkButton } from "../../components/button";
+import Callout, { CalloutVariant } from "../../components/callout";
+import Icon, { IconVariant } from "../../components/icon";
+import Image, { ImageRatioVariant } from "../../components/image";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { PostType } from "../cms/types";
 import FeaturedCard from "../flowComponents/cardView/featuredCard";
 import { FeaturedSection } from "../flowComponents/section";
@@ -13,6 +20,8 @@ import "./style.scss";
 type Props = RouteProps;
 
 interface CollectionsState {
+    isLoading: boolean;
+    featuredCollection: Featured;
     collections: Array<Featured>;
 }
 
@@ -20,17 +29,58 @@ export default class Collections extends React.Component<Props, CollectionsState
     static contextTypes: AppContext;
 
     state: CollectionsState = {
+        isLoading: false,
+        featuredCollection: null,
         collections: [],
     };
 
     async componentWillMount() {
-        const collections = await this.context.api.getFeaturedPosts(PostType.COLLECTION);
-        this.setState({ collections });
+        this.setState({ isLoading: true });
+        const [
+            featured,
+            collections,
+        ] = await Promise.all([
+            this.context.api.getFeaturedPosts(PostType.COLLECTION, "order_by=priority_level"),
+            this.context.api.getFeaturedPosts(PostType.COLLECTION, "order_by=latest"),
+        ]);
+        this.setState({
+            featuredCollection: this._getFeatured(featured),
+            collections,
+            isLoading: false,
+        });
     }
 
     render() {
+        if (this.state.isLoading) {
+            return <SpinnerContainer><Spinner/></SpinnerContainer>;
+        }
+
         return (
             <div className="collections">
+                {!isMobile && (
+                    <div className="featured-collection">
+                        <div className="featured-collection-card">
+                            <Link className="card-image" to={this._getCollectionUrl(this.state.featuredCollection)}>
+                                <Image
+                                    square
+                                    src={this.state.featuredCollection.cover_image && this.state.featuredCollection.cover_image.small_image_url}
+                                />
+                            </Link>
+                            <div className="card-details">
+                                <div>
+                                    <div className="iconed-callout">
+                                        <Icon variant={IconVariant.COLLECTION} />
+                                        <Callout inline>Look Collection</Callout>
+                                    </div>
+                                </div>
+                                <Link className="featured-title-container" to={`/article/${this.state.featuredCollection.id}`}>
+                                    <h2 className="featured-collection-title">{this.state.featuredCollection.title}</h2>
+                                    <div className="featured-collection-caption">{this.state.featuredCollection.caption}</div>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <FeaturedSection
                     title="Curated Collections"
                     subtitle="Our favorite posts and products from the influencers"
@@ -43,6 +93,25 @@ export default class Collections extends React.Component<Props, CollectionsState
                 </FeaturedSection>
             </div>
         );
+    }
+
+    private _getFeatured = (collections: Array<Featured>) => {
+        const featured = collections.filter(collection => collection.priority_level > 0);
+        if (featured.length > 0) {
+            return featured[0];
+        }
+        return collections[0];
+    }
+
+    private _getCollectionUrl = (collection: Featured) => {
+        const url = collection.direct_url;
+        if (!url) {
+            return "";
+        }
+        if (url.indexOf("?") !== -1) {
+            return `${url}&collection=1`;
+        }
+        return `${url}?collection=1`;
     }
 }
 

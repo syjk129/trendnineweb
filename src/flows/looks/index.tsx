@@ -61,6 +61,9 @@ export default class Looks extends React.Component<Props, LooksState> {
 
         if (this.props.location.search) {
             const params = new URLSearchParams(this.props.location.search);
+            if (params.get("collection") === "1") {
+                this._isCollection = true;
+            }
             const postParam = new PostParam(params);
             this._searchString = postParam.keyword !== "" ? postParam.keyword : null;
         }
@@ -96,6 +99,9 @@ export default class Looks extends React.Component<Props, LooksState> {
 
         if (nextProps.location.search) {
             const params = new URLSearchParams(nextProps.location.search);
+            if (params.get("collection")) {
+                this._isCollection = true;
+            }
             const postParam = new PostParam(params);
             this._searchString = postParam.keyword !== "" ? postParam.keyword : null;
         }
@@ -108,12 +114,12 @@ export default class Looks extends React.Component<Props, LooksState> {
     }
 
     render() {
-        let ContentEl = isMobile ? "div" : Content;
+        let ContentEl = isMobile && !this._isCollection ? "div" : Content;
         const user = JSON.parse(localStorage.getItem("user"));
 
         return (
             <>
-                {!this.state.loadingContent && !this._searchString && (
+                {!this.state.loadingContent && !this._searchString && !this._isCollection && (
                     <TagCarousel
                         className="looks-tag-carousel"
                         tags={this.state.tags}
@@ -121,36 +127,38 @@ export default class Looks extends React.Component<Props, LooksState> {
                     />
                 )}
                 <div className={`looks${isMobile ? " mobile" : ""}`} ref={this._pageRef}>
-                    {!isMobile && (
+                    {!isMobile && !this._isCollection && (
                         <Sidebar>
                             <Refine noTagFilter onRefine={this._onRefine}/>
                         </Sidebar>
                     )}
                     <ContentEl className="look-content">
                         {this._searchString && <SearchResult value={this._searchString} /> }
-                        {isMobile ? (
-                            <ContentToolbar
-                                location={this.props.location}
-                                history={this.props.history}
-                                match={this.props.match}
-                                gridSize={this.state.gridSize}
-                                loggedIn={!!user}
-                                contentType={ContentType.POST}
-                                setGridSize={this._setGridSize}
-                            />
-                        ) : (
-                            <div className="look-tabs">
-                                <Tab
-                                    selected={this.state.selectedTab === LookTab.LATEST}
-                                    label="Most Recent"
-                                    onSelect={() => this._selectTab(LookTab.LATEST)}
+                        {!this._isCollection && (
+                            isMobile ? (
+                                <ContentToolbar
+                                    location={this.props.location}
+                                    history={this.props.history}
+                                    match={this.props.match}
+                                    gridSize={this.state.gridSize}
+                                    loggedIn={!!user}
+                                    contentType={ContentType.POST}
+                                    setGridSize={this._setGridSize}
                                 />
-                                <Tab
-                                    selected={this.state.selectedTab === LookTab.POPULAR}
-                                    label="Most Popular"
-                                    onSelect={() => this._selectTab(LookTab.POPULAR)}
-                                />
-                            </div>
+                            ) : (
+                                <div className="look-tabs">
+                                    <Tab
+                                        selected={this.state.selectedTab === LookTab.LATEST}
+                                        label="Most Recent"
+                                        onSelect={() => this._selectTab(LookTab.LATEST)}
+                                    />
+                                    <Tab
+                                        selected={this.state.selectedTab === LookTab.POPULAR}
+                                        label="Most Popular"
+                                        onSelect={() => this._selectTab(LookTab.POPULAR)}
+                                    />
+                                </div>
+                            )
                         )}
                         {this.state.loadingContent ? (
                             <Spinner />
@@ -170,6 +178,7 @@ export default class Looks extends React.Component<Props, LooksState> {
     private _searchString: string;
     private _pageRef: React.RefObject<HTMLDivElement>;
     private _pageSize = 12;
+    private _isCollection: boolean = false;
     private _lookType: LookType;
     private _lookSelection: string;
 

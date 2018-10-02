@@ -29,10 +29,10 @@ export default class DesktopFooter extends React.Component<FooterProps> {
                         <div className="footer-column">
                             <p className="footer-title">Follow us</p>
                             <div className="social-buttons">
-                                <LinkButton href="https://www.instagram.com/trendnine/" target="_blank"><SocialIcon icon={SocialIconType.INSTAGRAM} /></LinkButton>
-                                <LinkButton href="https://www.facebook.com/trendnine" target="_blank"><SocialIcon icon={SocialIconType.FACEBOOK} /></LinkButton>
-                                <LinkButton href="https://twitter.com/trendnine" target="_blank"><SocialIcon icon={SocialIconType.TWITTER} /></LinkButton>
-                                <LinkButton href="https://www.pinterest.com/trendnine/" target="_blank"><SocialIcon icon={SocialIconType.PINTEREST} /></LinkButton>
+                                <LinkButton href="https://www.instagram.com/trendnine/" target="_blank"><SocialIcon white icon={SocialIconType.INSTAGRAM} /></LinkButton>
+                                <LinkButton href="https://www.facebook.com/trendnine" target="_blank"><SocialIcon white icon={SocialIconType.FACEBOOK} /></LinkButton>
+                                <LinkButton href="https://twitter.com/trendnine" target="_blank"><SocialIcon white icon={SocialIconType.TWITTER} /></LinkButton>
+                                <LinkButton href="https://www.pinterest.com/trendnine/" target="_blank"><SocialIcon white icon={SocialIconType.PINTEREST} /></LinkButton>
                             </div>
                         </div>
                         <div className="footer-disclaimer">

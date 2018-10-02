@@ -27,6 +27,17 @@
     }
 }
 
+.filter-chips {
+    &:not(:empty) {
+        padding: $base-spacing;
+        border-bottom: $standard-border-width solid $border-color;
+    }
+
+    .chip {
+        margin-right: $base-spacing;
+    }
+}
+
 .active-filters {
     .checkbox-container {
         display: inline-block;

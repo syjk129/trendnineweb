@@ -73,12 +73,13 @@
 
 .desktop-footer {
     width: 100%;
-    border-top: $standard-border-width solid $standard-border-color;
     padding: $standard-border-width;
     box-sizing: border-box;
+    background-color: $color-brand;
 
     .footer {
-        background-color: #fff;
+        background-color: $color-brand;
+        color: #fff;
         padding: $page-spacing;
         display: flex;
         margin: auto;
@@ -109,7 +110,9 @@
 
         .footer-link,
         .disclaimer {
+            color: #fff;
             display: block;
+            font-size: $font-size-body-small;
             margin-bottom: $base-spacing;
         }
 
@@ -124,11 +127,11 @@
         .footer-disclaimer {
             position: relative;
             min-width: 240px;
+            font-size: $font-size-body-small;
 
             .footer-title {
                 text-transform: none;
                 font-size: $font-size-4;
-                font-family: $font-family-serif;
             }
 
             .disclaimer {
