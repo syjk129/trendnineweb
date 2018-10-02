@@ -8,3 +8,56 @@
     grid-template-columns: repeat(auto-fill, minmax(#{$collections-card-size}, 1fr));
     grid-gap: $element-spacing - $base-spacing;
 }
+
+.featured-collection {
+    padding-top: $section-spacing;
+    border-bottom: $standard-border-width solid $border-color;
+    padding-bottom: $section-spacing;
+    margin-bottom: $section-spacing;
+
+    .featured-collection-card {
+        position: relative;
+        display: flex;
+        box-shadow: 0 0 5px rgba(149, 149, 149, 0.5);
+
+        .card-image {
+            width: 50%;
+            margin-right: $element-spacing;
+        }
+
+        .card-details {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-title-container {
+            width: 80%;
+
+            &:hover {
+                h2 {
+                    border-bottom: $border-width solid $color-brand;
+                    margin-bottom: $base-spacing - $border-width;
+                }
+            }
+        }
+
+        .featured-collection-caption,
+        .featured-collection-title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: top;
+            max-width: 100%;
+        }
+
+        .featured-collection-title {
+            display: inline-block;
+        }
+
+        .featured-collection-caption {
+            margin-bottom: $base-spacing * 2;
+        }
+    }
+}

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Featured } from "../../api/models";
 import { AppContext } from "../../app";
 import Button from "../../components/button";
+import Spinner, { SpinnerContainer } from "../../components/spinner";
 import { PostType } from "../cms/types";
 import { ArticleCard, FeaturedCard } from "../flowComponents/cardView";
 import RouteProps from "../routeProps";
@@ -62,7 +63,7 @@ export default class Articles extends React.Component<Props, ArticlesState> {
 
     render() {
         if (this.state.isLoading) {
-            return null;
+            return <SpinnerContainer><Spinner /></SpinnerContainer>;
         }
 
         return (
