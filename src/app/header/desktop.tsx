@@ -145,12 +145,14 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                                 <img className="nav-logo" src={Logo} ref={this._logoRef}/>
                             </Link>
                             <div className="header-links">
-                                <div className="header-link">
-                                    <div className="header-link-text">
-                                        Looks
-                                    </div>
+                                <NavLink
+                                    className="header-link"
+                                    pathname={this.props.location.pathname}
+                                    url="/looks"
+                                >
+                                    Looks
                                     {this._renderLookSubheader()}
-                                </div>
+                                </NavLink>
                                 <NavLink
                                     className="header-link"
                                     pathname={this.props.location.pathname}
@@ -165,12 +167,14 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                                 >
                                     Editorials
                                 </NavLink>
-                                <div className="header-link">
-                                    <div className="header-link-text">
-                                        Shop
-                                    </div>
+                                <NavLink
+                                    className="header-link"
+                                    pathname={this.props.location.pathname}
+                                    url="/shop"
+                                >
+                                    Shop
                                     {this._renderCategorySubheader()}
-                                </div>
+                                </NavLink>
                             </div>
                             <div className="user-buttons" ref={this._userButtonRef}>
                                 {(!loggedIn || !user) &&

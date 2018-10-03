@@ -35,7 +35,7 @@ export default function NavLink({ url, className, small, muted, selected, childr
 
     return (
         <div className={classes}>
-            <Link to={url} onClick={onClick}>
+            <Link className="nav-link-a" to={url} onClick={onClick}>
                 {children}
             </Link>
         </div>

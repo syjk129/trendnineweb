@@ -86,7 +86,7 @@ export default class Collections extends React.Component<Props, CollectionsState
                     subtitle="Our favorite posts and products from the influencers"
                 >
                     <div className="collections-grid">
-                        {this.state.collections.map(collection => (
+                        {this.state.collections.filter(collection => collection.id !== this.state.featuredCollection.id).map(collection => (
                             <FeaturedCard post={collection} />
                         ))}
                     </div>
