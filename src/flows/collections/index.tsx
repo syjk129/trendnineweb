@@ -60,7 +60,7 @@ export default class Collections extends React.Component<Props, CollectionsState
                 {!isMobile && (
                     <div className="featured-collection">
                         <div className="featured-collection-card">
-                            <Link className="card-image" to={this._getCollectionUrl(this.state.featuredCollection)}>
+                            <Link className="card-image" to={`/collection/${this.state.featuredCollection.id}`}>
                                 <Image
                                     ratio={ImageRatioVariant.FEATURED_COVER}
                                     src={this.state.featuredCollection.cover_image && this.state.featuredCollection.cover_image.small_image_url}
@@ -101,17 +101,6 @@ export default class Collections extends React.Component<Props, CollectionsState
             return featured[0];
         }
         return collections[0];
-    }
-
-    private _getCollectionUrl = (collection: Featured) => {
-        const url = collection.direct_url;
-        if (!url) {
-            return "";
-        }
-        if (url.indexOf("?") !== -1) {
-            return `${url}&collection=1`;
-        }
-        return `${url}?collection=1`;
     }
 }
 
