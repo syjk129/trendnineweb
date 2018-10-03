@@ -70,7 +70,7 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
             <>
                 <div className="header-placeholder" ref={this._placeholderRef} />
                 <div className="main-header" id="header" ref={this._headerRef}>
-                    {this.props.bannerAction && this.props.bannerContent && (
+                    {this.props.bannerAction && this.props.bannerContent && this.props.location.pathname === "/" && (
                         <Banner actionButton={this.props.bannerAction} onDismiss={this.props.dismissBanner}>
                             {this.props.bannerContent}
                         </Banner>

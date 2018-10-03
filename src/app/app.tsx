@@ -16,6 +16,7 @@ import ArticlesView from "../flows/articles";
 import Auth from "../flows/auth";
 import CMSView from "../flows/cms";
 import PostUpload from "../flows/cms/postUpload";
+import CollectionView from "../flows/collection";
 import CollectionsView from "../flows/collections";
 import ContactUs from "../flows/contact";
 import HomeView from "../flows/home";
@@ -211,6 +212,7 @@ export default class App extends React.Component<Props, AppState> {
                             <Route path="/product/:productId" component={ProductView} />
                             <Route path="/editorials" component={ArticlesView} />
                             <Route path="/collections" component={CollectionsView} />
+                            <Route path="/collection/:collectionId" component={CollectionView} />
                             <Route path="/user/:userId/:pageName?" component={User} />
                             <Route path="/shop" exact component={ShopView} />
                             <Route path="/shop/product/:productId" component={ProductView} />

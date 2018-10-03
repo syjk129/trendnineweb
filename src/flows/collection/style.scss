@@ -1,0 +1,25 @@
+@import "../../styles/variables";
+
+.collection {
+    .collection-banner {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        background-color: $color-brand;
+
+        .collection-banner-content {
+            color: #fff;
+            max-width: $max-page-width;
+            padding: $section-spacing $page-spacing;
+            margin: auto;
+
+            h2 {
+                margin-bottom: $base-spacing * 2;
+            }
+        }
+    }
+
+    .banner-placeholder {
+        margin-bottom: $base-spacing * 2;
+    }
+}

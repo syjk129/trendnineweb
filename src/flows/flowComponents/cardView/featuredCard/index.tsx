@@ -51,7 +51,8 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
             );
         } else {
             return (
-                <a href={this._getCollectionUrl()} className={classes}>
+                // <a href={this._getCollectionUrl()} className={classes}>
+                <Link to={`/collection/${this.props.post.id}`} className={classes}>
                     {isMobile ? (
                         <Image
                             className="featured-image"
@@ -71,7 +72,8 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
                         </div>
                         <div className="featured-caption">{this.props.post.caption}</div>
                     </div>
-                </a>
+                {/* </a> */}
+                </Link>
             );
         }
     }
