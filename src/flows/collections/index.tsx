@@ -62,7 +62,7 @@ export default class Collections extends React.Component<Props, CollectionsState
                         <div className="featured-collection-card">
                             <Link className="card-image" to={this._getCollectionUrl(this.state.featuredCollection)}>
                                 <Image
-                                    square
+                                    ratio={ImageRatioVariant.FEATURED_COVER}
                                     src={this.state.featuredCollection.cover_image && this.state.featuredCollection.cover_image.small_image_url}
                                 />
                             </Link>
