@@ -44,7 +44,7 @@ export default class Collections extends React.Component<Props, CollectionsState
             this.context.api.getFeaturedPosts(PostType.COLLECTION, "order_by=latest"),
         ]);
         this.setState({
-            featuredCollection: this._getFeatured(featured),
+            featuredCollection: !isMobile ? this._getFeatured(featured) : null,
             collections,
             isLoading: false,
         });
@@ -86,7 +86,7 @@ export default class Collections extends React.Component<Props, CollectionsState
                     subtitle="Our favorite posts and products from the influencers"
                 >
                     <div className="collections-grid">
-                        {this.state.collections.filter(collection => collection.id !== this.state.featuredCollection.id).map(collection => (
+                        {this.state.collections.filter(collection => collection.id !== (this.state.featuredCollection ? this.state.featuredCollection.id : null)).map(collection => (
                             <FeaturedCard post={collection} />
                         ))}
                     </div>

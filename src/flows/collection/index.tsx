@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
+import { isMobile } from "react-device-detect";
 
 import { Featured, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
@@ -38,7 +39,7 @@ export default class Collection extends React.Component<Props, CollectionState> 
         this.setState({ isLoading: true });
         const collection = await this.context.api.getFeaturedPost(this._collectionId);
         this.setState({ collection });
-        const query = collection.direct_url.split("?");
+        const query = collection.direct_url ? collection.direct_url.split("?") : "";
         let posts;
         if (query && query.length > 1) {
             posts = await this.context.api.getLatestPosts(query[query.length - 1]);
@@ -55,7 +56,7 @@ export default class Collection extends React.Component<Props, CollectionState> 
         }
 
         return (
-            <div className="collection">
+            <div className={`collection${isMobile ? " mobile" : ""}`}>
                 <div className="collection-banner" ref={this._bannerRef}>
                     <div className="collection-banner-content">
                         <h2>{this.state.collection.title}</h2>
@@ -63,7 +64,7 @@ export default class Collection extends React.Component<Props, CollectionState> 
                     </div>
                 </div>
                 <div className="banner-placeholder" ref={this._placeholderRef} />
-                <CardContainer>
+                <CardContainer gridSize={2}>
                     {this.state.posts.map(look => (
                         <LookCard onload={onload} look={look} />
                     ))}

@@ -1,6 +1,12 @@
 @import "../../styles/variables";
 
 .collection {
+    &.mobile {
+        .card-container {
+            padding: $mobile-page-spacing;
+        }
+    }
+
     .collection-banner {
         position: absolute;
         width: 100%;
