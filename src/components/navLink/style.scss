@@ -6,26 +6,26 @@
     font-size: $font-size-callout;
     letter-spacing: $letter-spacing-callout;
 
-    a {
+    .nav-link-a {
         text-transform: uppercase;
         text-decoration: none;
     }
 
     &.small {
-        a {
+        .nav-link-a {
             font-size: $font-size-callout-small;
         }
     }
 
     &:hover {
-        a {
+        > .nav-link-a {
             color: $text-primary;
             text-decoration: underline;
         }
     }
 
     &.selected {
-        a {
+        .nav-link-a {
             color: $text-primary;
             text-decoration: underline;
         }
@@ -35,11 +35,11 @@
     }
 
     &.muted {
-        a {
+        .nav-link-a {
             color: $color-secondary;
         }
 
-        &:hover a {
+        &:hover .nav-link-a {
             color: $color-primary;
         }
     }

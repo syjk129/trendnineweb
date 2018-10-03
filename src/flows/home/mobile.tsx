@@ -70,7 +70,9 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                     {this.props.collections.slice(0, 3).map(collection => (
                         <FeaturedCard className="featured-collection" post={collection} />
                     ))}
-                    <Button variant={ButtonVariant.OUTLINE} url="/collections">View All</Button>
+                    <div className="collection-button-container">
+                        <Button variant={ButtonVariant.OUTLINE} url="/collections">View More</Button>
+                    </div>
                 </FeaturedSection>
                 <FeaturedSection
                     title="Articles"
@@ -78,7 +80,7 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                 >
                     <div className="featured-articles">
                         {this.props.articles.slice(0, 3).map(article => <ArticleCard featured article={article} />)}
-                        <Button variant={ButtonVariant.OUTLINE} url="/editorials">View All</Button>
+                        <Button variant={ButtonVariant.OUTLINE} url="/editorials">View More</Button>
                     </div>
                 </FeaturedSection>
             </div>
