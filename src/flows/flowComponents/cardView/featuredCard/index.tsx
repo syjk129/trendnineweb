@@ -51,7 +51,7 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
             );
         } else {
             return (
-                <a href={this._getCollectionUrl()} className={classes}>
+                <Link to={`/collection/${this.props.post.id}`} className={classes}>
                     {isMobile ? (
                         <Image
                             className="featured-image"
@@ -71,20 +71,9 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
                         </div>
                         <div className="featured-caption">{this.props.post.caption}</div>
                     </div>
-                </a>
+                </Link>
             );
         }
-    }
-
-    private _getCollectionUrl = () => {
-        const url = this.props.post.direct_url;
-        if (!url) {
-            return "";
-        }
-        if (url.indexOf("?") !== -1) {
-            return `${url}&collection=1`;
-        }
-        return `${url}?collection=1`;
     }
 }
 

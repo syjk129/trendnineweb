@@ -70,7 +70,7 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
             <>
                 <div className="header-placeholder" ref={this._placeholderRef} />
                 <div className="main-header" id="header" ref={this._headerRef}>
-                    {this.props.bannerAction && this.props.bannerContent && (
+                    {this.props.bannerAction && this.props.bannerContent && this.props.location.pathname === "/" && (
                         <Banner actionButton={this.props.bannerAction} onDismiss={this.props.dismissBanner}>
                             {this.props.bannerContent}
                         </Banner>
@@ -280,7 +280,7 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
         return (
             <div className="subheader">
                 <div className="subheader-section">
-                    <Callout variant={CalloutVariant.SECONDARY}>Style</Callout>
+                    <Callout variant={CalloutVariant.SECONDARY}>By Style</Callout>
                     {this.props.styles.map(style => (
                         <div className="subheader-link">
                             <NavLink
@@ -299,7 +299,7 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                     ))}
                 </div>
                 <div className="subheader-section">
-                    <Callout variant={CalloutVariant.SECONDARY}>Occasions</Callout>
+                    <Callout variant={CalloutVariant.SECONDARY}>By Occasions</Callout>
                     {this.props.occasions.map(occasion => (
                         <div className="subheader-link">
                             <NavLink

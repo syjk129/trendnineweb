@@ -80,14 +80,7 @@ export default class Articles extends React.Component<Props, ArticlesState> {
                         </div>
                         <div className="featured-articles-right">
                             <div className="item" ref={this._mainRightRef}>
-                                <Link to={`/article/${this.state.articles[0].id}`} className="main-featured-card-left">
-                                    <img className="featured-image" src={this.state.articles[0].cover_image.small_image_url} />
-                                    <div className="main-featured-left-content">
-                                        <h1>{this.state.articles[0].title}</h1>
-                                        <div className="main-featured-left-caption">{this.state.articles[0].caption}</div>
-                                        <div><Button inline>Read & Shop</Button></div>
-                                    </div>
-                                </Link>
+                                <FeaturedCard post={this.state.articles[0]} />
                             </div>
                         </div>
                     </div>
