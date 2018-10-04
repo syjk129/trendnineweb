@@ -43,7 +43,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
     }
 
     componentWillReceiveProps(nextProps: PostProps) {
-        if (nextProps.location.state && nextProps.location.state.clearData) {
+        if (nextProps.location.state && nextProps.location.state.clearData && !this.state.isLoading) {
             this.setState({
                 post: null,
                 loadingNext: false,
