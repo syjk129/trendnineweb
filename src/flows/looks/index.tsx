@@ -71,6 +71,7 @@ export default class Looks extends React.Component<Props, LooksState> {
 
         this.setState({ loadingContent: true });
         try {
+            console.warn("wtf");
             const [
                 looks,
                 styles,
@@ -110,10 +111,14 @@ export default class Looks extends React.Component<Props, LooksState> {
             this._searchString = postParam.keyword !== "" ? postParam.keyword : null;
         }
 
-        if (nextProps.location.state && nextProps.location.state.refresh) {
+        if (nextProps.location.state && nextProps.location.state.refresh && !this.state.loadingContent) {
             this.setState({ loadingContent: true });
-            const looks = await this._fetchContent(nextProps);
-            this.setState({ looks: looks.list, nextToken: looks.nextToken, loadingContent: false });
+            try {
+                const looks = await this._fetchContent(nextProps);
+                this.setState({ looks: looks.list, nextToken: looks.nextToken, loadingContent: false });
+            } catch (err) {
+                console.warn(err);
+            }
         }
     }
 
