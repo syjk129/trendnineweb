@@ -80,7 +80,7 @@ export default class Shop extends React.Component<Props, ShopState> {
 
         this._category = decodeCategoryUrl(nextProps.match.params.category);
         this._subcategory = decodeCategoryUrl(nextProps.match.params.subcategory);
-        if (nextProps.location.state && nextProps.location.state.refresh && nextProps.location !== this.props.location) {
+        if (!this.state.loadingContent && nextProps.location.state && nextProps.location.state.refresh && nextProps.location !== this.props.location) {
             this.setState({ loadingContent: true });
             const products = await this._fetchContent(nextProps);
             this.setState({

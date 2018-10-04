@@ -6,7 +6,7 @@ import { Featured, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
 import { CardContainer } from "../../components/card";
 import Spinner, { SpinnerContainer } from "../../components/spinner";
-import { LookCard } from "../flowComponents/cardView";
+import { LookCard, ShopCard } from "../flowComponents/cardView";
 import RouteProps from "../routeProps";
 
 import "./style.scss";
@@ -42,7 +42,12 @@ export default class Collection extends React.Component<Props, CollectionState> 
         const query = collection.direct_url ? collection.direct_url.split("?") : "";
         let posts;
         if (query && query.length > 1) {
-            posts = await this.context.api.getLatestPosts(query[query.length - 1]);
+            if (collection.direct_url.indexOf("shop") !== -1) {
+                posts = await this.context.api.getLatestProducts(query[query.length - 1]);
+                this._isShop = true;
+            } else {
+                posts = await this.context.api.getLatestPosts(query[query.length - 1]);
+            }
             this.setState({ posts: posts.list });
         }
         this.setState({ isLoading: false });
@@ -65,14 +70,19 @@ export default class Collection extends React.Component<Props, CollectionState> 
                 </div>
                 <div className="banner-placeholder" ref={this._placeholderRef} />
                 <CardContainer gridSize={2}>
-                    {this.state.posts.map(look => (
-                        <LookCard onload={onload} look={look} />
+                    {this.state.posts.map(post => (
+                        !this._isShop ? (
+                            <LookCard onload={onload} look={post} />
+                        ) : (
+                            <ShopCard product={post} />
+                        )
                     ))}
                 </CardContainer>
             </div>
         );
     }
 
+    private _isShop: boolean = false;
     private _collectionId: string;
     private _bannerRef: React.RefObject<HTMLDivElement>;
     private _placeholderRef: React.RefObject<HTMLDivElement>;

@@ -289,7 +289,7 @@ export default class PostUpload extends React.Component<Props, PostUploadState> 
             caption: post.caption || "",
             ctaUrl: post.cta_url || "",
             content: post.content,
-            coverImage: post.cover_image.original_image_url,
+            coverImage: post.cover_image && post.cover_image.original_image_url,
             selectedStyles: post.style_tags || [],
             selectedOccasions: post.occasion_tags || [],
             tags: post.tags.reduce((result, tag) => result ? `${result},${tag.content}` : tag.content, ""),

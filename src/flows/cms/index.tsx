@@ -207,7 +207,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                 tag_list: post.tag_list,
                 occasion_tag_list: post.occasion_tag_list,
                 style_tag_list: post.style_tag_list,
-                cover_image_url: post.cover_image.original_image_url,
+                cover_image_url: post.cover_image && post.cover_image.original_image_url,
                 priority_level: priorityLevel,
                 cta_url: post.cta_url,
             } as ArticleRequest;
@@ -220,7 +220,7 @@ export default class CMSView extends React.Component<Props, CMSViewState> {
                 tag_list: post.tag_list,
                 occasion_tag_list: post.occasion_tag_list,
                 style_tag_list: post.style_tag_list,
-                cover_image_url: post.cover_image.original_image_url,
+                cover_image_url: post.cover_image && post.cover_image.original_image_url,
                 priority_level: priorityLevel,
                 direct_url: post.cta_url || "https://www.trendnine.com/looks",
             } as ResultRequest;

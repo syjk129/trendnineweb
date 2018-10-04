@@ -70,22 +70,27 @@ export default class Looks extends React.Component<Props, LooksState> {
 
 
         this.setState({ loadingContent: true });
-        const [
-            looks,
-            styles,
-            occasions,
-        ] = await Promise.all([
-            this._fetchContent(this.props),
-            this.context.api.getPostTags(PostTagType.STYLE),
-            this.context.api.getPostTags(PostTagType.OCCASION),
-        ]);
+        try {
+            console.warn("wtf");
+            const [
+                looks,
+                styles,
+                occasions,
+            ] = await Promise.all([
+                this._fetchContent(this.props),
+                this.context.api.getPostTags(PostTagType.STYLE),
+                this.context.api.getPostTags(PostTagType.OCCASION),
+            ]);
 
-        this.setState({
-            looks: looks.list,
-            nextToken: looks.nextToken,
-            loadingContent: false,
-            tags: styles.concat(occasions),
-        });
+            this.setState({
+                looks: looks.list,
+                nextToken: looks.nextToken,
+                loadingContent: false,
+                tags: styles.concat(occasions),
+            });
+        } catch (err) {
+            console.warn(err);
+        }
     }
 
     componentWillUnmount() {
@@ -106,10 +111,14 @@ export default class Looks extends React.Component<Props, LooksState> {
             this._searchString = postParam.keyword !== "" ? postParam.keyword : null;
         }
 
-        if (nextProps.location.state && nextProps.location.state.refresh) {
+        if (nextProps.location.state && nextProps.location.state.refresh && !this.state.loadingContent) {
             this.setState({ loadingContent: true });
-            const looks = await this._fetchContent(nextProps);
-            this.setState({ looks: looks.list, nextToken: looks.nextToken, loadingContent: false });
+            try {
+                const looks = await this._fetchContent(nextProps);
+                this.setState({ looks: looks.list, nextToken: looks.nextToken, loadingContent: false });
+            } catch (err) {
+                console.warn(err);
+            }
         }
     }
 
@@ -164,7 +173,7 @@ export default class Looks extends React.Component<Props, LooksState> {
                             <Spinner />
                         ) : (
                             <CardContainer gridSize={this.state.gridSize}>
-                                {this.state.looks.map(look => (
+                                {this.state.looks && this.state.looks.map(look => (
                                     <LookCard onload={onload} look={look} />
                                 ))}
                             </CardContainer>
@@ -209,8 +218,12 @@ export default class Looks extends React.Component<Props, LooksState> {
         const postParam = new PostParam(params);
         let queryString = postParam.convertUrlParamToQueryString();
         queryString += `&page_size=${this._pageSize}`;
-
-        return await this.context.api.getLatestPosts(queryString, nextToken);
+        try {
+            const posts = await this.context.api.getLatestPosts(queryString, nextToken);
+            return posts;
+        } catch (err) {
+            console.warn(err);
+        }
     }
 
     private _populateNext = async () => {
