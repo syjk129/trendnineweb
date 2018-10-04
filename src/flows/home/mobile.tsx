@@ -46,7 +46,7 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                         {this.props.tags.map(tag => <CarouselTag selected={false} tag={tag} />)}
                     </div>
                 </FeaturedSection>
-                {!user && (
+                {/* {!user && (
                     <div className="welcome-banner">
                         <Image
                             className="welcome-banner-image"
@@ -61,7 +61,7 @@ export default class MobileHome extends React.Component<MobileHomeProps> {
                             <div><Button inline variant={ButtonVariant.OUTLINE} url="/login">Join Now</Button></div>
                         </div>
                     </div>
-                )}
+                )} */}
                 <FeaturedSection
                     title="Featured Collections"
                     subtitle="Curated gallery of the hottest trends"

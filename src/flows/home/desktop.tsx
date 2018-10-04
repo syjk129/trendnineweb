@@ -69,7 +69,7 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                 >
                     <TagCarousel tags={this.props.tags} />
                 </FeaturedSection>
-                {!user && (
+                {/* {!user && (
                     <div className="welcome-banner">
                         <Image
                             className="welcome-banner-image"
@@ -93,7 +93,7 @@ export default class DesktopHome extends React.Component<DesktopHomeProps> {
                             </Button></div>
                         </div>
                     </div>
-                )}
+                )} */}
                 <FeaturedSection
                     title="Featured Collections"
                     subtitle="Curated gallery of the hottest trends"
