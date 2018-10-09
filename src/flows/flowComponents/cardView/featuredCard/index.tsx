@@ -24,6 +24,9 @@ class FeaturedCard extends React.Component<FeaturedCardProps> {
         if (this.props.className) {
             classes += ` ${this.props.className}`;
         }
+        if (!this.props.post) {
+            return null;
+        }
 
         if (this.props.post.type === FeaturedType.ARTICLE) {
             return (
