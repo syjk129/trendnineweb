@@ -59,13 +59,13 @@ export default class Collections extends React.Component<Props, CollectionsState
             <div className="collections">
                 {!isMobile && (
                     <div className="featured-collection">
-                        <div className="featured-collection-card">
-                            <Link className="card-image" to={`/collection/${this.state.featuredCollection.id}`}>
+                        <Link to={`/collection/${this.state.featuredCollection.id}`} className="featured-collection-card">
+                            <div className="card-image">
                                 <Image
                                     ratio={ImageRatioVariant.FEATURED_COVER}
                                     src={this.state.featuredCollection.cover_image && this.state.featuredCollection.cover_image.small_image_url}
                                 />
-                            </Link>
+                            </div>
                             <div className="card-details">
                                 <div>
                                     <div className="iconed-callout">
@@ -73,12 +73,12 @@ export default class Collections extends React.Component<Props, CollectionsState
                                         <Callout inline>Look Collection</Callout>
                                     </div>
                                 </div>
-                                <Link className="featured-title-container" to={`/article/${this.state.featuredCollection.id}`}>
+                                <div className="featured-title-container">
                                     <h2 className="featured-collection-title">{this.state.featuredCollection.title}</h2>
                                     <div className="featured-collection-caption">{this.state.featuredCollection.caption}</div>
-                                </Link>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     </div>
                 )}
                 <FeaturedSection

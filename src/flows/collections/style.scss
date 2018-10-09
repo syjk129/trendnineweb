@@ -34,8 +34,10 @@
 
         .featured-title-container {
             width: 80%;
+        }
 
-            &:hover {
+        &:hover {
+            .featured-title-container {
                 h2 {
                     border-bottom: $border-width solid $color-brand;
                     margin-bottom: $base-spacing - $border-width;
