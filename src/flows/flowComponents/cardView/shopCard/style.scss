@@ -49,11 +49,13 @@
         justify-content: center;
     }
 
-    &:hover {
-        border: 1px solid $border-color;
+    &:not(&.mobile) {
+        &:hover {
+            border: 1px solid $border-color;
 
-        .shop-card {
-            margin: $base-spacing - 1px;
+            .shop-card {
+                margin: $base-spacing - 1px;
+            }
         }
     }
 }
