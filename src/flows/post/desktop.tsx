@@ -14,7 +14,6 @@ import Sticky from "../../components/sticky";
 import formatTime from "../../util/formatTime";
 import LookCard from "../flowComponents/cardView/lookCard";
 import Comments from "../flowComponents/comments";
-import { ContentSection } from "../flowComponents/section";
 import RouteProps from "../routeProps";
 
 interface PostViewProps extends RouteProps {

@@ -45,7 +45,7 @@ class ShopCard extends React.Component<ShopCardProps, ShopCardState> {
         const imageUrl = product.image && (isMobile ? product.image.small_image_url : product.image.thumbnail_image_url);
 
         return (
-            <div className="shop-card-container">
+            <div className={`shop-card-container${isMobile ? " mobile" : ""}`}>
                 <Link
                     to={{
                         pathname: `/product/${product.id}`,
