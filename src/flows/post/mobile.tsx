@@ -1,7 +1,7 @@
 import autobind from "autobind-decorator";
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import { isMobile } from "react-device-detect";
+import { Link } from "react-router-dom";
 
 import { Comment, Post, PostPreview } from "../../api/models";
 import { AppContext } from "../../app";
@@ -65,6 +65,14 @@ export default class MobilePost extends React.Component<MobilePostProps, MobileP
                 <p className="post-title">
                     {post.title}
                 </p>
+                <Link to={`/user/${this.props.post.author.username}`} className="user-more mobile">
+                    <div className="user-details">
+                        <img className="user-image" src={this.props.post.author.profile_small_image_url} />
+                        <div className="username">
+                            <b>{this.props.post.author.username}</b>
+                        </div>
+                    </div>
+                </Link>
                 <div className="post-content">
                     {post.cover_image && (
                         <Image
