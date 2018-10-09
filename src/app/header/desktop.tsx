@@ -78,9 +78,9 @@ export default class DesktopHeader extends React.Component<HeaderProps, DesktopH
                     <div className="header-content">
                         <div className="top-header" ref={this._topHeaderRef}>
                             <div className="social-icons">
-                                <SocialIcon icon={SocialIconType.FACEBOOK} />
-                                <SocialIcon icon={SocialIconType.PINTEREST} />
-                                <SocialIcon icon={SocialIconType.INSTAGRAM} />
+                                <LinkButton href="https://www.instagram.com/trendnine/" target="_blank"><SocialIcon icon={SocialIconType.INSTAGRAM} /></LinkButton>
+                                <LinkButton href="https://www.facebook.com/trendnine" target="_blank"><SocialIcon icon={SocialIconType.FACEBOOK} /></LinkButton>
+                                <LinkButton href="https://www.pinterest.com/trendnine/" target="_blank"><SocialIcon icon={SocialIconType.PINTEREST} /></LinkButton>
                             </div>
                             <Link
                                 className="nav-logo-container"
