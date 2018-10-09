@@ -1,6 +1,6 @@
 import { PropTypes } from "prop-types";
 import * as React from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import { Comment, Post, PostPreview, Product } from "../../api/models";
 import { AppContext } from "../../app";
@@ -112,13 +112,13 @@ class DesktopPostView extends React.Component<PostViewProps, DesktopPostViewStat
                                 <div>
                                     <div className="user-more">
                                         <div className="user-follow-container">
-                                            <div className="user-details">
+                                            <Link to={`/user/${this.props.post.author.username}`} className="user-details">
                                                 <img className="user-image" src={this.props.post.author.profile_small_image_url} />
                                                 <div className="username">
                                                     <p className="more-from">More from</p>
                                                     <b>{this.props.post.author.username}</b>
                                                 </div>
-                                            </div>
+                                            </Link>
                                         </div>
                                         <div className="user-posts">
                                             {this.state.authorPosts.slice(0, 3).map(post => (

@@ -135,9 +135,13 @@
 }
 
 .user-more {
-    padding: $section-spacing 0;
-    border-bottom: $standard-border-width solid $border-color;
+    display: block;
     margin-bottom: $section-spacing;
+
+    &:not(&.mobile) {
+        padding: $section-spacing 0;
+        border-bottom: $standard-border-width solid $border-color;
+    }
 
     .user-follow-container {
         display: flex;
@@ -194,6 +198,13 @@
 
     .user-follow {
         flex-shrink: 0;
+    }
+
+    &.mobile {
+        .user-image {
+            height: 30px;
+            width: 30px;
+        }
     }
 }
 
