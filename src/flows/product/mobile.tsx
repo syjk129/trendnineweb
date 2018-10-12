@@ -2,9 +2,7 @@ import * as React from "react";
 
 import Button, { ButtonVariant } from "../../components/button";
 import Carousel, { CarouselItem } from "../../components/carousel";
-import { IconSize } from "../../components/icon";
 import { ImageFitVariant } from "../../components/image";
-import ActionLinks, { ActionLinksVariant } from "../flowComponents/actions";
 import { ContentSection, ExpandableSection } from "../flowComponents/section";
 import { ProductProps } from "./types";
 
