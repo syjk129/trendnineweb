@@ -153,7 +153,7 @@ export default class PostView extends React.Component<PostProps, PostState> {
 
     private _redirectProduct = (product) => {
         this.props.history.push({
-            pathname: `/product/${product.id}?referrer_type=post&referrer_id=${this.state.post.id}`,
+            pathname: `/shop/product/${product.id}?referrer_type=post&referrer_id=${this.state.post.id}`,
             state: { refresh: true },
         });
     }

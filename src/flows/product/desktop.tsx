@@ -44,10 +44,6 @@ export default class DesktopProduct extends React.Component<ProductProps, Produc
             onProductClick,
         } = this.props;
 
-        const reviewsTitle = reviews && reviews.length > 0 ? (
-            `Reviews (${reviews.length})`
-        )  : "Reviews";
-
         const productSizes = new Set<string>();
         const images = [];
         if (product) {

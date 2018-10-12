@@ -209,7 +209,6 @@ export default class App extends React.Component<Props, AppState> {
                         <Switch location={isModal ? this._previousLocation : this.props.location}>
                             <Route exact path="/" component={HomeView} />
                             <Route path="/looks:query?" component={LooksView} />
-                            <Route path="/product/:productId" component={ProductView} />
                             <Route path="/editorials" component={ArticlesView} />
                             <Route path="/collections" component={CollectionsView} />
                             <Route path="/collection/:collectionId" component={CollectionView} />
@@ -237,7 +236,7 @@ export default class App extends React.Component<Props, AppState> {
                             <>
                                 <Route path="/login" render={(props) => <Auth {...props} close={this._redirectCloseModal} setLoggedState={this._setLoggedState} />}/>
                                 <Route path="/post/:postId" render={(props) => <PostView {...props} close={this._redirectCloseModal} />} />
-                                <Route path="/product/:productId" render={(props) => <ProductView {...props} close={this._redirectCloseModal} />} />
+                                <Route path="/shop/product/:productId" render={(props) => <ProductView {...props} close={this._redirectCloseModal} />} />
                             </>
                         )}
                     </div>

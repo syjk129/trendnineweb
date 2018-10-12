@@ -51,7 +51,7 @@ class ProductTag extends React.Component<ProductTagProps, ProductTagState> {
     private _tagNameRef: React.RefObject<HTMLSpanElement>;
 
     private _onClick = () => {
-        this.props.history.push(`/product/${this.props.tag.product_id}`);
+        this.props.history.push(`/shop/product/${this.props.tag.product_id}`);
         window.open(this.props.tag.product_url);
     }
 

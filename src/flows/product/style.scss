@@ -61,3 +61,30 @@
         margin-bottom: $section-spacing;
     }
 }
+
+.mobile-product {
+    .carousel-item {
+        margin-right: 0;
+    }
+
+    .product-details {
+        margin: $mobile-page-spacing;
+    }
+
+    .product-brand {
+        margin-bottom: $base-spacing;
+    }
+
+    .product-title {
+        margin-bottom: $section-spacing;
+    }
+
+    .product-price {
+        font-size: $font-size-h3;
+        margin-bottom: $section-spacing;
+    }
+
+    button {
+        margin-bottom: $base-spacing;
+    }
+}

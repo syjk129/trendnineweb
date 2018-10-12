@@ -192,7 +192,7 @@ class LookCard extends React.Component<LookCardProps, LookCardState> {
 
     private _redirectProduct = (product) => {
         return () => {
-            this.props.history.push(`/product/${product.id}?referrer_type=post&referrer_id=${this.props.look.id}`);
+            this.props.history.push(`/shop/${product.id}?referrer_type=post&referrer_id=${this.props.look.id}`);
         };
     }
 

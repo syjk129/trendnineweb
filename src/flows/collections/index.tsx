@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 
 import { Featured } from "../../api/models";
 import { AppContext } from "../../app";
-import { LinkButton } from "../../components/button";
-import Callout, { CalloutVariant } from "../../components/callout";
+import Callout from "../../components/callout";
 import Icon, { IconVariant } from "../../components/icon";
 import Image, { ImageRatioVariant } from "../../components/image";
 import Spinner, { SpinnerContainer } from "../../components/spinner";

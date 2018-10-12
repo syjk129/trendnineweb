@@ -48,7 +48,7 @@ class ShopCard extends React.Component<ShopCardProps, ShopCardState> {
             <div className={`shop-card-container${isMobile ? " mobile" : ""}`}>
                 <Link
                     to={{
-                        pathname: `/product/${product.id}`,
+                        pathname: `/shop/product/${product.id}`,
                         state: {
                             modal: !isMobile,
                             clearData: this.props.clearData,
