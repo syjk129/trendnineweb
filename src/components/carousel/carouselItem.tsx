@@ -64,7 +64,7 @@ class CarouselItem extends React.Component<CarouselItemProps> {
             if (this.props.newWindowUrl) {
                 window.open(this.props.newWindowUrl);
             }
-        } else {
+        } else if (this.props.onClick) {
             this.props.onClick();
         }
     }
